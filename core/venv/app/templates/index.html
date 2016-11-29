@@ -3,15 +3,53 @@
 	<head>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!--<link rel="stylesheet" href= "{{ url_for('static',filename='styles/custom.css') }}">-->
+		<link rel="stylesheet" href= "../static/styles/custom.css">
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		
 	</head>
 	
-	<body>
-		<h1> How old are you? </h1>
-		<form method = "POST" action = "/send">
-			<div class = "from-group">
-				<input type = "text" name = "age">
+	<body>    
+
+    <div class="ex-box-shadow ex-container">	
+		<div class="container-fluid clear-top">
+			<div class="row ex-header">
+				<div class="col-xs-12">
+					<h1 id = "ex-to"class = "text-center h1"></h1>
+					<p class = "text-center ex-descript h3">Find the word!</p>
+					<div class="ex-progress">
+					  <div id="ex-bar">
+					  </div>
+					</div>
+				</div>
 			</div>
-			<input class = "btn btn-primary" type = "submit" value = "submit">
-		</form>
+			
+			<div class="row ex-content">
+				<div class="col-xs-12 ">
+					<p id = "ex-context" class="h3">						
+					</p>
+					
+				</div>
+			</div>
+			<div class="row ex-footer">
+				<div class="col-xs-3 ex-footer-elem">
+					<a id="show_solution" href="#" onclick="showAnswer()">
+                        <img  class="clickable-symbol" src="../static/img/grey-question.png">
+                    </a>
+				</div>
+				<div class="col-xs-6 ex-footer-elem">
+					<input id = "ex-main-input" class="ex-input-box " placeholder="" data-original-title="" title="">
+				</div>
+				<div class="col-xs-3 ex-footer-elem">
+					<a id="check_answer" href="#" onclick="checkAnswer()">
+                        <img class="clickable-symbol" src="../static/img/forward-green.png">
+                    </a>
+				</div>
+			</div>
+		</div>
+	</div>				
+	<script src="../static/js/custom.js"></script>
+	<script src="../static/js/progress_bar.js"></script>
 	</body>
 </html>

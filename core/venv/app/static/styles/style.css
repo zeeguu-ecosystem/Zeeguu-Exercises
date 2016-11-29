@@ -1,0 +1,251 @@
+body
+{
+	margin:0px;
+	border-radius:5px;
+	background-color:#F5F5F4;
+}
+div
+{
+	border-radius:5px;
+}
+.clear
+{
+	clear:both;
+}
+.content
+{	
+	margin-top:10px;
+	width:1000px;	
+	position:relative;
+	margin-left:-500px;
+	left:50%;
+	box-shadow:0px 0px 5px;
+}
+.header
+{
+	width:100%;
+	height:220px;
+	background-image:url(../img/header.jpg);
+	box-shadow:inset 0px 0px 35px;
+	position:relative;
+	border-bottom-left-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.headerWrapper
+{		
+	top:10px;
+	position:relative;
+	margin-left:-400px;
+	left:50%;	
+	width:800px;
+}
+.headerCards
+{
+	float:left;
+	width:143px;
+	height:200px;
+	margin-right:10px;	
+	box-shadow:inset 2px 2px 5px;
+	box-shadow:0px 0px 15px;
+}
+.cardAdd
+{
+	top:5px;
+	position:relative;
+}
+.lifeSearchStyle
+{
+	top:2px;
+	position:relative;
+	width: 0; 
+	height: 0; 
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;	
+	border-bottom: 10px solid black;
+	opacity:0.8;
+	left:50%;
+	margin-left:-15px;
+}
+.liveSearch
+{
+	cursor:pointer;	
+	top:2px;
+	position:relative;
+	background-color:rgba(0,0,0,0.8);
+	box-shadow:0px 0px 5px;
+	z-index:100;
+	width:240px;
+	height: 160px;
+	overflow: skroll;
+	overflow-x: hidden;	
+}
+.liveSearchSecondString
+{
+	width:56px;
+	height: 80px;
+	overflow:visible;
+	left:50%;
+	margin-left:-29px;
+}
+.searchCards
+{
+	float:left;
+	width:51px;
+	height:75px;
+	background-repeat:no-repeat;
+	background-size:175px;
+	background-position:center;
+	box-shadow: 0px 0px 5px;
+	position:relative;
+	margin:2px;
+	opacity:0.9;
+}
+.searchCards:hover
+{ 
+	opacity:1;
+	box-shadow:0px 0px 15px;
+}
+.cardAdd >input 
+{
+	width:100px;
+	height:30px;
+	text-align:center;
+	margin:auto;	
+	display:block;
+	text-transform:uppercase;
+	font-weight:bold;
+}
+.mgr30
+{
+	margin-right:30px;
+}
+
+.monitor
+{
+	position:relative;
+}
+.banner
+{
+	position:relative;
+	width:100%;
+	height:30px;
+	border-radius:0px;
+	z-index:2;
+	box-shadow: 0px 0px 15px;
+}
+.monitorWrapper
+{
+	position:relative;
+	z-index:1;
+	position:absolute;
+	height:200px;
+	width:480px;
+	left:50%;
+	margin-left:-250px;
+	border-top-left-radius:0px;
+	border-top-right-radius:0px;
+	box-shadow: 0px 0px 10px;
+	padding:10px;
+}
+.monitorColor
+{	
+	background-color:#C4ECC9;
+	background-image:url(../img/monitor.bmp);
+}
+.display
+{
+	height:200px;
+	width:480px;	
+	box-shadow: inset 0px 0px 10px black;
+	background-image:url(../img/dispRed.jpg);
+	background-position:center;
+}
+.trans
+{
+	width:95%;
+	height:95%;
+	background-color:rgba(0,0,0,0.5);
+	color:rgba(240,240,240,1);
+	font-size:35px;
+}
+.footer
+{
+	width:980px;
+	height:;
+	background-image:url(../img/footer.jpg);
+	padding:10px;
+	box-shadow:inset 0px 0px 35px;
+	border-top-left-radius:0px;
+	border-top-right-radius:0px;
+}
+.tables
+{
+	float:left;
+	width:220px;
+	height:200px;
+	margin-right:33px;
+}
+.mg0
+{
+	margin:0px;
+}
+.tableCards
+{
+	float:left;
+	height:150px;
+	width:107.5px;
+	background-color:  ;	
+	box-shadow: 0px 0px 10px;
+	z-index:1;
+}
+.info
+{
+	width:100%;
+	height:50px;
+	background-color:white;
+	position:relative;
+	z-index:2;
+	box-shadow: 0px 2px 5px;	
+	margin-top:2px;
+}
+
+.fll
+{
+	float:left;
+}
+.flr
+{
+	float:right;
+}
+.firstLast
+{
+	margin-bottom:20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
