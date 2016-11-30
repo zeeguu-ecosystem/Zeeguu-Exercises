@@ -16,3 +16,8 @@ function move_progress() {
     persent = max_move;
   }
 }
+
+function restart_progress_bar(){
+	persent = 0;
+	document.getElementById("ex-bar").style.width = persent;
+}
