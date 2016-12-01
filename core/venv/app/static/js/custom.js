@@ -56,7 +56,7 @@ function next(){
 }
 
 function checkAnswer(){
-	if (document.getElementById("ex-main-input").value.trim().toUpperCase() === data[index].from.trim().toUpperCase()){		
+	if (document.getElementById("ex-main-input").value.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === data[index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
 	if(index != data.length-1){
 			swal({
 			  title: "Well done!",
