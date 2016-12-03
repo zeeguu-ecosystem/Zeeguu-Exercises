@@ -8,7 +8,7 @@ var ADDRESS = "https://zeeguu.unibe.ch/bookmarks_to_study/"+size+"?session="+ses
 console.log(ADDRESS);
 var data;
 
-function testGetRequest(){
+function getBookmarks(){
 	return $.ajax({	  
 	  type: 'GET',
 	  dataType: 'json',
@@ -109,7 +109,7 @@ function calcSessionTime(){
 
 function start()
 {
-	$.when(testGetRequest()).then(function (ldata) {
+	$.when(getBookmarks()).then(function (ldata) {
 	  data = ldata;
 	  console.log(ldata);
 	  init();
