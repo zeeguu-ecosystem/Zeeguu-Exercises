@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href= "../static/styles/custom.css">		
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">		
 		<link rel="stylesheet" type="text/css" href="../static/styles/sweetalert.css">
+		<link rel="stylesheet" type="text/css" href="../static/styles/success.css">
 		<link rel="icon" href="../static/img/favicon.png" type="image/x-icon"/>
 		
 		
@@ -24,9 +25,8 @@
 						<p id = "ex-descript" class = "text-center h3">Find the word in the context</p>						
 						<div id="ex-bar"></div>	
 					</div>
-					<h1 id = "ex-to"class = "text-center h1"></h1>			
-					
-					
+					<h1 id = "ex-to"class = "text-center h1"></h1>	
+					<div id="ex-status" class = "">	</div>
 				</div>
 			</div>
 			
@@ -40,6 +40,7 @@
 				<div id = "show_solution" class="col-xs-3 ex-footer-elem ex-clickable" href="#" onclick="showAnswer()">
                     <img  class="clickable-symbol" src="../static/img/grey-question.png">
 				</div>
+				
 				<div class="col-xs-6 ex-footer-elem">
 					<input id = "ex-main-input" class="ex-input-box " placeholder="" data-original-title="" title="">
 				</div>

@@ -33,6 +33,7 @@ function next(){
 		$("#ex-descript").fadeOut(300, function() { $(this).remove(); });
 	}
 	
+	//The exersises are complete
 	if(index == data.length){
 		swal({
 		  title: "You rock!",
@@ -57,18 +58,9 @@ function next(){
 
 function checkAnswer(){
 	if (document.getElementById("ex-main-input").value.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === data[index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
-	if(index != data.length-1){
-			swal({
-			  title: "Well done!",
-			  text: "\""+data[index].from.trim()+"\"" + " is translated as " + "\""+data[index].to+"\"",
-			  allowOutsideClick: true,
-			  type: "success",
-			  confirmButtonText: "next",
-			  showConfirmButton: true,
-			  allowEscapeKey:true,
-			  showLoaderOnConfirm:true,			  
-			});
-		}
+		if(index != data.length-1){
+				document.getElementById("ex-status").innerHTML = '<svg class="checkmark " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>'	
+			}
 		move_progress();
 		index++;
 		next();
@@ -83,7 +75,7 @@ function checkAnswer(){
 		  showLoaderOnConfirm:true,
 		  timer:2000
 		});
-	}	
+	}
 	
 }
 $("#ex-main-input").keyup(function(event){
