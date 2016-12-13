@@ -59,7 +59,7 @@ function next(){
 function checkAnswer(){
 	if (document.getElementById("ex-main-input").value.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === data[index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
 		if(index != data.length-1){
-				document.getElementById("ex-status").innerHTML = '<svg class="checkmark " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>'	
+				document.getElementById("ex-status").innerHTML = '<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>'	
 			}
 		move_progress();
 		index++;

@@ -1,7 +1,7 @@
 .checkmark__circle {
   stroke-dasharray: 166;
   stroke-dashoffset: 166;
-  stroke-width: 2;
+  stroke-width: 4;
   stroke-miterlimit: 10;
   stroke: #7ac142;
   fill: none;
@@ -13,7 +13,7 @@
   height: 56px;
   border-radius: 50%;
   display: block;
-  stroke-width: 2;
+  stroke-width: 5;
   stroke: #fff;
   stroke-miterlimit: 10;
   margin: auto;
@@ -48,7 +48,7 @@
 }
 
 /* Safari 4.0 - 8.0 */
-@-webkit-keyframes example {
+@-webkit-keyframes status-anim {
     0%   {opacity:1; left:0px; top:0px;visibility:visible;}
 	100% {opacity:0; top:-100px;width:0;height:0;visibility:hidden;}
 }
