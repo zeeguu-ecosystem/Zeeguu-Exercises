@@ -59,21 +59,28 @@ function next(){
 function checkAnswer(){
 	if (document.getElementById("ex-main-input").value.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === data[index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
 		if(index != data.length-1){
-				document.getElementById("ex-status").innerHTML = '<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>'	
-			}
+				document.getElementById("ex-status").innerHTML = '<div id = "ex-status-container" class = "status-animation"><svg id = "temp-ex-success" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>';
+				setTimeout(function(){
+				  if ($('#ex-status-container').length > 0) {
+					$('#ex-status-container').remove();
+				  }
+				}, 2000);
+				
+		}
 		move_progress();
 		index++;
-		next();
+		setTimeout(next, 2000);
+		
 	}else{
 		swal({
 		  title: "Wrong answer...",
 		  allowOutsideClick: true,
 		  type: "error",
-		  confirmButtonText: "next",
-		  showConfirmButton: false,
+		  text: "Hint: the word starts with \"" +data[index].from.trim().charAt(0)+ "\"",
+		  confirmButtonText: "ok",
+		  showConfirmButton: true,
 		  allowEscapeKey:true,
 		  showLoaderOnConfirm:true,
-		  timer:2000
 		});
 	}
 	
@@ -108,5 +115,6 @@ function start()
 	  START_TIME = new Date();
 	});	
 }
+
 window.onload = start;	
 
