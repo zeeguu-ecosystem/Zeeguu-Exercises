@@ -1,6 +1,7 @@
 body
 {
   background-color: #e9e9e9;  
+  transition: all 0.5s;
 }
 .ex-box-shadow
 {
@@ -133,7 +134,14 @@ body
   background-image: linear-gradient(to left, #3eb495, #7eb530);
   transition: all .5s;
   border-radius: 25px;
-  transition-delay: 0.3s;
+  transition-delay: 2s;
+}
+
+#ex-status{
+	height: 56px;
+}
+#ex-status-container{
+	
 }
 
 #ex-progress-label {

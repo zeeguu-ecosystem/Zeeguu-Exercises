@@ -56,7 +56,7 @@
 /* Standard syntax */
 @keyframes status-anim {
     0%   {opacity:1; top:0px;visibility:visible;}
-    100% {opacity:0; top:-100px;overflow:hidden;width:0;
+    100% {opacity:0;top:-200px;overflow:hidden;width:0;
         height:0;}
 }
 
@@ -65,11 +65,11 @@
 	
     -webkit-animation-name: status-anim; /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 3s; /* Safari 4.0 - 8.0 */
-    -webkit-animation-delay: 4s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-delay: 2s; /* Safari 4.0 - 8.0 */
 	
     animation-name: status-anim;
-    animation-duration: 3s;
-    animation-delay: 3s;
+    animation-duration: 1s;
+    animation-delay: 1.5s;
 }
 
 
