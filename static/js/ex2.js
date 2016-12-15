@@ -2,7 +2,7 @@
 var session = 34563456;
 var START_TIME;
 var END_TIME;
-var size = 6;
+var size = 3;
 var ADDRESS = "https://zeeguu.unibe.ch/bookmarks_to_study/"+size+"?session="+session;
 
 console.log(ADDRESS);
@@ -49,6 +49,7 @@ function next(){
 		  restart();
 		});
 		index = 0;
+		submitResults();
 		return;
 	}
 
@@ -65,6 +66,12 @@ function next(){
 	document.getElementById("btn"+arr[0]).innerHTML = data[index].from;
 	document.getElementById("btn"+arr[1]).innerHTML = data[answer2].from;
 	document.getElementById("btn"+arr[2]).innerHTML = data[answer3].from;
+}
+
+function submitResults(){
+	for(var i = 0; i< data.length;i++){
+		$.post("https://www.zeeguu.unibe.ch/report_exercise_outcome/Too easy/Recognize/1000/"+data[i].id+"?session="+34563456);		
+	}
 }
 
 function btnSelect(btnID){
