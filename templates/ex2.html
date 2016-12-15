@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href= "../static/styles/custom.css">		
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">		
 		<link rel="stylesheet" type="text/css" href="../static/styles/sweetalert.css">
+		<link rel="stylesheet" type="text/css" href="../static/styles/ex2.css">
 		<link rel="stylesheet" type="text/css" href="../static/styles/success.css">
 		<link rel="icon" href="../static/img/favicon.png" type="image/x-icon"/>
 		
@@ -16,13 +17,13 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 	</head>
 	
-	<body>    	
+	<body  id="bootstrap-overrides">    	
     <div class="ex-box-shadow ex-container">	
 		<div class="container-fluid clear-top">
 			<div class="row ex-header">
 				<div class="col-xs-12">
 					<div class="ex-progress">
-						<p id = "ex-descript" class = "text-center h3">Find the word in the context</p>						
+						<p id = "ex-descript" class = "text-center h3">Choose the word that fits the context</p>						
 						<div id="ex-bar"></div>	
 					</div>
 					<h1 id = "ex-to"class = "text-center h1"></h1>	
@@ -32,7 +33,7 @@
 			
 			<div class="row ex-content">
 				<div class="col-xs-12 ">
-					<p id = "ex-context" class="h3 clickable-text">						
+					<p id = "ex-context" class="h3">						
 					</p>					
 				</div>
 			</div>
@@ -42,15 +43,17 @@
 				</div>
 				
 				<div class="col-xs-6 ex-footer-elem ex-clickable">
-					<input id = "ex-main-input" class="ex-input-box " placeholder="" data-original-title="" title="">
+					<button type = "button" id = "btn1" onclick = "btnSelect('1')" class = "btn btn-default option-btn"></button>
+					<button type = "button" id = "btn2" onclick = "btnSelect('2')" class = "btn btn-default option-btn"></button>
+					<button type = "button" id = "btn3" onclick = "btnSelect('3')" class = "btn btn-default option-btn"></button>
 				</div>
-				<div id = "check_answer"class="col-xs-3 ex-footer-elem ex-clickable" href="#" onclick="checkAnswer()">
+				<div id = "check_answer"class="col-xs-3 ex-footer-elem ex-clickable" href="#" onclick="btnSelect('1')">
                     <img class="clickable-symbol" src="../static/img/forward-green.png">						
 				</div>
 			</div>
 		</div>
 	</div>				
-	<script src="../static/js/custom.js"></script>
+	<script src="../static/js/ex2.js"></script>
 	<script src="../static/js/progress_bar.js"></script>
 	<script src="../static/js/dist/sweetalert.min.js"></script>
 	<script src="../static/js/util.js"></script>

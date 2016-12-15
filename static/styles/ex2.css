@@ -1,0 +1,8 @@
+.option-btn{
+    height: 50px;
+	min-width: 120px;			
+	margin-top: 12px;
+	display: inline-block;
+	white-space: normal;
+	text-align: center;
+}

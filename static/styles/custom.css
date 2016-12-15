@@ -34,13 +34,27 @@ body
  {
 	bottom: 0;
 	position: relative;
-	min-height: 50px;
-	height: 75px;
+	min-height: 75px;	
 	clear:both;
 	background-color: #dbdbdb;
 	display:block;
+	position: relative;
 } 
 
+.ex-footer-elem
+{
+	display:inline-block;
+	margin:auto;
+	min-height:100%;
+	opacity: 0.85;
+	transition: background-color 0.5s ease;
+    height: 100%;
+}
+.ex-footer-elem:hover
+{
+	background-color: #EEEEEE;
+	opacity: 1;
+}
 
 
 #ex-to
@@ -60,19 +74,7 @@ body
 	font: 16px arial,sans-serif;
 	padding: 20px 50px;
 }
-.ex-footer-elem
-{
-	display:block;
-	margin:auto;
-	min-height:100%;
-	opacity: 0.85;
-	transition: background-color 0.5s ease;
-}
-.ex-footer-elem:hover
-{
-	background-color: #EEEEEE;
-	opacity: 1;
-}
+
 
 .ex-context
 {
@@ -82,14 +84,18 @@ body
 .ex-clickable
 {
 	cursor:pointer;
+	min-height:75px;
+	text-align: center;
 }
 
 .clickable-symbol {
-	display:block;
 	margin:auto;
     width: 45px;
     height: 45px;	
 	margin-top: 15px;
+	text-align: center;
+    display:table-cell;
+    vertical-align:middle;
 }
 .ex-input-box
 {

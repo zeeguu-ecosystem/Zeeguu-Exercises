@@ -11,8 +11,12 @@ def index():
     return render_template('index.html')
 	
 @app.route('/get-ex')
-def test():
+def getex():
     return app.send_static_file('template/index.html')
+
+@app.route('/ex2')
+def getex2():
+    return render_template('ex2.html')
 
 	
 if __name__ == "__main__":
