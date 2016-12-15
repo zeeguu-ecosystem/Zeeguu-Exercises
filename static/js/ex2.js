@@ -2,7 +2,7 @@
 var session = 34563456;
 var START_TIME;
 var END_TIME;
-var size = 3;
+var size = 6;
 var ADDRESS = "https://zeeguu.unibe.ch/bookmarks_to_study/"+size+"?session="+session;
 
 console.log(ADDRESS);
