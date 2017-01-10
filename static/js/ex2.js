@@ -4,6 +4,7 @@ var START_TIME;
 var END_TIME;
 var size = 6;
 var ADDRESS = "https://zeeguu.unibe.ch/bookmarks_to_study/"+size+"?session="+session;
+var exContentElem;
 
 console.log(ADDRESS);
 var data;
@@ -25,6 +26,7 @@ function getBookmarks(){
 var index;
 
 function init(){
+	exContentElem = document.getElementById("")
 	index=0;
 	next();
 }

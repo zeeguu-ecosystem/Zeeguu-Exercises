@@ -1,5 +1,5 @@
 
-var session = 34563456;
+var session = 11010001;
 var START_TIME;
 var END_TIME;
 var size = 12;
