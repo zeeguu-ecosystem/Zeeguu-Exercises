@@ -6,6 +6,7 @@ var END_TIME;
 var SIZE = 12;
 var ADDRESS = "https://zeeguu.unibe.ch/bookmarks_to_study/"+SIZE+"?session="+session;
 
+
 console.log(ADDRESS);
 var data;
 
@@ -30,6 +31,7 @@ function getBookmarks(){
  *	Initializes the INDEX and populates ex-fields with concent using next
 **/
 function init(){
+	ProgressBar.init(55,66);
 	INDEX=0;
 	next();
 }
@@ -84,7 +86,7 @@ function checkAnswer(){
 			  }
 			}, 2000);				
 		}
-		move_progress();
+		ProgressBar.move();
 		INDEX++;
 		setTimeout(next, 2000);		
 	}else{
@@ -103,7 +105,7 @@ function checkAnswer(){
 }
 
 function restart(){
-	restart_progress_bar();
+	ProgressBar.restart();
 	start();
 }
 
