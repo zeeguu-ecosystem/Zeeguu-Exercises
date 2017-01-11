@@ -29,4 +29,8 @@ $(".clickable-text").click(function() {
     document.getElementById("ex-main-input").value = t;
 });
 
-
+$("#ex-main-input").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#check_answer").click();
+    }
+});

@@ -1,5 +1,5 @@
 var persent = 0;
-var amount = 100/size;
+var amount = 100/SIZE;
 console.log(amount);
 function move_progress() {
   var elem = document.getElementById("ex-bar");   
