@@ -28,10 +28,10 @@ function getBookmarks(){
 }
 
 /**
- *	Initializes the INDEX and populates ex-fields with concent using next
+ *	Initializes the INDEX and populates ex-fields with content using next
 **/
 function init(){
-	ProgressBar.init(55,66);
+	ProgressBar.init(0,SIZE);
 	INDEX=0;
 	next();
 }

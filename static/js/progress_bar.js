@@ -1,34 +1,30 @@
+/** Modular progress bar @author Martin Avagyan
+ *  Initialize it using ProgressBar.init(percent,size);
+ *  Add progress using  ProgressBar.move();
+**/
 var bar,ProgressBar = {
 	settings:{
-		persent: 0,
-		size: SIZE,
+		percent: 0,
 		amount: 100/SIZE,
 		elem: document.getElementById("ex-bar"),
-	},
-	
-	init: function(size,persent){
-		this.settings.persent = persent;
-		this.settings.size = size;
-		
-		this.bindUIActions();
-		
+	},	
+	init: function(percent,size){	
+		this.bindUIActions();		
 		bar = this.settings;
-		bar.persent = persent;
-		bar.size = size;
-	},
-	
+		bar.percent = percent;
+		bar.amount = 100/size;
+	},	
 	restart: function(){
-		bar.persent = 0;
-		bar.elem.style.width = persent;
-	},
-	
+		bar.percent = 0;
+		bar.elem.style.width = percent;
+	},	
 	bindUIActions: function() {
 		
 	},	
 	move: function() {  
-		  var width = bar.persent;
+		  var width = bar.percent;
 		  var id = setInterval(frame, 10);
-		  var max_move = bar.persent+bar.amount;
+		  var max_move = bar.percent+bar.amount;
 		  function frame() {
 			if (width >= max_move || width >=100) {
 			  clearInterval(id);
@@ -36,7 +32,7 @@ var bar,ProgressBar = {
 			  width++; 			  
 			  bar.elem.style.width = width + '%'; 
 			}
-			bar.persent = max_move;
+			bar.percent = max_move;
 		}
 	},
 };
