@@ -4,8 +4,8 @@
 **/
 var bar,ProgressBar = {
 	settings:{
-		percent: 0,
-		amount: 100/SIZE,
+		percent: 0, //default starting point
+		amount: 25, //default value for progress amount
 		elem: document.getElementById("ex-bar"),
 	},	
 	init: function(percent,size){	
@@ -18,9 +18,7 @@ var bar,ProgressBar = {
 		bar.percent = 0;
 		bar.elem.style.width = percent;
 	},	
-	bindUIActions: function() {
-		
-	},	
+	bindUIActions: function() {},	
 	move: function() {  
 		  var width = bar.percent;
 		  var id = setInterval(frame, 10);
