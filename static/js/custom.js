@@ -6,10 +6,11 @@ var ex,Exercise = {
 	settings: {
 		data: 0,
 		session: 11010001, //for now hardcoded session number
+		bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
 		index: 0,
 		startTime: 0,
 		endTime: 0,
-		size: 3, //default number of bookmarks
+		size: 6, //default number of bookmarks
 		elem: $("#ex-container"),
 	},
 	
@@ -45,7 +46,7 @@ var ex,Exercise = {
 	getBookmarks: function(){	
 		ex.elem.addClass('hide');
 		$('#loading').removeClass('hide');
-		address = "https://zeeguu.unibe.ch/bookmarks_to_study/"+ex.size+"?session="+ex.session;
+		address = ex.bookmarksURL+ex.size+"?session="+ex.session;
 		return $.ajax({	  
 		  type: 'GET',
 		  dataType: 'json',
@@ -55,7 +56,7 @@ var ex,Exercise = {
 			ex.elem.removeClass('hide');
 			$('#loading').addClass('hide');
 		  },
-		  async: false
+		  async: true
 		});
 	},
 	
