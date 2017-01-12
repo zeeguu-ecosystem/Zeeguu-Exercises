@@ -17,7 +17,8 @@
 	</head>
 	
 	<body>    	
-    <div id = "ex-container" class="ex-box-shadow ex-container">	
+	<div id="loading"></div>
+    <div id = "ex-container" class="ex-box-shadow ex-container hide">			
 		<div class="container-fluid clear-top">
 			<div class="row ex-header">
 				<div class="col-xs-12">
@@ -37,14 +38,14 @@
 				</div>
 			</div>
 			<div class="row ex-footer">
-				<div id = "show_solution" class="col-xs-3 ex-footer-elem ex-clickable" href="#" onclick="showAnswer()">
+				<div id = "show_solution" class="col-xs-3 ex-footer-elem ex-clickable" href="#">
                     <img  class="clickable-symbol" src="../static/img/grey-question.png">
 				</div>
 				
 				<div class="col-xs-6 ex-footer-elem ex-clickable">
 					<input id = "ex-main-input" class="ex-input-box " placeholder="" data-original-title="" title="">
 				</div>
-				<div id = "check_answer"class="col-xs-3 ex-footer-elem ex-clickable" href="#" onclick="checkAnswer()">
+				<div id = "check_answer"class="col-xs-3 ex-footer-elem ex-clickable" href="#">
                     <img class="clickable-symbol" src="../static/img/forward-green.png">						
 				</div>
 			</div>
@@ -53,6 +54,7 @@
 	<script src="../static/js/custom.js"></script>
 	<script src="../static/js/progress_bar.js"></script>
 	<script src="../static/js/dist/sweetalert.min.js"></script>
-	<script src="../static/js/util.js"></script>
+	<script src="../static/js/util.js"></script>	
+	<script src="../static/js/main.js"></script>
 	</body>
 </html>

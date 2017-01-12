@@ -16,7 +16,7 @@ var bar,ProgressBar = {
 	},	
 	restart: function(){
 		bar.percent = 0;
-		bar.elem.style.width = percent;
+		bar.elem.style.width = bar.percent;
 	},	
 	bindUIActions: function() {},	
 	move: function() {  

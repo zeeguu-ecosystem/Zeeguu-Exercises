@@ -1,32 +1,50 @@
 /** Modular Zeeguu Powered Exercise @author Martin Avagyan
  *  Initialize it using Exercise.init(percent,size);
 **/
-var data;
 
 var ex,Exercise = {
 	settings: {
-		data: NULL,
+		data: 0,
 		session: 11010001, //for now hardcoded session number
 		index: 0,
 		startTime: 0,
 		endTime: 0,
-		size: 12, //default number of bookmarks
-		elem: document.getElementById(""),
+		size: 3, //default number of bookmarks
+		elem: $("#ex-container"),
 	},
 	
+	/**
+	 *	Exercise initialaizer
+	**/
 	init: function(){
 		ex = this.settings;
 		this.bindUIActions();
 		this.start();
 	},
 	
-	bindUIActions: function(){},
+	/**
+	 *	Binding UI with Controller functions
+	**/
+	bindUIActions: function(){
+		//Bind UI action of Hint/Show solution to the function
+		ex.elem.find("#show_solution").on("click", function() {
+			Exercise.showAnswer();
+		});
+		//Bind UI action of Check answer to the function
+		ex.elem.find("#check_answer").on("click", function() {
+			Exercise.checkAnswer();
+		});
+	},
 	
+	
+
 	/**
 	 *	Ajax get request to the Zeeguu API to get new bookmarks
 	 *	To populate the excersise
 	**/
-	getBookmarks: function(){
+	getBookmarks: function(){	
+		ex.elem.addClass('hide');
+		$('#loading').removeClass('hide');
 		address = "https://zeeguu.unibe.ch/bookmarks_to_study/"+ex.size+"?session="+ex.session;
 		return $.ajax({	  
 		  type: 'GET',
@@ -34,7 +52,8 @@ var ex,Exercise = {
 		  url: address,
 		  data: ex.data,
 		  success: function(data) {
-			//
+			ex.elem.removeClass('hide');
+			$('#loading').addClass('hide');
 		  },
 		  async: false
 		});
@@ -44,6 +63,7 @@ var ex,Exercise = {
 	 *	Initializes the INDEX and populates ex-fields with content using next
 	**/
 	reset: function (){
+		console.log("reseting");
 		ProgressBar.init(0,ex.size);
 		ex.index=0;		
 		ex.startTime = new Date();		
@@ -51,18 +71,13 @@ var ex,Exercise = {
 	},
 
 	next: function (){
-		//The exersises are complete
-		if(ex.index == ex.data.length){
-			this.onExComplete();
-			return;
-		}		
-		console.log("inside init:" +ex.data[ex.index]);
-		ex.elem.getElementById("ex-to").innerHTML = "\""+ex.data[ex.index].to+"\"";
-		ex.elem.getElementById("ex-context").innerHTML = ex.data[ex.index].context;
-		ex.elem.getElementById("ex-main-input").value = "";
+				
+		ex.elem.find("#ex-to").html("\""+ex.data[ex.index].to+"\"");
+		ex.elem.find("#ex-context").html(ex.data[ex.index].context);
+		ex.elem.find("#ex-main-input").val("");
 		//Remove the ex desciption when the ex is started
 		if(ex.index != 0){
-			$("#ex-descript").fadeOut(300, function() { $(this).remove(); });
+			ex.elem.find("#ex-descript").fadeOut(300, function() { $(this).remove(); });
 		}
 	},
 
@@ -72,7 +87,7 @@ var ex,Exercise = {
 	onExComplete: function (){
 		swal({
 			  title: "You rock!",
-			  text: "That took less than "+ calcSessionTime() + ". practice more?",
+			  text: "That took less than "+ Exercise.calcSessionTime() + ". practice more?",
 			  type: "success",
 			  showCancelButton: true,
 			  confirmButtonColor: "#7eb530",
@@ -80,15 +95,15 @@ var ex,Exercise = {
 			  closeOnConfirm: true
 			},
 			function(){
-			  this.restart();
+			  Exercise.restart();
 			});
 		ex.index = 0;
 	},
 
 	checkAnswer: function (){
-		if (document.getElementById("ex-main-input").value.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === ex.data[ex.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
+		if (ex.elem.find("#ex-main-input").val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === ex.data[ex.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
 			if(ex.index != ex.data.length-1){
-				document.getElementById("ex-status").innerHTML = '<div id = "ex-status-container" class = "status-animation"><svg id = "temp-ex-success" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>';
+				ex.elem.find("#ex-status").html('<div id = "ex-status-container" class = "status-animation"><svg id = "temp-ex-success" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>');
 				setTimeout(function(){
 				  if ($('#ex-status-container').length > 0) {
 					$('#ex-status-container').remove();
@@ -97,6 +112,11 @@ var ex,Exercise = {
 			}
 			ProgressBar.move();
 			ex.index++;
+			//The exersises are complete
+			if(ex.index == ex.data.length){
+				Exercise.onExComplete();
+				return;
+			}
 			setTimeout(this.next, 2000);		
 		}else{
 			swal({
@@ -114,11 +134,11 @@ var ex,Exercise = {
 
 	restart: function (){
 		ProgressBar.restart();
-		start();
+		this.start();
 	},
 
 	showAnswer: function (){
-		document.getElementById("ex-main-input").value =  ex.data[ex.index].from;
+		ex.elem.find("#ex-main-input").val(ex.data[ex.index].from);
 	},
 
 	calcSessionTime: function (){
@@ -130,8 +150,8 @@ var ex,Exercise = {
 	start: function ()
 	{
 		$.when(this.getBookmarks()).then(function (ldata) {
-		  ex.data = ldata;
-		  this.reset();
-		});	
+			ex.data = ldata;
+			Exercise.reset();
+		});			
 	},
 }

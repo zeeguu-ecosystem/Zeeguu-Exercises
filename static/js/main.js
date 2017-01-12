@@ -1,5 +1,3 @@
 (function() {
-
-	window.onload = Exercise.init();
-
+	window.onload = Exercise.init();		
 })();
