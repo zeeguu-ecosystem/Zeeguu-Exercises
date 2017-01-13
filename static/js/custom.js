@@ -104,12 +104,7 @@ var ex,Exercise = {
 	checkAnswer: function (){
 		if (ex.elem.find("#ex-main-input").val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === ex.data[ex.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
 			if(ex.index != ex.data.length-1){
-				ex.elem.find("#ex-status").html('<div id = "ex-status-container" class = "status-animation"><svg id = "temp-ex-success" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>');
-				setTimeout(function(){
-				  if ($('#ex-status-container').length > 0) {
-					$('#ex-status-container').remove();
-				  }
-				}, 2000);				
+				this.animateSuccess();			
 			}
 			ProgressBar.move();
 			ex.index++;
@@ -133,6 +128,15 @@ var ex,Exercise = {
 		}		
 	},
 
+	animateSuccess: function(){
+		ex.elem.find("#ex-status").html('<div id = "ex-status-container" class = "status-animation"><svg id = "temp-ex-success" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>');
+		setTimeout(function(){
+		  if ($('#ex-status-container').length > 0) {
+			$('#ex-status-container').remove();
+		  }
+		}, 2000);	
+	},
+	
 	restart: function (){
 		ProgressBar.restart();
 		this.start();
