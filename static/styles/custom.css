@@ -10,6 +10,9 @@ body
 .hide {
   display: none !important;
 }
+.fluid{
+	width: 100%;
+}
 
 .ex-box-shadow
 {
@@ -53,7 +56,7 @@ body
 {
 	display:inline-block;
 	margin:auto;
-	min-height:100%;
+	
 	opacity: 0.85;
 	transition: background-color 0.5s ease;
     height: 100%;

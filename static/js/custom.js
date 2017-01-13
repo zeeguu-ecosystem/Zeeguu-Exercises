@@ -10,7 +10,7 @@ var ex,Exercise = {
 		index: 0,
 		startTime: 0,
 		endTime: 0,
-		size: 6, //default number of bookmarks
+		size: 3, //default number of bookmarks
 		elem: $("#ex-container"),
 	},
 	
