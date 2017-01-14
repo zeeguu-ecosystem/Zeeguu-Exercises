@@ -13,6 +13,7 @@ var bar,ProgressBar = {
 		bar = this.settings;
 		bar.percent = percent;
 		bar.amount = 100/size;
+		bar.elem.style.width = bar.percent;
 	},	
 	restart: function(){
 		bar.percent = 0;

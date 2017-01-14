@@ -21,7 +21,38 @@ var ex,Exercise = {
 		ex = this.settings;
 		this.bindUIActions();
 		this.start();
+	},	
+
+	start: function ()
+	{
+		$.when(this.getBookmarks()).then(function (ldata) {
+			ex.data = ldata;
+			Exercise.reset();
+		});			
 	},
+	
+	restart: function (){
+		this.start();
+	},
+	
+	reset: function (){				
+		ProgressBar.init(0,ex.size);	
+		ex.index=0;		
+		ex.startTime = new Date();		
+		this.next();
+	},
+
+	next: function (){
+				
+		ex.elem.find("#ex-to").html("\""+ex.data[ex.index].to+"\"");
+		ex.elem.find("#ex-context").html(ex.data[ex.index].context);
+		ex.elem.find("#ex-main-input").val("");
+		//Remove the ex desciption when the ex is started
+		if(ex.index != 0){
+			ex.elem.find("#ex-descript").fadeOut(300, function() { $(this).remove(); });
+		}
+	},
+
 	
 	/**
 	 *	Binding UI with Controller functions
@@ -35,8 +66,18 @@ var ex,Exercise = {
 		ex.elem.find("#check_answer").on("click", function() {
 			Exercise.checkAnswer();
 		});
+		//Bind UI Text click
+		ex.elem.find(".clickable-text").on("click",function() {
+			var t = Util.getSelectedText();
+			ex.elem.find("#ex-main-input").value = t;
+		});
+		//Bind UI Enter pressed
+		ex.elem.find("#ex-main-input").keyup(function(event){
+			if(event.keyCode == 13){
+				$("#check_answer").click();
+			}
+		});
 	},
-	
 	
 
 	/**
@@ -60,28 +101,7 @@ var ex,Exercise = {
 		});
 	},
 	
-	/**
-	 *	Initializes the INDEX and populates ex-fields with content using next
-	**/
-	reset: function (){
-		console.log("reseting");
-		ProgressBar.init(0,ex.size);
-		ex.index=0;		
-		ex.startTime = new Date();		
-		this.next();
-	},
-
-	next: function (){
-				
-		ex.elem.find("#ex-to").html("\""+ex.data[ex.index].to+"\"");
-		ex.elem.find("#ex-context").html(ex.data[ex.index].context);
-		ex.elem.find("#ex-main-input").val("");
-		//Remove the ex desciption when the ex is started
-		if(ex.index != 0){
-			ex.elem.find("#ex-descript").fadeOut(300, function() { $(this).remove(); });
-		}
-	},
-
+	
 	/**
 	 *	When the ex are done perform an action
 	**/
@@ -131,15 +151,10 @@ var ex,Exercise = {
 	animateSuccess: function(){
 		ex.elem.find("#ex-status").html('<div id = "ex-status-container" class = "status-animation"><svg id = "temp-ex-success" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>');
 		setTimeout(function(){
-		  if ($('#ex-status-container').length > 0) {
-			$('#ex-status-container').remove();
+		  if (ex.elem.find('#ex-status-container').length > 0) {
+			ex.elem.find('#ex-status-container').remove();
 		  }
 		}, 2000);	
-	},
-	
-	restart: function (){
-		ProgressBar.restart();
-		this.start();
 	},
 
 	showAnswer: function (){
@@ -150,13 +165,5 @@ var ex,Exercise = {
 		ex.endTime = new Date();
 		var total = ex.endTime.getMinutes()-ex.startTime.getMinutes();
 		return (total <= 1)?"1 minute":total + " minutes";
-	},
-
-	start: function ()
-	{
-		$.when(this.getBookmarks()).then(function (ldata) {
-			ex.data = ldata;
-			Exercise.reset();
-		});			
 	},
 }
