@@ -1,4 +1,7 @@
 var ut,Util = {
+	/**
+	*Returns selected text
+	**/
 	getSelectedText: function() {
 		// Gets clicked on word (or selected text if text is selected)
 		var t = '';

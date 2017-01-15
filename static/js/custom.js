@@ -1,5 +1,5 @@
 /** Modular Zeeguu Powered Exercise @author Martin Avagyan
- *  Initialize it using Exercise.init(percent,size);
+ *  Initialize it using Exercise.init();
 **/
 
 var ex,Exercise = {
@@ -12,6 +12,7 @@ var ex,Exercise = {
 		endTime: 0,
 		size: 3, //default number of bookmarks
 		elem: $("#ex-container"),
+		description: "Find the word in the context",
 	},
 	
 	/**
@@ -27,7 +28,7 @@ var ex,Exercise = {
 	{
 		$.when(this.getBookmarks()).then(function (ldata) {
 			ex.data = ldata;
-			Exercise.reset();
+			Exercise.constructor();
 		});			
 	},
 	
@@ -35,22 +36,30 @@ var ex,Exercise = {
 		this.start();
 	},
 	
-	reset: function (){				
+	constructor: function (){		
+		this.setDescription();
 		ProgressBar.init(0,ex.size);	
 		ex.index=0;		
 		ex.startTime = new Date();		
 		this.next();
 	},
-
-	next: function (){
-				
+	
+	setDescription: function(){
+		ex.elem.find("#ex-descript").html(ex.description);
+	},
+	
+	removeDescription: function(){
+		if(ex.index != 0){
+			ex.elem.find("#ex-descript").fadeOut(300, function() { $(this).remove(); });
+		}
+	},
+	
+	next: function (){				
 		ex.elem.find("#ex-to").html("\""+ex.data[ex.index].to+"\"");
 		ex.elem.find("#ex-context").html(ex.data[ex.index].context);
 		ex.elem.find("#ex-main-input").val("");
 		//Remove the ex desciption when the ex is started
-		if(ex.index != 0){
-			ex.elem.find("#ex-descript").fadeOut(300, function() { $(this).remove(); });
-		}
+		
 	},
 
 	
@@ -63,13 +72,14 @@ var ex,Exercise = {
 			Exercise.showAnswer();
 		});
 		//Bind UI action of Check answer to the function
-		ex.elem.find("#check_answer").on("click", function() {
+		ex.elem.find("#check_answer").on("click", function() {			
 			Exercise.checkAnswer();
+			Exercise.removeDescription();
 		});
 		//Bind UI Text click
 		ex.elem.find(".clickable-text").on("click",function() {
 			var t = Util.getSelectedText();
-			ex.elem.find("#ex-main-input").value = t;
+			ex.elem.find("#ex-main-input").val(t);			
 		});
 		//Bind UI Enter pressed
 		ex.elem.find("#ex-main-input").keyup(function(event){
@@ -124,7 +134,7 @@ var ex,Exercise = {
 	checkAnswer: function (){
 		if (ex.elem.find("#ex-main-input").val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === ex.data[ex.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
 			if(ex.index != ex.data.length-1){
-				this.animateSuccess();			
+				this.animateSuccess(ex.elem.find("#ex-status"));			
 			}
 			ProgressBar.move();
 			ex.index++;
@@ -148,12 +158,13 @@ var ex,Exercise = {
 		}		
 	},
 
-	animateSuccess: function(){
-		ex.elem.find("#ex-status").html('<div id = "ex-status-container" class = "status-animation"><svg id = "temp-ex-success" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>');
+	animateSuccess: function(element){
+		element.html('<div id = "ex-status-container" class = "status-animation"><svg id = "temp-ex-success" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>');
 		setTimeout(function(){
-		  if (ex.elem.find('#ex-status-container').length > 0) {
-			ex.elem.find('#ex-status-container').remove();
-		  }
+			var statusElem = ex.elem.find('#ex-status-container');
+			if (statusElem.length > 0) {
+				statusElem.remove();
+			}
 		}, 2000);	
 	},
 
