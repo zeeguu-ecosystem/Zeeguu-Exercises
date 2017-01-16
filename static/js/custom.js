@@ -9,9 +9,7 @@ var ex,Exercise = {
 		bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
 		index: 0,
 		startTime: 0,
-		endTime: 0,
 		size: 3, //default number of bookmarks
-		elem: $("#ex-container"),
 		description: "Find the word in the context",
 	},
 	
@@ -27,7 +25,7 @@ var ex,Exercise = {
 		this.$clickableText 	= this.$elem.find(".clickable-text");
 		this.$loader 			= this.$elem.find('#loader');
 		this.$status 			= this.$elem.find("#ex-status");		
-		this.$statusContainer 	= this.$elem.find('#ex-status-container')
+		this.$statusContainer 	= this.$elem.find('#ex-status-container');
 	},
 	
 	/**
@@ -39,16 +37,13 @@ var ex,Exercise = {
 		this.bindUIActions();
 		this.start();
 	},	
-
-	render: function(){
-		
-	},
 	
 	start: function ()
 	{
+		var _this = this;
 		$.when(this.getBookmarks()).then(function (ldata) {
 			ex.data = ldata;
-			Exercise.constructor();
+			_this.constructor();
 		});			
 	},
 	
@@ -69,7 +64,7 @@ var ex,Exercise = {
 	},
 	
 	removeDescription: function(){
-		if(ex.index != 0){
+		if(ex.index !== 0){
 			this.$description.fadeOut(300, function() { $(this).remove(); });
 		}
 	},
@@ -85,37 +80,37 @@ var ex,Exercise = {
 	 *	Binding UI with Controller functions
 	**/
 	bindUIActions: function(){
-		var tempDom;
+		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", function() {
-			Exercise.showAnswer();
-		});
+		this.$showSolution.on("click", _this.showAnswer.bind(this));
+		
 		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", function() {			
-			Exercise.checkAnswer();
-			Exercise.removeDescription();
-		});
+		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+		
 		//Bind UI Text click		
-		tempDom = this.$input;
-		this.$clickableText.on("click",function() {
-			var t = Util.getSelectedText();
-			tempDom.val(t);			
-		});
-		//Bind UI Enter pressed
-		var tempDom = this.$checkAnswer;
-		this.$input.keyup(function(event){
-			if(event.keyCode == 13){
-				tempDom.click();
-			}
-		});
+		this.$clickableText.on("click",_this.updateInput.bind(this));
+		
+		//Bind UI Enter pressed		
+		this.$input.keyup(_this.enterKeyup.bind(this));
 	},
 	
+	updateInput: function() {
+		var t = Util.getSelectedText();
+		this.$input.val(t);
+	},
+	
+	enterKeyup: function(event){
+		if(event.keyCode == 13){
+			this.$checkAnswer.click();
+		}
+	},
 
 	/**
 	 *	Ajax get request to the Zeeguu API to get new bookmarks
 	 *	To populate the excersise
 	**/
 	getBookmarks: function(){
+		var _this = this;
 		this.loadingAnimation(true);
 		address = ex.bookmarksURL+ex.size+"?session="+ex.session;
 		return $.ajax({	  
@@ -124,14 +119,14 @@ var ex,Exercise = {
 		  url: address,
 		  data: ex.data,
 		  success: function(data) {
-			Exercise.loadingAnimation(false);
+			_this.loadingAnimation(false);
 		  },
 		  async: true
 		});
 	},
 	
-	loadingAnimation(activate){	
-		if(activate == true){			
+	loadingAnimation: function(activate){	
+		if(activate === true){			
 			this.$container.addClass('hide');
 			this.$loader.removeClass('hide');
 		}else{
@@ -144,9 +139,10 @@ var ex,Exercise = {
 	 *	When the ex are done perform an action
 	**/
 	onExComplete: function (){
+		var _this = this;
 		swal({
 			  title: "You rock!",
-			  text: "That took less than "+ Exercise.calcSessionTime() + ". practice more?",
+			  text: "That took less than "+ _this.calcSessionTime() + ". practice more?",
 			  type: "success",
 			  showCancelButton: true,
 			  confirmButtonColor: "#7eb530",
@@ -154,11 +150,15 @@ var ex,Exercise = {
 			  closeOnConfirm: true
 			},
 			function(){
-			  Exercise.restart();
+			  _this.restart();
 			});
 		ex.index = 0;
 	},
-
+	
+	showAnswer: function (){
+		this.$input.val(ex.data[ex.index].from);
+	},
+	
 	checkAnswer: function (){
 		if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === ex.data[ex.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
 			if(ex.index != ex.data.length-1){
@@ -168,27 +168,32 @@ var ex,Exercise = {
 			ex.index++;
 			//The exersises are complete
 			if(ex.index == ex.data.length){
-				Exercise.onExComplete();
+				this.onExComplete();
 				return;
-			}
-			setTimeout(this.next(), 2000);		
+			}			
+			setTimeout(this.next(), 2000);	
+			this.removeDescription();				
 		}else{
-			swal({
-			  title: "Wrong answer...",
-			  allowOutsideClick: true,
-			  type: "error",
-			  text: "Hint: the word starts with \"" +ex.data[ex.index].from.trim().charAt(0)+ "\"",
-			  confirmButtonText: "ok",
-			  showConfirmButton: true,
-			  allowEscapeKey:true,
-			  showLoaderOnConfirm:true,
-			});
+			this.wrongAnswerAnimation();
 		}		
+	},
+	
+	wrongAnswerAnimation: function(){
+		swal({
+			title: "Wrong answer...",
+			allowOutsideClick: true,
+			type: "error",
+			text: "Hint: the word starts with \"" +ex.data[ex.index].from.trim().charAt(0)+ "\"",
+			confirmButtonText: "ok",
+			showConfirmButton: true,
+			allowEscapeKey:true,
+			showLoaderOnConfirm:true,
+		});
 	},
 
 	animateSuccess: function(){
+		this.$statusContainer.removeClass('hide');		
 		var _this = this;
-		_this.$statusContainer.removeClass('hide');
 		setTimeout(function(){
 			if (_this.$statusContainer.length > 0) {
 				_this.$statusContainer.addClass('hide');
@@ -196,13 +201,9 @@ var ex,Exercise = {
 		}, 2000);	
 	},
 
-	showAnswer: function (){
-		this.$input.val(ex.data[ex.index].from);
-	},
-
 	calcSessionTime: function (){
-		ex.endTime = new Date();
-		var total = ex.endTime.getMinutes()-ex.startTime.getMinutes();
+		var endTime = new Date();
+		var total = endTime.getMinutes()-ex.startTime.getMinutes();
 		return (total <= 1)?"1 minute":total + " minutes";
 	},
-}
+};
