@@ -15,15 +15,35 @@ var ex,Exercise = {
 		description: "Find the word in the context",
 	},
 	
+	cacheDom: function(){
+		this.$elem 				= $("#ex-module");		
+		this.$container  		= this.$elem.find("#ex-container");
+		this.$description  		= this.$elem.find("#ex-descript");
+		this.$to 				= this.$elem.find("#ex-to");
+		this.$context 			= this.$elem.find("#ex-context");
+		this.$input 			= this.$elem.find("#ex-main-input");
+		this.$showSolution 		= this.$elem.find("#show_solution");
+		this.$checkAnswer 		= this.$elem.find("#check_answer");
+		this.$clickableText 	= this.$elem.find(".clickable-text");
+		this.$loader 			= this.$elem.find('#loader');
+		this.$status 			= this.$elem.find("#ex-status");		
+		this.$statusContainer 	= this.$elem.find('#ex-status-container')
+	},
+	
 	/**
 	 *	Exercise initialaizer
 	**/
 	init: function(){
 		ex = this.settings;
+		this.cacheDom();		
 		this.bindUIActions();
 		this.start();
 	},	
 
+	render: function(){
+		
+	},
+	
 	start: function ()
 	{
 		$.when(this.getBookmarks()).then(function (ldata) {
@@ -45,21 +65,19 @@ var ex,Exercise = {
 	},
 	
 	setDescription: function(){
-		ex.elem.find("#ex-descript").html(ex.description);
+		this.$description.html(ex.description);
 	},
 	
 	removeDescription: function(){
 		if(ex.index != 0){
-			ex.elem.find("#ex-descript").fadeOut(300, function() { $(this).remove(); });
+			this.$description.fadeOut(300, function() { $(this).remove(); });
 		}
 	},
 	
-	next: function (){				
-		ex.elem.find("#ex-to").html("\""+ex.data[ex.index].to+"\"");
-		ex.elem.find("#ex-context").html(ex.data[ex.index].context);
-		ex.elem.find("#ex-main-input").val("");
-		//Remove the ex desciption when the ex is started
-		
+	next: function (){	
+		this.$to.html("\""+ex.data[ex.index].to+"\"");
+		this.$context.html(ex.data[ex.index].context);
+		this.$input.val("");
 	},
 
 	
@@ -67,24 +85,27 @@ var ex,Exercise = {
 	 *	Binding UI with Controller functions
 	**/
 	bindUIActions: function(){
-		//Bind UI action of Hint/Show solution to the function
-		ex.elem.find("#show_solution").on("click", function() {
+		var tempDom;
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on("click", function() {
 			Exercise.showAnswer();
 		});
 		//Bind UI action of Check answer to the function
-		ex.elem.find("#check_answer").on("click", function() {			
+		this.$checkAnswer.on("click", function() {			
 			Exercise.checkAnswer();
 			Exercise.removeDescription();
 		});
-		//Bind UI Text click
-		ex.elem.find(".clickable-text").on("click",function() {
+		//Bind UI Text click		
+		tempDom = this.$input;
+		this.$clickableText.on("click",function() {
 			var t = Util.getSelectedText();
-			ex.elem.find("#ex-main-input").val(t);			
+			tempDom.val(t);			
 		});
 		//Bind UI Enter pressed
-		ex.elem.find("#ex-main-input").keyup(function(event){
+		var tempDom = this.$checkAnswer;
+		this.$input.keyup(function(event){
 			if(event.keyCode == 13){
-				$("#check_answer").click();
+				tempDom.click();
 			}
 		});
 	},
@@ -94,9 +115,8 @@ var ex,Exercise = {
 	 *	Ajax get request to the Zeeguu API to get new bookmarks
 	 *	To populate the excersise
 	**/
-	getBookmarks: function(){	
-		ex.elem.addClass('hide');
-		$('#loading').removeClass('hide');
+	getBookmarks: function(){
+		this.loadingAnimation(true);
 		address = ex.bookmarksURL+ex.size+"?session="+ex.session;
 		return $.ajax({	  
 		  type: 'GET',
@@ -104,13 +124,21 @@ var ex,Exercise = {
 		  url: address,
 		  data: ex.data,
 		  success: function(data) {
-			ex.elem.removeClass('hide');
-			$('#loading').addClass('hide');
+			Exercise.loadingAnimation(false);
 		  },
 		  async: true
 		});
 	},
 	
+	loadingAnimation(activate){	
+		if(activate == true){			
+			this.$container.addClass('hide');
+			this.$loader.removeClass('hide');
+		}else{
+			this.$container.removeClass('hide');
+			this.$loader.addClass('hide');
+		}
+	},
 	
 	/**
 	 *	When the ex are done perform an action
@@ -132,9 +160,9 @@ var ex,Exercise = {
 	},
 
 	checkAnswer: function (){
-		if (ex.elem.find("#ex-main-input").val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === ex.data[ex.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
+		if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === ex.data[ex.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
 			if(ex.index != ex.data.length-1){
-				this.animateSuccess(ex.elem.find("#ex-status"));			
+				this.animateSuccess();			
 			}
 			ProgressBar.move();
 			ex.index++;
@@ -143,7 +171,7 @@ var ex,Exercise = {
 				Exercise.onExComplete();
 				return;
 			}
-			setTimeout(this.next, 2000);		
+			setTimeout(this.next(), 2000);		
 		}else{
 			swal({
 			  title: "Wrong answer...",
@@ -158,18 +186,18 @@ var ex,Exercise = {
 		}		
 	},
 
-	animateSuccess: function(element){
-		element.html('<div id = "ex-status-container" class = "status-animation"><svg id = "temp-ex-success" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>');
+	animateSuccess: function(){
+		var _this = this;
+		_this.$statusContainer.removeClass('hide');
 		setTimeout(function(){
-			var statusElem = ex.elem.find('#ex-status-container');
-			if (statusElem.length > 0) {
-				statusElem.remove();
+			if (_this.$statusContainer.length > 0) {
+				_this.$statusContainer.addClass('hide');
 			}
 		}, 2000);	
 	},
 
 	showAnswer: function (){
-		ex.elem.find("#ex-main-input").val(ex.data[ex.index].from);
+		this.$input.val(ex.data[ex.index].from);
 	},
 
 	calcSessionTime: function (){

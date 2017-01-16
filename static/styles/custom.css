@@ -4,8 +4,8 @@ body
   transition: all 0.5s;
 }
 
-#loading {
-    position: absolute; width: 100%; height: 100%; background: url('../img/loader.gif') no-repeat center center;
+#loader {
+    margin: auto; position: absolute; width: 100%; height: 100%; background: url('../img/loader.gif') no-repeat center center;
 }
 .hide {
   display: none !important;
