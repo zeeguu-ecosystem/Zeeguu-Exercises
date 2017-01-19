@@ -33,3 +33,10 @@ var ut,Util = {
 	},	
 }
 
+var extendObject = function(child,parent){
+	var temp = function(){};	
+	temp.prototype = parent.prototype;
+	child.prototype = new temp();
+	child.prototype.constructor = child;
+}
+

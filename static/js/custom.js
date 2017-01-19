@@ -1,17 +1,21 @@
 /** Modular Zeeguu Powered Exercise @author Martin Avagyan
  *  Initialize it using Exercise.init();
 **/
+Exercise = function(){
+	this.init();
+};
 
-var ex,Exercise = {
-	settings: {
-		data: 0,
-		session: 11010001, //for now hardcoded session number
-		bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
-		index: 0,
-		startTime: 0,
-		size: 3, //default number of bookmarks
-		description: "Find the word in the context",
-	},
+Exercise.prototype = {
+	
+	/////////////////////////////// SETTINGS ////////////////////////////
+	data: 0,
+	session: 11010001, //for now hardcoded session number
+	bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
+	index: 0,
+	startTime: 0,
+	size: 3, //default number of bookmarks
+	description:  "Solve the exercise",  //default description
+	/////////////////////////////////////////////////////////////////////
 	
 	cacheDom: function(){
 		this.$elem 				= $("#ex-module");		
@@ -32,7 +36,6 @@ var ex,Exercise = {
 	 *	Exercise initialaizer
 	**/
 	init: function(){
-		ex = this.settings;
 		this.cacheDom();		
 		this.bindUIActions();
 		this.start();
@@ -42,8 +45,8 @@ var ex,Exercise = {
 	{
 		var _this = this;
 		$.when(this.getBookmarks()).then(function (ldata) {
-			ex.data = ldata;
-			_this.constructor();
+			_this.data = ldata;
+			_this._constructor();
 		});			
 	},
 	
@@ -51,27 +54,27 @@ var ex,Exercise = {
 		this.start();
 	},
 	
-	constructor: function (){		
+	_constructor: function (){		
 		this.setDescription();
-		ProgressBar.init(0,ex.size);	
-		ex.index=0;		
-		ex.startTime = new Date();		
+		ProgressBar.init(0,this.size);	
+		this.index=0;		
+		this.startTime = new Date();		
 		this.next();
 	},
 	
 	setDescription: function(){
-		this.$description.html(ex.description);
+		this.$description.html(this.description);
 	},
 	
 	removeDescription: function(){
-		if(ex.index !== 0){
+		if(this.index !== 0){
 			this.$description.fadeOut(300, function() { $(this).remove(); });
 		}
 	},
 	
 	next: function (){	
-		this.$to.html("\""+ex.data[ex.index].to+"\"");
-		this.$context.html(ex.data[ex.index].context);
+		this.$to.html("\""+this.data[this.index].to+"\"");
+		this.$context.html(this.data[this.index].context);
 		this.$input.val("");
 	},
 
@@ -112,12 +115,12 @@ var ex,Exercise = {
 	getBookmarks: function(){
 		var _this = this;
 		this.loadingAnimation(true);
-		address = ex.bookmarksURL+ex.size+"?session="+ex.session;
+		address = this.bookmarksURL+this.size+"?session="+this.session;
 		return $.ajax({	  
 		  type: 'GET',
 		  dataType: 'json',
 		  url: address,
-		  data: ex.data,
+		  data: this.data,
 		  success: function(data) {
 			_this.loadingAnimation(false);
 		  },
@@ -152,22 +155,22 @@ var ex,Exercise = {
 			function(){
 			  _this.restart();
 			});
-		ex.index = 0;
+		this.index = 0;
 	},
 	
 	showAnswer: function (){
-		this.$input.val(ex.data[ex.index].from);
+		this.$input.val(this.data[this.index].from);
 	},
 	
 	checkAnswer: function (){
-		if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === ex.data[ex.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
-			if(ex.index != ex.data.length-1){
+		if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")){		
+			if(this.index != this.data.length-1){
 				this.animateSuccess();			
 			}
 			ProgressBar.move();
-			ex.index++;
+			this.index++;
 			//The exersises are complete
-			if(ex.index == ex.data.length){
+			if(this.index == this.data.length){
 				this.onExComplete();
 				return;
 			}			
@@ -183,7 +186,7 @@ var ex,Exercise = {
 			title: "Wrong answer...",
 			allowOutsideClick: true,
 			type: "error",
-			text: "Hint: the word starts with \"" +ex.data[ex.index].from.trim().charAt(0)+ "\"",
+			text: "Hint: the word starts with \"" +this.data[this.index].from.trim().charAt(0)+ "\"",
 			confirmButtonText: "ok",
 			showConfirmButton: true,
 			allowEscapeKey:true,
@@ -203,7 +206,7 @@ var ex,Exercise = {
 
 	calcSessionTime: function (){
 		var endTime = new Date();
-		var total = endTime.getMinutes()-ex.startTime.getMinutes();
+		var total = endTime.getMinutes()-this.startTime.getMinutes();
 		return (total <= 1)?"1 minute":total + " minutes";
 	},
 };

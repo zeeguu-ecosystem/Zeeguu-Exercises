@@ -1,12 +1,6 @@
 (function() {
 	//window.onload = Exercise.init();
+		
+	window.onload = new Ex1();
 	
-	function Employee(age,weight,salary){
-		this.age = age;
-		this.weight = weight;
-		this.salary = salary;
-	}
-	Employee.prototype = Object.create(Exercise);
-	
-	window.onload = Employee.prototype.init();	
 })();
