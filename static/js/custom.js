@@ -20,7 +20,7 @@ Exercise.prototype = {
 	
 	createDom: function(){
 		var xhr= new XMLHttpRequest();
-		xhr.open('GET','../static/template/exercise.html', false);
+		xhr.open('GET','../static/template/exercise.html', true);
 		xhr.onreadystatechange= function() {
 			if (this.readyState!==4) return;
 			if (this.status!==200) return;
@@ -51,6 +51,7 @@ Exercise.prototype = {
 	init: function(){
 		_this = this;
 		$.when(this.createDom()).then(function(){
+			alert(document.innerHTML);
 			_this.cacheDom();		
 			_this.bindUIActions();
 			_this.start();
