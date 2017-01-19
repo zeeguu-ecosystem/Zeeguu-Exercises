@@ -49,10 +49,12 @@ Exercise.prototype = {
 	 *	Exercise initialaizer
 	**/
 	init: function(){
-		this.createDom();
-		this.cacheDom();		
-		this.bindUIActions();
-		this.start();
+		_this = this;
+		$.when(this.createDom()).then(function(){
+			_this.cacheDom();		
+			_this.bindUIActions();
+			_this.start();
+		});			
 	},	
 	
 	start: function ()
