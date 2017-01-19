@@ -17,6 +17,18 @@ Exercise.prototype = {
 	description:  "Solve the exercise",  //default description
 	/////////////////////////////////////////////////////////////////////
 	
+	
+	createDom: function(){
+		var xhr= new XMLHttpRequest();
+		xhr.open('GET','../static/template/exercise.html', true);
+		xhr.onreadystatechange= function() {
+			if (this.readyState!==4) return;
+			if (this.status!==200) return;
+			document.getElementById('main-content').innerHTML= this.responseText;
+		};
+		xhr.send();
+	},	
+	
 	cacheDom: function(){
 		this.$elem 				= $("#ex-module");		
 		this.$container  		= this.$elem.find("#ex-container");
@@ -32,10 +44,12 @@ Exercise.prototype = {
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
 	},
 	
+	
 	/**
 	 *	Exercise initialaizer
 	**/
 	init: function(){
+		this.createDom();
 		this.cacheDom();		
 		this.bindUIActions();
 		this.start();
