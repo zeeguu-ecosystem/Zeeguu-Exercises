@@ -51,7 +51,7 @@ Exercise.prototype = {
 	init: function(){
 		_this = this;
 		$.when(this.createDom()).then(function(){
-			alert(document.innerHTML);
+			alert(document.getElementById('main-content').innerHTML);
 			_this.cacheDom();		
 			_this.bindUIActions();
 			_this.start();
