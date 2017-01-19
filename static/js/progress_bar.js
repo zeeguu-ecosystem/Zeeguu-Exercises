@@ -6,13 +6,14 @@ var bar,ProgressBar = {
 	settings:{
 		percent: 0, //default starting point
 		amount: 25, //default value for progress amount
-		elem: document.getElementById("ex-bar"),
+		elem: 0,
 	},	
 	init: function(percent,size){	
 		this.bindUIActions();		
 		bar = this.settings;
 		bar.percent = percent;
 		bar.amount = 100/size;
+		bar.elem = document.getElementById("ex-bar");
 		bar.elem.style.width = bar.percent;
 	},	
 	restart: function(){

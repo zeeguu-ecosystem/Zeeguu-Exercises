@@ -17,17 +17,21 @@ Exercise.prototype = {
 	description:  "Solve the exercise",  //default description
 	/////////////////////////////////////////////////////////////////////
 	
-	
 	createDom: function(){
-		var xhr= new XMLHttpRequest();
-		xhr.open('GET','../static/template/exercise.html', true);
-		xhr.onreadystatechange= function() {
-			if (this.readyState!==4) return;
-			if (this.status!==200) return;
-			document.getElementById('main-content').innerHTML= this.responseText;
-		};
-		xhr.send();
-	},	
+		console.log("Before Doing the request!: " + $.active);
+		var _this = this;
+		return $.ajax({	  
+		  type: 'GET',
+		  dataType: 'html',
+		  url: '../static/template/exercise.html',
+		  data: this.data,
+		  success: function(data) {
+			$("#main-content").html(data);	
+		  },
+		  async: true
+		});
+	},
+	
 	
 	cacheDom: function(){
 		this.$elem 				= $("#ex-module");		
@@ -48,20 +52,21 @@ Exercise.prototype = {
 	/**
 	 *	Exercise initialaizer
 	**/
-	init: function(){
+	init: function(){	
 		_this = this;
-		$.when(this.createDom()).then(function(){
-			alert(document.getElementById('main-content').innerHTML);
+		$.when(this.createDom()).done(function(){
+			console.log("After the request: " + $.active);		
 			_this.cacheDom();		
 			_this.bindUIActions();
-			_this.start();
+			_this.start();	
 		});			
 	},	
 	
 	start: function ()
 	{
 		var _this = this;
-		$.when(this.getBookmarks()).then(function (ldata) {
+		$.when(this.getBookmarks()).done(function (ldata) {		
+			console.log("get bookmarks  is done! I think: " + $.active);
 			_this.data = ldata;
 			_this._constructor();
 		});			
@@ -71,8 +76,10 @@ Exercise.prototype = {
 		this.start();
 	},
 	
-	_constructor: function (){		
-		this.setDescription();
+	_constructor: function (){	
+		
+		console.log("In Constructor");
+		this.setDescription();				
 		ProgressBar.init(0,this.size);	
 		this.index=0;		
 		this.startTime = new Date();		
