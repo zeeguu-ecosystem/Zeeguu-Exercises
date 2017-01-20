@@ -1,5 +1,6 @@
 /** Modular Zeeguu Powered Exercise @author Martin Avagyan
- *  Initialize it using Exercise.init();
+ *  @initialize it using: new Exercise();
+ *  @customize it by using prototypal inheritance 
 **/
 Exercise = function(){
 	this.init();
@@ -7,7 +8,7 @@ Exercise = function(){
 
 Exercise.prototype = {
 	
-	/////////////////////////////// SETTINGS ////////////////////////////
+	/************************** SETTINGS ********************************/	
 	data: 0,
 	session: 11010001, //for now hardcoded session number
 	bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
@@ -16,8 +17,12 @@ Exercise.prototype = {
 	startTime: 0,
 	size: 3, //default number of bookmarks
 	description:  "Solve the exercise",  //default description
-	/////////////////////////////////////////////////////////////////////
 	
+	
+	/*********************** General Functions ***************************/	
+	/**
+	*	Loads the HTML exercise template from static
+	**/
 	createDom: function(){
 		var _this = this;
 		return $.ajax({	  
@@ -32,23 +37,21 @@ Exercise.prototype = {
 		});
 	},
 	
-	
+	/**
+	*	Saves the common dom in chache
+	**/
 	cacheDom: function(){
-		this.$elem 					= $("#ex-module");		
-		this.$container  				= this.$elem.find("#ex-container");
-		this.$description  			= this.$elem.find("#ex-descript");
-		this.$loader 					= this.$elem.find('#loader');
-		this.$status 					= this.$elem.find("#ex-status");		
+		this.$elem 				= $("#ex-module");		
+		this.$container  		= this.$elem.find("#ex-container");
+		this.$description  		= this.$elem.find("#ex-descript");
+		this.$loader 			= this.$elem.find('#loader');
+		this.$status 			= this.$elem.find("#ex-status");		
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
 		this.customCacheDom();
 	},
 	
-	
-	customCacheDom: function(){	
-	},
-	
 	/**
-	 *	Exercise initialaizer
+	*	Exercise initialaizer
 	**/
 	init: function(){	
 		_this = this;
@@ -59,31 +62,45 @@ Exercise.prototype = {
 		});			
 	},	
 	
+	/**
+	*	Call to load the data
+	*	When the loading is complete constructs the exercise
+	**/
 	start: function ()
 	{
 		var _this = this;
 		$.when(this.getBookmarks()).done(function (ldata) {		
-			_this.data = ldata;  												// TO DO
+			_this.data = ldata;  												
 			_this._constructor();
 		});			
 	},
 	
-	restart: function (){
-		this.start();
-	},
-	
+	/**
+	*	The main constructor
+	**/
 	_constructor: function (){	
 		this.setDescription();				
-		ProgressBar.init(0,this.size);				// TO DO
+		ProgressBar.init(0,this.size);				
 		this.index=0;			
 		this.startTime = new Date();		
 		this.next();
 	},
 	
+	
+	restart: function (){
+		this.start();
+	},
+	
+	/**
+	*	Populates custom exercise description
+	**/
 	setDescription: function(){
 		this.$description.html(this.description);
 	},
 	
+	/**
+	*	Removes the desciption after the first successful solution
+	**/
 	removeDescription: function(){
 		if(this.index !== 0){
 			this.$description.fadeOut(300, function() { $(this).remove(); });
@@ -91,8 +108,7 @@ Exercise.prototype = {
 	},
 
 	/**
-	 *	Ajax get request to the Zeeguu API to get new bookmarks
-	 *	To populate the excersise
+	*	Ajax get request to the Zeeguu API to get new bookmarks
 	**/
 	getBookmarks: function(){
 		var _this = this;
@@ -110,18 +126,8 @@ Exercise.prototype = {
 		});
 	},
 	
-	loadingAnimation: function(activate){	
-		if(activate === true){			
-			this.$container.addClass('hide');
-			this.$loader.removeClass('hide');
-		}else{
-			this.$container.removeClass('hide');
-			this.$loader.addClass('hide');
-		}
-	},
-	
 	/**
-	 *	When the ex are done perform an action
+	*	When the ex are done perform an action
 	**/
 	onExComplete: function (){
 		var _this = this;
@@ -140,6 +146,9 @@ Exercise.prototype = {
 		this.index = 0;
 	},
 	
+	/**
+	*	Check selected answer with success condition
+	**/
 	checkAnswer: function (){
 		if (this.successCondition()){		
 			if(this.index != this.data.length-1){
@@ -147,7 +156,7 @@ Exercise.prototype = {
 			}
 			ProgressBar.move();
 			this.index++;
-			// The exercises are complete
+			// The exercise set is complete
 			if(this.index == this.data.length){
 				this.onExComplete();
 				return;
@@ -160,28 +169,54 @@ Exercise.prototype = {
 	},
 	
 	/**
-	 *	Binding UI with Controller functions
+	*	Check selected answer with success condition
 	**/
-	bindUIActions: function(){
+	calcSessionTime: function (){
+		var endTime = new Date();
+		var total = endTime.getMinutes()-this.startTime.getMinutes();
+		return (total <= 1)?"1 minute":total + " minutes";
 	},
 	
 	/**
-	*  Condition used by checkAnswer 
+	*	Request the submit API
 	**/
-	successCondition: function(){
+	submitResults: function(){
+		for(var i = 0; i< data.length;i++){
+			$.post("https://www.zeeguu.unibe.ch/report_exercise_outcome/Too easy/Recognize/1000/"+data[i].id+"?session="+34563456);		
+		}
 	},
 	
+	/*********************** Interface functions *****************************/
 	/**
-	*  Gives a hint when the hint button is pressed
+	*	Binding UI with Controller functions
 	**/
-	giveHint: function (){
-	},
+	bindUIActions: function(){},
 	
 	/**
-	*  Populates the next exercise
+	*	Condition used by checkAnswer 
 	**/
-	next: function (){	
-	},
+	successCondition: function(){},
+	
+	/**
+	*	Gives a hint when the hint button is pressed
+	**/
+	giveHint: function (){},
+	
+	/**
+	*	Populates the next exercise
+	**/
+	next: function (){},
+	
+	/**
+	*	Custom dom chache for each exercise
+	**/
+	customCacheDom: function(){},	
+	
+	
+	/************************** Animations ********************************/	
+	/**
+	*	Animation for wrong solution
+	**/
 	wrongAnswerAnimation: function(){
 		swal({
 			title: "Wrong answer...",
@@ -195,6 +230,9 @@ Exercise.prototype = {
 		});
 	},
 
+	/**
+	*	Animation for successful solution
+	**/
 	animateSuccess: function(){
 		this.$statusContainer.removeClass('hide');		
 		var _this = this;
@@ -204,10 +242,17 @@ Exercise.prototype = {
 			}
 		}, 2000);	
 	},
-
-	calcSessionTime: function (){
-		var endTime = new Date();
-		var total = endTime.getMinutes()-this.startTime.getMinutes();
-		return (total <= 1)?"1 minute":total + " minutes";
+	
+	/**
+	*	Animation used for loading
+	**/
+	loadingAnimation: function(activate){	
+		if(activate === true){			
+			this.$container.addClass('hide');
+			this.$loader.removeClass('hide');
+		}else{
+			this.$container.removeClass('hide');
+			this.$loader.addClass('hide');
+		}
 	},
 };

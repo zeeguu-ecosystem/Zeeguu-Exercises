@@ -170,4 +170,14 @@ body
 	cursor:pointer;
 }
 
+.option-btn{
+    height: 50px;
+	min-width: 80px;
+	max-width: 175px;	
+	margin-top: 12px;
+	display: inline-block;
+	white-space: normal;
+	text-align: center;
+}
+
 

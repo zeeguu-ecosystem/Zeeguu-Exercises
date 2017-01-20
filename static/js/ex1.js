@@ -1,14 +1,19 @@
+/** Custom exercise form finding word in a context. Inherited from Exercise.js
+ *  @initialize it using: new Ex1();
+ *  @customize it by using prototypal inheritance 
+**/
+
 function Ex1(){
 	this.init();
 	
 	/** @Override */
 	this.customCacheDom = function(){	
 		this.$to 					= this.$elem.find("#ex-to");
-		this.$context 			= this.$elem.find("#ex-context");
+		this.$context 				= this.$elem.find("#ex-context");
 		this.$input 				= this.$elem.find("#ex-main-input");
-		this.$showSolution 	= this.$elem.find("#show_solution");
-		this.$checkAnswer 	= this.$elem.find("#check_answer");
-		this.$clickableText 	= this.$elem.find(".clickable-text");
+		this.$showSolution 			= this.$elem.find("#show_solution");
+		this.$checkAnswer 			= this.$elem.find("#check_answer");
+		this.$clickableText 		= this.$elem.find(".clickable-text");
 	}
 	
 	/** @Override */
@@ -57,10 +62,8 @@ function Ex1(){
 };
 Ex1.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex1,
-	/////////////////////////////// SETTINGS ////////////////////////////	
-	size: 		 {value: 5}, 
+	/************************** SETTINGS ********************************/	
+	size: 		 {value: 3}, 
 	description: {value: "Find the word in the context With guess!"},
-	templateURL: {value: '../static/template/exercise.html'},
-	/////////////////////////////////////////////////////////////////////
-	
+	templateURL: {value: '../static/template/ex1.html'},	
 });
