@@ -149,8 +149,9 @@ Exercise.prototype = {
 	/**
 	*	Check selected answer with success condition
 	**/
-	checkAnswer: function (){
-		if (this.successCondition()){		
+	checkAnswer: function (chosenWord){
+		_this = this;
+		if (this.successCondition(chosenWord)){		
 			if(this.index != this.data.length-1){
 				this.animateSuccess();			
 			}
@@ -161,7 +162,7 @@ Exercise.prototype = {
 				this.onExComplete();
 				return;
 			}			
-			setTimeout(this.next(), 2000);	
+			setTimeout(function() { _this.next(); }, 2000);
 			this.removeDescription();				
 		}else{
 			this.wrongAnswerAnimation();
@@ -211,6 +212,7 @@ Exercise.prototype = {
 	*	Custom dom chache for each exercise
 	**/
 	customCacheDom: function(){},	
+	
 	
 	
 	/************************** Animations ********************************/	
