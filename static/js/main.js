@@ -1,3 +1,3 @@
 (function() {		
-	window.onload = new Ex2();	
+	window.onload = new Ex2();
 })();

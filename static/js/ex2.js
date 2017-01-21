@@ -106,7 +106,7 @@ function Ex2(){
 Ex2.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex2,
 	/************************** SETTINGS ********************************/	
-	size: 		 {value: 3}, 
+	size: 		 {value: 5}, 
 	description: {value: "Choose the word that fits the context"},
 	templateURL: {value: '../static/template/ex2.html'},
 	/*******************************************************************/
