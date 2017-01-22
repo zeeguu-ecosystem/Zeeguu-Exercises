@@ -23,44 +23,42 @@ function Ex3(){
 		//this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
 		
 		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", selectChoice.bind(this,1));
+		this.$btn1.on("click", this.selectChoice.bind(this,1));
 		
 		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", selectChoice.bind(this,2));
+		this.$btn2.on("click", this.selectChoice.bind(this,2));
 		
 		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", selectChoice.bind(this,3));
+		this.$btn3.on("click", this.selectChoice.bind(this,3));
 		
 		//Bind UI action of button 4 click to the function
-		this.$btn4.on("click", selectAnswer.bind(this,4));
+		this.$btn4.on("click", this.checkAnswer.bind(this,4));
 		
 		//Bind UI action of button 5 click to the function
-		this.$btn5.on("click", selectAnswer.bind(this,5));
+		this.$btn5.on("click", this.checkAnswer.bind(this,5));
 		
 		//Bind UI action of button 6 click to the function
-		this.$btn6.on("click", selectAnswer.bind(this,6));
+		this.$btn6.on("click", this.checkAnswer.bind(this,6));
 		
 	};
 	
 	
-	selectChoice = function(btnID){
-	console.log("chosen button: " + btnID);
-		chosenButton = btnID;
+	this.selectChoice = function(btnID){
+		this.chosenButton = btnID;
 	};
 	
+	this.successDisableBtn = function(btnID){
+		var elem = $("#btn"+btnID);
+		elem.prop('disabled', true);
+		elem.addClass("btn-success");
+	}
 	
+	this.checkAnswer = function(btnID){
+		if(this.successCondition(btnID,this.chosenButton)){
 	
-	selectAnswer = function(btnID){
-		if(answers.indexOf(btnID) == choices.indexOf(chosenButton)){
-	
-			// Disable buttons
-			var elem = $("#btn"+btnID);
-			elem.prop('disabled', true);
-			elem.removeClass("btn-danger");
-			
-			elem = $("#btn"+ chosenButton);
-			elem.prop('disabled', true);
-			elem.removeClass("btn-danger");
+			// Disable buttons			
+			this.successDisableBtn(btnID);
+			this.successDisableBtn(this.chosenButton);
 			
 			// If the user has given all 3 answers, proceed to next exercise
 			this.correctAnswers ++;
@@ -86,11 +84,15 @@ function Ex3(){
 		}
 	};
 	
+	this.successCondition = function(id1,id2){
+		return answers.indexOf(id1) == choices.indexOf(id2);
+	};
+	
 	resetBtns = function(){
 		for(var idx = 1; idx<=6; idx++){
 			var elem = $('#btn'+idx);
 			elem.prop('disabled', false);
-			elem.removeClass("btn-danger");
+			elem.removeClass("btn-success");
 		}
 	};
 	
@@ -123,9 +125,6 @@ function Ex3(){
 			answers[i] = answers[i] + 3;
 		}
 		
-
-		console.log ( choices+ "  " + answers);
-		
 		//Populate buttons
 		document.getElementById("btn"+choices[0]).innerHTML = this.data[this.index].from;
 		document.getElementById("btn"+choices[1]).innerHTML = this.data[answer2].from;
@@ -133,11 +132,14 @@ function Ex3(){
 		
 		document.getElementById("btn"+answers[0]).innerHTML = this.data[this.index].to;
 		document.getElementById("btn"+answers[1]).innerHTML = this.data[answer2].to;
-		document.getElementById("btn"+answers[2]).innerHTML = this.data[answer3].to;
-		
-		
+		document.getElementById("btn"+answers[2]).innerHTML = this.data[answer3].to;		
 	};
 	
+	this.giveHint = function (){
+		var elem = $('#btn'+this.btns[1]);
+		elem.prop('disabled', true);
+		elem.addClass("btn-danger");
+	};
 	
 	randomNums = function(nr){
 	var arr = []
@@ -154,7 +156,7 @@ function Ex3(){
 Ex3.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex3,
 	/************************** SETTINGS ********************************/	
-	size: 		 {value: 3}, 
+	size: 		 {value: 6}, 
 	description: {value: "Match each word with its translation"},
 	templateURL: {value: '../static/template/ex3.html'},
 	choices: 	 { writable: true, value:[1,2,3]},				// arr of indexes of possible choices

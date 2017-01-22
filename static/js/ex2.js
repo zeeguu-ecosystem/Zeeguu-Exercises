@@ -34,21 +34,23 @@ function Ex2(){
 	this.next = function(){		
 		//Populate context
 		this.generateContext();
+				
 		
-		//Random options
-		var answer2 = Math.floor((Math.random() * this.data.length) ); 
-		var answer3 = Math.floor((Math.random() * this.data.length)); 	
-		arr = randomNums(3);
+		this.resetBtns();
+		
+		//Random options	
+		var idxs = randomNums(this.data.length-1);
+		this.btns = randomNums(this.optionNum);
 		
 		//Populate buttons
-		document.getElementById("btn"+arr[0]).innerHTML = this.data[this.index].from;
-		document.getElementById("btn"+arr[1]).innerHTML = this.data[answer2].from;
-		document.getElementById("btn"+arr[2]).innerHTML = this.data[answer3].from;
+		document.getElementById("btn"+this.btns[0]).innerHTML = this.data[this.index].from;
+		document.getElementById("btn"+this.btns[1]).innerHTML = this.data[idxs[0]].from;
+		document.getElementById("btn"+this.btns[2]).innerHTML = this.data[idxs[1]].from;
 	}
 	
 	/** @Override */
 	this.giveHint = function (){
-		var elem = $('#btn'+arr[1]);
+		var elem = $('#btn'+this.btns[1]);
 		elem.prop('disabled', true);
 		elem.addClass("btn-danger");
 	}
@@ -64,16 +66,16 @@ function Ex2(){
 		this.checkAnswer(chosenWord);	
 	}
 
-	resetBtns = function(){
-		var elem = $('#btn'+arr[1]);
+	this.resetBtns = function(){
+		var elem = $('#btn'+this.btns[1]);
 		elem.prop('disabled', false);
 		elem.removeClass("btn-danger");
 	}
 	
 	randomNums = function(size){
-		var arr = []
+		var arr = [];
 		while(arr.length < size){
-			var randomnumber = Math.ceil(Math.random()*3);
+			var randomnumber = Math.ceil(Math.random()*size);
 			if(arr.indexOf(randomnumber) > -1) continue;
 			arr[arr.length] = randomnumber;
 		}
@@ -106,8 +108,10 @@ function Ex2(){
 Ex2.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex2,
 	/************************** SETTINGS ********************************/	
-	size: 		 {value: 5}, 
+	size: 		 {value: 6},//Min is 3 
 	description: {value: "Choose the word that fits the context"},
 	templateURL: {value: '../static/template/ex2.html'},
+	btns: 		 {writable: true, value:[1,2,3]}, 
+	optionNum:	 {value: 3},
 	/*******************************************************************/
 });

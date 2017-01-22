@@ -18,7 +18,6 @@ Exercise.prototype = {
 	size: 3, //default number of bookmarks
 	description:  "Solve the exercise",  //default description
 	
-	
 	/*********************** General Functions ***************************/	
 	/**
 	*	Loads the HTML exercise template from static
@@ -163,10 +162,10 @@ Exercise.prototype = {
 				return;
 			}			
 			setTimeout(function() { _this.next(); }, 2000);
-			this.removeDescription();				
-		}else{
-			this.wrongAnswerAnimation();
+			this.removeDescription();	
+			return;
 		}		
+		this.wrongAnswerAnimation();				
 	},
 	
 	/**
@@ -224,7 +223,7 @@ Exercise.prototype = {
 			title: "Wrong answer...",
 			allowOutsideClick: true,
 			type: "error",
-			text: "Hint: the corrensponding translation of \"" + this.data[this.index].to + "\" starts with " + this.data[this.index].from.trim().charAt(0)+ "\"",
+			text: "Hint: the translation of \"" + this.data[this.index].to + "\" starts with " + this.data[this.index].from.trim().charAt(0)+ "\"",
 			confirmButtonText: "ok",
 			showConfirmButton: true,
 			allowEscapeKey:true,

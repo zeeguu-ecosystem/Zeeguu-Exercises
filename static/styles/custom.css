@@ -180,4 +180,8 @@ body
 	text-align: center;
 }
 
+.btn:focus {
+  outline: none important!;
+}
+
 
