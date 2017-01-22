@@ -3,7 +3,8 @@ function Ex3(){
 	
 	/** @Override */
 	this.customCacheDom = function(){	
-		this.$context 				= this.$elem.find("#ex-context");	
+		this.$context 				= this.$elem.find("#ex-context");
+		this.$showSolution 			= this.$elem.find("#show_solution");
 		this.$btn1 					= this.$elem.find("#btn1");
 		this.$btn2 					= this.$elem.find("#btn2");
 		this.$btn3 					= this.$elem.find("#btn3");	
@@ -15,9 +16,8 @@ function Ex3(){
 	
 	/** @Override */
 	this.bindUIActions = function(){
-		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		//this.$showSolution.on("click", _this.giveHint.bind(this));
+		this.$showSolution.on("click", this.giveHint.bind(this));
 		
 		//Bind UI action of Check answer to the function
 		//this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
@@ -53,32 +53,49 @@ function Ex3(){
 		elem.addClass("btn-success");
 	}
 	
+	this.isDisabled = function(btnID){
+		var elem = $("#btn"+btnID);
+		return elem.is(':disabled');
+	}
+	
+	this.correctAnswersCheck = function(){
+		// If the user has given all 3 answers, proceed to next exercise
+		if(this.correctAnswers >= 3){
+		
+			
+			this.index++;
+			
+			// Reset buttons, answers, hints
+			this.resetBtns();
+			this.correctAnswers = 0;
+			this.hints = 0;
+			
+			// Show progress
+			this.animateSuccess();
+			ProgressBar.move();
+			
+			
+			// The exercises are complete
+			if(this.index == this.data.length){
+				this.onExComplete();
+				return;
+			}
+			// Populate next exercise
+			setTimeout(this.next(), 2000);		
+		}
+	
+	}
+	
 	this.checkAnswer = function(btnID){
 		if(this.successCondition(btnID,this.chosenButton)){
-	
+			
+			this.correctAnswers ++;
 			// Disable buttons			
 			this.successDisableBtn(btnID);
 			this.successDisableBtn(this.chosenButton);
 			
-			// If the user has given all 3 answers, proceed to next exercise
-			this.correctAnswers ++;
-			if(this.correctAnswers == 3){
-			
-				this.animateSuccess();
-				ProgressBar.move();
-				this.index++;
-		
-				// reset buttons and answers
-				resetBtns();
-				this.correctAnswers = 0;
-			
-				// The exersises are complete
-				if(this.index == this.data.length){
-					this.onExComplete();
-					return;
-				}
-				setTimeout(this.next(), 2000);		
-			}
+			// check if all the answers were given
+			this.correctAnswersCheck();
 		}else{
 			this.wrongAnswerAnimation();
 		}
@@ -88,7 +105,7 @@ function Ex3(){
 		return answers.indexOf(id1) == choices.indexOf(id2);
 	};
 	
-	resetBtns = function(){
+	this.resetBtns = function(){
 		for(var idx = 1; idx<=6; idx++){
 			var elem = $('#btn'+idx);
 			elem.prop('disabled', false);
@@ -106,15 +123,7 @@ function Ex3(){
 		}
 		
 		//Random options
-		var answer2 = Math.floor((Math.random() * this.data.length) );
-				while(answer2 == this.index){
-			answer2 = Math.floor((Math.random() * this.data.length)); 
-		}
-		
-		var answer3 = Math.floor((Math.random() * this.data.length));	
-		while(answer2 == answer3 || this.index == answer3){
-			answer3 = Math.floor((Math.random() * this.data.length)); 
-		}
+		var idxs = randomNums(this.data.length-1);
 		
 		// random numbers between 1 and 3
 	     choices  = randomNums(3);
@@ -125,26 +134,54 @@ function Ex3(){
 			answers[i] = answers[i] + 3;
 		}
 		
-		//Populate buttons
+		//Populate buttons // TO DO
 		document.getElementById("btn"+choices[0]).innerHTML = this.data[this.index].from;
-		document.getElementById("btn"+choices[1]).innerHTML = this.data[answer2].from;
-		document.getElementById("btn"+choices[2]).innerHTML = this.data[answer3].from;
+		document.getElementById("btn"+choices[1]).innerHTML = this.data[idxs[0]].from;
+		document.getElementById("btn"+choices[2]).innerHTML = this.data[idxs[1]].from;
 		
 		document.getElementById("btn"+answers[0]).innerHTML = this.data[this.index].to;
-		document.getElementById("btn"+answers[1]).innerHTML = this.data[answer2].to;
-		document.getElementById("btn"+answers[2]).innerHTML = this.data[answer3].to;		
+		document.getElementById("btn"+answers[1]).innerHTML = this.data[idxs[0]].to;
+		document.getElementById("btn"+answers[2]).innerHTML = this.data[idxs[1]].to;		
 	};
 	
 	this.giveHint = function (){
-		var elem = $('#btn'+this.btns[1]);
-		elem.prop('disabled', true);
-		elem.addClass("btn-danger");
+	
+		if(this.hints < 1){
+			// Disable buttons
+			if(!this.isDisabled(answers[2])){
+				this.successDisableBtn(choices[2]);
+				this.successDisableBtn(answers[2]);
+				this.correctAnswers++;
+				this.correctAnswersCheck();
+				this.hints++;
+				return;
+			}
+			
+			if (!this.isDisabled(answers[1])){
+				this.successDisableBtn(choices[1]);
+				this.successDisableBtn(answers[1]);
+				this.correctAnswers++;
+				this.correctAnswersCheck();
+				this.hints++;
+				return;
+			}
+			
+			if (!this.isDisabled(answers[0])){
+				this.successDisableBtn(choices[0]);
+				this.successDisableBtn(answers[0]);
+				this.correctAnswers++;
+				this.correctAnswersCheck();
+				this.hints++;
+				return;
+			}
+		}
+		
 	};
 	
-	randomNums = function(nr){
+	randomNums = function(size){
 	var arr = []
-		while(arr.length < nr){
-			var randomnumber = Math.ceil(Math.random()*3)
+		while(arr.length < size){
+			var randomnumber = Math.ceil(Math.random()*size)
 			if(arr.indexOf(randomnumber) > -1) continue;
 			arr[arr.length] = randomnumber;
 		}
@@ -163,5 +200,6 @@ Ex3.prototype = Object.create(Exercise.prototype, {
 	answers: 	{ writable: true, value:[1,2,3]},				// arr of indexes of possible answers
 	chosenButton: { writable: true, value:0},  	// ID of currently selected button
 	correctAnswers: { writable: true, value:0},	// number of correct answers
+	hints: {writable:true, value:0}				// max number of possible hints is 1
 	/*******************************************************************/
 });
