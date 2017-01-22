@@ -224,7 +224,7 @@ Exercise.prototype = {
 			title: "Wrong answer...",
 			allowOutsideClick: true,
 			type: "error",
-			text: "Hint: the word starts with \"" +this.data[this.index].from.trim().charAt(0)+ "\"",
+			text: "Hint: the corrensponding translation of \"" + this.data[this.index].to + "\" starts with " + this.data[this.index].from.trim().charAt(0)+ "\"",
 			confirmButtonText: "ok",
 			showConfirmButton: true,
 			allowEscapeKey:true,
