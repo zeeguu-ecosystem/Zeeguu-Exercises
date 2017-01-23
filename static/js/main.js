@@ -1,4 +1,3 @@
 (function() {		
-	window.onload = new Ex3();
-	
+	window.onload = new Home();	
 })();
