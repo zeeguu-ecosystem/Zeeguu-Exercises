@@ -32,19 +32,26 @@ function Ex3(){
 		this.$btn3.on("click", this.selectChoice.bind(this,3));
 		
 		//Bind UI action of button 4 click to the function
-		this.$btn4.on("click", this.checkAnswer.bind(this,4));
+		this.$btn4.on("click", this.selectChoice.bind(this,4));
 		
 		//Bind UI action of button 5 click to the function
-		this.$btn5.on("click", this.checkAnswer.bind(this,5));
+		this.$btn5.on("click", this.selectChoice.bind(this,5));
 		
 		//Bind UI action of button 6 click to the function
-		this.$btn6.on("click", this.checkAnswer.bind(this,6));
+		this.$btn6.on("click", this.selectChoice.bind(this,6));
 		
 	};
 	
 	
+	
 	this.selectChoice = function(btnID){
+	// if no butten was previously selected, select it now
+	if(this.chosenButton == -1){
 		this.chosenButton = btnID;
+	}else{
+		// otherwise check the selection
+		this.checkAnswer(btnID);
+	}
 	};
 	
 	this.successDisableBtn = function(btnID){
@@ -90,15 +97,18 @@ function Ex3(){
 		if(this.successCondition(btnID,this.chosenButton)){
 			
 			this.correctAnswers ++;
-			// Disable buttons			
+			
+			// Disable buttons		
 			this.successDisableBtn(btnID);
 			this.successDisableBtn(this.chosenButton);
+			
 			
 			// check if all the answers were given
 			this.correctAnswersCheck();
 		}else{
 			this.wrongAnswerAnimation();
 		}
+		this.chosenButton = -1;	
 	};
 	
 	this.successCondition = function(id1,id2){
@@ -198,7 +208,7 @@ Ex3.prototype = Object.create(Exercise.prototype, {
 	templateURL: {value: '../static/template/ex3.html'},
 	choices: 	 { writable: true, value:[1,2,3]},				// arr of indexes of possible choices
 	answers: 	{ writable: true, value:[1,2,3]},				// arr of indexes of possible answers
-	chosenButton: { writable: true, value:0},  	// ID of currently selected button
+	chosenButton: { writable: true, value:-1},  	// ID of currently selected button; -1 means no button is selected
 	correctAnswers: { writable: true, value:0},	// number of correct answers
 	hints: {writable:true, value:0}				// max number of possible hints is 1
 	/*******************************************************************/
