@@ -13,6 +13,7 @@ Exercise.prototype = {
 	session: 11010001, //for now hardcoded session number
 	bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
 	templateURL: '../static/template/exercise.html',
+	customTemplateURL: '../static/template/exercise.html',
 	index: 0,
 	startTime: 0,
 	size: 3, //default number of bookmarks
@@ -36,6 +37,20 @@ Exercise.prototype = {
 		});
 	},
 	
+	createCustomDom: function(){
+		var _this = this;
+		return $.ajax({	  
+		  type: 'GET',
+		  dataType: 'html',
+		  url: _this.customTemplateURL,
+		  data: this.data,
+		  success: function(data) {
+			$("#custom-content").html(data);	
+		  },
+		  async: true
+		});
+	},
+	
 	/**
 	*	Saves the common dom in chache
 	**/
@@ -46,7 +61,7 @@ Exercise.prototype = {
 		this.$loader 			= this.$elem.find('#loader');
 		this.$status 			= this.$elem.find("#ex-status");		
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
-		this.customCacheDom();
+		this.cacheCustomDom();
 	},
 	
 	/**
@@ -54,10 +69,12 @@ Exercise.prototype = {
 	**/
 	init: function(){	
 		_this = this;
-		$.when(this.createDom()).done(function(){		
-			_this.cacheDom();		
-			_this.bindUIActions();
-			_this.start();	
+		$.when(this.createDom()).done(function(){	
+			$.when(_this.createCustomDom()).done(function(){
+				_this.cacheDom();	
+				_this.bindUIActions();
+				_this.start();	
+			});	
 		});			
 	},	
 	
@@ -162,7 +179,6 @@ Exercise.prototype = {
 				return;
 			}			
 			setTimeout(function() { _this.next(); }, 2000);
-			this.removeDescription();	
 			return;
 		}		
 		this.wrongAnswerAnimation();				
@@ -210,7 +226,7 @@ Exercise.prototype = {
 	/**
 	*	Custom dom chache for each exercise
 	**/
-	customCacheDom: function(){},	
+	cacheCustomDom: function(){},	
 	
 	
 	

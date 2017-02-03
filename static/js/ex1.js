@@ -7,7 +7,7 @@ function Ex1(){
 	this.init();
 	
 	/** @Override */
-	this.customCacheDom = function(){	
+	this.cacheCustomDom = function(){	
 		this.$to 					= this.$elem.find("#ex-to");
 		this.$context 				= this.$elem.find("#ex-context");
 		this.$input 				= this.$elem.find("#ex-main-input");
@@ -64,6 +64,6 @@ Ex1.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/	
 	size: 		 {value: 3}, 
-	description: {value: "Find the word in the context!"},
-	templateURL: {value: '../static/template/ex1.html'},	
+	description: {value: "Find the word in the context:"},
+	customTemplateURL: {value: '../static/template/ex1.html'},	
 });
