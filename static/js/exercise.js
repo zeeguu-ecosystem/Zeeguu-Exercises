@@ -3,16 +3,14 @@
  *  @customize it by using prototypal inheritance 
 **/
 Exercise = function(){
-	this.init();
+	this.init();	
+	//TODO unbind method
 };
 
 Exercise.prototype = {
 	
 	/************************** SETTINGS ********************************/	
-	data: 0,
-	session: 11010001, //for now hardcoded session number
-	bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
-	templateURL: '../static/template/exercise.html',
+	data: 0,	
 	customTemplateURL: '../static/template/exercise.html',
 	index: 0,
 	startTime: 0,
@@ -23,19 +21,6 @@ Exercise.prototype = {
 	/**
 	*	Loads the HTML exercise template from static
 	**/
-	createDom: function(){
-		var _this = this;
-		return $.ajax({	  
-		  type: 'GET',
-		  dataType: 'html',
-		  url: _this.templateURL,
-		  data: this.data,
-		  success: function(data) {
-			$("#main-content").html(data);	
-		  },
-		  async: true
-		});
-	},
 	
 	createCustomDom: function(){
 		var _this = this;
@@ -69,13 +54,11 @@ Exercise.prototype = {
 	**/
 	init: function(){	
 		_this = this;
-		$.when(this.createDom()).done(function(){	
-			$.when(_this.createCustomDom()).done(function(){
-				_this.cacheDom();	
-				_this.bindUIActions();
-				_this.start();	
-			});	
-		});			
+		$.when(_this.createCustomDom()).done(function(){
+			_this.cacheDom();	
+			_this.bindUIActions();
+			_this.start();	
+		});		
 	},	
 	
 	/**
@@ -95,8 +78,7 @@ Exercise.prototype = {
 	*	The main constructor
 	**/
 	_constructor: function (){	
-		this.setDescription();				
-		ProgressBar.init(0,this.size);				
+		this.setDescription();						
 		this.index=0;			
 		this.startTime = new Date();		
 		this.next();
@@ -115,73 +97,34 @@ Exercise.prototype = {
 	},
 	
 	/**
-	*	Removes the desciption after the first successful solution
-	**/
-	removeDescription: function(){
-		if(this.index !== 0){
-			this.$description.fadeOut(300, function() { $(this).remove(); });
-		}
-	},
-
-	/**
-	*	Ajax get request to the Zeeguu API to get new bookmarks
-	**/
-	getBookmarks: function(){
-		var _this = this;
-		this.loadingAnimation(true);
-		address = this.bookmarksURL+this.size+"?session="+this.session;
-		return $.ajax({	  
-		  type: 'GET',
-		  dataType: 'json',
-		  url: address,
-		  data: this.data,
-		  success: function(data) {
-			_this.loadingAnimation(false);
-		  },
-		  async: true
-		});
-	},
-	
-	/**
 	*	When the ex are done perform an action
 	**/
-	onExComplete: function (){
-		var _this = this;
-		swal({
-			  title: "You rock!",
-			  text: "That took less than "+ _this.calcSessionTime() + ". practice more?",
-			  type: "success",
-			  showCancelButton: true,
-			  confirmButtonColor: "#7eb530",
-			  confirmButtonText: "Let's do it!",
-			  closeOnConfirm: true
-			},
-			function(){
-			  _this.restart();
-			});
-		this.index = 0;
+	onExComplete: function (){		
+		events.emit('exerciseCompleted');		
 	},
 	
 	/**
 	*	Check selected answer with success condition
 	**/
 	checkAnswer: function (chosenWord){
-		_this = this;
 		if (this.successCondition(chosenWord)){		
-			if(this.index != this.data.length-1){
-				this.animateSuccess();			
-			}
-			ProgressBar.move();
-			this.index++;
-			// The exercise set is complete
-			if(this.index == this.data.length){
-				this.onExComplete();
-				return;
-			}			
-			setTimeout(function() { _this.next(); }, 2000);
+			this.onSuccess();
 			return;
-		}		
-		this.wrongAnswerAnimation();				
+		}	
+		this.wrongAnswerAnimation();					
+	},
+	
+	onSuccess: function(){		
+		_this = this;
+		this.animateSuccess();
+		events.emit('progress');
+		this.index++;
+		// The exercise set is complete
+		if(this.index == this.data.length){
+			this.onExComplete();
+			return;
+		}			
+		setTimeout(function() { _this.next(); }, 2000);
 	},
 	
 	/**
@@ -258,18 +201,5 @@ Exercise.prototype = {
 				_this.$statusContainer.addClass('hide');
 			}
 		}, 2000);	
-	},
-	
-	/**
-	*	Animation used for loading
-	**/
-	loadingAnimation: function(activate){	
-		if(activate === true){			
-			this.$container.addClass('hide');
-			this.$loader.removeClass('hide');
-		}else{
-			this.$container.removeClass('hide');
-			this.$loader.addClass('hide');
-		}
-	},
+	},	
 };

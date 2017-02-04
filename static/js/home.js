@@ -67,7 +67,7 @@ Home.prototype = {
 	newEx: function(exIdx){
 		switch(exIdx) {
 			case 1:
-				var a = new Ex1();
+				new Ex1();
 				break;
 			case 2:
 				new Ex2();
