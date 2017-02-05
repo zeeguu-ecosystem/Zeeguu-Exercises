@@ -12,14 +12,6 @@ Generator.prototype = {
 	bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
 	templateURL: '../static/template/exercise.html',
 	
-	//get Bookmarks
-	//Initialize progress bar
-	//set up exercise
-	
-	//Engine
-	//Gets the current ex
-	//prepare the bookmakrs
-	//inits the ex with bookmakrs
 	
 	/**
 	*	Generator initialaizer

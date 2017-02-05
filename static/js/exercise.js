@@ -2,8 +2,8 @@
  *  @initialize it using: new Exercise();
  *  @customize it by using prototypal inheritance 
 **/
-Exercise = function(){
-	this.init();	
+Exercise = function(data){
+	this.init(data);	
 	//TODO unbind method
 };
 
@@ -52,12 +52,12 @@ Exercise.prototype = {
 	/**
 	*	Exercise initialaizer
 	**/
-	init: function(){	
+	init: function(data){	
 		_this = this;
 		$.when(_this.createCustomDom()).done(function(){
 			_this.cacheDom();	
 			_this.bindUIActions();
-			_this.start();	
+			_this.start(data);	
 		});		
 	},	
 	
@@ -65,13 +65,10 @@ Exercise.prototype = {
 	*	Call to load the data
 	*	When the loading is complete constructs the exercise
 	**/
-	start: function ()
-	{
-		var _this = this;
-		$.when(this.getBookmarks()).done(function (ldata) {		
-			_this.data = ldata;  												
-			_this._constructor();
-		});			
+	start: function (data)
+	{			
+		this.data = ldata;  												
+		this._constructor();	
 	},
 	
 	/**
