@@ -2,8 +2,8 @@
  *  @initialize it using: new Exercise();
  *  @customize it by using prototypal inheritance 
 **/
-Exercise = function(data){
-	this.init(data);	
+Exercise = function(data,index,size){
+	this.init(data,index,size);	
 	//TODO unbind method
 };
 
@@ -13,8 +13,8 @@ Exercise.prototype = {
 	data: 0,	
 	customTemplateURL: '../static/template/exercise.html',
 	index: 0,
-	startTime: 0,
-	size: 3, //default number of bookmarks
+	startIndex: 0,
+	size: 0, //default number of bookmarks
 	description:  "Solve the exercise",  //default description
 	
 	/*********************** General Functions ***************************/	
@@ -52,40 +52,28 @@ Exercise.prototype = {
 	/**
 	*	Exercise initialaizer
 	**/
-	init: function(data){	
-		_this = this;
+	init: function(data,index,size){	
+		var _this = this;
 		$.when(_this.createCustomDom()).done(function(){
 			_this.cacheDom();	
 			_this.bindUIActions();
-			_this.start(data);	
+			_this._constructor(data,index,size);	
 		});		
 	},	
 	
-	/**
-	*	Call to load the data
-	*	When the loading is complete constructs the exercise
-	**/
-	start: function (data)
-	{			
-		this.data = ldata;  												
-		this._constructor();	
-	},
 	
 	/**
 	*	The main constructor
 	**/
-	_constructor: function (){	
-		this.setDescription();						
-		this.index=0;			
-		this.startTime = new Date();		
+	_constructor: function (data,index,size){		
+		this.data  = data;
+		this.index = index;
+		this.startIndex = index;
+		this.size  = size;			
+		this.setDescription(); 	
 		this.next();
 	},
-	
-	
-	restart: function (){
-		this.start();
-	},
-	
+		
 	/**
 	*	Populates custom exercise description
 	**/
@@ -94,10 +82,10 @@ Exercise.prototype = {
 	},
 	
 	/**
-	*	When the ex are done perform an action
+	*	When the ex are done notify the observers
 	**/
 	onExComplete: function (){		
-		events.emit('exerciseCompleted');		
+		events.emit('exerciseCompleted');	
 	},
 	
 	/**
@@ -112,35 +100,22 @@ Exercise.prototype = {
 	},
 	
 	onSuccess: function(){		
-		_this = this;
+		var _this = this;
 		this.animateSuccess();
 		events.emit('progress');
 		this.index++;
 		// The exercise set is complete
-		if(this.index == this.data.length){
+		console.log("ExIdx: " + this.index + "size: " + (this.size + this.startIndex));
+		if(this.index == this.size + this.startIndex){						
 			this.onExComplete();
 			return;
 		}			
 		setTimeout(function() { _this.next(); }, 2000);
 	},
 	
-	/**
-	*	Check selected answer with success condition
-	**/
-	calcSessionTime: function (){
-		var endTime = new Date();
-		var total = endTime.getMinutes()-this.startTime.getMinutes();
-		return (total <= 1)?"1 minute":total + " minutes";
-	},
 	
-	/**
-	*	Request the submit API
-	**/
-	submitResults: function(){
-		for(var i = 0; i< data.length;i++){
-			$.post("https://www.zeeguu.unibe.ch/report_exercise_outcome/Too easy/Recognize/1000/"+data[i].id+"?session="+34563456);		
-		}
-	},
+	
+	
 	
 	/*********************** Interface functions *****************************/
 	/**

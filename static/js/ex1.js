@@ -3,8 +3,9 @@
  *  @customize it by using prototypal inheritance 
 **/
 
-function Ex1(){
-	this.init();
+function Ex1(data,index,size){
+	
+	this.init(data,index,size);
 	
 	/** @Override */
 	this.cacheCustomDom = function(){	
@@ -33,7 +34,7 @@ function Ex1(){
 	}
 	
 	/** @Override */
-	this.next = function (){	
+	this.next = function (){
 		this.$to.html("\""+this.data[this.index].to+"\"");
 		this.$context.html(this.data[this.index].context);
 		this.$input.val("");
@@ -63,7 +64,6 @@ function Ex1(){
 Ex1.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/	
-	size: 		 {value: 3}, 
 	description: {value: "Find the word in the context:"},
 	customTemplateURL: {value: '../static/template/ex1.html'},	
 });

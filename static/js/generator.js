@@ -7,34 +7,51 @@ Generator = function(set){
 Generator.prototype = {
 	/************************** SETTINGS ********************************/	
 	data: 0,
-	index: 0,
+	set: 0,
+	size: 0,
+	index: 0,	
+	startTime: 0,
 	session: 11010001, //for now hardcoded session number
 	bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
-	templateURL: '../static/template/exercise.html',
+	templateURL: '../static/template/exercise.html',	
+	currentEx: 0,
 	
+	/**
+	*	Saves the common dom in chache
+	**/
+	cacheDom: function(){
+		this.$elem 				= $("#ex-module");		
+		this.$container  		= this.$elem.find("#ex-container");
+		this.$loader 			= this.$elem.find('#loader');
+	},
 	
 	/**
 	*	Generator initialaizer
 	**/
-	init: function(set){
-		_this = this;
-		events.on('exerciseCompleted', this.nextEx);
+	init: function(set){		
+		this.set = set;
+		var _this = this;
 		$.when(this.createDom()).done(function(){
-			_this.start();															
-			_this._constructor();
-		});	
+			_this.cacheDom();
+			_this.start();			
+		});
 	},	
 	
 	
+	restart: function(){
+		this.start();
+	},
+	
 	/**
-	*	Call to load the data
-	*	When the loading is complete constructs the exercise
+	*	Call to load the data from API
 	**/
 	start: function ()
 	{
 		var _this = this;
+		this.size = this.calcSize(this.set,this.set.length);
 		$.when(this.getBookmarks()).done(function (ldata) {		
-			_this.data = ldata;  	
+			_this.data = ldata; 												
+			_this._constructor();	
 		});			
 	},
 	
@@ -42,17 +59,76 @@ Generator.prototype = {
 	*	The main constructor
 	**/
 	_constructor: function (){			
-		ProgressBar.init(0,this.size);		
+		ProgressBar.init(0,this.size);	
+		this.index = 0;		
+		this.startTime = new Date();			
+		this.engine();
 	},
 	
-	engine: function(){
+	engine: function(){			
+		var _this = this;		
+		events.on('exerciseCompleted',function(){_this.nextEx();});
+		this.nextEx();			
+	},
+	
+	nextEx: function(){
+		console.log("I am here: " + this.index);
+		if(this.index === this.set.length){
+			events.off('exerciseCompleted',function(){_this.nextEx();});
+			this.onExSetComplete();
+			return;
+		}
+		var ex = this.set[this.index][0];
+		var size = this.set[this.index][1];
+		var startingIndex = this.calcSize(this.set,this.index);
+		
+		
+		console.log("New set with Ex" + ex + ", size: " + size + ",startingInex: "+ startingIndex);
+		this.currentEx = null;
+		delete this.currentEx;
+		switch(ex) {
+			case 1:
+				this.currentEx = new Ex1(this.data,startingIndex,size);
+				break;
+			case 2:
+				this.currentEx = new Ex2(this.data,startingIndex,size);
+				break;
+			case 3:
+				this.currentEx = new Ex3(this.data,startingIndex,size);
+				break;
+			case 4:
+				this.currentEx = new Ex4(this.data,startingIndex,size);
+				break;
+		}
+		
+		this.index++;
+	},
+	
+	calcSize: function(set,length){
+		var sum = 0;
+		for(var i = 0; i<length; i++){
+		  sum += set[i][1];
+		}
+		return sum;
 			
 	},
 	
-	nextEx: function(currentEx){
-		//currentEx.unBind();TODO unbind the EX
-		//delete currentEx TODO
-		var a = 
+	/**
+	*	Request the submit API
+	**/
+	/*submitResults: function(){
+		for(var i = 0; i< this.data.length;i++){
+			$.post("https://www.zeeguu.unibe.ch/report_exercise_outcome/Too easy/Recognize/1000/"+this.data[i].id+"?session="+34563456);		
+		}
+	},*/
+	
+	/**
+	*	Check selected answer with success condition
+	**/
+	calcSessionTime: function (){
+		var endTime = new Date();
+		var total = endTime.getMinutes()-this.startTime.getMinutes();
+		return (total <= 1)?"1 minute":total + " minutes";
 	},
 	
 	/***********************  ***************************/	
@@ -71,7 +147,7 @@ Generator.prototype = {
 			  closeOnConfirm: true
 			},
 			function(){
-				//_this.restart();TODO RESTART 
+				_this.restart();
 			});
 	},
 	
