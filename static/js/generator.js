@@ -30,7 +30,8 @@ Generator.prototype = {
 	**/
 	init: function(set){		
 		this.set = set;
-		var _this = this;
+		var _this = this;		
+		events.on('exerciseCompleted',function(){_this.nextEx();});
 		$.when(this.createDom()).done(function(){
 			_this.cacheDom();
 			_this.start();			
@@ -67,14 +68,12 @@ Generator.prototype = {
 	
 	engine: function(){			
 		var _this = this;		
-		events.on('exerciseCompleted',function(){_this.nextEx();});
 		this.nextEx();			
 	},
 	
 	nextEx: function(){
 		console.log("I am here: " + this.index);
 		if(this.index === this.set.length){
-			events.off('exerciseCompleted',function(){_this.nextEx();});
 			this.onExSetComplete();
 			return;
 		}
