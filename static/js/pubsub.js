@@ -29,7 +29,8 @@ var events = (function() {
     return {
         on: on,
         off: off,
-        emit: emit
+        emit: emit,
+		//get: function(){return events;}
     };
 
 })();
