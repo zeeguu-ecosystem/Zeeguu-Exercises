@@ -65,7 +65,28 @@ function Ex3(data,index,size){
 		return elem.is(':disabled');
 	}
 	
-	this.onSuccess = function(){
+	onSuccess: function(){		
+		var _this = this;
+		this.animateSuccess();
+		events.emit('progress');
+		this.index++;
+		// The exercise set is complete
+		if(this.index == this.size + this.startIndex){						
+			this.onExComplete();
+			return;
+		}			
+		setTimeout(function() { _this.next(); }, 2000);
+	},
+	
+	this.onSuccess = function(btnID){
+		
+		this.correctAnswers ++;
+		
+		// Disable buttons		
+		this.successDisableBtn(btnID);
+		this.successDisableBtn(this.chosenButton);
+			
+		
 		// If the user has given all 3 answers, proceed to next exercise
 		if(this.correctAnswers >= 3){
 					
@@ -81,28 +102,21 @@ function Ex3(data,index,size){
 			ProgressBar.move();
 			
 			
-			// The exercises are complete
-			if(this.index == this.data.length){
+			// The exercise set is complete
+			if(this.index == this.size + this.startIndex){						
 				this.onExComplete();
 				return;
-			}
+			}			
+			setTimeout(function() { _this.next(); }, 2000);
 			// Populate next exercise
 			setTimeout(this.next(), 2000);		
 		}	
 	}
 	
 	this.checkAnswer = function(btnID){
-		if(this.successCondition(btnID,this.chosenButton)){
-			
-			this.correctAnswers ++;
-			
-			// Disable buttons		
-			this.successDisableBtn(btnID);
-			this.successDisableBtn(this.chosenButton);
-			
-			
+		if(this.successCondition(btnID,this.chosenButton)){			
 			// check if all the answers were given
-			this.onSuccess();
+			this.onSuccess(btnID);
 		}else{
 			this.wrongAnswerAnimation();
 		}
