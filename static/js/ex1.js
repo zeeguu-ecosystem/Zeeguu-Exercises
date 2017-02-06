@@ -6,6 +6,7 @@
 function Ex1(data,index,size){
 	
 	this.init(data,index,size);
+	
 	/** @Override */
 	this.cacheCustomDom = function(){	
 		this.$to 					= this.$elem.find("#ex-to");
@@ -21,7 +22,7 @@ function Ex1(data,index,size){
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
 		this.$showSolution.on("click", _this.giveHint.bind(this));
-	
+		
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
 		
@@ -64,5 +65,5 @@ Ex1.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/	
 	description: {value: "Find the word in the context:"},
-	customTemplateURL: {value: '../static/template/ex1.html'}	
+	customTemplateURL: {value: '../static/template/ex1.html'},	
 });

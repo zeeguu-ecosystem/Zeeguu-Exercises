@@ -1,8 +1,7 @@
 (function() {	
 
-	var a = [[3,2],
-			 [1,2],
-			 [1,1]];
+	var a = [[1,2],
+			 [1,2]];
 					 
 	window.onload = new Generator(a);	
 })();

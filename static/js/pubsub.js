@@ -29,8 +29,7 @@ var events = (function() {
     return {
         on: on,
         off: off,
-        emit: emit,
-		//get: function(){return events;}
+        emit: emit
     };
 
 })();

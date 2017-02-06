@@ -3,7 +3,8 @@
  *  @customize it by using prototypal inheritance 
 **/
 Exercise = function(data,index,size){
-	this.init(data,index,size);
+	this.init(data,index,size);	
+	//TODO unbind method
 };
 
 Exercise.prototype = {
@@ -64,7 +65,7 @@ Exercise.prototype = {
 	/**
 	*	The main constructor
 	**/
-	_constructor: function (data,index,size){	
+	_constructor: function (data,index,size){		
 		this.data  = data;
 		this.index = index;
 		this.startIndex = index;
@@ -84,7 +85,6 @@ Exercise.prototype = {
 	*	When the ex are done notify the observers
 	**/
 	onExComplete: function (){		
-		console.log('event emitted here',this);
 		events.emit('exerciseCompleted');	
 	},
 	
@@ -95,8 +95,7 @@ Exercise.prototype = {
 		if (this.successCondition(chosenWord)){		
 			this.onSuccess();
 			return;
-		}
-			console.log('WRONG');
+		}	
 		this.wrongAnswerAnimation();					
 	},
 	
@@ -106,7 +105,7 @@ Exercise.prototype = {
 		events.emit('progress');
 		this.index++;
 		// The exercise set is complete
-		// console.log("ExIdx: " + this.index + "size: " + (this.size + this.startIndex));
+		console.log("ExIdx: " + this.index + "size: " + (this.size + this.startIndex));
 		if(this.index == this.size + this.startIndex){						
 			this.onExComplete();
 			return;
