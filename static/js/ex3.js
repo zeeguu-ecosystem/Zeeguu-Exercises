@@ -1,9 +1,15 @@
+/** Custom exercise formatching 3 words. Inherited from Exercise.js
+ *  @initialize it using: new Ex3();
+ *  @customize it by using prototypal inheritance 
+**/
+
 function Ex3(data,index,size){
 	this.init(data,index,size);
 	
 	/** @Override */
-	this.cacheCustomDom = function(){	
-		this.$context 				= this.$elem.find("#ex-context");
+	this.cacheCustomDom = function(data,index,size){
+		this.$to 					= this.$elem.find("#ex-to");
+		this.$context 				= this.$elem.find("#ex-content");
 		this.$showSolution 			= this.$elem.find("#show_solution");
 		this.$btn1 					= this.$elem.find("#btn1");
 		this.$btn2 					= this.$elem.find("#btn2");
@@ -45,88 +51,76 @@ function Ex3(data,index,size){
 	
 	
 	this.selectChoice = function(btnID){
-	// if no butten was previously selected, select it now
-	if(this.chosenButton == -1){
-		this.chosenButton = btnID;
-	}else{
-		// otherwise check the selection
-		this.checkAnswer(btnID);
-	}
+		// if no butten was previously selected, select it now
+		if(this.chosenButton == -1){
+			this.chosenButton = btnID;
+		}else{
+			// otherwise check the selection
+			this.check(btnID);
+		}
 	};
 	
+	// Disables correctly selected buttons
 	this.successDisableBtn = function(btnID){
 		var elem = $("#btn"+btnID);
 		elem.prop('disabled', true);
 		elem.addClass("btn-success");
-	}
+	};
 	
+	//Checks if a button is disabled
 	this.isDisabled = function(btnID){
 		var elem = $("#btn"+btnID);
 		return elem.is(':disabled');
-	}
+	};
 	
-	onSuccess: function(){		
-		var _this = this;
-		this.animateSuccess();
-		events.emit('progress');
-		this.index++;
-		// The exercise set is complete
-		if(this.index == this.size + this.startIndex){						
-			this.onExComplete();
-			return;
-		}			
-		setTimeout(function() { _this.next(); }, 2000);
-	},
+	// Checks answers
+	this.check = function(btnID){
 	
-	this.onSuccess = function(btnID){
-		
-		this.correctAnswers ++;
-		
-		// Disable buttons		
-		this.successDisableBtn(btnID);
-		this.successDisableBtn(this.chosenButton);
+		if(this.checkCondition(btnID)){
 			
-		
-		// If the user has given all 3 answers, proceed to next exercise
-		if(this.correctAnswers >= 3){
-					
-			this.index++;
+			// Disable buttons		
+			this.successDisableBtn(btnID);
+			this.successDisableBtn(this.chosenButton);
 			
-			// Reset buttons, answers, hints
-			this.resetBtns();
-			this.correctAnswers = 0;
-			this.hints = 0;
+			this.correctAnswers ++;
+			this.endExercise();
 			
-			// Show progress
-			this.animateSuccess();
-			ProgressBar.move();
-			
-			
-			// The exercise set is complete
-			if(this.index == this.size + this.startIndex){						
-				this.onExComplete();
-				return;
-			}			
-			setTimeout(function() { _this.next(); }, 2000);
-			// Populate next exercise
-			setTimeout(this.next(), 2000);		
-		}	
-	}
-	
-	this.checkAnswer = function(btnID){
-		if(this.successCondition(btnID,this.chosenButton)){			
-			// check if all the answers were given
-			this.onSuccess(btnID);
 		}else{
 			this.wrongAnswerAnimation();
 		}
 		this.chosenButton = -1;	
 	};
 	
-	this.successCondition = function(id1,id2){
-		return answers.indexOf(id1) == choices.indexOf(id2);
+	this.endExercise = function(){
+		// check if all the answers were given
+		if(this.successCondition(0)){
+			// Proceed to next exercise
+			this.checkAnswer(0);
+			
+			// Reset buttons, answers, hints
+			this.resetBtns();
+			this.correctAnswers = 0;
+			this.hints = 0;
+		}
 	};
 	
+	// Checks the selected buttons
+	this.checkCondition = function(btnID){
+	console.log(choices.indexOf(this.chosenButton) + " " + answers.indexOf(btnID));
+		if((answers.indexOf(btnID) == -1)|| (choices.indexOf(this.chosenButton) == -1)){
+		console.log(answers.indexOf(this.chosenButton) + " " + choices.indexOf(btnID));
+			return (choices.indexOf(btnID) == answers.indexOf(this.chosenButton));
+		}else{
+			return (answers.indexOf(btnID) == choices.indexOf(this.chosenButton));
+		}
+	};
+	
+	/** @Override */
+	this.successCondition = function(a){
+		return (this.correctAnswers >= 3); 
+	};
+	
+	// Resets all the disabled buttons
 	this.resetBtns = function(){
 		for(var idx = 1; idx<=6; idx++){
 			var elem = $('#btn'+idx);
@@ -135,15 +129,13 @@ function Ex3(data,index,size){
 		}
 	};
 	
-	
 	/** @Override */
-	this.next = function (){
-		
-		//Remove the ex description when the ex is started
-		if(this.index != 0){
-			this.$description.fadeOut(300, function() { $(this).remove(); });
-		}
-		
+	this.next = function (){	
+		this.populateButtons();
+	};
+	
+	// Populates the buttons
+	this.populateButtons = function(){	
 		//Random options
 		var idxs = randomNums(this.data.length-1);
 		
@@ -163,43 +155,42 @@ function Ex3(data,index,size){
 		
 		document.getElementById("btn"+answers[0]).innerHTML = this.data[this.index].to;
 		document.getElementById("btn"+answers[1]).innerHTML = this.data[idxs[0]].to;
-		document.getElementById("btn"+answers[2]).innerHTML = this.data[idxs[1]].to;		
+		document.getElementById("btn"+answers[2]).innerHTML = this.data[idxs[1]].to;
 	};
 	
+	// Gives a hint by disabling a correct match
 	this.giveHint = function (){
-	
+		// Only one hint is possible
 		if(this.hints < 1){
 			// Disable buttons
-			if(!this.isDisabled(answers[2])){
-				this.successDisableBtn(choices[2]);
-				this.successDisableBtn(answers[2]);
-				this.correctAnswers++;
-				this.onSuccess();
-				this.hints++;
+			if(!this.isDisabled(answers[0])){
+				this.disableHintButtons(0);
 				return;
 			}
 			
 			if (!this.isDisabled(answers[1])){
-				this.successDisableBtn(choices[1]);
-				this.successDisableBtn(answers[1]);
-				this.correctAnswers++;
-				this.onSuccess();
-				this.hints++;
+				this.disableHintButtons(1);
 				return;
 			}
 			
-			if (!this.isDisabled(answers[0])){
-				this.successDisableBtn(choices[0]);
-				this.successDisableBtn(answers[0]);
-				this.correctAnswers++;
-				this.onSuccess();
-				this.hints++;
+			if (!this.isDisabled(answers[2])){
+				this.disableHintButtons(2);
 				return;
 			}
 		}
 		
 	};
 	
+	// Disables the buttons given in the hint
+	this.disableHintButtons = function(idx){
+		this.successDisableBtn(choices[idx]);
+		this.successDisableBtn(answers[idx]);
+		this.correctAnswers++;
+		this.hints++;
+		this.endExercise();
+	};
+	
+	// Generates an array of random numbers
 	randomNums = function(size){
 	var arr = []
 		while(arr.length < size){
