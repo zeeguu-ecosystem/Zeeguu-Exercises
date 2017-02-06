@@ -1,8 +1,14 @@
-function Ex4(){
-	this.init();
+/** Custom exercise for translating the word given in the context. Inherited from Exercise.js
+ *  @initialize it using: new Ex4();
+ *  @customize it by using prototypal inheritance 
+**/
+
+function Ex4(data,index,size){
+	
+	this.init(data,index,size);
 	
 	/** @Override */
-	this.customCacheDom = function(){	
+	this.cacheCustomDom = function(){	
 		this.$to 					= this.$elem.find("#ex-to");
 		this.$context 				= this.$elem.find("#ex-context");
 		this.$input 				= this.$elem.find("#ex-main-input");
@@ -28,9 +34,7 @@ function Ex4(){
 	}
 	
 	/** @Override */
-	this.next = function (){	
-	
-		
+	this.next = function (){			
 		this.$to.html("\""+this.data[this.index].from +"\"");
 		this.$context.html(this.generateContext());
 		this.$input.val("");
@@ -55,8 +59,7 @@ function Ex4(){
 			contextString = contextString.replace(res[i], res[i].bold());
 		}
 			
-		return contextString;
-		
+		return contextString;		
 	};
 	
 	
@@ -66,8 +69,7 @@ function Ex4(){
 	}
 	
 	/** @Override */
-	this.successCondition = function(){
-	
+	this.successCondition = function(){	
 		// Check all the possible answers
 		for (var i = 0; i<  this.data[this.index].to.length; i++)
 		 if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to[i].trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""))
@@ -88,13 +90,11 @@ function Ex4(){
 			allowEscapeKey:true,
 			showLoaderOnConfirm:true,
 		});
-	}
-	
+	}	
 };
 Ex4.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex4,
 	/************************** SETTINGS ********************************/	
-	size: 		 {value: 3}, 
 	description: {value: "Translate the word given in the context."},
-	templateURL: {value: '../static/template/ex4.html'},	
+	customTemplateURL: {value: '../static/template/ex4.html'},	
 });

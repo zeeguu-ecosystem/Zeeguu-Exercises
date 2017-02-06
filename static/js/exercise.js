@@ -11,7 +11,7 @@ Exercise.prototype = {
 	
 	/************************** SETTINGS ********************************/	
 	data: 0,	
-	customTemplateURL: '../static/template/exercise.html',
+	customTemplateURL: 0,
 	index: 0,
 	startIndex: 0,
 	size: 0, //default number of bookmarks
@@ -85,7 +85,7 @@ Exercise.prototype = {
 	*	When the ex are done notify the observers
 	**/
 	onExComplete: function (){		
-		events.emit('exerciseCompleted');	
+		setTimeout(function() { events.emit('exerciseCompleted');}, 2000);			
 	},
 	
 	/**

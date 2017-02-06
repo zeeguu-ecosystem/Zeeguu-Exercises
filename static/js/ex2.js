@@ -1,8 +1,8 @@
-function Ex2(){
-	this.init();
+function Ex2(data,index,size){
+	this.init(data,index,size);
 	
 	/** @Override */
-	this.customCacheDom = function(){	
+	this.cacheCustomDom = function(){	
 		this.$context 				= this.$elem.find("#ex-context");
 		this.$showSolution 			= this.$elem.find("#show_solution");
 		this.$checkAnswer 			= this.$elem.find("#check_answer");		
@@ -33,8 +33,7 @@ function Ex2(){
 	/** @Override */
 	this.next = function(){		
 		//Populate context
-		this.generateContext();
-				
+		this.generateContext();			
 		
 		this.resetBtns();
 		
@@ -108,9 +107,8 @@ function Ex2(){
 Ex2.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex2,
 	/************************** SETTINGS ********************************/	
-	size: 		 {value: 6},//Min is 3 
 	description: {value: "Choose the word that fits the context"},
-	templateURL: {value: '../static/template/ex2.html'},
+	customTemplateURL: {value: '../static/template/ex2.html'},
 	btns: 		 {writable: true, value:[1,2,3]}, 
 	optionNum:	 {value: 3},
 	/*******************************************************************/

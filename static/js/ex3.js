@@ -1,8 +1,8 @@
-function Ex3(){
-	this.init();
+function Ex3(data,index,size){
+	this.init(data,index,size);
 	
 	/** @Override */
-	this.customCacheDom = function(){	
+	this.cacheCustomDom = function(){	
 		this.$context 				= this.$elem.find("#ex-context");
 		this.$showSolution 			= this.$elem.find("#show_solution");
 		this.$btn1 					= this.$elem.find("#btn1");
@@ -65,11 +65,10 @@ function Ex3(){
 		return elem.is(':disabled');
 	}
 	
-	this.correctAnswersCheck = function(){
+	this.onSuccess = function(){
 		// If the user has given all 3 answers, proceed to next exercise
 		if(this.correctAnswers >= 3){
-		
-			
+					
 			this.index++;
 			
 			// Reset buttons, answers, hints
@@ -89,8 +88,7 @@ function Ex3(){
 			}
 			// Populate next exercise
 			setTimeout(this.next(), 2000);		
-		}
-	
+		}	
 	}
 	
 	this.checkAnswer = function(btnID){
@@ -104,7 +102,7 @@ function Ex3(){
 			
 			
 			// check if all the answers were given
-			this.correctAnswersCheck();
+			this.onSuccess();
 		}else{
 			this.wrongAnswerAnimation();
 		}
@@ -162,7 +160,7 @@ function Ex3(){
 				this.successDisableBtn(choices[2]);
 				this.successDisableBtn(answers[2]);
 				this.correctAnswers++;
-				this.correctAnswersCheck();
+				this.onSuccess();
 				this.hints++;
 				return;
 			}
@@ -171,7 +169,7 @@ function Ex3(){
 				this.successDisableBtn(choices[1]);
 				this.successDisableBtn(answers[1]);
 				this.correctAnswers++;
-				this.correctAnswersCheck();
+				this.onSuccess();
 				this.hints++;
 				return;
 			}
@@ -180,7 +178,7 @@ function Ex3(){
 				this.successDisableBtn(choices[0]);
 				this.successDisableBtn(answers[0]);
 				this.correctAnswers++;
-				this.correctAnswersCheck();
+				this.onSuccess();
 				this.hints++;
 				return;
 			}
@@ -203,9 +201,8 @@ function Ex3(){
 Ex3.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex3,
 	/************************** SETTINGS ********************************/	
-	size: 		 {value: 6}, 
 	description: {value: "Match each word with its translation"},
-	templateURL: {value: '../static/template/ex3.html'},
+	customTemplateURL: {value: '../static/template/ex3.html'},
 	choices: 	 { writable: true, value:[1,2,3]},				// arr of indexes of possible choices
 	answers: 	{ writable: true, value:[1,2,3]},				// arr of indexes of possible answers
 	chosenButton: { writable: true, value:-1},  	// ID of currently selected button; -1 means no button is selected
