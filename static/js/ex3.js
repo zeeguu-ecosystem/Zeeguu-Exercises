@@ -163,31 +163,24 @@ function Ex3(data,index,size){
 		// Only one hint is possible
 		if(this.hints < 1){
 			// Disable buttons
-			if(!this.isDisabled(answers[0])){
-				this.disableHintButtons(0);
-				return;
-			}
-			
-			if (!this.isDisabled(answers[1])){
-				this.disableHintButtons(1);
-				return;
-			}
-			
-			if (!this.isDisabled(answers[2])){
-				this.disableHintButtons(2);
-				return;
-			}
+			if(this.disableHintButtons(0)) return;
+			if(this.disableHintButtons(1)) return;
+			if(this.disableHintButtons(2)) return;
 		}
 		
 	};
 	
 	// Disables the buttons given in the hint
 	this.disableHintButtons = function(idx){
-		this.successDisableBtn(choices[idx]);
-		this.successDisableBtn(answers[idx]);
-		this.correctAnswers++;
-		this.hints++;
-		this.endExercise();
+		if(!this.isDisabled(answers[idx])){
+			this.successDisableBtn(choices[idx]);
+			this.successDisableBtn(answers[idx]);
+			this.correctAnswers++;
+			this.hints++;
+			this.endExercise();
+			return true;
+		}
+		return false;
 	};
 	
 	// Generates an array of random numbers
