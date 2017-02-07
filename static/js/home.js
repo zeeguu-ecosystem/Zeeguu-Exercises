@@ -29,8 +29,8 @@ Home.prototype = {
 	**/
 	cacheDom: function(){
 		this.$elem 			= $("#home-container");		
-		this.$btn1  			= this.$elem.find("#btn1");
-		this.$btn2  			= this.$elem.find("#btn2");
+		this.$btn1  		= this.$elem.find("#btn1");
+		this.$btn2  		= this.$elem.find("#btn2");
 		this.$btn3 			= this.$elem.find('#btn3');
 		this.$btn4 			= this.$elem.find("#btn4");		
 	},

@@ -16,9 +16,10 @@ function Ex3(data,index,size){
 		this.$btn3 					= this.$elem.find("#btn3");	
 		this.$btn4 					= this.$elem.find("#btn4");
 		this.$btn5 					= this.$elem.find("#btn5");
-		this.$btn6 					= this.$elem.find("#btn6");			
+		this.$btn6 					= this.$elem.find("#btn6");
 	};
 	
+	//this.get = () => { return this["$btn1"]; };
 	
 	/** @Override */
 	this.bindUIActions = function(){
@@ -51,7 +52,7 @@ function Ex3(data,index,size){
 	
 	
 	this.selectChoice = function(btnID){
-		// if no butten was previously selected, select it now
+		// if no button was previously selected, select it now
 		if(this.chosenButton == -1){
 			this.chosenButton = btnID;
 		}else{
@@ -106,9 +107,7 @@ function Ex3(data,index,size){
 	
 	// Checks the selected buttons
 	this.checkCondition = function(btnID){
-	console.log(choices.indexOf(this.chosenButton) + " " + answers.indexOf(btnID));
 		if((answers.indexOf(btnID) == -1)|| (choices.indexOf(this.chosenButton) == -1)){
-		console.log(answers.indexOf(this.chosenButton) + " " + choices.indexOf(btnID));
 			return (choices.indexOf(btnID) == answers.indexOf(this.chosenButton));
 		}else{
 			return (answers.indexOf(btnID) == choices.indexOf(this.chosenButton));
@@ -138,7 +137,7 @@ function Ex3(data,index,size){
 	this.populateButtons = function(){	
 		//Random options
 		var idxs = randomNums(this.data.length-1);
-		
+		var _this = this;
 		// random numbers between 1 and 3
 	     choices  = randomNums(3);
 		 
@@ -148,15 +147,18 @@ function Ex3(data,index,size){
 			answers[i] = answers[i] + 3;
 		}
 		
-		//Populate buttons // TO DO
-		document.getElementById("btn"+choices[0]).innerHTML = this.data[this.index].from;
-		document.getElementById("btn"+choices[1]).innerHTML = this.data[idxs[0]].from;
-		document.getElementById("btn"+choices[2]).innerHTML = this.data[idxs[1]].from;
 		
-		document.getElementById("btn"+answers[0]).innerHTML = this.data[this.index].to;
-		document.getElementById("btn"+answers[1]).innerHTML = this.data[idxs[0]].to;
-		document.getElementById("btn"+answers[2]).innerHTML = this.data[idxs[1]].to;
+		//Populate buttons
+		function match2Buttons(choice, answer, valueFrom, valueTo) {
+			_this["$btn"+choice].text(valueFrom);
+			_this["$btn"+answer].text(valueTo);
+		}
+
+		match2Buttons(choices[0],answers[0],this.data[this.index].from,this.data[this.index].to);
+		match2Buttons(choices[1],answers[1],this.data[idxs[0]].from,this.data[idxs[0]].to);
+		match2Buttons(choices[2],answers[2],this.data[idxs[1]].from,this.data[idxs[1]].to);
 	};
+	
 	
 	// Gives a hint by disabling a correct match
 	this.giveHint = function (){

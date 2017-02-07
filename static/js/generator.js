@@ -72,7 +72,6 @@ Generator.prototype = {
 	},
 	
 	nextEx: function(){
-		console.log("I am here: " + this.index);
 		if(this.index === this.set.length){
 			this.onExSetComplete();
 			return;
@@ -81,8 +80,6 @@ Generator.prototype = {
 		var size = this.set[this.index][1];
 		var startingIndex = this.calcSize(this.set,this.index);
 		
-		
-		console.log("New set with Ex" + ex + ", size: " + size + ",startingInex: "+ startingIndex);
 		this.currentEx = null;
 		delete this.currentEx;
 		switch(ex) {

@@ -41,10 +41,15 @@ function Ex2(data,index,size){
 		var idxs = randomNums(this.data.length-1);
 		this.btns = randomNums(this.optionNum);
 		
+		
 		//Populate buttons
-		document.getElementById("btn"+this.btns[0]).innerHTML = this.data[this.index].from;
-		document.getElementById("btn"+this.btns[1]).innerHTML = this.data[idxs[0]].from;
-		document.getElementById("btn"+this.btns[2]).innerHTML = this.data[idxs[1]].from;
+		function populateButton(buttonID, value) {
+			_this["$btn"+buttonID].text(value);
+		}
+
+		populateButton(this.btns[0], this.data[this.index].from);
+		populateButton(this.btns[1], this.data[idxs[0]].from);
+		populateButton(this.btns[2], this.data[idxs[1]].from);
 	}
 	
 	/** @Override */
@@ -87,7 +92,7 @@ function Ex2(data,index,size){
 		
 		for (i = 0; i <res.length; i++){
 			contextString = contextString.replace(res[i]," ______ ");
-		}	
+		}
 		this.$context.html(contextString);
 	};
 	

@@ -82,7 +82,7 @@ Exercise.prototype = {
 	},
 	
 	/**
-	*	When the ex are done notify the observers
+	*	When the ex are done, notify the observers
 	**/
 	onExComplete: function (){		
 		setTimeout(function() { events.emit('exerciseCompleted');}, 2000);
@@ -105,7 +105,6 @@ Exercise.prototype = {
 		events.emit('progress');
 		this.index++;
 		// The exercise set is complete
-		console.log("ExIdx: " + this.index + "size: " + (this.size + this.startIndex));
 		if(this.index == this.size + this.startIndex){						
 			this.onExComplete();
 			return;
