@@ -15,6 +15,7 @@ var bar,ProgressBar = {
 		bar.amount = 100/size;
 		bar.elem = document.getElementById("ex-bar");
 		bar.elem.style.width = bar.percent;
+		// "bind" event
 		events.on('progress', this.move);
 	},	
 	restart: function(){

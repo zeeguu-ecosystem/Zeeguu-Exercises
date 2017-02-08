@@ -30,8 +30,12 @@ Generator.prototype = {
 	**/
 	init: function(set){		
 		this.set = set;
-		var _this = this;		
+		var _this = this;	
+		
+		// "bind" event
 		events.on('exerciseCompleted',function(){_this.nextEx();});
+		
+		// Create the DOM and initialize
 		$.when(this.createDom()).done(function(){
 			_this.cacheDom();
 			_this.start();			
@@ -63,12 +67,7 @@ Generator.prototype = {
 		ProgressBar.init(0,this.size);	
 		this.index = 0;		
 		this.startTime = new Date();			
-		this.engine();
-	},
-	
-	engine: function(){			
-		var _this = this;		
-		this.nextEx();			
+		this.nextEx();
 	},
 	
 	nextEx: function(){

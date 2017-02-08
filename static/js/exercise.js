@@ -99,12 +99,16 @@ Exercise.prototype = {
 		this.wrongAnswerAnimation();					
 	},
 	
+	/**
+	*	Actions taken when the succes condition is true
+	**/
 	onSuccess: function(){		
 		var _this = this;
 		this.animateSuccess();
+		// Notify the observer
 		events.emit('progress');
 		this.index++;
-		// The exercise set is complete
+		// The current exercise set is complete
 		if(this.index == this.size + this.startIndex){						
 			this.onExComplete();
 			return;
@@ -124,6 +128,7 @@ Exercise.prototype = {
 	
 	/**
 	*	Condition used by checkAnswer 
+	*	If true, then a correct answer was given
 	**/
 	successCondition: function(){},
 	
@@ -138,7 +143,7 @@ Exercise.prototype = {
 	next: function (){},
 	
 	/**
-	*	Custom dom chache for each exercise
+	*	Cahes custom dom of the exercise
 	**/
 	cacheCustomDom: function(){},	
 	
