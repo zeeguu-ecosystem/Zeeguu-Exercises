@@ -65,19 +65,6 @@ Home.prototype = {
 	},
 	
 	newEx: function(exIdx){
-		switch(exIdx) {
-			case 1:
-				new Ex1();
-				break;
-			case 2:
-				new Ex2();
-				break;
-			case 3:
-				new Ex3();
-				break;
-			case 4:
-				new Ex4();
-				break;
-		}
+		new Generator([[exIdx,3]]);
 	},
 };

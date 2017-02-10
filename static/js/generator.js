@@ -53,7 +53,8 @@ Generator.prototype = {
 	start: function ()
 	{
 		var _this = this;
-		this.size = this.calcSize(this.set,this.set.length);
+		this.size = this.calcSize(this.set,this.set.length);			
+		ProgressBar.init(0,this.size);
 		$.when(this.getBookmarks()).done(function (ldata) {		
 			_this.data = ldata; 												
 			_this._constructor();	
@@ -64,7 +65,6 @@ Generator.prototype = {
 	*	The main constructor
 	**/
 	_constructor: function (){			
-		ProgressBar.init(0,this.size);	
 		this.index = 0;		
 		this.startTime = new Date();			
 		this.nextEx();
@@ -111,11 +111,11 @@ Generator.prototype = {
 	/**
 	*	Request the submit API
 	**/
-	/*submitResults: function(){
+	submitResults: function(){
 		for(var i = 0; i< this.data.length;i++){
 			$.post("https://www.zeeguu.unibe.ch/report_exercise_outcome/Too easy/Recognize/1000/"+this.data[i].id+"?session="+34563456);		
 		}
-	},*/
+	},
 	
 	/**
 	*	Check selected answer with success condition
@@ -126,7 +126,6 @@ Generator.prototype = {
 		return (total <= 1)?"1 minute":total + " minutes";
 	},
 	
-	/***********************  ***************************/	
 	/**
 	*	When the ex are done perform an action
 	**/
