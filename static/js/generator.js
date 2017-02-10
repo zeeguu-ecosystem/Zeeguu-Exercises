@@ -11,7 +11,7 @@ Generator.prototype = {
 	size: 0,
 	index: 0,	
 	startTime: 0,
-	session: 11010001, //for now hardcoded session number
+	session: 34563456, //for now hardcoded session number
 	bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
 	templateURL: '../static/template/exercise.html',	
 	currentEx: 0,

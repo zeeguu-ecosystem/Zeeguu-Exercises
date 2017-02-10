@@ -117,9 +117,6 @@ Exercise.prototype = {
 	},
 	
 	
-	
-	
-	
 	/*********************** Interface functions *****************************/
 	/**
 	*	Binding UI with Controller functions
