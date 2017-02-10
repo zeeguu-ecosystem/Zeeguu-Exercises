@@ -34,8 +34,8 @@ function Ex2(data,index,size){
 	this.next = function(){		
 		//Populate context
 		this.generateContext();			
-		
 		this.resetBtns();
+		var _this = this;
 		
 		//Random options	
 		var idxs = randomNums(this.data.length-1);
