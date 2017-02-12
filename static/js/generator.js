@@ -10,16 +10,14 @@ Generator = function(set){
 
 Generator.prototype = {
 	/************************** SETTINGS ********************************/	
-	data: 0,
-	set: 0,
-	size: 0,
-	index: 0,	
-	startTime: 0,
+	data: 0,		//bookmakrs from zeeguu api
+	set: 0,			//matrix for initialaizer
+	size: 0,		//total count of bookmakrs
+	index: 0,		//current index from set
+	startTime: 0,	
 	session: 34563456, //for now hardcoded session number
 	bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
 	templateURL: '../static/template/exercise.html',	
-	currentEx: 0,
-	eventFunc: 0,
 	
 	/**
 	*	Saves the common dom in chache
@@ -38,8 +36,8 @@ Generator.prototype = {
 		var _this = this;	
 		
 		// "bind" event
-		this.eventFunc = function(){_this.nextEx()};		
-		events.on('exerciseCompleted',this.eventFunc);
+		this.$eventFunc = function(){_this.nextEx()};		
+		events.on('exerciseCompleted',this.$eventFunc);
 		
 		// Create the DOM and initialize
 		$.when(this.createDom()).done(function(){
@@ -88,20 +86,20 @@ Generator.prototype = {
 		var size = this.set[this.index][1];
 		var startingIndex = this.calcSize(this.set,this.index);
 		
-		this.currentEx = null;
-		delete this.currentEx;
+		this.$currentEx = null;
+		delete this.$currentEx;
 		switch(ex) {
 			case 1:
-				this.currentEx = new Ex1(this.data,startingIndex,size);
+				this.$currentEx = new Ex1(this.data,startingIndex,size);
 				break;
 			case 2:
-				this.currentEx = new Ex2(this.data,startingIndex,size);
+				this.$currentEx = new Ex2(this.data,startingIndex,size);
 				break;
 			case 3:
-				this.currentEx = new Ex3(this.data,startingIndex,size);
+				this.$currentEx = new Ex3(this.data,startingIndex,size);
 				break;
 			case 4:
-				this.currentEx = new Ex4(this.data,startingIndex,size);
+				this.$currentEx = new Ex4(this.data,startingIndex,size);
 				break;
 		}
 		
@@ -160,7 +158,7 @@ Generator.prototype = {
 	},
 	
 	terminateGenerator: function(){
-		events.off('exerciseCompleted',this.eventFunc);
+		events.off('exerciseCompleted',this.$eventFunc);
 		events.emit('generatorCompleted');
 	},
 	/**
