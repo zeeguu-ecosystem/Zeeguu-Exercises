@@ -1,5 +1,9 @@
-/**Generator Ex*/
-
+/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
+ *  @initialize it using: new Generator(args); 
+ *  @param args is matrix of exercise name and number of bookmarks,
+ *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+ *  @customize it by using prototypal inheritance 
+**/
 Generator = function(set){
 	this.init(set);
 };
@@ -15,6 +19,7 @@ Generator.prototype = {
 	bookmarksURL: "https://zeeguu.unibe.ch/bookmarks_to_study/",
 	templateURL: '../static/template/exercise.html',	
 	currentEx: 0,
+	eventFunc: 0,
 	
 	/**
 	*	Saves the common dom in chache
@@ -33,7 +38,8 @@ Generator.prototype = {
 		var _this = this;	
 		
 		// "bind" event
-		events.on('exerciseCompleted',function(){_this.nextEx();});
+		this.eventFunc = function(){_this.nextEx()};		
+		events.on('exerciseCompleted',this.eventFunc);
 		
 		// Create the DOM and initialize
 		$.when(this.createDom()).done(function(){
@@ -70,6 +76,9 @@ Generator.prototype = {
 		this.nextEx();
 	},
 	
+	/**
+	*	Add Ex here
+	**/
 	nextEx: function(){
 		if(this.index === this.set.length){
 			this.onExSetComplete();
@@ -138,13 +147,22 @@ Generator.prototype = {
 			  showCancelButton: true,
 			  confirmButtonColor: "#7eb530",
 			  confirmButtonText: "Let's do it!",
+			  cancelButtonText: "Back to home!",
 			  closeOnConfirm: true
 			},
-			function(){
-				_this.restart();
+			function(isConfirm){
+				if(isConfirm){					
+					_this.restart();
+					return;
+				}				
+				_this.terminateGenerator();
 			});
 	},
 	
+	terminateGenerator: function(){
+		events.off('exerciseCompleted',this.eventFunc);
+		events.emit('generatorCompleted');
+	},
 	/**
 	*	Loads the HTML general exercise template from static
 	**/
