@@ -98,7 +98,6 @@ Home.prototype = {
 		var arr = stringArray.split(",").map(function(x){return parseInt(x)});
 		var newArr = [];
 		while(arr.length) newArr.push(arr.splice(0,2));
-		console.log(newArr);
 		return newArr;
 	},
 	

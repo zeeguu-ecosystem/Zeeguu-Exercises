@@ -98,6 +98,9 @@ function Ex3(data,index,size){
 			// Proceed to next exercise
 			this.checkAnswer(0);
 			
+			// Prepare the document
+			this.prepareDocument();
+			
 			// Reset buttons, answers, hints
 			this.resetBtns();
 			this.correctAnswers = 0;

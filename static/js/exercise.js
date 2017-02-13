@@ -117,6 +117,14 @@ Exercise.prototype = {
 	},
 	
 	
+	/**
+	*	Removes focus of page elements
+	**/
+	prepareDocument: function(){
+		if (document.activeElement != document.body) document.activeElement.blur();
+	},
+	
+	
 	/*********************** Interface functions *****************************/
 	/**
 	*	Binding UI with Controller functions
