@@ -5,34 +5,46 @@ Home = function(){
 Home.prototype = {
 	
 	/************************** SETTINGS ********************************/	
-	templateURL: '../static/template/home.html',	
+	homeTemplateURL: '../static/template/home.html',
+	cardTemplateURL: '../static/template/card.html',
+	defaultIcon: 	 '../img/icons/placeholder.svg',
+	exNames: [
+			  {name: "Find",            exID: [[1,6]], 							info: 'Find the word in the context', 			icon: '../static/img/icons/search-engine.svg',  time: 2},
+			  {name: "Choose",          exID: [[2,6]], 							info: 'Choose the word that fits the context', 	icon: '../static/img/icons/test.svg', 			time: 2},
+			  {name: "Match",           exID: [[3,6]], 							info: 'Match each word with its translation', 	icon: '../static/img/icons/question.svg', 		time: 3},
+			  {name: "Translate",	    exID: [[4,6]], 							info: 'Translate the word given in the context',icon: '../static/img/icons/translator.svg', 	time: 2},			  
+			  {name: "Short Practice",  exID: [[1,3],[2,3]], 					info: 'General exercise for short practice',	icon: '../static/img/icons/placeholder.svg',	time: 3},
+			  {name: "Long Practice",   exID: [[1,3],[2,3],[3,3],[4,3]],		info: 'General exerciese for short practice', 	icon: '../static/img/icons/placeholder.svg',	time: 4},
+			  {name: "Random",   		exID: [[2,3],[1,3],[3,3],[4,3][1,3]], 	info: 'Repeat via random exercises', 			icon: '../static/img/icons/shuffle.svg',		time: 6},
+			  
+			  ],
+	currentGenerator: 0,
+	eventFunc: 0,
 	/*********************** General Functions ***************************/	
 	/**
 	*	Loads the HTML exercise template from static
 	**/
 	createDom: function(){
-		var _this = this;
+		$("#main-content").html(this.loadTemplate(this.homeTemplateURL));	
+	},
+	
+	loadTemplate: function(tempUrl){
 		return $.ajax({	  
 		  type: 'GET',
 		  dataType: 'html',
-		  url: _this.templateURL,
-		  data: this.data,
-		  success: function(data) {
-			$("#main-content").html(data);	
-		  },
-		  async: true
-		});
+		  url: tempUrl,
+		  async: false
+		}).responseText;		
 	},
 	
+	
+	
 	/**
-	*	Saves the common dom in chache
+	*	Saves the dom 
 	**/
 	cacheDom: function(){
 		this.$elem 			= $("#home-container");		
-		this.$btn1  		= this.$elem.find("#btn1");
-		this.$btn2  		= this.$elem.find("#btn2");
-		this.$btn3 			= this.$elem.find('#btn3');
-		this.$btn4 			= this.$elem.find("#btn4");		
+		this.$exCards 		= this.$elem.find("#exercieses-cards");	
 	},
 	
 	
@@ -40,31 +52,67 @@ Home.prototype = {
 	*	Exercise initialaizer
 	**/
 	init: function(){	
-		_this = this;
+		var _this = this;
+		
+		// "bind" event
+		this.eventFunc = function(){_this.reset();};
+		events.on('generatorCompleted',this.eventFunc);
+	
+		this.start();		
+	},	
+	
+	/**
+	*	The main constructor
+	**/
+	start: function (){	
+		var _this = this;
 		$.when(this.createDom()).done(function(){		
 			_this.cacheDom();		
+			_this.generateEx();			
 			_this.bindUIActions();
-		});			
-	},	
+		});	
+	},
 
+	bindUIActions: function(){	
 	
-	
-	
-	bindUIActions: function(){		
-		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", this.newEx.bind(this,1));
+		//Bind UI action of button clicks to the function
+		var exs = this.$exCards.children();
 		
-		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", this.newEx.bind(this,2));
-		
-		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", this.newEx.bind(this,3));
-		
-		//Bind UI action of button 4 click to the function
-		this.$btn4.on("click", this.newEx.bind(this,4));	
+		for(var i = 0; i<exs.length; i++){
+			var id = exs[i].getAttribute("ex-id");
+			$(exs[i]).on("click", this.newEx.bind(this,id));
+		}	
 	},
 	
-	newEx: function(exIdx){
-		new Generator([[exIdx,3]]);
+	generateEx: function(){		
+		var cardTemplate = this.loadTemplate(this.cardTemplateURL);		
+		var cardNames = {Exercises: this.exNames};	
+		
+		this.$exCards.append(Mustache.render(cardTemplate,cardNames));
+	},
+	
+	/**
+	* Parse string into 2D array for generator arguments
+	*/
+	exArrayParser: function(stringArray){		
+		var arr = stringArray.split(",").map(function(x){return parseInt(x)});
+		var newArr = [];
+		while(arr.length) newArr.push(arr.splice(0,2));
+		console.log(newArr);
+		return newArr;
+	},
+	
+	reset: function(){
+		this.currentGenerator = null;
+		delete this.currentGenerator;	
+		this.start();
+	},
+	
+	terminate: function(){
+		events.off('generatorCompleted',this.eventFunc);
+	},
+	
+	newEx: function(exID){
+		this.currentGenerator = new Generator(this.exArrayParser(exID));
 	},
 };
