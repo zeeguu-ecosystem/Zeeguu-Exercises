@@ -21,17 +21,21 @@ function Ex2(data,index,size){
 		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
 		
 		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", btnSelect.bind(this,1));
+		this.$btn1.on("click", _this.btnSelect.bind(this,1));
 		
 		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", btnSelect.bind(this,2));
+		this.$btn2.on("click", _this.btnSelect.bind(this,2));
 		
 		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", btnSelect.bind(this,3));
+		this.$btn3.on("click", _this.btnSelect.bind(this,3));
 	}
 	
 	/** @Override */
 	this.next = function(){		
+		
+		// Prepare the document
+		this.prepareDocument();
+		
 		//Populate context
 		this.generateContext();			
 		this.resetBtns();
@@ -64,9 +68,9 @@ function Ex2(data,index,size){
 		return (chosenWord.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""));
 	}
 	
-	btnSelect = function(arg){
-		var chosenWord = document.getElementById("btn"+arg).innerHTML;	
-		this.reGenerateContext(chosenWord);	
+	this.btnSelect = function(arg){
+		var chosenWord = this["$btn"+arg].text();	
+		if (this.successCondition(chosenWord)) this.reGenerateContext(chosenWord);
 		this.checkAnswer(chosenWord);	
 	}
 
