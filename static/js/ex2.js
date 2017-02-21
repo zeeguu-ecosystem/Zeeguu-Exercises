@@ -113,7 +113,7 @@ Ex2.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex2,
 	/************************** SETTINGS ********************************/	
 	description: {value: "Choose the word that fits the context"},
-	customTemplateURL: {value: '../static/template/ex2.html'},
+	customTemplateURL: {value: 'static/template/ex2.html'},
 	btns: 		 {writable: true, value:[1,2,3]}, 
 	optionNum:	 {value: 3},
 	/*******************************************************************/
