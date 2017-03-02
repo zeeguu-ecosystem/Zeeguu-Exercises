@@ -12,7 +12,7 @@ def index():
 	
 @app.route('/get-ex')
 def getex():
-    return app.send_static_file('template/index.html')
+    return render_template('test.html')
 
 @app.route('/ex2')
 def getex2():
