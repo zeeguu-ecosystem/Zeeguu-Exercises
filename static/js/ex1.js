@@ -67,5 +67,5 @@ Ex1.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/	
 	description: {value: "Find the word in the context:"},
-	customTemplateURL: {value: '../static/template/ex1.html'},	
+	customTemplateURL: {value: 'static/template/ex1.html'},	
 });
