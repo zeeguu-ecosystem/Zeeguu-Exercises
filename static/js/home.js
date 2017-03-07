@@ -20,6 +20,7 @@ Home.prototype = {
 			  ],
 	currentGenerator: 0,
 	eventFunc: 0,
+	creditsOn: false,
 	/*********************** General Functions ***************************/	
 	/**
 	*	Loads the HTML exercise template from static
@@ -43,8 +44,10 @@ Home.prototype = {
 	*	Saves the dom 
 	**/
 	cacheDom: function(){
-		this.$elem 			= $("#home-container");		
+		this.$elem 			= $("#home-body");		
 		this.$exCards 		= this.$elem.find("#exercieses-cards");	
+		this.$attribution 	= this.$elem.find("#attribution");	
+		this.$credits 		= this.$elem.find("#credits");	
 	},
 	
 	
@@ -78,10 +81,24 @@ Home.prototype = {
 		//Bind UI action of button clicks to the function
 		var exs = this.$exCards.children();
 		
+		//Bind UI action of credits to the function		
+		var _this = this;		
+		this.$credits.on("click", _this.giveCredits.bind(this));
+		
 		for(var i = 0; i<exs.length; i++){
 			var id = exs[i].getAttribute("ex-id");
 			$(exs[i]).on("click", this.newEx.bind(this,id));
 		}	
+	},
+	
+	giveCredits: function(){
+		if(this.creditsOn){
+			this.creditsOn = false;
+			this.$attribution.addClass("hide");
+			return;
+		}
+		this.creditsOn = true;
+		this.$attribution.removeClass("hide");
 	},
 	
 	generateEx: function(){		
