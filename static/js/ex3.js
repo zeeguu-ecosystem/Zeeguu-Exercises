@@ -139,13 +139,13 @@ function Ex3(data,index,size){
 	// Populates the buttons
 	this.populateButtons = function(){	
 		//Random options
-		var idxs = randomNums(this.data.length-1);
+		var idxs = this.randomNums(this.data.length-1);
 		var _this = this;
 		// random numbers between 1 and 3
-	     choices  = randomNums(3);
+	     choices  = this.randomNums(3);
 		 
 		// random numbers between 4 and 6
-		 answers = randomNums(3);
+		 answers = this.randomNums(3);
 		for (var i=0; i<answers.length; i++){
 			answers[i] = answers[i] + 3;
 		}
@@ -189,11 +189,10 @@ function Ex3(data,index,size){
 	};
 	
 	// Generates an array of random numbers
-	randomNums = function(size){
+	this.randomNums = function(size){
 	var arr = []
 		while(arr.length < size){
 			var randomnumber = Math.ceil(Math.random()*size)
-			if(arr.indexOf(randomnumber) > -1) continue;
 			arr[arr.length] = randomnumber;
 		}
 	return arr;
