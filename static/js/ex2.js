@@ -42,7 +42,7 @@ function Ex2(data,index,size){
 		var _this = this;
 		
 		//Random options	
-		var idxs = randomNums(this.data.length-1);
+		var idxs = this.randomNumsInRange(2,this.data.length-1);
 		this.btns = randomNums(this.optionNum);
 		
 		
@@ -89,6 +89,20 @@ function Ex2(data,index,size){
 		}
 		return arr;
 	};
+	
+	// Generates an array of random numbers of given size
+	// @param size:  defines how many random numbers we want
+	// @param range: defines the upper limit of the numbers: [1,range]
+	this.randomNumsInRange = function(size,range){
+		var arr = [];	
+		while(arr.length < size){
+			var randomnumber = Math.ceil(Math.random()*range);	
+			if((arr.indexOf(randomnumber) > -1) || randomnumber==this.index) continue;
+			arr[arr.length] = randomnumber;
+		}		
+		return arr;
+	};
+	
 	
 	this.generateContext = function(){
 		var contextString = this.data[this.index].context;
