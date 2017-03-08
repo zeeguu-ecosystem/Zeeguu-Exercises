@@ -61,10 +61,24 @@ Generator.prototype = {
 		this.size = this.calcSize(this.set,this.set.length);			
 		ProgressBar.init(0,this.size);
 		$.when(this.getBookmarks()).done(function (ldata) {		
-			_this.data = ldata; 												
+			_this.data = (ldata); 												
 			_this._constructor();	
 		});			
 	},
+	
+	filterArray: function(bookmarksData)
+	{		
+		for(var i = 0; i< bookmarksData.length;i++){
+			var tempIdx = indexOf(bookmarksData[i]);
+			if(tempIdx == -1 || tempIdx == i){
+				continue;
+			}
+			bookmarksData.splice(i, 1);
+		}
+		console.log(bookmarksData);
+		return bookmarksData;
+	},
+		
 	
 	/**
 	*	The main constructor
