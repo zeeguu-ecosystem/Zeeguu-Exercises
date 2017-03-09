@@ -98,3 +98,4 @@ Ex4.prototype = Object.create(Exercise.prototype, {
 	description: {value: "Translate the word given in the context."},
 	customTemplateURL: {value: 'static/template/ex4.html'},	
 });
+
