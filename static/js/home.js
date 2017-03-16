@@ -15,7 +15,7 @@ Home.prototype = {
 			  {name: "Translate",	    exID: [[4,6]], 							info: 'Translate the word given in the context',icon: 'static/img/icons/translator.svg', 	time: 2},			  
 			  {name: "Short Practice",  exID: [[1,3],[2,3]], 					info: 'General exercise for short practice',	icon: 'static/img/icons/placeholder.svg',	time: 3},
 			  {name: "Long Practice",   exID: [[1,3],[2,3],[3,3],[4,3]],		info: 'General exerciese for short practice', 	icon: 'static/img/icons/placeholder.svg',	time: 4},
-			  {name: "Random",   		exID: [[2,3],[1,3],[3,3],[4,3][1,3]], 	info: 'Repeat via random exercises', 			icon: 'static/img/icons/shuffle.svg',		time: 6},
+			  {name: "Random",   		exID: [[2,3],[1,3],[3,3],[4,3],[1,3]], 	info: 'Repeat via random exercises', 			icon: 'static/img/icons/shuffle.svg',		time: 6},
 			  
 			  ],
 	currentGenerator: 0,

@@ -142,10 +142,10 @@ function Ex3(data,index,size){
 		var idxs = this.randomNumsInRange(2,this.data.length-1);
 		var _this = this;
 		// random numbers between 1 and 3
-	    choices  = this.randomNums(3);
+	    choices  = this.arrayWithRandomNumsUpTo(3);
 		 
 		// random numbers between 4 and 6
-		 answers = this.randomNums(3);
+		 answers = this.arrayWithRandomNumsUpTo(3);
 		for (var i=0; i<answers.length; i++){
 			answers[i] = answers[i] + 3;
 		}
@@ -156,9 +156,6 @@ function Ex3(data,index,size){
 			_this["$btn"+answer].text(valueTo);
 		}
 		
-/* 		console.log(choices[0] + " -- " + answers[0] + " have " + this.data[this.index].from + " - " + this.data[this.index].to);
-		console.log(choices[1] + " -- " + answers[1] + " have " + this.data[idxs[0]].from + " - " + this.data[idxs[0]].to);
-		console.log(choices[2] + " -- " + answers[2] + " have " + this.data[idxs[1]].from + " - " + this.data[idxs[1]].to); */
 		match2Buttons(choices[0],answers[0],this.data[this.index].from,this.data[this.index].to);
 		match2Buttons(choices[1],answers[1],this.data[idxs[0]].from,this.data[idxs[0]].to);
 		match2Buttons(choices[2],answers[2],this.data[idxs[1]].from,this.data[idxs[1]].to);
@@ -190,10 +187,11 @@ function Ex3(data,index,size){
 		return false;
 	};
 	
-	// Generates an array of random numbers of given size
-	// @param size: defines how many random numbers we want
-	//				the resulted random numbers will in the range of [1,size]
-	this.randomNums = function(size){
+	/** Generates an array of random numbers of given size
+	* @param size: defines how many random numbers we want
+	*				the resulted random numbers will in the range of [1,size]
+	*/
+	this.arrayWithRandomNumsUpTo = function(size){
 		var arr = [];	
 		while(arr.length < size){
 			var randomnumber = Math.ceil(Math.random()*size);	
@@ -203,9 +201,10 @@ function Ex3(data,index,size){
 		return arr;
 	};
 	
-	// Generates an array of random numbers of given size
-	// @param size:  defines how many random numbers we want
-	// @param range: defines the upper limit of the numbers: [1,range]
+	/** Generates an array of random numbers of given size
+	* @param size:  defines how many random numbers we want
+	* @param range: defines the upper limit of the numbers: [1,range]
+	*/
 	this.randomNumsInRange = function(size,range){
 		var arr = [];	
 		while(arr.length < size){

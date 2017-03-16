@@ -12,36 +12,42 @@
 				a.appendChild(r);
 			})(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
 		</script>
+		<!-- Add Page Title -->	
+		<title>Zeeguu Practice</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+		<!-- Add External styles -->	
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">	
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">	
-		<link rel="stylesheet" href= "../static/styles/custom.css">			
-		<link rel="stylesheet" type="text/css" href="../static/styles/sweetalert.css">
-		<link rel="stylesheet" type="text/css" href="../static/styles/success.css">
-		<link rel="stylesheet" type="text/css" href="../static/styles/loader.css">
-		<link rel="icon" href="../static/img/favicon.png" type="image/x-icon"/>
-		
-		
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300">	
+		<!-- Add Local styles -->		
+		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/custom.css') }}" 	type= "text/css">
+		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/sweetalert.css') }}" type= "text/css">
+		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/success.css') }}" 	type= "text/css">
+		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/loader.css') }}" 	type= "text/css">
+		<!-- Add favicon -->
+		<link rel="icon" 	   href= "{{ url_for('static',filename='img/favicon.png') }}"  		type="image/x-icon"/>		
+		<!-- Add External scripts -->	
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
 	</head>	
 	<body class = "home-body">	
 	
 	<div id = "main-content">		
 	</div>	
 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
-	<script src="../static/js/home.js"></script>	
-	<script src="../static/js/generator.js"></script>	
-	<script src="../static/js/pubsub.js"></script>	
-	<script src="../static/js/exercise.js"></script>	
-	<script src="../static/js/ex1.js"></script>	
-	<script src="../static/js/ex2.js"></script>
-	<script src="../static/js/ex3.js"></script>
-	<script src="../static/js/ex4.js"></script>		
-	<script src="../static/js/main2.js"></script>	
-	<script src="../static/js/dist/sweetalert.min.js"></script>	
-	<script src="../static/js/util.js"></script>
-	<script src="../static/js/progress_bar.js"></script>
+	<!-- Add Local scripts -->	
+	<script src="{{ url_for('static',filename='js/home.js') }}" 			></script>	
+	<script src="{{ url_for('static',filename='js/generator.js') }}"		></script>	
+	<script src="{{ url_for('static',filename='js/pubsub.js') }}"			></script>	
+	<script src="{{ url_for('static',filename='js/exercise.js') }}"			></script>	
+	<script src="{{ url_for('static',filename='js/ex1.js') }}"				></script>	
+	<script src="{{ url_for('static',filename='js/ex2.js') }}"				></script>
+	<script src="{{ url_for('static',filename='js/ex3.js') }}"				></script>
+	<script src="{{ url_for('static',filename='js/ex4.js') }}"				></script>		
+	<script src="{{ url_for('static',filename='js/main2.js') }}"				></script>	
+	<script src="{{ url_for('static',filename='js/dist/sweetalert.min.js') }}"></script>	
+	<script src="{{ url_for('static',filename='js/util.js') }}"				></script>
+	<script src="{{ url_for('static',filename='js/progress_bar.js') }}"		></script>
 	</body>
 </html>

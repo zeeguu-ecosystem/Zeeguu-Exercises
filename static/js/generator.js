@@ -136,7 +136,7 @@ Generator.prototype = {
 	**/
 	submitResults: function(){
 		for(var i = 0; i< this.data.length;i++){
-			$.post(this.submitResutsUrl+this.data[i].id+"?session="+34563456);		
+			$.post(this.submitResutsUrl+this.data[i].id+"?session="+this.session);		
 
 		}
 	},
