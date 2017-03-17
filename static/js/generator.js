@@ -18,6 +18,8 @@ Generator.prototype = {
 	session: 34563456  , //for now hardcoded session number 34563456 or 11010001
 	bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
 	templateURL: 'static/template/exercise.html',	
+	submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",
+
 	
 	/**
 	*	Saves the common dom in chache
@@ -60,10 +62,24 @@ Generator.prototype = {
 		this.size = this.calcSize(this.set,this.set.length);			
 		ProgressBar.init(0,this.size);
 		$.when(this.getBookmarks()).done(function (ldata) {		
-			_this.data = ldata; 												
+			_this.data = (ldata); 												
 			_this._constructor();	
 		});			
 	},
+	
+	filterArray: function(bookmarksData)
+	{		
+		for(var i = 0; i< bookmarksData.length;i++){
+			var tempIdx = indexOf(bookmarksData[i]);
+			if(tempIdx == -1 || tempIdx == i){
+				continue;
+			}
+			bookmarksData.splice(i, 1);
+		}
+		console.log(bookmarksData);
+		return bookmarksData;
+	},
+		
 	
 	/**
 	*	The main constructor
@@ -120,7 +136,8 @@ Generator.prototype = {
 	**/
 	submitResults: function(){
 		for(var i = 0; i< this.data.length;i++){
-			$.post("https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/"+this.data[i].id+"?session="+34563456);		
+			$.post(this.submitResutsUrl+this.data[i].id+"?session="+this.session);		
+
 		}
 	},
 	

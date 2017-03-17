@@ -8,9 +8,7 @@ function Ex1(data,index,size){
 	this.init(data,index,size);
 	
 	/** @Override */
-	this.cacheCustomDom = function(){
-
-		console.log('I am called');		
+	this.cacheCustomDom = function(){	
 		this.$to 					= this.$elem.find("#ex-to");
 		this.$context 				= this.$elem.find("#ex-context");
 		this.$input 				= this.$elem.find("#ex-main-input");
@@ -69,3 +67,4 @@ Ex1.prototype = Object.create(Exercise.prototype, {
 	description: {value: "Find the word in the context:"},
 	customTemplateURL: {value: 'static/template/ex1.html'},	
 });
+

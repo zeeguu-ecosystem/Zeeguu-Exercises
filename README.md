@@ -1,37 +1,66 @@
-## Welcome to GitHub Pages
+Usage
+=====
 
-You can use the [editor on GitHub](https://github.com/martinavagyan/practice-as-a-service/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+How to run the code on local machine
+------------------------------------
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+At first clone the repository from
+<https://github.com/martinavagyan/zeeguu-exercises.git>  
+In order to run the code on the local machine, we need to install the
+following dependencies: Python Virtual environment, *F**l**a**s**k*,
+*G**u**n**i**c**o**r**n*, *R**e**q**u**e**s**t**s*.  
+  
+The following tutorial shows how to install
+*v**i**r**t**u**a**l**e**n**v* and *F**l**a**s**k*:  
+<http://flask.pocoo.org/docs/0.12/installation/>  
+  
+After installing virtual environment in the project folder, activate it
+using:
 
-### Markdown
+    venv/Scripts/activate
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+***Make sure the environment is activated before proceeding with the
+instructions***  
+  
+To install *g**u**n**i**c**o**r**n* use the following command:
 
-```markdown
-Syntax highlighted code block
+    pip install gunicorn
 
-# Header 1
-## Header 2
-### Header 3
+More details here:  
+<http://docs.gunicorn.org/en/stable/install.html>  
+  
+To install the *r**e**q**u**e**s**t**s* package simply do:
 
-- Bulleted
-- List
+    pip install requests
 
-1. Numbered
-2. List
+   
+Afterwards, you need to (re)generate the requirements file:
 
-**Bold** and _Italic_ and `Code` text
+    pip freeze > requirements.txt 
 
-[Link](url) and ![Image](src)
-```
+And then save it:
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+    pip install -r requirements.txt
 
-### Jekyll Themes
+   
+A batch file (*b**a**t**c**h**f**i**l**e*.*b**a**t*) is provided to
+easily activate the virtual environment and start the local host, given
+that all the previous installations are successfully completed.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/martinavagyan/practice-as-a-service/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Heroku Deployment
+-----------------
 
-### Support or Contact
+The code is already deployed on the *H**e**r**o**k**u* server[1]. The
+deployment is done through Github.  
+The link to our app:  
+[zeeguu.herokuapp.com]  
+The repository connected to heroku is:  
+<https://github.com/martinavagyan/practice-as-a-service>  
+In order to contribute to the project you can fork the repository,
+connect it to heroku to have your own running version.  
+How to deploy a Phyton app on Heroku:  
+<https://devcenter.heroku.com/articles/getting-started-with-python#introduction>  
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+[1] https://www.heroku.com/
+
+  [zeeguu.herokuapp.com]: zeeguu.herokuapp.com

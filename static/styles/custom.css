@@ -316,4 +316,16 @@ body
   outline: none important!;
 }
 
+#footnotes
+{
+	text-align:center;
+	color: grey;
+	margin:auto;
+}
+#footnotes a
+{
+	cursor:pointer;	
+	color:grey;
+}
+
 
