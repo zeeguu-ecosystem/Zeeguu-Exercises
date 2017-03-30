@@ -155,6 +155,7 @@ Generator.prototype = {
 	**/
 	onExSetComplete: function (){				
 		var _this = this;
+		var redirect = _this.distractionShield();
 		swal({
 			  title: "You rock!",
 			  text: "That took less than "+ _this.calcSessionTime() + ". practice more?",
@@ -162,7 +163,7 @@ Generator.prototype = {
 			  showCancelButton: true,
 			  confirmButtonColor: "#7eb530",
 			  confirmButtonText: "Let's do it!",
-			  cancelButtonText: "Back to home!",
+			  cancelButtonText: redirect!=null?"Take me away!":"Go home!",
 			  closeOnConfirm: true
 			},
 			function(isConfirm){
@@ -171,6 +172,9 @@ Generator.prototype = {
 					return;
 				}				
 				_this.terminateGenerator();
+				if (redirect!=null) {
+				    window.location = redirect;
+				}
 			});
 	},
 	
@@ -226,5 +230,17 @@ Generator.prototype = {
 			this.$container.removeClass('hide');
 			this.$loader.addClass('hide');
 		}
+	},
+	
+	/**
+	* Extraction of redirect url for Distraction Shield
+	**/
+	distractionShield: function() {
+        url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+        if (!results || !results[2]) return null;
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
 	},
 }	
