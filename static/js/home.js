@@ -5,8 +5,8 @@ Home = function(){
 Home.prototype = {
 	
 	/************************** SETTINGS ********************************/	
-	homeTemplateURL: 'static/template/home.html',
-	cardTemplateURL: 'static/template/card.html',
+	homeTemplateURL: "{{ url_for('static',filename='template/home.html') }}",
+	cardTemplateURL: "{{ url_for('static',filename='template/card.html') }}",
 	defaultIcon: 	 'img/icons/placeholder.svg',
 	exNames: [
 			  {name: "Find",            exID: [[1,6]], 							info: 'Find the word in the context', 			icon: 'static/img/icons/search-engine.svg',  time: 2},
@@ -55,6 +55,8 @@ Home.prototype = {
 	*	Exercise initialaizer
 	**/
 	init: function(){	
+	
+		console.log(this.homeTemplateURL);
 		var _this = this;
 		
 		// "bind" event

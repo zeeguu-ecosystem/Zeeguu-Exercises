@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- Current session -->
+		<script>
+			var sessionID =  {{ sessionID }};
+			var exerciseTemplate =  "{{ url_for('static',filename='template/exercise.html') }}";	
+			var homeTemplate =  	"{{ url_for('static',filename='template/home.html') }}";	
+			var cardTemplate = 		"{{ url_for('static',filename='template/card.html') }}";				
+		</script>
+		
 		<!-- Hotjar Tracking Code for https://zeeguu.herokuapp.com/ -->
 		<script>
 			(function(h,o,t,j,a,r){
