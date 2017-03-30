@@ -8,7 +8,6 @@ from flask import render_template
 
 @app.route('/')
 def index():
-    print "test!"
     return render_template('index.html')
 	
 @app.route('/get-ex')
