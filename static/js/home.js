@@ -5,8 +5,6 @@ Home = function(){
 Home.prototype = {
 	
 	/************************** SETTINGS ********************************/	
-	homeTemplateURL: "{{ url_for('static',filename='template/home.html') }}",
-	cardTemplateURL: "{{ url_for('static',filename='template/card.html') }}",
 	defaultIcon: 	 'img/icons/placeholder.svg',
 	exNames: [
 			  {name: "Find",            exID: [[1,6]], 							info: 'Find the word in the context', 			icon: 'static/img/icons/search-engine.svg',  time: 2},
