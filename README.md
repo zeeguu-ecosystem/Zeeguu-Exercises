@@ -13,6 +13,10 @@ following dependencies: Python Virtual environment, *F**l**a**s**k*,
 The following tutorial shows how to install
 *v**i**r**t**u**a**l**e**n**v* and *F**l**a**s**k*:  
 <http://flask.pocoo.org/docs/0.12/installation/>  
+
+Note: to install virtual enviroment in windows simply type:  
+
+    virtualenv < name of the folder>
   
 After installing virtual environment in the project folder, activate it
 using:
