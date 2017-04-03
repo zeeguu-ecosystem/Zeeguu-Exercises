@@ -5,6 +5,8 @@ Home = function(){
 Home.prototype = {
 	
 	/************************** SETTINGS ********************************/	
+	homeTemplateURL: 'static/template/home.html',
+	cardTemplateURL: 'static/template/card.html',
 	defaultIcon: 	 'img/icons/placeholder.svg',
 	exNames: [
 			  {name: "Find",            exID: [[1,6]], 							info: 'Find the word in the context', 			icon: 'static/img/icons/search-engine.svg',  time: 2},
