@@ -22,16 +22,16 @@ def with_session(f):
 	"""
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
-		print request.args.get
+		print (request.args.get)
 		request.sessionID = None
 		if request.args.get('sessionID'):
-			print "Session is supplied as a query string"
+			print ("Session is supplied as a query string")
 			request.sessionID = int(request.args['sessionID'])
 		elif 'sessionID' in request.cookies:
-			print "Session is retrived from cookies"
+			print ("Session is retrived from cookies")
 			request.sessionID = request.cookies.get('sessionID')
 		else:
-			print "Session is default for testing"
+			print ("Session is default for testing")
 			request.sessionID = DEFAULT_SESSION
 		return f(*args, **kwargs)
 	return decorated_function
