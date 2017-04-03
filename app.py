@@ -39,12 +39,18 @@ def with_session(f):
 @app.route('/', methods=['GET'])
 @with_session
 def index():	
+	"""
+	Main entry point
+	"""
 	return home_page(request.sessionID)
 
-@app.route('/get-ex/', methods=['GET'])
-@with_session
+
+@app.route('/get-ex', methods=['GET'])
 def getex():
-	return test_page(request.sessionID)
+	"""
+	Temporary route for distraction shield testing
+	"""
+	return test_page(DEFAULT_SESSION)
 
 def home_page(session_id):
 	return render_template('index.html', sessionID=session_id)
