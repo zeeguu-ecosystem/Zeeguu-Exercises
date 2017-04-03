@@ -1,6 +1,6 @@
+import functools
 from flask import Flask, render_template, make_response, request, redirect, g, url_for
 import requests
-import functools
 from functools import wraps
 from flask import render_template
 
@@ -22,6 +22,7 @@ def with_session(f):
 	"""
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
+		print request.args.get
 		request.sessionID = None
 		if request.args.get('sessionID'):
 			print "Session is supplied as a query string"
@@ -40,12 +41,18 @@ def with_session(f):
 def index():	
 	return home_page(request.sessionID)
 
-def home_page(session_id):
-    return render_template('index.html', sessionID=session_id)
-	
-@app.route('/get-ex')
+@app.route('/get-ex/', methods=['GET'])
+@with_session
 def getex():
-    return render_template('test.html')
+	return test_page(request.sessionID)
+
+def home_page(session_id):
+	return render_template('index.html', sessionID=session_id)
+	
+def test_page(session_id):
+	return render_template('test.html', sessionID=session_id)
+	
+
 
 @app.route('/ex2')
 def getex2():
