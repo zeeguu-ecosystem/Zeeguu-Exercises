@@ -6,6 +6,7 @@ How to run the code on local machine
 
 At first clone the repository from
 <https://github.com/martinavagyan/zeeguu-exercises.git>  
+Note: you need to have python 2.7 installed in your machine.
 In order to run the code on the local machine, we need to install the
 following dependencies: Python Virtual environment, *F**l**a**s**k*,
 *G**u**n**i**c**o**r**n*, *R**e**q**u**e**s**t**s*.  

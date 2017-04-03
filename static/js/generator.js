@@ -15,7 +15,7 @@ Generator.prototype = {
 	size: 0,		//total count of bookmakrs
 	index: 0,		//current index from set
 	startTime: 0,	
-	session: sessionID, //for now hardcoded session number 34563456 or 11010001
+	session: sessionID, //Example of session id 34563456 or 11010001
 	bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
 	templateURL: 'static/template/exercise.html',	
 	submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",

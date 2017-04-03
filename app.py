@@ -4,30 +4,40 @@ import functools
 from functools import wraps
 from flask import render_template
 
+"""
+The default_session is only used for testing purposes
+Alternative: 11010001
+"""
+DEFAULT_SESSION = '34563456'
+
 app = Flask(__name__)
 
 def with_session(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        request.sessionID = None
-       	if request.args.get('sessionID'):
-			print "section 1"
+	"""
+	Decorator for checking sessionID
+	- query string
+	- cookie parameter
+	- defualt_session for tests
+	Example: http://127.0.0.1:5000/?sessionID=11010001
+	"""
+	@wraps(f)
+	def decorated_function(*args, **kwargs):
+		request.sessionID = None
+		if request.args.get('sessionID'):
+			print "Session is supplied as a query string"
 			request.sessionID = int(request.args['sessionID'])
-        elif 'sessionID' in request.cookies:
-			print "section 2"
+		elif 'sessionID' in request.cookies:
+			print "Session is retrived from cookies"
 			request.sessionID = request.cookies.get('sessionID')
-        else:
-			print "section 3"
-			request.sessionID = '11010001'
-        return f(*args, **kwargs)
-    return decorated_function
+		else:
+			print "Session is default for testing"
+			request.sessionID = DEFAULT_SESSION
+		return f(*args, **kwargs)
+	return decorated_function
 
 @app.route('/', methods=['GET'])
 @with_session
 def index():	
-	print request.args
-	print request.cookies
-	print request.sessionID	
 	return home_page(request.sessionID)
 
 	
