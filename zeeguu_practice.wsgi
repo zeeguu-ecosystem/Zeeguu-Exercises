@@ -9,3 +9,5 @@ sys.path.append(dir)
  # sys.path i read from: http://www.jakowicz.com/flask-apache-wsgi/
 
 from app import app as application
+application.config['DEBUG']=True
+print ("PRACTICE: started the service")

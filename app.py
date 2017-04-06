@@ -46,11 +46,12 @@ def index():
 
 
 @app.route('/get-ex', methods=['GET'])
+@with_session
 def getex():
 	"""
 	Temporary route for distraction shield testing
 	"""
-	return test_page(DEFAULT_SESSION)
+	return test_page(request.sessionID)
 
 def home_page(session_id):
 	return render_template('index.html', sessionID=session_id)
