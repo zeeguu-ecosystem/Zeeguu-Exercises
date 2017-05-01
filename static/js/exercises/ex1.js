@@ -3,6 +3,11 @@
  *  @customize it by using prototypal inheritance 
 **/
 
+import $ from 'jquery';
+import Exercise from './exercise';
+import Util from '../util';
+
+
 function Ex1(data,index,size){
 	
 	this.init(data,index,size);
@@ -68,3 +73,4 @@ Ex1.prototype = Object.create(Exercise.prototype, {
 	customTemplateURL: {value: 'static/template/ex1.html'},	
 });
 
+export default Ex1;

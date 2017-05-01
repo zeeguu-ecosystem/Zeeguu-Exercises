@@ -2,6 +2,11 @@
  *  @initialize it using: new Exercise();
  *  @customize it by using prototypal inheritance 
 **/
+
+import $ from 'jquery';
+import { default as swal } from 'sweetalert2';
+import events from '../pubsub';
+
 Exercise = function(data,index,size){
 	this.init(data,index,size);	
 	//TODO unbind method
@@ -184,3 +189,5 @@ Exercise.prototype = {
 		}, 2000);	
 	},	
 };
+
+export default Exercise;

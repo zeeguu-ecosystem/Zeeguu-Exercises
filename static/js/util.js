@@ -40,3 +40,4 @@ var extendObject = function(child,parent){
 	child.prototype.constructor = child;
 }
 
+export default Util;

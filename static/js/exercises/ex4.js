@@ -3,6 +3,10 @@
  *  @customize it by using prototypal inheritance 
 **/
 
+import $ from 'jquery';
+import Exercise from './exercise';
+import Util from '../util';
+
 function Ex4(data,index,size){
 	
 	this.init(data,index,size);
@@ -98,4 +102,6 @@ Ex4.prototype = Object.create(Exercise.prototype, {
 	description: {value: "Translate the word given in the context."},
 	customTemplateURL: {value: 'static/template/ex4.html'},	
 });
+
+export default Ex4;
 

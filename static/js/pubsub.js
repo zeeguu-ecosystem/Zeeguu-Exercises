@@ -33,3 +33,5 @@ var events = (function() {
     };
 
 })();
+
+export default events;

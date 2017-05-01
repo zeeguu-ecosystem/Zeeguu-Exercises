@@ -3,6 +3,9 @@
  *  @customize it by using prototypal inheritance 
 **/
 
+import $ from 'jquery';
+import Exercise from "./exercise";
+
 function Ex3(data,index,size){
 	this.init(data,index,size);
 	
@@ -230,3 +233,5 @@ Ex3.prototype = Object.create(Exercise.prototype, {
 	hints: {writable:true, value:0}				// max number of possible hints is 1
 	/*******************************************************************/
 });
+
+export default Ex3;

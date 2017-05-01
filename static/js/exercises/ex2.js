@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import Exercise from './exercise';
+
 function Ex2(data,index,size){
 	this.init(data,index,size);
 	
@@ -137,3 +140,5 @@ Ex2.prototype = Object.create(Exercise.prototype, {
 	optionNum:	 {value: 3},
 	/*******************************************************************/
 });
+
+export default Ex2;

@@ -1,3 +1,7 @@
+import $ from 'jquery';
+import Generator from './generator';
+import events from './pubsub';
+
 Home = function(){
 	this.init();
 };
@@ -132,3 +136,6 @@ Home.prototype = {
 		this.currentGenerator = new Generator(this.exArrayParser(exID));
 	},
 };
+
+export default Home;
+
