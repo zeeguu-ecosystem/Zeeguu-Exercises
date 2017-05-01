@@ -137,7 +137,6 @@ Generator.prototype = {
     submitResults: function(){
         for(var i = 0; i< this.data.length;i++){
             $.post(this.submitResutsUrl+this.data[i].id+"?session="+this.session);
-
         }
     },
 
@@ -156,6 +155,7 @@ Generator.prototype = {
     onExSetComplete: function (){
         var _this = this;
         var redirect = _this.distractionShieldOriginalDestination();
+		_this.submitResults();
         swal({
                 title: "You rock!",
                 text: "That took less than "+ _this.calcSessionTime() + ". practice more?",

@@ -15,7 +15,12 @@ Exercise.prototype = {
 	index: 0,
 	startIndex: 0,
 	size: 0, //default number of bookmarks
-	description:  "Solve the exercise",  //default description
+	description:  "Solve the exercise",  //default description	
+    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/",
+	correctSolution: "Correct",
+	wrongSolution: "Wrong",
+	tempParam: "/Recognize/1000/",
+	session: sessionID  , //Example of session id 34563456 or 11010001
 	
 	/*********************** General Functions ***************************/	
 	/**
@@ -95,8 +100,9 @@ Exercise.prototype = {
 		if (this.successCondition(chosenWord)){		
 			this.onSuccess();
 			return;
-		}	
-		this.wrongAnswerAnimation();					
+		}			
+		this.wrongAnswerAnimation();
+		this.submitResult(this.data[this.index].id,this.wrongSolution);
 	},
 	
 	/**
@@ -105,6 +111,8 @@ Exercise.prototype = {
 	onSuccess: function(){		
 		var _this = this;
 		this.animateSuccess();
+		//Submit the result of translation
+		this.submitResult(this.data[this.index].id,this.correctSolution);
 		// Notify the observer
 		events.emit('progress');
 		this.index++;
@@ -115,6 +123,14 @@ Exercise.prototype = {
 		}			
 		setTimeout(function() { _this.next(); }, 2000);
 	},
+	
+	/**
+     *	Request the submit to the Zeeguu API
+     **/
+    submitResult: function(id,result){
+        $.post(this.submitResutsUrl+result+this.tempParam+id+"?session="+this.session);
+    },
+
 	
 	
 	/**
