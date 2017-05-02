@@ -16,11 +16,12 @@ Exercise.prototype = {
 	startIndex: 0,
 	size: 0, //default number of bookmarks
 	description:  "Solve the exercise",  //default description	
-    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/",
+    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome",
 	correctSolution: "Correct",
 	wrongSolution: "Wrong",
-	tempParam: "/Recognize/1000/",
+	exType: "Recognize",
 	session: sessionID  , //Example of session id 34563456 or 11010001
+	startTime: 0,
 	
 	/*********************** General Functions ***************************/	
 	/**
@@ -76,7 +77,8 @@ Exercise.prototype = {
 		this.startIndex = index;
 		this.size  = size;			
 		this.setDescription(); 	
-		this.next();
+		this.next();		
+        this.startTime = new Date();
 	},
 		
 	/**
@@ -126,12 +128,13 @@ Exercise.prototype = {
 	
 	/**
      *	Request the submit to the Zeeguu API
+	 *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 
      **/
-    submitResult: function(id,result){
-        $.post(this.submitResutsUrl+result+this.tempParam+id+"?session="+this.session);
+    submitResult: function(id,exResult){
+		var exTime = Util.calcTimeInMilliseconds(this.startTime);
+        $.post(this.submitResutsUrl + "/" + exResult + "/" + this.exType + "/" + exTime + "/" + id + "?session="+this.session);
     },
 
-	
 	
 	/**
 	*	Removes focus of page elements

@@ -31,6 +31,26 @@ var ut,Util = {
 		}
 		return t;
 	},	
+	
+	/**
+     *	Calculate session time in minutes
+	 *	@return string with appended minute
+     **/
+    calcTimeInMinutes: function (startTime){
+        var endTime = new Date();
+        var total = endTime.getMinutes()-startTime.getMinutes();
+        return (total <= 1)?"1 minute":total + " minutes";
+    },
+	
+	/**
+     *	Calculate exercise time in milliseconds
+	 *	@return milliseconds
+     **/
+    calcTimeInMilliseconds: function (startTime){
+        var endTime = new Date();
+        var total = endTime.getTime() - startTime.getTime();
+        return total;
+    },
 }
 
 var extendObject = function(child,parent){
