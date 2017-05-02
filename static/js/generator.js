@@ -137,18 +137,10 @@ Generator.prototype = {
     submitResults: function(){
         for(var i = 0; i< this.data.length;i++){
             $.post(this.submitResutsUrl+this.data[i].id+"?session="+this.session);
-
         }
     },
 
-    /**
-     *	Check selected answer with success condition
-     **/
-    calcSessionTime: function (){
-        var endTime = new Date();
-        var total = endTime.getMinutes()-this.startTime.getMinutes();
-        return (total <= 1)?"1 minute":total + " minutes";
-    },
+    
 
     /**
      *	When the ex are done perform an action
@@ -156,9 +148,10 @@ Generator.prototype = {
     onExSetComplete: function (){
         var _this = this;
         var redirect = _this.distractionShieldOriginalDestination();
+		_this.submitResults();
         swal({
                 title: "You rock!",
-                text: "That took less than "+ _this.calcSessionTime() + ". practice more?",
+                text: "That took less than "+ Util.calcTimeInMinutes(_this.startTime) + ". practice more?",
                 type: "success",
                 showCancelButton: true,
                 confirmButtonColor: "#7eb530",
