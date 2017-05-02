@@ -6,8 +6,8 @@ var inProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
 	entry: {
-		mainEntry: './static/js/main.js',
-		testEntry: './static/js/main2.js',
+		mainEntry: './static/js/app/main.js',
+		testEntry: './static/js/app/test/main2.js',
     },
 	output: {		
 		path: path.join(__dirname, './static/js/dist'),
