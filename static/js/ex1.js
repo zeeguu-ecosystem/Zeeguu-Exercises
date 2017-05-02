@@ -5,7 +5,7 @@
 
 import $ from 'jquery';
 import Exercise from './exercise';
-import Util from '../util';
+import Util from './util';
 
 
 function Ex1(data,index,size){
@@ -32,10 +32,10 @@ function Ex1(data,index,size){
 		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
 		
 		//Bind UI Text click		
-		this.$clickableText.on("click",updateInput.bind(this));
+		this.$clickableText.on("click",_this.updateInput.bind(this));
 		
 		// Bind UI Enter Key
-		  this.$input.keyup(enterKeyup.bind(this));
+		  this.$input.keyup(_this.enterKeyup.bind(this));
 	}
 	
 	/** @Override */
@@ -45,12 +45,12 @@ function Ex1(data,index,size){
 		this.$input.val("");
 	}
 	
-	updateInput = function() {
+	this.updateInput = function() {
 		var t = Util.getSelectedText();
 		this.$input.val(t);
 	}
 	
-	enterKeyup = function(event){
+	this.enterKeyup = function(event){
 		if(event.keyCode == 13){
 			this.$checkAnswer.click();
 		}

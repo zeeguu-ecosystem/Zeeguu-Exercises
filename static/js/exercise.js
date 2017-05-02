@@ -4,10 +4,10 @@
 **/
 
 import $ from 'jquery';
-import { default as swal } from 'sweetalert2';
-import events from '../pubsub';
+import swal from 'sweetalert';
+import events from './pubsub';
 
-Exercise = function(data,index,size){
+var Exercise = function(data,index,size){
 	this.init(data,index,size);	
 	//TODO unbind method
 };
@@ -163,7 +163,7 @@ Exercise.prototype = {
 	/**
 	*	Animation for wrong solution
 	**/
-	wrongAnswerAnimation: function(){
+	wrongAnswerAnimation: function(){		
 		swal({
 			title: "Wrong answer...",
 			allowOutsideClick: true,

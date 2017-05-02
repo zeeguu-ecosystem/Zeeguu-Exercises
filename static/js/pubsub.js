@@ -1,12 +1,10 @@
 var events = (function() {
-
     var events = {};
 
     function on(eventName, fn) {
         events[eventName] = events[eventName] || [];
         events[eventName].push(fn);
     }
-
     function off(eventName, fn) {
         if (events[eventName]) {
             for (var i = 0; i < events[eventName].length; i++) {
@@ -17,7 +15,6 @@ var events = (function() {
             }
         }
     }
-
     function emit(eventName, data) {
         if (events[eventName]) {
             events[eventName].forEach(function(fn) {
@@ -25,7 +22,6 @@ var events = (function() {
             });
         }
     }
-
     return {
         on: on,
         off: off,

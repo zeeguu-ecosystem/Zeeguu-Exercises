@@ -113,10 +113,7 @@ function Ex3(data,index,size){
 	
 	// Checks the selected buttons
 	this.checkCondition = function(btnID){
-		if((answers.indexOf(btnID) == -1)|| (choices.indexOf(this.chosenButton) == -1)){
-			return (choices.indexOf(btnID) == answers.indexOf(this.chosenButton));
 		}else{
-			return (answers.indexOf(btnID) == choices.indexOf(this.chosenButton));
 		}
 	};
 	
@@ -145,12 +142,8 @@ function Ex3(data,index,size){
 		var idxs = this.randomNumsInRange(2,this.data.length-1);
 		var _this = this;
 		// random numbers between 1 and 3
-	    choices  = this.arrayWithRandomNumsUpTo(3);
 		 
 		// random numbers between 4 and 6
-		 answers = this.arrayWithRandomNumsUpTo(3);
-		for (var i=0; i<answers.length; i++){
-			answers[i] = answers[i] + 3;
 		}
 		
 		//Populate buttons
@@ -159,9 +152,6 @@ function Ex3(data,index,size){
 			_this["$btn"+answer].text(valueTo);
 		}
 		
-		match2Buttons(choices[0],answers[0],this.data[this.index].from,this.data[this.index].to);
-		match2Buttons(choices[1],answers[1],this.data[idxs[0]].from,this.data[idxs[0]].to);
-		match2Buttons(choices[2],answers[2],this.data[idxs[1]].from,this.data[idxs[1]].to);
 	};
 	
 	
@@ -179,9 +169,6 @@ function Ex3(data,index,size){
 	
 	// Disables the buttons given in the hint
 	this.disableHintButtons = function(idx){
-		if(!this.isDisabled(answers[idx])){
-			this.successDisableBtn(choices[idx]);
-			this.successDisableBtn(answers[idx]);
 			this.correctAnswers++;
 			this.hints++;
 			this.endExercise();

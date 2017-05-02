@@ -5,7 +5,6 @@
 
 import $ from 'jquery';
 import Exercise from './exercise';
-import Util from '../util';
 
 function Ex4(data,index,size){
 	
@@ -34,7 +33,6 @@ function Ex4(data,index,size){
 		//this.$clickableText.on("click",updateInput.bind(this));
 		
 		// Bind UI Enter Key
-		  this.$input.keyup(enterKeyup.bind(this));
 	}
 	
 	/** @Override */
@@ -44,12 +42,10 @@ function Ex4(data,index,size){
 		this.$input.val("");
 	}
 	
-	updateInput = function() {
 		var t = Util.getSelectedText();
 		this.$input.val(t);
 	}
 	
-	enterKeyup = function(event){
 		if(event.keyCode == 13){
 			this.$checkAnswer.click();
 		}
@@ -59,7 +55,6 @@ function Ex4(data,index,size){
 		var contextString = this.data[this.index].context;
 		var res = this.data[this.index].from.split(" ");	
 		
-		for (i = 0; i <res.length; i++){
 			contextString = contextString.replace(res[i], res[i].bold());
 		}
 			

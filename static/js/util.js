@@ -5,6 +5,7 @@ var ut,Util = {
 	getSelectedText: function() {
 		// Gets clicked on word (or selected text if text is selected)
 		var t = '';
+		var sel;
 		if (window.getSelection && (sel = window.getSelection()).modify) {
 			var s = window.getSelection();
 			if (s.isCollapsed) {

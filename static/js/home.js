@@ -1,8 +1,9 @@
 import $ from 'jquery';
 import Generator from './generator';
 import events from './pubsub';
+import Mustache from 'mustache';
 
-Home = function(){
+var Home = function(){
 	this.init();
 };
 
