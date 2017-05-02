@@ -4,7 +4,19 @@
  *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
  *  @customize it by using prototypal inheritance
  **/
-Generator = function(set){
+ 
+import $ from 'jquery';
+import Ex1 from './ex1';
+import Ex2 from './ex2';
+import Ex3 from './ex3';
+import Ex4 from './ex4';
+import ProgressBar from './progress_bar';
+import events from './pubsub';
+import swal from 'sweetalert';
+
+
+ 
+var Generator = function(set){
     this.init(set);
 };
 
@@ -199,7 +211,7 @@ Generator.prototype = {
     getBookmarks: function(){
         var _this = this;
         this.loadingAnimation(true);
-        address = this.bookmarksURL+this.size+"?session="+this.session;
+        var address = this.bookmarksURL+this.size+"?session="+this.session;
         return $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -242,3 +254,5 @@ Generator.prototype = {
         return newUrl
     },
 }	
+
+export default Generator;

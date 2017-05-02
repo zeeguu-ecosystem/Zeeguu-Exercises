@@ -2,7 +2,12 @@
  *  @initialize it using: new Exercise();
  *  @customize it by using prototypal inheritance 
 **/
-Exercise = function(data,index,size){
+
+import $ from 'jquery';
+import swal from 'sweetalert';
+import events from './pubsub';
+
+var Exercise = function(data,index,size){
 	this.init(data,index,size);	
 	//TODO unbind method
 };
@@ -177,7 +182,7 @@ Exercise.prototype = {
 	/**
 	*	Animation for wrong solution
 	**/
-	wrongAnswerAnimation: function(){
+	wrongAnswerAnimation: function(){		
 		swal({
 			title: "Wrong answer...",
 			allowOutsideClick: true,
@@ -203,3 +208,5 @@ Exercise.prototype = {
 		}, 2000);	
 	},	
 };
+
+export default Exercise;

@@ -6,9 +6,9 @@ from flask import render_template
 
 """
 The default_session is only used for testing purposes
-Alternative: 11010001
+Alternative: 11010001 34563456
 """
-DEFAULT_SESSION = '34563456'
+DEFAULT_SESSION = '11010001'
 
 app = Flask(__name__)
 
