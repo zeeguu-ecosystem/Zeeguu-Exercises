@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module)))
 
 /***/ }),
 /* 1 */
@@ -10126,7 +10126,7 @@ var _defaultParams2 = _interopRequireWildcard(_defaultParams);
  * Add modal + overlay to DOM
  */
 
-var _injectedHTML = __webpack_require__(13);
+var _injectedHTML = __webpack_require__(12);
 
 var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
 
@@ -10686,9 +10686,9 @@ var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$r
 
 // Handle button events and keyboard events
 
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(11);
+var _handleButton$handleConfirm$handleCancel = __webpack_require__(10);
 
-var _handleKeyDown = __webpack_require__(12);
+var _handleKeyDown = __webpack_require__(11);
 
 var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
@@ -10698,7 +10698,7 @@ var _defaultParams = __webpack_require__(6);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
-var _setParameters = __webpack_require__(14);
+var _setParameters = __webpack_require__(13);
 
 var _setParameters2 = _interopRequireWildcard(_setParameters);
 
@@ -11022,6 +11022,836 @@ exports.default = Util;
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _ex = __webpack_require__(15);
+
+var _ex2 = _interopRequireDefault(_ex);
+
+var _ex3 = __webpack_require__(16);
+
+var _ex4 = _interopRequireDefault(_ex3);
+
+var _ex5 = __webpack_require__(17);
+
+var _ex6 = _interopRequireDefault(_ex5);
+
+var _ex7 = __webpack_require__(18);
+
+var _ex8 = _interopRequireDefault(_ex7);
+
+var _progress_bar = __webpack_require__(19);
+
+var _progress_bar2 = _interopRequireDefault(_progress_bar);
+
+var _pubsub = __webpack_require__(5);
+
+var _pubsub2 = _interopRequireDefault(_pubsub);
+
+var _sweetalert = __webpack_require__(7);
+
+var _sweetalert2 = _interopRequireDefault(_sweetalert);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
+ *  @initialize it using: new Generator(args);
+ *  @param args is matrix of exercise name and number of bookmarks,
+ *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+ *  @customize it by using prototypal inheritance
+ **/
+
+var Generator = function Generator(set) {
+    this.init(set);
+};
+
+Generator.prototype = {
+    /************************** SETTINGS ********************************/
+    data: 0, //bookmakrs from zeeguu api
+    set: 0, //matrix for initialaizer
+    size: 0, //total count of bookmakrs
+    index: 0, //current index from set
+    startTime: 0,
+    session: sessionID, //Example of session id 34563456 or 11010001
+    bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
+    templateURL: 'static/template/exercise.html',
+    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",
+
+    /**
+     *	Saves the common dom in chache
+     **/
+    cacheDom: function cacheDom() {
+        this.$elem = (0, _jquery2.default)("#ex-module");
+        this.$container = this.$elem.find("#ex-container");
+        this.$loader = this.$elem.find('#loader');
+    },
+
+    /**
+     *	Generator initialaizer
+     **/
+    init: function init(set) {
+        this.set = set;
+        var _this = this;
+
+        // "bind" event
+        this.$eventFunc = function () {
+            _this.nextEx();
+        };
+        _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
+
+        // Create the DOM and initialize
+        _jquery2.default.when(this.createDom()).done(function () {
+            _this.cacheDom();
+            _this.start();
+        });
+    },
+
+    restart: function restart() {
+        this.start();
+    },
+
+    /**
+     *	Call to load the data from API
+     **/
+    start: function start() {
+        var _this = this;
+        this.size = this.calcSize(this.set, this.set.length);
+        _progress_bar2.default.init(0, this.size);
+        _jquery2.default.when(this.getBookmarks()).done(function (ldata) {
+            _this.data = ldata;
+            _this._constructor();
+        });
+    },
+
+    filterArray: function filterArray(bookmarksData) {
+        for (var i = 0; i < bookmarksData.length; i++) {
+            var tempIdx = indexOf(bookmarksData[i]);
+            if (tempIdx == -1 || tempIdx == i) {
+                continue;
+            }
+            bookmarksData.splice(i, 1);
+        }
+        console.log(bookmarksData);
+        return bookmarksData;
+    },
+
+    /**
+     *	The main constructor
+     **/
+    _constructor: function _constructor() {
+        this.index = 0;
+        this.startTime = new Date();
+        this.nextEx();
+    },
+
+    /**
+     *	Add Ex here
+     **/
+    nextEx: function nextEx() {
+        if (this.index === this.set.length) {
+            this.onExSetComplete();
+            return;
+        }
+        var ex = this.set[this.index][0];
+        var size = this.set[this.index][1];
+        var startingIndex = this.calcSize(this.set, this.index);
+
+        this.$currentEx = null;
+        delete this.$currentEx;
+        switch (ex) {
+            case 1:
+                this.$currentEx = new _ex2.default(this.data, startingIndex, size);
+                break;
+            case 2:
+                this.$currentEx = new _ex4.default(this.data, startingIndex, size);
+                break;
+            case 3:
+                this.$currentEx = new _ex6.default(this.data, startingIndex, size);
+                break;
+            case 4:
+                this.$currentEx = new _ex8.default(this.data, startingIndex, size);
+                break;
+        }
+
+        this.index++;
+    },
+
+    calcSize: function calcSize(set, length) {
+        var sum = 0;
+        for (var i = 0; i < length; i++) {
+            sum += set[i][1];
+        }
+        return sum;
+    },
+
+    /**
+     *	Request the submit API
+     **/
+    submitResults: function submitResults() {
+        for (var i = 0; i < this.data.length; i++) {
+            _jquery2.default.post(this.submitResutsUrl + this.data[i].id + "?session=" + this.session);
+        }
+    },
+
+    /**
+     *	Check selected answer with success condition
+     **/
+    calcSessionTime: function calcSessionTime() {
+        var endTime = new Date();
+        var total = endTime.getMinutes() - this.startTime.getMinutes();
+        return total <= 1 ? "1 minute" : total + " minutes";
+    },
+
+    /**
+     *	When the ex are done perform an action
+     **/
+    onExSetComplete: function onExSetComplete() {
+        var _this = this;
+        var redirect = _this.distractionShieldOriginalDestination();
+        (0, _sweetalert2.default)({
+            title: "You rock!",
+            text: "That took less than " + _this.calcSessionTime() + ". practice more?",
+            type: "success",
+            showCancelButton: true,
+            confirmButtonColor: "#7eb530",
+            confirmButtonText: "Let's do it!",
+            cancelButtonText: redirect != null ? "Take me away!" : "Go home!",
+            closeOnConfirm: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                _this.restart();
+                return;
+            }
+            _this.terminateGenerator();
+            if (redirect != null) {
+                window.location = redirect;
+            }
+        });
+    },
+
+    terminateGenerator: function terminateGenerator() {
+        _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
+        _pubsub2.default.emit('generatorCompleted');
+    },
+    /**
+     *	Loads the HTML general exercise template from static
+     **/
+    createDom: function createDom() {
+        var _this = this;
+        return _jquery2.default.ajax({
+            type: 'GET',
+            dataType: 'html',
+            url: _this.templateURL,
+            data: this.data,
+            success: function success(data) {
+                (0, _jquery2.default)("#main-content").html(data);
+            },
+            async: true
+        });
+    },
+
+    /**
+     *	Ajax get request to the Zeeguu API to get new bookmarks
+     **/
+    getBookmarks: function getBookmarks() {
+        var _this = this;
+        this.loadingAnimation(true);
+        var address = this.bookmarksURL + this.size + "?session=" + this.session;
+        return _jquery2.default.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: address,
+            data: this.data,
+            success: function success(data) {
+                _this.loadingAnimation(false);
+            },
+            async: true
+        });
+    },
+
+    /**
+     *	Animation used for loading
+     **/
+    loadingAnimation: function loadingAnimation(activate) {
+        if (activate === true) {
+            this.$container.addClass('hide');
+            this.$loader.removeClass('hide');
+        } else {
+            this.$container.removeClass('hide');
+            this.$loader.addClass('hide');
+        }
+    },
+
+    /**
+     * Extraction of redirect url for Distraction Shield
+     **/
+    distractionShieldOriginalDestination: function distractionShieldOriginalDestination() {
+        var url = window.location.href;
+        var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)");
+        var results = regex.exec(url);
+        if (!results || !results[2]) return null;
+        var newUrl = decodeURIComponent(results[2].replace(/\+/g, " "));
+        if (newUrl.indexOf('?') > -1) {
+            newUrl += "&tds_exComplete=true";
+        } else {
+            newUrl += "?tds_exComplete=true";
+        }
+        return newUrl;
+    }
+};
+
+exports.default = Generator;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _colorLuminance = __webpack_require__(3);
+
+var _getModal = __webpack_require__(2);
+
+var _hasClass$isDescendant = __webpack_require__(1);
+
+/*
+ * User clicked on "Confirm"/"OK" or "Cancel"
+ */
+var handleButton = function handleButton(event, params, modal) {
+  var e = event || window.event;
+  var target = e.target || e.srcElement;
+
+  var targetedConfirm = target.className.indexOf('confirm') !== -1;
+  var targetedOverlay = target.className.indexOf('sweet-overlay') !== -1;
+  var modalIsVisible = _hasClass$isDescendant.hasClass(modal, 'visible');
+  var doneFunctionExists = params.doneFunction && modal.getAttribute('data-has-done-function') === 'true';
+
+  // Since the user can change the background-color of the confirm button programmatically,
+  // we must calculate what the color should be on hover/active
+  var normalColor, hoverColor, activeColor;
+  if (targetedConfirm && params.confirmButtonColor) {
+    normalColor = params.confirmButtonColor;
+    hoverColor = _colorLuminance.colorLuminance(normalColor, -0.04);
+    activeColor = _colorLuminance.colorLuminance(normalColor, -0.14);
+  }
+
+  function shouldSetConfirmButtonColor(color) {
+    if (targetedConfirm && params.confirmButtonColor) {
+      target.style.backgroundColor = color;
+    }
+  }
+
+  switch (e.type) {
+    case 'mouseover':
+      shouldSetConfirmButtonColor(hoverColor);
+      break;
+
+    case 'mouseout':
+      shouldSetConfirmButtonColor(normalColor);
+      break;
+
+    case 'mousedown':
+      shouldSetConfirmButtonColor(activeColor);
+      break;
+
+    case 'mouseup':
+      shouldSetConfirmButtonColor(hoverColor);
+      break;
+
+    case 'focus':
+      var $confirmButton = modal.querySelector('button.confirm');
+      var $cancelButton = modal.querySelector('button.cancel');
+
+      if (targetedConfirm) {
+        $cancelButton.style.boxShadow = 'none';
+      } else {
+        $confirmButton.style.boxShadow = 'none';
+      }
+      break;
+
+    case 'click':
+      var clickedOnModal = modal === target;
+      var clickedOnModalChild = _hasClass$isDescendant.isDescendant(modal, target);
+
+      // Ignore click outside if allowOutsideClick is false
+      if (!clickedOnModal && !clickedOnModalChild && modalIsVisible && !params.allowOutsideClick) {
+        break;
+      }
+
+      if (targetedConfirm && doneFunctionExists && modalIsVisible) {
+        handleConfirm(modal, params);
+      } else if (doneFunctionExists && modalIsVisible || targetedOverlay) {
+        handleCancel(modal, params);
+      } else if (_hasClass$isDescendant.isDescendant(modal, target) && target.tagName === 'BUTTON') {
+        sweetAlert.close();
+      }
+      break;
+  }
+};
+
+/*
+ *  User clicked on "Confirm"/"OK"
+ */
+var handleConfirm = function handleConfirm(modal, params) {
+  var callbackValue = true;
+
+  if (_hasClass$isDescendant.hasClass(modal, 'show-input')) {
+    callbackValue = modal.querySelector('input').value;
+
+    if (!callbackValue) {
+      callbackValue = '';
+    }
+  }
+
+  params.doneFunction(callbackValue);
+
+  if (params.closeOnConfirm) {
+    sweetAlert.close();
+  }
+  // Disable cancel and confirm button if the parameter is true
+  if (params.showLoaderOnConfirm) {
+    sweetAlert.disableButtons();
+  }
+};
+
+/*
+ *  User clicked on "Cancel"
+ */
+var handleCancel = function handleCancel(modal, params) {
+  // Check if callback function expects a parameter (to track cancel actions)
+  var functionAsStr = String(params.doneFunction).replace(/\s/g, '');
+  var functionHandlesCancel = functionAsStr.substring(0, 9) === 'function(' && functionAsStr.substring(9, 10) !== ')';
+
+  if (functionHandlesCancel) {
+    params.doneFunction(false);
+  }
+
+  if (params.closeOnCancel) {
+    sweetAlert.close();
+  }
+};
+
+exports['default'] = {
+  handleButton: handleButton,
+  handleConfirm: handleConfirm,
+  handleCancel: handleCancel
+};
+module.exports = exports['default'];
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _stopEventPropagation$fireClick = __webpack_require__(1);
+
+var _setFocusStyle = __webpack_require__(2);
+
+var handleKeyDown = function handleKeyDown(event, params, modal) {
+  var e = event || window.event;
+  var keyCode = e.keyCode || e.which;
+
+  var $okButton = modal.querySelector('button.confirm');
+  var $cancelButton = modal.querySelector('button.cancel');
+  var $modalButtons = modal.querySelectorAll('button[tabindex]');
+
+  if ([9, 13, 32, 27].indexOf(keyCode) === -1) {
+    // Don't do work on keys we don't care about.
+    return;
+  }
+
+  var $targetElement = e.target || e.srcElement;
+
+  var btnIndex = -1; // Find the button - note, this is a nodelist, not an array.
+  for (var i = 0; i < $modalButtons.length; i++) {
+    if ($targetElement === $modalButtons[i]) {
+      btnIndex = i;
+      break;
+    }
+  }
+
+  if (keyCode === 9) {
+    // TAB
+    if (btnIndex === -1) {
+      // No button focused. Jump to the confirm button.
+      $targetElement = $okButton;
+    } else {
+      // Cycle to the next button
+      if (btnIndex === $modalButtons.length - 1) {
+        $targetElement = $modalButtons[0];
+      } else {
+        $targetElement = $modalButtons[btnIndex + 1];
+      }
+    }
+
+    _stopEventPropagation$fireClick.stopEventPropagation(e);
+    $targetElement.focus();
+
+    if (params.confirmButtonColor) {
+      _setFocusStyle.setFocusStyle($targetElement, params.confirmButtonColor);
+    }
+  } else {
+    if (keyCode === 13) {
+      if ($targetElement.tagName === 'INPUT') {
+        $targetElement = $okButton;
+        $okButton.focus();
+      }
+
+      if (btnIndex === -1) {
+        // ENTER/SPACE clicked outside of a button.
+        $targetElement = $okButton;
+      } else {
+        // Do nothing - let the browser handle it.
+        $targetElement = undefined;
+      }
+    } else if (keyCode === 27 && params.allowEscapeKey === true) {
+      $targetElement = $cancelButton;
+      _stopEventPropagation$fireClick.fireClick($targetElement, e);
+    } else {
+      // Fallback - let the browser handle it.
+      $targetElement = undefined;
+    }
+  }
+};
+
+exports['default'] = handleKeyDown;
+module.exports = exports['default'];
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var injectedHTML =
+
+// Dark overlay
+"<div class=\"sweet-overlay\" tabIndex=\"-1\"></div>" +
+
+// Modal
+"<div class=\"sweet-alert\">" +
+
+// Error icon
+"<div class=\"sa-icon sa-error\">\n      <span class=\"sa-x-mark\">\n        <span class=\"sa-line sa-left\"></span>\n        <span class=\"sa-line sa-right\"></span>\n      </span>\n    </div>" +
+
+// Warning icon
+"<div class=\"sa-icon sa-warning\">\n      <span class=\"sa-body\"></span>\n      <span class=\"sa-dot\"></span>\n    </div>" +
+
+// Info icon
+"<div class=\"sa-icon sa-info\"></div>" +
+
+// Success icon
+"<div class=\"sa-icon sa-success\">\n      <span class=\"sa-line sa-tip\"></span>\n      <span class=\"sa-line sa-long\"></span>\n\n      <div class=\"sa-placeholder\"></div>\n      <div class=\"sa-fix\"></div>\n    </div>" + "<div class=\"sa-icon sa-custom\"></div>" +
+
+// Title, text and input
+"<h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type=\"text\" tabIndex=\"3\" />\n      <div class=\"sa-input-error\"></div>\n    </fieldset>" +
+
+// Input errors
+"<div class=\"sa-error-container\">\n      <div class=\"icon\">!</div>\n      <p>Not valid!</p>\n    </div>" +
+
+// Cancel and confirm buttons
+"<div class=\"sa-button-container\">\n      <button class=\"cancel\" tabIndex=\"2\">Cancel</button>\n      <div class=\"sa-confirm-button-container\">\n        <button class=\"confirm\" tabIndex=\"1\">OK</button>" +
+
+// Loading animation
+"<div class=\"la-ball-fall\">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div>" +
+
+// End of modal
+"</div>";
+
+exports["default"] = injectedHTML;
+module.exports = exports["default"];
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _isIE8 = __webpack_require__(3);
+
+var _getModal$getInput$setFocusStyle = __webpack_require__(2);
+
+var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
+
+var alertTypes = ['error', 'warning', 'info', 'success', 'input', 'prompt'];
+
+/*
+ * Set type, text and actions on modal
+ */
+var setParameters = function setParameters(params) {
+  var modal = _getModal$getInput$setFocusStyle.getModal();
+
+  var $title = modal.querySelector('h2');
+  var $text = modal.querySelector('p');
+  var $cancelBtn = modal.querySelector('button.cancel');
+  var $confirmBtn = modal.querySelector('button.confirm');
+
+  /*
+   * Title
+   */
+  $title.innerHTML = params.html ? params.title : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.title).split('\n').join('<br>');
+
+  /*
+   * Text
+   */
+  $text.innerHTML = params.html ? params.text : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.text || '').split('\n').join('<br>');
+  if (params.text) _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($text);
+
+  /*
+   * Custom class
+   */
+  if (params.customClass) {
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, params.customClass);
+    modal.setAttribute('data-custom-class', params.customClass);
+  } else {
+    // Find previously set classes and remove them
+    var customClass = modal.getAttribute('data-custom-class');
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.removeClass(modal, customClass);
+    modal.setAttribute('data-custom-class', '');
+  }
+
+  /*
+   * Icon
+   */
+  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide(modal.querySelectorAll('.sa-icon'));
+
+  if (params.type && !_isIE8.isIE8()) {
+    var _ret = function () {
+
+      var validType = false;
+
+      for (var i = 0; i < alertTypes.length; i++) {
+        if (params.type === alertTypes[i]) {
+          validType = true;
+          break;
+        }
+      }
+
+      if (!validType) {
+        logStr('Unknown alert type: ' + params.type);
+        return {
+          v: false
+        };
+      }
+
+      var typesWithIcons = ['success', 'error', 'warning', 'info'];
+      var $icon = undefined;
+
+      if (typesWithIcons.indexOf(params.type) !== -1) {
+        $icon = modal.querySelector('.sa-icon.' + 'sa-' + params.type);
+        _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($icon);
+      }
+
+      var $input = _getModal$getInput$setFocusStyle.getInput();
+
+      // Animate icon
+      switch (params.type) {
+
+        case 'success':
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animate');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-tip'), 'animateSuccessTip');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-long'), 'animateSuccessLong');
+          break;
+
+        case 'error':
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animateErrorIcon');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-x-mark'), 'animateXMark');
+          break;
+
+        case 'warning':
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'pulseWarning');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-body'), 'pulseWarningIns');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-dot'), 'pulseWarningIns');
+          break;
+
+        case 'input':
+        case 'prompt':
+          $input.setAttribute('type', params.inputType);
+          $input.value = params.inputValue;
+          $input.setAttribute('placeholder', params.inputPlaceholder);
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, 'show-input');
+          setTimeout(function () {
+            $input.focus();
+            $input.addEventListener('keyup', swal.resetInputError);
+          }, 400);
+          break;
+      }
+    }();
+
+    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === 'object') {
+      return _ret.v;
+    }
+  }
+
+  /*
+   * Custom image
+   */
+  if (params.imageUrl) {
+    var $customIcon = modal.querySelector('.sa-icon.sa-custom');
+
+    $customIcon.style.backgroundImage = 'url(' + params.imageUrl + ')';
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($customIcon);
+
+    var _imgWidth = 80;
+    var _imgHeight = 80;
+
+    if (params.imageSize) {
+      var dimensions = params.imageSize.toString().split('x');
+      var imgWidth = dimensions[0];
+      var imgHeight = dimensions[1];
+
+      if (!imgWidth || !imgHeight) {
+        logStr('Parameter imageSize expects value with format WIDTHxHEIGHT, got ' + params.imageSize);
+      } else {
+        _imgWidth = imgWidth;
+        _imgHeight = imgHeight;
+      }
+    }
+
+    $customIcon.setAttribute('style', $customIcon.getAttribute('style') + 'width:' + _imgWidth + 'px; height:' + _imgHeight + 'px');
+  }
+
+  /*
+   * Show cancel button?
+   */
+  modal.setAttribute('data-has-cancel-button', params.showCancelButton);
+  if (params.showCancelButton) {
+    $cancelBtn.style.display = 'inline-block';
+  } else {
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($cancelBtn);
+  }
+
+  /*
+   * Show confirm button?
+   */
+  modal.setAttribute('data-has-confirm-button', params.showConfirmButton);
+  if (params.showConfirmButton) {
+    $confirmBtn.style.display = 'inline-block';
+  } else {
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($confirmBtn);
+  }
+
+  /*
+   * Custom text on cancel/confirm buttons
+   */
+  if (params.cancelButtonText) {
+    $cancelBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.cancelButtonText);
+  }
+  if (params.confirmButtonText) {
+    $confirmBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.confirmButtonText);
+  }
+
+  /*
+   * Custom color on confirm button
+   */
+  if (params.confirmButtonColor) {
+    // Set confirm button to selected background color
+    $confirmBtn.style.backgroundColor = params.confirmButtonColor;
+
+    // Set the confirm button color to the loading ring
+    $confirmBtn.style.borderLeftColor = params.confirmLoadingButtonColor;
+    $confirmBtn.style.borderRightColor = params.confirmLoadingButtonColor;
+
+    // Set box-shadow to default focused button
+    _getModal$getInput$setFocusStyle.setFocusStyle($confirmBtn, params.confirmButtonColor);
+  }
+
+  /*
+   * Allow outside click
+   */
+  modal.setAttribute('data-allow-outside-click', params.allowOutsideClick);
+
+  /*
+   * Callback function
+   */
+  var hasDoneFunction = params.doneFunction ? true : false;
+  modal.setAttribute('data-has-done-function', hasDoneFunction);
+
+  /*
+   * Animation
+   */
+  if (!params.animation) {
+    modal.setAttribute('data-animation', 'none');
+  } else if (typeof params.animation === 'string') {
+    modal.setAttribute('data-animation', params.animation); // Custom animation
+  } else {
+    modal.setAttribute('data-animation', 'pop');
+  }
+
+  /*
+   * Timer
+   */
+  modal.setAttribute('data-timer', params.timer);
+};
+
+exports['default'] = setParameters;
+module.exports = exports['default'];
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function () {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function get() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function get() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
@@ -11029,7 +11859,695 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _generator = __webpack_require__(20);
+var _exercise = __webpack_require__(4);
+
+var _exercise2 = _interopRequireDefault(_exercise);
+
+var _util = __webpack_require__(8);
+
+var _util2 = _interopRequireDefault(_util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Ex1(data, index, size) {
+
+	this.init(data, index, size);
+
+	/** @Override */
+	this.cacheCustomDom = function () {
+		this.$to = this.$elem.find("#ex-to");
+		this.$context = this.$elem.find("#ex-context");
+		this.$input = this.$elem.find("#ex-main-input");
+		this.$showSolution = this.$elem.find("#show_solution");
+		this.$checkAnswer = this.$elem.find("#check_answer");
+		this.$clickableText = this.$elem.find(".clickable-text");
+	};
+
+	/** @Override */
+	this.bindUIActions = function () {
+		var _this = this;
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on("click", _this.giveHint.bind(this));
+
+		//Bind UI action of Check answer to the function
+		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+
+		//Bind UI Text click		
+		this.$clickableText.on("click", _this.updateInput.bind(this));
+
+		// Bind UI Enter Key
+		this.$input.keyup(_this.enterKeyup.bind(this));
+	};
+
+	/** @Override */
+	this.next = function () {
+		this.$to.html("\"" + this.data[this.index].to + "\"");
+		this.$context.html(this.data[this.index].context);
+		this.$input.val("");
+	};
+
+	this.updateInput = function () {
+		var t = _util2.default.getSelectedText();
+		this.$input.val(t);
+	};
+
+	this.enterKeyup = function (event) {
+		if (event.keyCode == 13) {
+			this.$checkAnswer.click();
+		}
+	};
+
+	/** @Override */
+	this.giveHint = function () {
+		this.$input.val(this.data[this.index].from);
+	};
+
+	/** @Override */
+	this.successCondition = function () {
+		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
+	};
+} /** Custom exercise form finding word in a context. Inherited from Exercise.js
+   *  @initialize it using: new Ex1();
+   *  @customize it by using prototypal inheritance 
+  **/
+
+;
+Ex1.prototype = Object.create(_exercise2.default.prototype, {
+	constructor: Ex1,
+	/************************** SETTINGS ********************************/
+	description: { value: "Find the word in the context:" },
+	customTemplateURL: { value: 'static/template/ex1.html' }
+});
+
+exports.default = Ex1;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _exercise = __webpack_require__(4);
+
+var _exercise2 = _interopRequireDefault(_exercise);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Ex2(data, index, size) {
+	this.init(data, index, size);
+
+	/** @Override */
+	this.cacheCustomDom = function () {
+		this.$context = this.$elem.find("#ex-context");
+		this.$showSolution = this.$elem.find("#show_solution");
+		this.$checkAnswer = this.$elem.find("#check_answer");
+		this.$btn1 = this.$elem.find("#btn1");
+		this.$btn2 = this.$elem.find("#btn2");
+		this.$btn3 = this.$elem.find("#btn3");
+	};
+
+	/** @Override */
+	this.bindUIActions = function () {
+		var _this = this;
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on("click", _this.giveHint.bind(this));
+
+		//Bind UI action of Check answer to the function
+		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+
+		//Bind UI action of button 1 click to the function
+		this.$btn1.on("click", _this.btnSelect.bind(this, 1));
+
+		//Bind UI action of button 2 click to the function
+		this.$btn2.on("click", _this.btnSelect.bind(this, 2));
+
+		//Bind UI action of button 3 click to the function
+		this.$btn3.on("click", _this.btnSelect.bind(this, 3));
+	};
+
+	/** @Override */
+	this.next = function () {
+
+		// Prepare the document
+		this.prepareDocument();
+
+		//Populate context
+		this.generateContext();
+		this.resetBtns();
+		var _this = this;
+
+		//Random options	
+		var idxs = this.randomNumsInRange(2, this.data.length - 1);
+		this.btns = this.arrayWithRandomNumsUpTo(this.optionNum);
+
+		//Populate buttons
+		function populateButton(buttonID, value) {
+			_this["$btn" + buttonID].text(value);
+		}
+
+		populateButton(this.btns[0], this.data[this.index].from);
+		populateButton(this.btns[1], this.data[idxs[0]].from);
+		populateButton(this.btns[2], this.data[idxs[1]].from);
+	};
+
+	/** @Override */
+	this.giveHint = function () {
+		var elem = (0, _jquery2.default)('#btn' + this.btns[1]);
+		elem.prop('disabled', true);
+		elem.addClass("btn-danger");
+	};
+
+	/** @Override */
+	this.successCondition = function (chosenWord) {
+		return chosenWord.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
+	};
+
+	this.btnSelect = function (arg) {
+		var chosenWord = this["$btn" + arg].text();
+		if (this.successCondition(chosenWord)) this.reGenerateContext(chosenWord);
+		this.checkAnswer(chosenWord);
+	};
+
+	this.resetBtns = function () {
+		var elem = (0, _jquery2.default)('#btn' + this.btns[1]);
+		elem.prop('disabled', false);
+		elem.removeClass("btn-danger");
+	};
+
+	this.arrayWithRandomNumsUpTo = function (size) {
+		var arr = [];
+		while (arr.length < size) {
+			var randomnumber = Math.ceil(Math.random() * size);
+			if (arr.indexOf(randomnumber) > -1) continue;
+			arr[arr.length] = randomnumber;
+		}
+		return arr;
+	};
+
+	/** Generates an array of random numbers of given size
+ * @param size:  defines how many random numbers we want
+ * @param range: defines the upper limit of the numbers: [1,range]
+ */
+	this.randomNumsInRange = function (size, range) {
+		var arr = [];
+		while (arr.length < size) {
+			var randomnumber = Math.ceil(Math.random() * range);
+			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
+			arr[arr.length] = randomnumber;
+		}
+		return arr;
+	};
+
+	this.generateContext = function () {
+		var contextString = this.data[this.index].context;
+		var res = this.data[this.index].from.split(" ");
+
+		for (var i = 0; i < res.length; i++) {
+			contextString = contextString.replace(res[i], " ______ ");
+		}
+		this.$context.html(contextString);
+	};
+
+	this.reGenerateContext = function (chosenWord) {
+		var contextString = this.$context.html();
+		var res = chosenWord.split(" ");
+
+		for (var i = 0; i < res.length; i++) {
+			contextString = contextString.replace(" ______ ", res[i].bold());
+		}
+		this.$context.html(contextString);
+	};
+};
+
+Ex2.prototype = Object.create(_exercise2.default.prototype, {
+	constructor: Ex2,
+	/************************** SETTINGS ********************************/
+	description: { value: "Choose the word that fits the context" },
+	customTemplateURL: { value: 'static/template/ex2.html' },
+	btns: { writable: true, value: [1, 2, 3] },
+	optionNum: { value: 3 }
+});
+
+exports.default = Ex2;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _exercise = __webpack_require__(4);
+
+var _exercise2 = _interopRequireDefault(_exercise);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Custom exercise formatching 3 words. Inherited from Exercise.js
+ *  @initialize it using: new Ex3();
+ *  @customize it by using prototypal inheritance 
+**/
+
+function Ex3(data, index, size) {
+	this.init(data, index, size);
+
+	/** @Override */
+	this.cacheCustomDom = function (data, index, size) {
+		this.$to = this.$elem.find("#ex-to");
+		this.$context = this.$elem.find("#ex-content");
+		this.$showSolution = this.$elem.find("#show_solution");
+		this.$btn1 = this.$elem.find("#btn1");
+		this.$btn2 = this.$elem.find("#btn2");
+		this.$btn3 = this.$elem.find("#btn3");
+		this.$btn4 = this.$elem.find("#btn4");
+		this.$btn5 = this.$elem.find("#btn5");
+		this.$btn6 = this.$elem.find("#btn6");
+	};
+
+	//this.get = () => { return this["$btn1"]; };
+
+	/** @Override */
+	this.bindUIActions = function () {
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on("click", this.giveHint.bind(this));
+
+		//Bind UI action of Check answer to the function
+		//this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+
+		//Bind UI action of button 1 click to the function
+		this.$btn1.on("click", this.selectChoice.bind(this, 1));
+
+		//Bind UI action of button 2 click to the function
+		this.$btn2.on("click", this.selectChoice.bind(this, 2));
+
+		//Bind UI action of button 3 click to the function
+		this.$btn3.on("click", this.selectChoice.bind(this, 3));
+
+		//Bind UI action of button 4 click to the function
+		this.$btn4.on("click", this.selectChoice.bind(this, 4));
+
+		//Bind UI action of button 5 click to the function
+		this.$btn5.on("click", this.selectChoice.bind(this, 5));
+
+		//Bind UI action of button 6 click to the function
+		this.$btn6.on("click", this.selectChoice.bind(this, 6));
+	};
+
+	this.selectChoice = function (btnID) {
+		// if no button was previously selected, select it now
+		if (this.chosenButton == -1) {
+			this.chosenButton = btnID;
+		} else {
+			// otherwise check the selection
+			this.check(btnID);
+		}
+	};
+
+	// Disables correctly selected buttons
+	this.successDisableBtn = function (btnID) {
+		var elem = (0, _jquery2.default)("#btn" + btnID);
+		elem.prop('disabled', true);
+		elem.addClass("btn-success");
+	};
+
+	//Checks if a button is disabled
+	this.isDisabled = function (btnID) {
+		var elem = (0, _jquery2.default)("#btn" + btnID);
+		return elem.is(':disabled');
+	};
+
+	// Checks answers
+	this.check = function (btnID) {
+
+		if (this.checkCondition(btnID)) {
+
+			// Disable buttons		
+			this.successDisableBtn(btnID);
+			this.successDisableBtn(this.chosenButton);
+
+			this.correctAnswers++;
+			this.endExercise();
+		} else {
+			this.wrongAnswerAnimation();
+		}
+		this.chosenButton = -1;
+	};
+
+	this.endExercise = function () {
+		// check if all the answers were given
+		if (this.successCondition(0)) {
+			// Proceed to next exercise
+			this.checkAnswer(0);
+
+			// Prepare the document
+			this.prepareDocument();
+
+			// Reset buttons, answers, hints
+			this.resetBtns();
+			this.correctAnswers = 0;
+			this.hints = 0;
+		}
+	};
+
+	// Checks the selected buttons
+	this.checkCondition = function (btnID) {
+		if (this.answers.indexOf(btnID) == -1 || this.choices.indexOf(this.chosenButton) == -1) {
+			return this.choices.indexOf(btnID) == this.answers.indexOf(this.chosenButton);
+		} else {
+			return this.answers.indexOf(btnID) == this.choices.indexOf(this.chosenButton);
+		}
+	};
+
+	/** @Override */
+	this.successCondition = function (a) {
+		return this.correctAnswers >= 3;
+	};
+
+	// Resets all the disabled buttons
+	this.resetBtns = function () {
+		for (var idx = 1; idx <= 6; idx++) {
+			var elem = (0, _jquery2.default)('#btn' + idx);
+			elem.prop('disabled', false);
+			elem.removeClass("btn-success");
+		}
+	};
+
+	/** @Override */
+	this.next = function () {
+		this.populateButtons();
+	};
+
+	// Populates the buttons
+	this.populateButtons = function () {
+		//Random options
+		var idxs = this.randomNumsInRange(2, this.data.length - 1);
+		var _this = this;
+		// random numbers between 1 and 3
+		this.choices = this.arrayWithRandomNumsUpTo(3);
+
+		// random numbers between 4 and 6
+		this.answers = this.arrayWithRandomNumsUpTo(3);
+		for (var i = 0; i < this.answers.length; i++) {
+			this.answers[i] = this.answers[i] + 3;
+		}
+
+		//Populate buttons
+		function match2Buttons(choice, answer, valueFrom, valueTo) {
+			_this["$btn" + choice].text(valueFrom);
+			_this["$btn" + answer].text(valueTo);
+		}
+
+		match2Buttons(this.choices[0], this.answers[0], this.data[this.index].from, this.data[this.index].to);
+		match2Buttons(this.choices[1], this.answers[1], this.data[idxs[0]].from, this.data[idxs[0]].to);
+		match2Buttons(this.choices[2], this.answers[2], this.data[idxs[1]].from, this.data[idxs[1]].to);
+	};
+
+	// Gives a hint by disabling a correct match
+	this.giveHint = function () {
+		// Only one hint is possible
+		if (this.hints < 1) {
+			// Disable buttons
+			if (this.disableHintButtons(0)) return;
+			if (this.disableHintButtons(1)) return;
+			if (this.disableHintButtons(2)) return;
+		}
+	};
+
+	// Disables the buttons given in the hint
+	this.disableHintButtons = function (idx) {
+		if (!this.isDisabled(this.answers[idx])) {
+			this.successDisableBtn(this.choices[idx]);
+			this.successDisableBtn(this.answers[idx]);
+			this.correctAnswers++;
+			this.hints++;
+			this.endExercise();
+			return true;
+		}
+		return false;
+	};
+
+	/** Generates an array of random numbers of given size
+ * @param size: defines how many random numbers we want
+ *				the resulted random numbers will in the range of [1,size]
+ */
+	this.arrayWithRandomNumsUpTo = function (size) {
+		var arr = [];
+		while (arr.length < size) {
+			var randomnumber = Math.ceil(Math.random() * size);
+			if (arr.indexOf(randomnumber) > -1) continue;
+			arr[arr.length] = randomnumber;
+		}
+		return arr;
+	};
+
+	/** Generates an array of random numbers of given size
+ * @param size:  defines how many random numbers we want
+ * @param range: defines the upper limit of the numbers: [1,range]
+ */
+	this.randomNumsInRange = function (size, range) {
+		var arr = [];
+		while (arr.length < size) {
+			var randomnumber = Math.ceil(Math.random() * range);
+			//console.log(this.index + " : " + randomnumber);
+			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
+			arr[arr.length] = randomnumber;
+		}
+		return arr;
+	};
+};
+
+Ex3.prototype = Object.create(_exercise2.default.prototype, {
+	constructor: Ex3,
+	/************************** SETTINGS ********************************/
+	description: { value: "Match each word with its translation" },
+	customTemplateURL: { value: 'static/template/ex3.html' },
+	choices: { writable: true, value: [1, 2, 3] }, // arr of indexes of possible choices
+	answers: { writable: true, value: [1, 2, 3] }, // arr of indexes of possible answers
+	chosenButton: { writable: true, value: -1 }, // ID of currently selected button; -1 means no button is selected
+	correctAnswers: { writable: true, value: 0 }, // number of correct answers
+	hints: { writable: true, value: 0 } // max number of possible hints is 1
+	/*******************************************************************/
+});
+
+exports.default = Ex3;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _exercise = __webpack_require__(4);
+
+var _exercise2 = _interopRequireDefault(_exercise);
+
+var _util = __webpack_require__(8);
+
+var _util2 = _interopRequireDefault(_util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Ex4(data, index, size) {
+
+	this.init(data, index, size);
+
+	/** @Override */
+	this.cacheCustomDom = function () {
+		this.$to = this.$elem.find("#ex-to");
+		this.$context = this.$elem.find("#ex-context");
+		this.$input = this.$elem.find("#ex-main-input");
+		this.$showSolution = this.$elem.find("#show_solution");
+		this.$checkAnswer = this.$elem.find("#check_answer");
+		this.$clickableText = this.$elem.find(".clickable-text");
+	};
+
+	/** @Override */
+	this.bindUIActions = function () {
+		var _this = this;
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on("click", _this.giveHint.bind(this));
+
+		//Bind UI action of Check answer to the function
+		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+
+		//Bind UI Text click		
+		//this.$clickableText.on("click",updateInput.bind(this));
+
+		// Bind UI Enter Key
+		this.$input.keyup(_this.enterKeyup.bind(this));
+	};
+
+	/** @Override */
+	this.next = function () {
+		this.$to.html("\"" + this.data[this.index].from + "\"");
+		this.$context.html(this.generateContext());
+		this.$input.val("");
+	};
+
+	this.updateInput = function () {
+		var t = _util2.default.getSelectedText();
+		this.$input.val(t);
+	};
+
+	this.enterKeyup = function (event) {
+		if (event.keyCode == 13) {
+			this.$checkAnswer.click();
+		}
+	};
+
+	this.generateContext = function () {
+		var contextString = this.data[this.index].context;
+		var res = this.data[this.index].from.split(" ");
+
+		for (var i = 0; i < res.length; i++) {
+			contextString = contextString.replace(res[i], res[i].bold());
+		}
+
+		return contextString;
+	};
+
+	/** @Override */
+	this.giveHint = function () {
+		this.$input.val(this.data[this.index].to[0]);
+	};
+
+	/** @Override */
+	this.successCondition = function () {
+		// Check all the possible answers
+		for (var i = 0; i < this.data[this.index].to.length; i++) {
+			if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to[i].trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")) return true;
+		}return false;
+	};
+
+	/** @Override */
+	this.wrongAnswerAnimation = function () {
+		swal({
+			title: "Wrong answer...",
+			allowOutsideClick: true,
+			type: "error",
+			text: "Hint: the word starts with \"" + this.data[this.index].to[0].trim().charAt(0) + "\"",
+			confirmButtonText: "ok",
+			showConfirmButton: true,
+			allowEscapeKey: true,
+			showLoaderOnConfirm: true
+		});
+	};
+} /** Custom exercise for translating the word given in the context. Inherited from Exercise.js
+   *  @initialize it using: new Ex4();
+   *  @customize it by using prototypal inheritance 
+  **/
+
+;
+Ex4.prototype = Object.create(_exercise2.default.prototype, {
+	constructor: Ex4,
+	/************************** SETTINGS ********************************/
+	description: { value: "Translate the word given in the context." },
+	customTemplateURL: { value: 'static/template/ex4.html' }
+});
+
+exports.default = Ex4;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _pubsub = __webpack_require__(5);
+
+var _pubsub2 = _interopRequireDefault(_pubsub);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var bar,
+    ProgressBar = {
+	settings: {
+		percent: 0, //default starting point
+		amount: 25, //default value for progress amount
+		elem: 0
+	},
+	init: function init(percent, size) {
+		this.bindUIActions();
+		bar = this.settings;
+		bar.percent = percent;
+		bar.amount = 100 / size;
+		bar.elem = document.getElementById("ex-bar");
+		bar.elem.style.width = bar.percent;
+		// "bind" event
+		_pubsub2.default.on('progress', this.move);
+	},
+	restart: function restart() {
+		bar.percent = 0;
+		bar.elem.style.width = bar.percent;
+	},
+	bindUIActions: function bindUIActions() {},
+	move: function move() {
+		var width = bar.percent;
+		var id = setInterval(frame, 10);
+		var max_move = bar.percent + bar.amount;
+		function frame() {
+			if (width >= max_move || width >= 100) {
+				clearInterval(id);
+			} else {
+				width++;
+				bar.elem.style.width = width + '%';
+			}
+			bar.percent = max_move;
+		}
+	}
+}; /** Modular progress bar @author Martin Avagyan
+    *  Initialize it using ProgressBar.init(percent,size);
+    *  Add progress using  ProgressBar.move();
+   **/
+exports.default = ProgressBar;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _generator = __webpack_require__(9);
 
 var _generator2 = _interopRequireDefault(_generator);
 
@@ -11037,7 +12555,7 @@ var _pubsub = __webpack_require__(5);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _mustache = __webpack_require__(10);
+var _mustache = __webpack_require__(21);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
@@ -11174,7 +12692,7 @@ Home.prototype = {
 exports.default = Home;
 
 /***/ }),
-/* 10 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11794,1472 +13312,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 11 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _colorLuminance = __webpack_require__(3);
-
-var _getModal = __webpack_require__(2);
-
-var _hasClass$isDescendant = __webpack_require__(1);
-
-/*
- * User clicked on "Confirm"/"OK" or "Cancel"
- */
-var handleButton = function handleButton(event, params, modal) {
-  var e = event || window.event;
-  var target = e.target || e.srcElement;
-
-  var targetedConfirm = target.className.indexOf('confirm') !== -1;
-  var targetedOverlay = target.className.indexOf('sweet-overlay') !== -1;
-  var modalIsVisible = _hasClass$isDescendant.hasClass(modal, 'visible');
-  var doneFunctionExists = params.doneFunction && modal.getAttribute('data-has-done-function') === 'true';
-
-  // Since the user can change the background-color of the confirm button programmatically,
-  // we must calculate what the color should be on hover/active
-  var normalColor, hoverColor, activeColor;
-  if (targetedConfirm && params.confirmButtonColor) {
-    normalColor = params.confirmButtonColor;
-    hoverColor = _colorLuminance.colorLuminance(normalColor, -0.04);
-    activeColor = _colorLuminance.colorLuminance(normalColor, -0.14);
-  }
-
-  function shouldSetConfirmButtonColor(color) {
-    if (targetedConfirm && params.confirmButtonColor) {
-      target.style.backgroundColor = color;
-    }
-  }
-
-  switch (e.type) {
-    case 'mouseover':
-      shouldSetConfirmButtonColor(hoverColor);
-      break;
-
-    case 'mouseout':
-      shouldSetConfirmButtonColor(normalColor);
-      break;
-
-    case 'mousedown':
-      shouldSetConfirmButtonColor(activeColor);
-      break;
-
-    case 'mouseup':
-      shouldSetConfirmButtonColor(hoverColor);
-      break;
-
-    case 'focus':
-      var $confirmButton = modal.querySelector('button.confirm');
-      var $cancelButton = modal.querySelector('button.cancel');
-
-      if (targetedConfirm) {
-        $cancelButton.style.boxShadow = 'none';
-      } else {
-        $confirmButton.style.boxShadow = 'none';
-      }
-      break;
-
-    case 'click':
-      var clickedOnModal = modal === target;
-      var clickedOnModalChild = _hasClass$isDescendant.isDescendant(modal, target);
-
-      // Ignore click outside if allowOutsideClick is false
-      if (!clickedOnModal && !clickedOnModalChild && modalIsVisible && !params.allowOutsideClick) {
-        break;
-      }
-
-      if (targetedConfirm && doneFunctionExists && modalIsVisible) {
-        handleConfirm(modal, params);
-      } else if (doneFunctionExists && modalIsVisible || targetedOverlay) {
-        handleCancel(modal, params);
-      } else if (_hasClass$isDescendant.isDescendant(modal, target) && target.tagName === 'BUTTON') {
-        sweetAlert.close();
-      }
-      break;
-  }
-};
-
-/*
- *  User clicked on "Confirm"/"OK"
- */
-var handleConfirm = function handleConfirm(modal, params) {
-  var callbackValue = true;
-
-  if (_hasClass$isDescendant.hasClass(modal, 'show-input')) {
-    callbackValue = modal.querySelector('input').value;
-
-    if (!callbackValue) {
-      callbackValue = '';
-    }
-  }
-
-  params.doneFunction(callbackValue);
-
-  if (params.closeOnConfirm) {
-    sweetAlert.close();
-  }
-  // Disable cancel and confirm button if the parameter is true
-  if (params.showLoaderOnConfirm) {
-    sweetAlert.disableButtons();
-  }
-};
-
-/*
- *  User clicked on "Cancel"
- */
-var handleCancel = function handleCancel(modal, params) {
-  // Check if callback function expects a parameter (to track cancel actions)
-  var functionAsStr = String(params.doneFunction).replace(/\s/g, '');
-  var functionHandlesCancel = functionAsStr.substring(0, 9) === 'function(' && functionAsStr.substring(9, 10) !== ')';
-
-  if (functionHandlesCancel) {
-    params.doneFunction(false);
-  }
-
-  if (params.closeOnCancel) {
-    sweetAlert.close();
-  }
-};
-
-exports['default'] = {
-  handleButton: handleButton,
-  handleConfirm: handleConfirm,
-  handleCancel: handleCancel
-};
-module.exports = exports['default'];
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _stopEventPropagation$fireClick = __webpack_require__(1);
-
-var _setFocusStyle = __webpack_require__(2);
-
-var handleKeyDown = function handleKeyDown(event, params, modal) {
-  var e = event || window.event;
-  var keyCode = e.keyCode || e.which;
-
-  var $okButton = modal.querySelector('button.confirm');
-  var $cancelButton = modal.querySelector('button.cancel');
-  var $modalButtons = modal.querySelectorAll('button[tabindex]');
-
-  if ([9, 13, 32, 27].indexOf(keyCode) === -1) {
-    // Don't do work on keys we don't care about.
-    return;
-  }
-
-  var $targetElement = e.target || e.srcElement;
-
-  var btnIndex = -1; // Find the button - note, this is a nodelist, not an array.
-  for (var i = 0; i < $modalButtons.length; i++) {
-    if ($targetElement === $modalButtons[i]) {
-      btnIndex = i;
-      break;
-    }
-  }
-
-  if (keyCode === 9) {
-    // TAB
-    if (btnIndex === -1) {
-      // No button focused. Jump to the confirm button.
-      $targetElement = $okButton;
-    } else {
-      // Cycle to the next button
-      if (btnIndex === $modalButtons.length - 1) {
-        $targetElement = $modalButtons[0];
-      } else {
-        $targetElement = $modalButtons[btnIndex + 1];
-      }
-    }
-
-    _stopEventPropagation$fireClick.stopEventPropagation(e);
-    $targetElement.focus();
-
-    if (params.confirmButtonColor) {
-      _setFocusStyle.setFocusStyle($targetElement, params.confirmButtonColor);
-    }
-  } else {
-    if (keyCode === 13) {
-      if ($targetElement.tagName === 'INPUT') {
-        $targetElement = $okButton;
-        $okButton.focus();
-      }
-
-      if (btnIndex === -1) {
-        // ENTER/SPACE clicked outside of a button.
-        $targetElement = $okButton;
-      } else {
-        // Do nothing - let the browser handle it.
-        $targetElement = undefined;
-      }
-    } else if (keyCode === 27 && params.allowEscapeKey === true) {
-      $targetElement = $cancelButton;
-      _stopEventPropagation$fireClick.fireClick($targetElement, e);
-    } else {
-      // Fallback - let the browser handle it.
-      $targetElement = undefined;
-    }
-  }
-};
-
-exports['default'] = handleKeyDown;
-module.exports = exports['default'];
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var injectedHTML =
-
-// Dark overlay
-"<div class=\"sweet-overlay\" tabIndex=\"-1\"></div>" +
-
-// Modal
-"<div class=\"sweet-alert\">" +
-
-// Error icon
-"<div class=\"sa-icon sa-error\">\n      <span class=\"sa-x-mark\">\n        <span class=\"sa-line sa-left\"></span>\n        <span class=\"sa-line sa-right\"></span>\n      </span>\n    </div>" +
-
-// Warning icon
-"<div class=\"sa-icon sa-warning\">\n      <span class=\"sa-body\"></span>\n      <span class=\"sa-dot\"></span>\n    </div>" +
-
-// Info icon
-"<div class=\"sa-icon sa-info\"></div>" +
-
-// Success icon
-"<div class=\"sa-icon sa-success\">\n      <span class=\"sa-line sa-tip\"></span>\n      <span class=\"sa-line sa-long\"></span>\n\n      <div class=\"sa-placeholder\"></div>\n      <div class=\"sa-fix\"></div>\n    </div>" + "<div class=\"sa-icon sa-custom\"></div>" +
-
-// Title, text and input
-"<h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type=\"text\" tabIndex=\"3\" />\n      <div class=\"sa-input-error\"></div>\n    </fieldset>" +
-
-// Input errors
-"<div class=\"sa-error-container\">\n      <div class=\"icon\">!</div>\n      <p>Not valid!</p>\n    </div>" +
-
-// Cancel and confirm buttons
-"<div class=\"sa-button-container\">\n      <button class=\"cancel\" tabIndex=\"2\">Cancel</button>\n      <div class=\"sa-confirm-button-container\">\n        <button class=\"confirm\" tabIndex=\"1\">OK</button>" +
-
-// Loading animation
-"<div class=\"la-ball-fall\">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div>" +
-
-// End of modal
-"</div>";
-
-exports["default"] = injectedHTML;
-module.exports = exports["default"];
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _isIE8 = __webpack_require__(3);
-
-var _getModal$getInput$setFocusStyle = __webpack_require__(2);
-
-var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
-
-var alertTypes = ['error', 'warning', 'info', 'success', 'input', 'prompt'];
-
-/*
- * Set type, text and actions on modal
- */
-var setParameters = function setParameters(params) {
-  var modal = _getModal$getInput$setFocusStyle.getModal();
-
-  var $title = modal.querySelector('h2');
-  var $text = modal.querySelector('p');
-  var $cancelBtn = modal.querySelector('button.cancel');
-  var $confirmBtn = modal.querySelector('button.confirm');
-
-  /*
-   * Title
-   */
-  $title.innerHTML = params.html ? params.title : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.title).split('\n').join('<br>');
-
-  /*
-   * Text
-   */
-  $text.innerHTML = params.html ? params.text : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.text || '').split('\n').join('<br>');
-  if (params.text) _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($text);
-
-  /*
-   * Custom class
-   */
-  if (params.customClass) {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, params.customClass);
-    modal.setAttribute('data-custom-class', params.customClass);
-  } else {
-    // Find previously set classes and remove them
-    var customClass = modal.getAttribute('data-custom-class');
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.removeClass(modal, customClass);
-    modal.setAttribute('data-custom-class', '');
-  }
-
-  /*
-   * Icon
-   */
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide(modal.querySelectorAll('.sa-icon'));
-
-  if (params.type && !_isIE8.isIE8()) {
-    var _ret = function () {
-
-      var validType = false;
-
-      for (var i = 0; i < alertTypes.length; i++) {
-        if (params.type === alertTypes[i]) {
-          validType = true;
-          break;
-        }
-      }
-
-      if (!validType) {
-        logStr('Unknown alert type: ' + params.type);
-        return {
-          v: false
-        };
-      }
-
-      var typesWithIcons = ['success', 'error', 'warning', 'info'];
-      var $icon = undefined;
-
-      if (typesWithIcons.indexOf(params.type) !== -1) {
-        $icon = modal.querySelector('.sa-icon.' + 'sa-' + params.type);
-        _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($icon);
-      }
-
-      var $input = _getModal$getInput$setFocusStyle.getInput();
-
-      // Animate icon
-      switch (params.type) {
-
-        case 'success':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animate');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-tip'), 'animateSuccessTip');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-long'), 'animateSuccessLong');
-          break;
-
-        case 'error':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animateErrorIcon');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-x-mark'), 'animateXMark');
-          break;
-
-        case 'warning':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'pulseWarning');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-body'), 'pulseWarningIns');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-dot'), 'pulseWarningIns');
-          break;
-
-        case 'input':
-        case 'prompt':
-          $input.setAttribute('type', params.inputType);
-          $input.value = params.inputValue;
-          $input.setAttribute('placeholder', params.inputPlaceholder);
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, 'show-input');
-          setTimeout(function () {
-            $input.focus();
-            $input.addEventListener('keyup', swal.resetInputError);
-          }, 400);
-          break;
-      }
-    }();
-
-    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === 'object') {
-      return _ret.v;
-    }
-  }
-
-  /*
-   * Custom image
-   */
-  if (params.imageUrl) {
-    var $customIcon = modal.querySelector('.sa-icon.sa-custom');
-
-    $customIcon.style.backgroundImage = 'url(' + params.imageUrl + ')';
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($customIcon);
-
-    var _imgWidth = 80;
-    var _imgHeight = 80;
-
-    if (params.imageSize) {
-      var dimensions = params.imageSize.toString().split('x');
-      var imgWidth = dimensions[0];
-      var imgHeight = dimensions[1];
-
-      if (!imgWidth || !imgHeight) {
-        logStr('Parameter imageSize expects value with format WIDTHxHEIGHT, got ' + params.imageSize);
-      } else {
-        _imgWidth = imgWidth;
-        _imgHeight = imgHeight;
-      }
-    }
-
-    $customIcon.setAttribute('style', $customIcon.getAttribute('style') + 'width:' + _imgWidth + 'px; height:' + _imgHeight + 'px');
-  }
-
-  /*
-   * Show cancel button?
-   */
-  modal.setAttribute('data-has-cancel-button', params.showCancelButton);
-  if (params.showCancelButton) {
-    $cancelBtn.style.display = 'inline-block';
-  } else {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($cancelBtn);
-  }
-
-  /*
-   * Show confirm button?
-   */
-  modal.setAttribute('data-has-confirm-button', params.showConfirmButton);
-  if (params.showConfirmButton) {
-    $confirmBtn.style.display = 'inline-block';
-  } else {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($confirmBtn);
-  }
-
-  /*
-   * Custom text on cancel/confirm buttons
-   */
-  if (params.cancelButtonText) {
-    $cancelBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.cancelButtonText);
-  }
-  if (params.confirmButtonText) {
-    $confirmBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.confirmButtonText);
-  }
-
-  /*
-   * Custom color on confirm button
-   */
-  if (params.confirmButtonColor) {
-    // Set confirm button to selected background color
-    $confirmBtn.style.backgroundColor = params.confirmButtonColor;
-
-    // Set the confirm button color to the loading ring
-    $confirmBtn.style.borderLeftColor = params.confirmLoadingButtonColor;
-    $confirmBtn.style.borderRightColor = params.confirmLoadingButtonColor;
-
-    // Set box-shadow to default focused button
-    _getModal$getInput$setFocusStyle.setFocusStyle($confirmBtn, params.confirmButtonColor);
-  }
-
-  /*
-   * Allow outside click
-   */
-  modal.setAttribute('data-allow-outside-click', params.allowOutsideClick);
-
-  /*
-   * Callback function
-   */
-  var hasDoneFunction = params.doneFunction ? true : false;
-  modal.setAttribute('data-has-done-function', hasDoneFunction);
-
-  /*
-   * Animation
-   */
-  if (!params.animation) {
-    modal.setAttribute('data-animation', 'none');
-  } else if (typeof params.animation === 'string') {
-    modal.setAttribute('data-animation', params.animation); // Custom animation
-  } else {
-    modal.setAttribute('data-animation', 'pop');
-  }
-
-  /*
-   * Timer
-   */
-  modal.setAttribute('data-timer', params.timer);
-};
-
-exports['default'] = setParameters;
-module.exports = exports['default'];
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function (module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function () {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function get() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function get() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _exercise = __webpack_require__(4);
-
-var _exercise2 = _interopRequireDefault(_exercise);
-
-var _util = __webpack_require__(8);
-
-var _util2 = _interopRequireDefault(_util);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Ex1(data, index, size) {
-
-	this.init(data, index, size);
-
-	/** @Override */
-	this.cacheCustomDom = function () {
-		this.$to = this.$elem.find("#ex-to");
-		this.$context = this.$elem.find("#ex-context");
-		this.$input = this.$elem.find("#ex-main-input");
-		this.$showSolution = this.$elem.find("#show_solution");
-		this.$checkAnswer = this.$elem.find("#check_answer");
-		this.$clickableText = this.$elem.find(".clickable-text");
-	};
-
-	/** @Override */
-	this.bindUIActions = function () {
-		var _this = this;
-		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.giveHint.bind(this));
-
-		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
-
-		//Bind UI Text click		
-		this.$clickableText.on("click", _this.updateInput.bind(this));
-
-		// Bind UI Enter Key
-		this.$input.keyup(_this.enterKeyup.bind(this));
-	};
-
-	/** @Override */
-	this.next = function () {
-		this.$to.html("\"" + this.data[this.index].to + "\"");
-		this.$context.html(this.data[this.index].context);
-		this.$input.val("");
-	};
-
-	this.updateInput = function () {
-		var t = _util2.default.getSelectedText();
-		this.$input.val(t);
-	};
-
-	this.enterKeyup = function (event) {
-		if (event.keyCode == 13) {
-			this.$checkAnswer.click();
-		}
-	};
-
-	/** @Override */
-	this.giveHint = function () {
-		this.$input.val(this.data[this.index].from);
-	};
-
-	/** @Override */
-	this.successCondition = function () {
-		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
-	};
-} /** Custom exercise form finding word in a context. Inherited from Exercise.js
-   *  @initialize it using: new Ex1();
-   *  @customize it by using prototypal inheritance 
-  **/
-
-;
-Ex1.prototype = Object.create(_exercise2.default.prototype, {
-	constructor: Ex1,
-	/************************** SETTINGS ********************************/
-	description: { value: "Find the word in the context:" },
-	customTemplateURL: { value: 'static/template/ex1.html' }
-});
-
-exports.default = Ex1;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _exercise = __webpack_require__(4);
-
-var _exercise2 = _interopRequireDefault(_exercise);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Ex2(data, index, size) {
-	this.init(data, index, size);
-
-	/** @Override */
-	this.cacheCustomDom = function () {
-		this.$context = this.$elem.find("#ex-context");
-		this.$showSolution = this.$elem.find("#show_solution");
-		this.$checkAnswer = this.$elem.find("#check_answer");
-		this.$btn1 = this.$elem.find("#btn1");
-		this.$btn2 = this.$elem.find("#btn2");
-		this.$btn3 = this.$elem.find("#btn3");
-	};
-
-	/** @Override */
-	this.bindUIActions = function () {
-		var _this = this;
-		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.giveHint.bind(this));
-
-		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
-
-		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", _this.btnSelect.bind(this, 1));
-
-		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", _this.btnSelect.bind(this, 2));
-
-		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", _this.btnSelect.bind(this, 3));
-	};
-
-	/** @Override */
-	this.next = function () {
-
-		// Prepare the document
-		this.prepareDocument();
-
-		//Populate context
-		this.generateContext();
-		this.resetBtns();
-		var _this = this;
-
-		//Random options	
-		var idxs = this.randomNumsInRange(2, this.data.length - 1);
-		this.btns = this.arrayWithRandomNumsUpTo(this.optionNum);
-
-		//Populate buttons
-		function populateButton(buttonID, value) {
-			_this["$btn" + buttonID].text(value);
-		}
-
-		populateButton(this.btns[0], this.data[this.index].from);
-		populateButton(this.btns[1], this.data[idxs[0]].from);
-		populateButton(this.btns[2], this.data[idxs[1]].from);
-	};
-
-	/** @Override */
-	this.giveHint = function () {
-		var elem = (0, _jquery2.default)('#btn' + this.btns[1]);
-		elem.prop('disabled', true);
-		elem.addClass("btn-danger");
-	};
-
-	/** @Override */
-	this.successCondition = function (chosenWord) {
-		return chosenWord.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
-	};
-
-	this.btnSelect = function (arg) {
-		var chosenWord = this["$btn" + arg].text();
-		if (this.successCondition(chosenWord)) this.reGenerateContext(chosenWord);
-		this.checkAnswer(chosenWord);
-	};
-
-	this.resetBtns = function () {
-		var elem = (0, _jquery2.default)('#btn' + this.btns[1]);
-		elem.prop('disabled', false);
-		elem.removeClass("btn-danger");
-	};
-
-	this.arrayWithRandomNumsUpTo = function (size) {
-		var arr = [];
-		while (arr.length < size) {
-			var randomnumber = Math.ceil(Math.random() * size);
-			if (arr.indexOf(randomnumber) > -1) continue;
-			arr[arr.length] = randomnumber;
-		}
-		return arr;
-	};
-
-	/** Generates an array of random numbers of given size
- * @param size:  defines how many random numbers we want
- * @param range: defines the upper limit of the numbers: [1,range]
- */
-	this.randomNumsInRange = function (size, range) {
-		var arr = [];
-		while (arr.length < size) {
-			var randomnumber = Math.ceil(Math.random() * range);
-			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
-			arr[arr.length] = randomnumber;
-		}
-		return arr;
-	};
-
-	this.generateContext = function () {
-		var contextString = this.data[this.index].context;
-		var res = this.data[this.index].from.split(" ");
-
-		for (var i = 0; i < res.length; i++) {
-			contextString = contextString.replace(res[i], " ______ ");
-		}
-		this.$context.html(contextString);
-	};
-
-	this.reGenerateContext = function (chosenWord) {
-		var contextString = this.$context.html();
-		var res = chosenWord.split(" ");
-
-		for (var i = 0; i < res.length; i++) {
-			contextString = contextString.replace(" ______ ", res[i].bold());
-		}
-		this.$context.html(contextString);
-	};
-};
-
-Ex2.prototype = Object.create(_exercise2.default.prototype, {
-	constructor: Ex2,
-	/************************** SETTINGS ********************************/
-	description: { value: "Choose the word that fits the context" },
-	customTemplateURL: { value: 'static/template/ex2.html' },
-	btns: { writable: true, value: [1, 2, 3] },
-	optionNum: { value: 3 }
-});
-
-exports.default = Ex2;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _exercise = __webpack_require__(4);
-
-var _exercise2 = _interopRequireDefault(_exercise);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/** Custom exercise formatching 3 words. Inherited from Exercise.js
- *  @initialize it using: new Ex3();
- *  @customize it by using prototypal inheritance 
-**/
-
-function Ex3(data, index, size) {
-	this.init(data, index, size);
-
-	/** @Override */
-	this.cacheCustomDom = function (data, index, size) {
-		this.$to = this.$elem.find("#ex-to");
-		this.$context = this.$elem.find("#ex-content");
-		this.$showSolution = this.$elem.find("#show_solution");
-		this.$btn1 = this.$elem.find("#btn1");
-		this.$btn2 = this.$elem.find("#btn2");
-		this.$btn3 = this.$elem.find("#btn3");
-		this.$btn4 = this.$elem.find("#btn4");
-		this.$btn5 = this.$elem.find("#btn5");
-		this.$btn6 = this.$elem.find("#btn6");
-	};
-
-	//this.get = () => { return this["$btn1"]; };
-
-	/** @Override */
-	this.bindUIActions = function () {
-		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", this.giveHint.bind(this));
-
-		//Bind UI action of Check answer to the function
-		//this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
-
-		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", this.selectChoice.bind(this, 1));
-
-		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", this.selectChoice.bind(this, 2));
-
-		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", this.selectChoice.bind(this, 3));
-
-		//Bind UI action of button 4 click to the function
-		this.$btn4.on("click", this.selectChoice.bind(this, 4));
-
-		//Bind UI action of button 5 click to the function
-		this.$btn5.on("click", this.selectChoice.bind(this, 5));
-
-		//Bind UI action of button 6 click to the function
-		this.$btn6.on("click", this.selectChoice.bind(this, 6));
-	};
-
-	this.selectChoice = function (btnID) {
-		// if no button was previously selected, select it now
-		if (this.chosenButton == -1) {
-			this.chosenButton = btnID;
-		} else {
-			// otherwise check the selection
-			this.check(btnID);
-		}
-	};
-
-	// Disables correctly selected buttons
-	this.successDisableBtn = function (btnID) {
-		var elem = (0, _jquery2.default)("#btn" + btnID);
-		elem.prop('disabled', true);
-		elem.addClass("btn-success");
-	};
-
-	//Checks if a button is disabled
-	this.isDisabled = function (btnID) {
-		var elem = (0, _jquery2.default)("#btn" + btnID);
-		return elem.is(':disabled');
-	};
-
-	// Checks answers
-	this.check = function (btnID) {
-
-		if (this.checkCondition(btnID)) {
-
-			// Disable buttons		
-			this.successDisableBtn(btnID);
-			this.successDisableBtn(this.chosenButton);
-
-			this.correctAnswers++;
-			this.endExercise();
-		} else {
-			this.wrongAnswerAnimation();
-		}
-		this.chosenButton = -1;
-	};
-
-	this.endExercise = function () {
-		// check if all the answers were given
-		if (this.successCondition(0)) {
-			// Proceed to next exercise
-			this.checkAnswer(0);
-
-			// Prepare the document
-			this.prepareDocument();
-
-			// Reset buttons, answers, hints
-			this.resetBtns();
-			this.correctAnswers = 0;
-			this.hints = 0;
-		}
-	};
-
-	// Checks the selected buttons
-	this.checkCondition = function (btnID) {
-		if (this.answers.indexOf(btnID) == -1 || this.choices.indexOf(this.chosenButton) == -1) {
-			return this.choices.indexOf(btnID) == this.answers.indexOf(this.chosenButton);
-		} else {
-			return this.answers.indexOf(btnID) == this.choices.indexOf(this.chosenButton);
-		}
-	};
-
-	/** @Override */
-	this.successCondition = function (a) {
-		return this.correctAnswers >= 3;
-	};
-
-	// Resets all the disabled buttons
-	this.resetBtns = function () {
-		for (var idx = 1; idx <= 6; idx++) {
-			var elem = (0, _jquery2.default)('#btn' + idx);
-			elem.prop('disabled', false);
-			elem.removeClass("btn-success");
-		}
-	};
-
-	/** @Override */
-	this.next = function () {
-		this.populateButtons();
-	};
-
-	// Populates the buttons
-	this.populateButtons = function () {
-		//Random options
-		var idxs = this.randomNumsInRange(2, this.data.length - 1);
-		var _this = this;
-		// random numbers between 1 and 3
-		this.choices = this.arrayWithRandomNumsUpTo(3);
-
-		// random numbers between 4 and 6
-		this.answers = this.arrayWithRandomNumsUpTo(3);
-		for (var i = 0; i < this.answers.length; i++) {
-			this.answers[i] = this.answers[i] + 3;
-		}
-
-		//Populate buttons
-		function match2Buttons(choice, answer, valueFrom, valueTo) {
-			_this["$btn" + choice].text(valueFrom);
-			_this["$btn" + answer].text(valueTo);
-		}
-
-		match2Buttons(this.choices[0], this.answers[0], this.data[this.index].from, this.data[this.index].to);
-		match2Buttons(this.choices[1], this.answers[1], this.data[idxs[0]].from, this.data[idxs[0]].to);
-		match2Buttons(this.choices[2], this.answers[2], this.data[idxs[1]].from, this.data[idxs[1]].to);
-	};
-
-	// Gives a hint by disabling a correct match
-	this.giveHint = function () {
-		// Only one hint is possible
-		if (this.hints < 1) {
-			// Disable buttons
-			if (this.disableHintButtons(0)) return;
-			if (this.disableHintButtons(1)) return;
-			if (this.disableHintButtons(2)) return;
-		}
-	};
-
-	// Disables the buttons given in the hint
-	this.disableHintButtons = function (idx) {
-		if (!this.isDisabled(this.answers[idx])) {
-			this.successDisableBtn(this.choices[idx]);
-			this.successDisableBtn(this.answers[idx]);
-			this.correctAnswers++;
-			this.hints++;
-			this.endExercise();
-			return true;
-		}
-		return false;
-	};
-
-	/** Generates an array of random numbers of given size
- * @param size: defines how many random numbers we want
- *				the resulted random numbers will in the range of [1,size]
- */
-	this.arrayWithRandomNumsUpTo = function (size) {
-		var arr = [];
-		while (arr.length < size) {
-			var randomnumber = Math.ceil(Math.random() * size);
-			if (arr.indexOf(randomnumber) > -1) continue;
-			arr[arr.length] = randomnumber;
-		}
-		return arr;
-	};
-
-	/** Generates an array of random numbers of given size
- * @param size:  defines how many random numbers we want
- * @param range: defines the upper limit of the numbers: [1,range]
- */
-	this.randomNumsInRange = function (size, range) {
-		var arr = [];
-		while (arr.length < size) {
-			var randomnumber = Math.ceil(Math.random() * range);
-			//console.log(this.index + " : " + randomnumber);
-			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
-			arr[arr.length] = randomnumber;
-		}
-		return arr;
-	};
-};
-
-Ex3.prototype = Object.create(_exercise2.default.prototype, {
-	constructor: Ex3,
-	/************************** SETTINGS ********************************/
-	description: { value: "Match each word with its translation" },
-	customTemplateURL: { value: 'static/template/ex3.html' },
-	choices: { writable: true, value: [1, 2, 3] }, // arr of indexes of possible choices
-	answers: { writable: true, value: [1, 2, 3] }, // arr of indexes of possible answers
-	chosenButton: { writable: true, value: -1 }, // ID of currently selected button; -1 means no button is selected
-	correctAnswers: { writable: true, value: 0 }, // number of correct answers
-	hints: { writable: true, value: 0 } // max number of possible hints is 1
-	/*******************************************************************/
-});
-
-exports.default = Ex3;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _exercise = __webpack_require__(4);
-
-var _exercise2 = _interopRequireDefault(_exercise);
-
-var _util = __webpack_require__(8);
-
-var _util2 = _interopRequireDefault(_util);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Ex4(data, index, size) {
-
-	this.init(data, index, size);
-
-	/** @Override */
-	this.cacheCustomDom = function () {
-		this.$to = this.$elem.find("#ex-to");
-		this.$context = this.$elem.find("#ex-context");
-		this.$input = this.$elem.find("#ex-main-input");
-		this.$showSolution = this.$elem.find("#show_solution");
-		this.$checkAnswer = this.$elem.find("#check_answer");
-		this.$clickableText = this.$elem.find(".clickable-text");
-	};
-
-	/** @Override */
-	this.bindUIActions = function () {
-		var _this = this;
-		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.giveHint.bind(this));
-
-		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
-
-		//Bind UI Text click		
-		//this.$clickableText.on("click",updateInput.bind(this));
-
-		// Bind UI Enter Key
-		this.$input.keyup(_this.enterKeyup.bind(this));
-	};
-
-	/** @Override */
-	this.next = function () {
-		this.$to.html("\"" + this.data[this.index].from + "\"");
-		this.$context.html(this.generateContext());
-		this.$input.val("");
-	};
-
-	this.updateInput = function () {
-		var t = _util2.default.getSelectedText();
-		this.$input.val(t);
-	};
-
-	this.enterKeyup = function (event) {
-		if (event.keyCode == 13) {
-			this.$checkAnswer.click();
-		}
-	};
-
-	this.generateContext = function () {
-		var contextString = this.data[this.index].context;
-		var res = this.data[this.index].from.split(" ");
-
-		for (var i = 0; i < res.length; i++) {
-			contextString = contextString.replace(res[i], res[i].bold());
-		}
-
-		return contextString;
-	};
-
-	/** @Override */
-	this.giveHint = function () {
-		this.$input.val(this.data[this.index].to[0]);
-	};
-
-	/** @Override */
-	this.successCondition = function () {
-		// Check all the possible answers
-		for (var i = 0; i < this.data[this.index].to.length; i++) {
-			if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to[i].trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")) return true;
-		}return false;
-	};
-
-	/** @Override */
-	this.wrongAnswerAnimation = function () {
-		swal({
-			title: "Wrong answer...",
-			allowOutsideClick: true,
-			type: "error",
-			text: "Hint: the word starts with \"" + this.data[this.index].to[0].trim().charAt(0) + "\"",
-			confirmButtonText: "ok",
-			showConfirmButton: true,
-			allowEscapeKey: true,
-			showLoaderOnConfirm: true
-		});
-	};
-} /** Custom exercise for translating the word given in the context. Inherited from Exercise.js
-   *  @initialize it using: new Ex4();
-   *  @customize it by using prototypal inheritance 
-  **/
-
-;
-Ex4.prototype = Object.create(_exercise2.default.prototype, {
-	constructor: Ex4,
-	/************************** SETTINGS ********************************/
-	description: { value: "Translate the word given in the context." },
-	customTemplateURL: { value: 'static/template/ex4.html' }
-});
-
-exports.default = Ex4;
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _ex = __webpack_require__(16);
-
-var _ex2 = _interopRequireDefault(_ex);
-
-var _ex3 = __webpack_require__(17);
-
-var _ex4 = _interopRequireDefault(_ex3);
-
-var _ex5 = __webpack_require__(18);
-
-var _ex6 = _interopRequireDefault(_ex5);
-
-var _ex7 = __webpack_require__(19);
-
-var _ex8 = _interopRequireDefault(_ex7);
-
-var _progress_bar = __webpack_require__(22);
-
-var _progress_bar2 = _interopRequireDefault(_progress_bar);
-
-var _pubsub = __webpack_require__(5);
-
-var _pubsub2 = _interopRequireDefault(_pubsub);
-
-var _sweetalert = __webpack_require__(7);
-
-var _sweetalert2 = _interopRequireDefault(_sweetalert);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
- *  @initialize it using: new Generator(args);
- *  @param args is matrix of exercise name and number of bookmarks,
- *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
- *  @customize it by using prototypal inheritance
- **/
-
-var Generator = function Generator(set) {
-    this.init(set);
-};
-
-Generator.prototype = {
-    /************************** SETTINGS ********************************/
-    data: 0, //bookmakrs from zeeguu api
-    set: 0, //matrix for initialaizer
-    size: 0, //total count of bookmakrs
-    index: 0, //current index from set
-    startTime: 0,
-    session: sessionID, //Example of session id 34563456 or 11010001
-    bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
-    templateURL: 'static/template/exercise.html',
-    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",
-
-    /**
-     *	Saves the common dom in chache
-     **/
-    cacheDom: function cacheDom() {
-        this.$elem = (0, _jquery2.default)("#ex-module");
-        this.$container = this.$elem.find("#ex-container");
-        this.$loader = this.$elem.find('#loader');
-    },
-
-    /**
-     *	Generator initialaizer
-     **/
-    init: function init(set) {
-        this.set = set;
-        var _this = this;
-
-        // "bind" event
-        this.$eventFunc = function () {
-            _this.nextEx();
-        };
-        _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
-
-        // Create the DOM and initialize
-        _jquery2.default.when(this.createDom()).done(function () {
-            _this.cacheDom();
-            _this.start();
-        });
-    },
-
-    restart: function restart() {
-        this.start();
-    },
-
-    /**
-     *	Call to load the data from API
-     **/
-    start: function start() {
-        var _this = this;
-        this.size = this.calcSize(this.set, this.set.length);
-        _progress_bar2.default.init(0, this.size);
-        _jquery2.default.when(this.getBookmarks()).done(function (ldata) {
-            _this.data = ldata;
-            _this._constructor();
-        });
-    },
-
-    filterArray: function filterArray(bookmarksData) {
-        for (var i = 0; i < bookmarksData.length; i++) {
-            var tempIdx = indexOf(bookmarksData[i]);
-            if (tempIdx == -1 || tempIdx == i) {
-                continue;
-            }
-            bookmarksData.splice(i, 1);
-        }
-        console.log(bookmarksData);
-        return bookmarksData;
-    },
-
-    /**
-     *	The main constructor
-     **/
-    _constructor: function _constructor() {
-        this.index = 0;
-        this.startTime = new Date();
-        this.nextEx();
-    },
-
-    /**
-     *	Add Ex here
-     **/
-    nextEx: function nextEx() {
-        if (this.index === this.set.length) {
-            this.onExSetComplete();
-            return;
-        }
-        var ex = this.set[this.index][0];
-        var size = this.set[this.index][1];
-        var startingIndex = this.calcSize(this.set, this.index);
-
-        this.$currentEx = null;
-        delete this.$currentEx;
-        switch (ex) {
-            case 1:
-                this.$currentEx = new _ex2.default(this.data, startingIndex, size);
-                break;
-            case 2:
-                this.$currentEx = new _ex4.default(this.data, startingIndex, size);
-                break;
-            case 3:
-                this.$currentEx = new _ex6.default(this.data, startingIndex, size);
-                break;
-            case 4:
-                this.$currentEx = new _ex8.default(this.data, startingIndex, size);
-                break;
-        }
-
-        this.index++;
-    },
-
-    calcSize: function calcSize(set, length) {
-        var sum = 0;
-        for (var i = 0; i < length; i++) {
-            sum += set[i][1];
-        }
-        return sum;
-    },
-
-    /**
-     *	Request the submit API
-     **/
-    submitResults: function submitResults() {
-        for (var i = 0; i < this.data.length; i++) {
-            _jquery2.default.post(this.submitResutsUrl + this.data[i].id + "?session=" + this.session);
-        }
-    },
-
-    /**
-     *	Check selected answer with success condition
-     **/
-    calcSessionTime: function calcSessionTime() {
-        var endTime = new Date();
-        var total = endTime.getMinutes() - this.startTime.getMinutes();
-        return total <= 1 ? "1 minute" : total + " minutes";
-    },
-
-    /**
-     *	When the ex are done perform an action
-     **/
-    onExSetComplete: function onExSetComplete() {
-        var _this = this;
-        var redirect = _this.distractionShieldOriginalDestination();
-        (0, _sweetalert2.default)({
-            title: "You rock!",
-            text: "That took less than " + _this.calcSessionTime() + ". practice more?",
-            type: "success",
-            showCancelButton: true,
-            confirmButtonColor: "#7eb530",
-            confirmButtonText: "Let's do it!",
-            cancelButtonText: redirect != null ? "Take me away!" : "Go home!",
-            closeOnConfirm: true
-        }, function (isConfirm) {
-            if (isConfirm) {
-                _this.restart();
-                return;
-            }
-            _this.terminateGenerator();
-            if (redirect != null) {
-                window.location = redirect;
-            }
-        });
-    },
-
-    terminateGenerator: function terminateGenerator() {
-        _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
-        _pubsub2.default.emit('generatorCompleted');
-    },
-    /**
-     *	Loads the HTML general exercise template from static
-     **/
-    createDom: function createDom() {
-        var _this = this;
-        return _jquery2.default.ajax({
-            type: 'GET',
-            dataType: 'html',
-            url: _this.templateURL,
-            data: this.data,
-            success: function success(data) {
-                (0, _jquery2.default)("#main-content").html(data);
-            },
-            async: true
-        });
-    },
-
-    /**
-     *	Ajax get request to the Zeeguu API to get new bookmarks
-     **/
-    getBookmarks: function getBookmarks() {
-        var _this = this;
-        this.loadingAnimation(true);
-        var address = this.bookmarksURL + this.size + "?session=" + this.session;
-        return _jquery2.default.ajax({
-            type: 'GET',
-            dataType: 'json',
-            url: address,
-            data: this.data,
-            success: function success(data) {
-                _this.loadingAnimation(false);
-            },
-            async: true
-        });
-    },
-
-    /**
-     *	Animation used for loading
-     **/
-    loadingAnimation: function loadingAnimation(activate) {
-        if (activate === true) {
-            this.$container.addClass('hide');
-            this.$loader.removeClass('hide');
-        } else {
-            this.$container.removeClass('hide');
-            this.$loader.addClass('hide');
-        }
-    },
-
-    /**
-     * Extraction of redirect url for Distraction Shield
-     **/
-    distractionShieldOriginalDestination: function distractionShieldOriginalDestination() {
-        var url = window.location.href;
-        var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)");
-        var results = regex.exec(url);
-        if (!results || !results[2]) return null;
-        var newUrl = decodeURIComponent(results[2].replace(/\+/g, " "));
-        if (newUrl.indexOf('?') > -1) {
-            newUrl += "&tds_exComplete=true";
-        } else {
-            newUrl += "?tds_exComplete=true";
-        }
-        return newUrl;
-    }
-};
-
-exports.default = Generator;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _home = __webpack_require__(9);
+var _home = __webpack_require__(20);
 
 var _home2 = _interopRequireDefault(_home);
 
@@ -13269,65 +13328,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 	window.onload = new _home2.default();
 })();
 
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _pubsub = __webpack_require__(5);
-
-var _pubsub2 = _interopRequireDefault(_pubsub);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var bar,
-    ProgressBar = {
-	settings: {
-		percent: 0, //default starting point
-		amount: 25, //default value for progress amount
-		elem: 0
-	},
-	init: function init(percent, size) {
-		this.bindUIActions();
-		bar = this.settings;
-		bar.percent = percent;
-		bar.amount = 100 / size;
-		bar.elem = document.getElementById("ex-bar");
-		bar.elem.style.width = bar.percent;
-		// "bind" event
-		_pubsub2.default.on('progress', this.move);
-	},
-	restart: function restart() {
-		bar.percent = 0;
-		bar.elem.style.width = bar.percent;
-	},
-	bindUIActions: function bindUIActions() {},
-	move: function move() {
-		var width = bar.percent;
-		var id = setInterval(frame, 10);
-		var max_move = bar.percent + bar.amount;
-		function frame() {
-			if (width >= max_move || width >= 100) {
-				clearInterval(id);
-			} else {
-				width++;
-				bar.elem.style.width = width + '%';
-			}
-			bar.percent = max_move;
-		}
-	}
-}; /** Modular progress bar @author Martin Avagyan
-    *  Initialize it using ProgressBar.init(percent,size);
-    *  Add progress using  ProgressBar.move();
-   **/
-exports.default = ProgressBar;
-
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.bundle.js.map
+//# sourceMappingURL=mainEntry.entry.js.map

@@ -22,16 +22,16 @@ def with_session(f):
 	"""
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
-		print request.args.get
+		print (request.args.get)
 		request.sessionID = None
 		if request.args.get('sessionID'):
-			print "Session is supplied as a query string"
+			print ("Session is supplied as a query string")
 			request.sessionID = int(request.args['sessionID'])
 		elif 'sessionID' in request.cookies:
-			print "Session is retrived from cookies"
+			print ("Session is retrived from cookies")
 			request.sessionID = request.cookies.get('sessionID')
 		else:
-			print "Session is default for testing"
+			print ("Session is default for testing")
 			request.sessionID = DEFAULT_SESSION
 		return f(*args, **kwargs)
 	return decorated_function
@@ -39,12 +39,18 @@ def with_session(f):
 @app.route('/', methods=['GET'])
 @with_session
 def index():	
+	"""
+	Main entry point
+	"""
 	return home_page(request.sessionID)
 
-@app.route('/get-ex/', methods=['GET'])
-@with_session
+
+@app.route('/get-ex', methods=['GET'])
 def getex():
-	return test_page(request.sessionID)
+	"""
+	Temporary route for distraction shield testing
+	"""
+	return test_page(DEFAULT_SESSION)
 
 def home_page(session_id):
 	return render_template('index.html', sessionID=session_id)
