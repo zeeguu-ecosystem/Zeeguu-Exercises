@@ -10118,7 +10118,7 @@ var _hexToRgb = __webpack_require__(3);
 
 var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(1);
 
-var _defaultParams = __webpack_require__(6);
+var _defaultParams = __webpack_require__(7);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
@@ -10368,7 +10368,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _sweetalert = __webpack_require__(7);
+var _sweetalert = __webpack_require__(8);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
@@ -10376,15 +10376,21 @@ var _pubsub = __webpack_require__(5);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
+var _util = __webpack_require__(6);
+
+var _util2 = _interopRequireDefault(_util);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Modular Zeeguu Powered Exercise @author Martin Avagyan
+ *  @initialize it using: new Exercise();
+ *  @customize it by using prototypal inheritance 
+**/
 
 var Exercise = function Exercise(data, index, size) {
 	this.init(data, index, size);
 	//TODO unbind method
-}; /** Modular Zeeguu Powered Exercise @author Martin Avagyan
-    *  @initialize it using: new Exercise();
-    *  @customize it by using prototypal inheritance 
-   **/
+};
 
 Exercise.prototype = {
 
@@ -10394,7 +10400,13 @@ Exercise.prototype = {
 	index: 0,
 	startIndex: 0,
 	size: 0, //default number of bookmarks
-	description: "Solve the exercise", //default description
+	description: "Solve the exercise", //default description	
+	submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome",
+	correctSolution: "Correct",
+	wrongSolution: "Wrong",
+	exType: "Recognize",
+	session: sessionID, //Example of session id 34563456 or 11010001
+	startTime: 0,
 
 	/*********************** General Functions ***************************/
 	/**
@@ -10450,6 +10462,7 @@ Exercise.prototype = {
 		this.size = size;
 		this.setDescription();
 		this.next();
+		this.startTime = new Date();
 	},
 
 	/**
@@ -10477,6 +10490,7 @@ Exercise.prototype = {
 			return;
 		}
 		this.wrongAnswerAnimation();
+		this.submitResult(this.data[this.index].id, this.wrongSolution);
 	},
 
 	/**
@@ -10485,6 +10499,8 @@ Exercise.prototype = {
 	onSuccess: function onSuccess() {
 		var _this = this;
 		this.animateSuccess();
+		//Submit the result of translation
+		this.submitResult(this.data[this.index].id, this.correctSolution);
 		// Notify the observer
 		_pubsub2.default.emit('progress');
 		this.index++;
@@ -10496,6 +10512,15 @@ Exercise.prototype = {
 		setTimeout(function () {
 			_this.next();
 		}, 2000);
+	},
+
+	/**
+     *	Request the submit to the Zeeguu API
+  *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 
+     **/
+	submitResult: function submitResult(id, exResult) {
+		var exTime = _util2.default.calcTimeInMilliseconds(this.startTime);
+		_jquery2.default.post(this.submitResutsUrl + "/" + exResult + "/" + this.exType + "/" + exTime + "/" + id + "?session=" + this.session);
 	},
 
 	/**
@@ -10615,6 +10640,81 @@ exports.default = events;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var ut,
+    Util = {
+	/**
+ *Returns selected text
+ **/
+	getSelectedText: function getSelectedText() {
+		// Gets clicked on word (or selected text if text is selected)
+		var t = '';
+		var sel;
+		if (window.getSelection && (sel = window.getSelection()).modify) {
+			var s = window.getSelection();
+			if (s.isCollapsed) {
+				s.modify('move', 'forward', 'character');
+				s.modify('move', 'backward', 'word');
+				s.modify('extend', 'forward', 'word');
+				t = s.toString();
+				s.modify('move', 'forward', 'character'); //clear selection
+			} else {
+				t = s.toString();
+			}
+		} else if ((sel = document.selection) && sel.type != "Control") {
+			// IE 4+
+			var textRange = sel.createRange();
+			if (!textRange.text) {
+				textRange.expand("word");
+			}
+			// Remove trailing spaces
+			while (/\s$/.test(textRange.text)) {
+				textRange.moveEnd("character", -1);
+			}
+			t = textRange.text;
+		}
+		return t;
+	},
+
+	/**
+     *	Calculate session time in minutes
+  *	@return string with appended minute
+     **/
+	calcTimeInMinutes: function calcTimeInMinutes(startTime) {
+		var endTime = new Date();
+		var total = endTime.getMinutes() - startTime.getMinutes();
+		return total <= 1 ? "1 minute" : total + " minutes";
+	},
+
+	/**
+     *	Calculate exercise time in milliseconds
+  *	@return milliseconds
+     **/
+	calcTimeInMilliseconds: function calcTimeInMilliseconds(startTime) {
+		var endTime = new Date();
+		var total = endTime.getTime() - startTime.getTime();
+		return total;
+	}
+};
+
+var extendObject = function extendObject(child, parent) {
+	var temp = function temp() {};
+	temp.prototype = parent.prototype;
+	child.prototype = new temp();
+	child.prototype.constructor = child;
+};
+
+exports.default = Util;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
@@ -10647,7 +10747,7 @@ exports['default'] = defaultParams;
 module.exports = exports['default'];
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10694,7 +10794,7 @@ var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
 // Default values
 
-var _defaultParams = __webpack_require__(6);
+var _defaultParams = __webpack_require__(7);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
@@ -10960,61 +11060,6 @@ if (typeof window !== 'undefined') {
 module.exports = exports['default'];
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-var ut,
-    Util = {
-	/**
- *Returns selected text
- **/
-	getSelectedText: function getSelectedText() {
-		// Gets clicked on word (or selected text if text is selected)
-		var t = '';
-		var sel;
-		if (window.getSelection && (sel = window.getSelection()).modify) {
-			var s = window.getSelection();
-			if (s.isCollapsed) {
-				s.modify('move', 'forward', 'character');
-				s.modify('move', 'backward', 'word');
-				s.modify('extend', 'forward', 'word');
-				t = s.toString();
-				s.modify('move', 'forward', 'character'); //clear selection
-			} else {
-				t = s.toString();
-			}
-		} else if ((sel = document.selection) && sel.type != "Control") {
-			// IE 4+
-			var textRange = sel.createRange();
-			if (!textRange.text) {
-				textRange.expand("word");
-			}
-			// Remove trailing spaces
-			while (/\s$/.test(textRange.text)) {
-				textRange.moveEnd("character", -1);
-			}
-			t = textRange.text;
-		}
-		return t;
-	}
-};
-
-var extendObject = function extendObject(child, parent) {
-	var temp = function temp() {};
-	temp.prototype = parent.prototype;
-	child.prototype = new temp();
-	child.prototype.constructor = child;
-};
-
-exports.default = Util;
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11053,7 +11098,7 @@ var _pubsub = __webpack_require__(5);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _sweetalert = __webpack_require__(7);
+var _sweetalert = __webpack_require__(8);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
@@ -11199,23 +11244,15 @@ Generator.prototype = {
     },
 
     /**
-     *	Check selected answer with success condition
-     **/
-    calcSessionTime: function calcSessionTime() {
-        var endTime = new Date();
-        var total = endTime.getMinutes() - this.startTime.getMinutes();
-        return total <= 1 ? "1 minute" : total + " minutes";
-    },
-
-    /**
      *	When the ex are done perform an action
      **/
     onExSetComplete: function onExSetComplete() {
         var _this = this;
         var redirect = _this.distractionShieldOriginalDestination();
+        _this.submitResults();
         (0, _sweetalert2.default)({
             title: "You rock!",
-            text: "That took less than " + _this.calcSessionTime() + ". practice more?",
+            text: "That took less than " + Util.calcTimeInMinutes(_this.startTime) + ". practice more?",
             type: "success",
             showCancelButton: true,
             confirmButtonColor: "#7eb530",
@@ -11863,7 +11900,7 @@ var _exercise = __webpack_require__(4);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(6);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -12367,7 +12404,7 @@ var _exercise = __webpack_require__(4);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(6);
 
 var _util2 = _interopRequireDefault(_util);
 

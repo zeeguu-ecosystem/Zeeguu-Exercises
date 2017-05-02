@@ -6,6 +6,7 @@
 import $ from 'jquery';
 import swal from 'sweetalert';
 import events from './pubsub';
+import Util from './util';
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
