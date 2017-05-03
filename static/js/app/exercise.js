@@ -25,6 +25,7 @@ Exercise.prototype = {
     submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome",
 	correctSolution: "Correct",
 	wrongSolution: "Wrong",
+	askedForHint: "asked_for_hint",
 	exType: "Recognize",
 	session: sessionID  , //Example of session id 34563456 or 11010001
 	startTime: 0,
@@ -149,6 +150,14 @@ Exercise.prototype = {
 		if (document.activeElement != document.body) document.activeElement.blur();
 	},
 	
+	/**
+	*	User hint handler
+	**/
+	handleHint: function(){
+		//TODO post request to server for feedback
+		this.giveHint();
+	},
+	
 	
 	/*********************** Interface functions *****************************/
 	/**
@@ -161,6 +170,7 @@ Exercise.prototype = {
 	*	If true, then a correct answer was given
 	**/
 	successCondition: function(){},
+	
 	
 	/**
 	*	Gives a hint when the hint button is pressed
