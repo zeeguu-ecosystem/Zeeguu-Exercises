@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10380,17 +10380,19 @@ var _util = __webpack_require__(6);
 
 var _util2 = _interopRequireDefault(_util);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _settings = __webpack_require__(20);
 
-/** Modular Zeeguu Powered Exercise @author Martin Avagyan
- *  @initialize it using: new Exercise();
- *  @customize it by using prototypal inheritance 
-**/
+var _settings2 = _interopRequireDefault(_settings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Exercise = function Exercise(data, index, size) {
 	this.init(data, index, size);
 	//TODO unbind method
-};
+}; /** Modular Zeeguu Powered Exercise @author Martin Avagyan
+    *  @initialize it using: new Exercise();
+    *  @customize it by using prototypal inheritance 
+   **/
 
 Exercise.prototype = {
 
@@ -10400,13 +10402,10 @@ Exercise.prototype = {
 	index: 0,
 	startIndex: 0,
 	size: 0, //default number of bookmarks
-	description: "Solve the exercise", //default description	
-	submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome",
-	correctSolution: "Correct",
-	wrongSolution: "Wrong",
-	exType: "Recognize",
+	description: "Solve the exercise", //default description
 	session: sessionID, //Example of session id 34563456 or 11010001
 	startTime: 0,
+	isHintUsed: false,
 
 	/*********************** General Functions ***************************/
 	/**
@@ -10490,7 +10489,7 @@ Exercise.prototype = {
 			return;
 		}
 		this.wrongAnswerAnimation();
-		this.submitResult(this.data[this.index].id, this.wrongSolution);
+		this.submitResult(this.data[this.index].id, _settings2.default.ZEEGUU_EX_OUTCOME_WRONG);
 	},
 
 	/**
@@ -10500,7 +10499,7 @@ Exercise.prototype = {
 		var _this = this;
 		this.animateSuccess();
 		//Submit the result of translation
-		this.submitResult(this.data[this.index].id, this.correctSolution);
+		this.submitResult(this.data[this.index].id, _settings2.default.ZEEGUU_EX_OUTCOME_CORRECT);
 		// Notify the observer
 		_pubsub2.default.emit('progress');
 		this.index++;
@@ -10518,9 +10517,18 @@ Exercise.prototype = {
      *	Request the submit to the Zeeguu API
   *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 
      **/
-	submitResult: function submitResult(id, exResult) {
+	submitResult: function submitResult(id, exOutcome) {
+		//If the user used the hint, do not register correct solution, resent the hint, move on
+		if (this.isHintUsed && exOutcome == _settings2.default.ZEEGUU_EX_OUTCOME_CORRECT) {
+			this.isHintUsed = false;
+			return;
+		}
+		//If hint is used twice, ignore request
+		if (this.isHintUsed && exOutcome == _settings2.default.ZEEGUU_EX_OUTCOME_HINT) return;
+		//Calculate time taken for single exercise
 		var exTime = _util2.default.calcTimeInMilliseconds(this.startTime);
-		_jquery2.default.post(this.submitResutsUrl + "/" + exResult + "/" + this.exType + "/" + exTime + "/" + id + "?session=" + this.session);
+		//Request back to the server with the outcome
+		_jquery2.default.post(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _settings2.default.ZEEGUU_EX_SOURCE_RECOGNIZE + "/" + exTime + "/" + id + "?session=" + this.session);
 	},
 
 	/**
@@ -10528,6 +10536,16 @@ Exercise.prototype = {
  **/
 	prepareDocument: function prepareDocument() {
 		if (document.activeElement != document.body) document.activeElement.blur();
+	},
+
+	/**
+ *	User hint handler
+ **/
+	handleHint: function handleHint() {
+		this.submitResult(this.data[this.index].id, _settings2.default.ZEEGUU_EX_OUTCOME_HINT);
+		this.isHintUsed = true;
+
+		this.giveHint();
 	},
 
 	/*********************** Interface functions *****************************/
@@ -11924,7 +11942,7 @@ function Ex1(data, index, size) {
 	this.bindUIActions = function () {
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.giveHint.bind(this));
+		this.$showSolution.on("click", _this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
@@ -12016,7 +12034,7 @@ function Ex2(data, index, size) {
 	this.bindUIActions = function () {
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.giveHint.bind(this));
+		this.$showSolution.on("click", _this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
@@ -12183,7 +12201,7 @@ function Ex3(data, index, size) {
 	/** @Override */
 	this.bindUIActions = function () {
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", this.giveHint.bind(this));
+		this.$showSolution.on("click", this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
 		//this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
@@ -12428,7 +12446,7 @@ function Ex4(data, index, size) {
 	this.bindUIActions = function () {
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.giveHint.bind(this));
+		this.$showSolution.on("click", _this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
@@ -12577,6 +12595,41 @@ exports.default = ProgressBar;
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * File containing global settings for exercises
+ * */
+
+exports.default = {
+    /*********************** Exercise API Parameters **************************/
+
+    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION: 'sessionID',
+
+    /*********************** Exercise Outcome Parameters **************************/
+
+    /** Current endpoint for submitting the result*/
+    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+
+    /** Source types for exercise outcome */
+    ZEEGUU_EX_SOURCE_RECOGNIZE: "/Recognize",
+
+    /** Outcome types for exercise */
+    ZEEGUU_EX_OUTCOME_CORRECT: "/Correct",
+    ZEEGUU_EX_OUTCOME_WRONG: "/Wrong",
+    ZEEGUU_EX_OUTCOME_HINT: "/asked_for_hint"
+
+};
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
@@ -12592,7 +12645,7 @@ var _pubsub = __webpack_require__(5);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _mustache = __webpack_require__(21);
+var _mustache = __webpack_require__(22);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
@@ -12729,7 +12782,7 @@ Home.prototype = {
 exports.default = Home;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13349,13 +13402,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _home = __webpack_require__(20);
+var _home = __webpack_require__(21);
 
 var _home2 = _interopRequireDefault(_home);
 

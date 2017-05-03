@@ -27,7 +27,7 @@ function Ex3(data,index,size){
 	/** @Override */
 	this.bindUIActions = function(){
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", this.giveHint.bind(this));
+		this.$showSolution.on("click", this.handleHint.bind(this));
 		
 		//Bind UI action of Check answer to the function
 		//this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
