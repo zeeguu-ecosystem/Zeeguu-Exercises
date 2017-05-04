@@ -56,6 +56,7 @@ def getex():
 	"""
     return render_template('test.html')
 
+
 @app.route('/test-setcookie', methods=['GET'])
 def setCookie():
     """
