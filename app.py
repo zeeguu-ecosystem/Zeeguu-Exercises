@@ -1,8 +1,6 @@
-import functools
-from flask import Flask, render_template, make_response, request, redirect, g, url_for, make_response
-import requests
-import flask
 from functools import wraps
+import flask
+from flask import Flask, request
 from flask import render_template
 
 """
@@ -18,12 +16,12 @@ app = Flask(__name__)
 
 def with_session(f):
     """
-	Decorator for checking sessionID
-	- query string
-	- cookie parameter
-	- defualt_session for tests
-	Example: http://127.0.0.1:5000/?sessionID=11010001
-	"""
+    Decorator for checking sessionID
+    - query string
+    - cookie parameter
+    - defualt_session for tests
+    Example: http://127.0.0.1:5000/?sessionID=11010001
+    """
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -39,30 +37,32 @@ def with_session(f):
 
     return decorated_function
 
+
 @app.route('/', methods=['GET'])
 @with_session
 def index():
     """
-	Main entry point
-	"""
+    Main entry point
+    """
     return render_template('index.html')
 
 
 @app.route('/get-ex', methods=['GET'])
 @with_session
-def getex():
+def get_ex():
     """
-	Temporary route for distraction shield testing
-	"""
+    Temporary route for distraction shield testing
+    """
     return render_template('test.html')
 
 
-@app.route('/test-setcookie', methods=['GET'])
-def setCookie():
+@app.route('/test-set-cookie', methods=['GET'])
+def set_cookie():
     """
-	Test route for setting the cookie only for local resting
-	"""
+    Test route for setting the cookie only for local resting
+    """
     return render_template('set_cookie.html')
+
 
 """
 TODO consider this option
