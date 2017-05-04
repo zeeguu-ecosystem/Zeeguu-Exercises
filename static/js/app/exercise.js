@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import events from './pubsub';
 import Util from './util';
 import Settings from './settings';
+import  Session from './session';
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
@@ -23,7 +24,7 @@ Exercise.prototype = {
 	startIndex: 0,
 	size: 0, //default number of bookmarks
 	description:  "Solve the exercise",  //default description
-	session: sessionID, //Example of session id 34563456 or 11010001
+	session: Session.getSession(), //Example of session id 34563456 or 11010001
 	startTime: 0,
 	isHintUsed: false,
 	

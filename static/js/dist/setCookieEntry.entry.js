@@ -68,79 +68,7 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 22:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/4/2017.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _cookie_handler = __webpack_require__(24);
-
-var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
-
-var _settings = __webpack_require__(9);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Session = function () {
-    function Session() {
-        _classCallCheck(this, Session);
-    }
-
-    _createClass(Session, null, [{
-        key: 'getSession',
-
-
-        /**
-         * @param name, name of the session identifier
-         * @default from Zeeguu Settings
-         * */
-        value: function getSession() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
-
-            return _cookie_handler2.default.getCookie(name);
-        }
-
-        /**
-         *  Set the zeeguu sessionID cookie to the default session
-         * @param name, cookie identifier
-         * @param value, value of the cookie
-         * @param days, expiration time
-         * @default form Zeeguu Settings
-         * */
-
-    }, {
-        key: 'setSession',
-        value: function setSession() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
-            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFUALT_SESSION;
-            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFUALT_COOKIE_EXPIRATION;
-
-            _cookie_handler2.default.setCookie(name, value, days);
-        }
-    }]);
-
-    return Session;
-}();
-
-exports.default = Session;
-
-/***/ }),
-
-/***/ 24:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -217,7 +145,7 @@ exports.default = cookieHandler;
 "use strict";
 
 
-var _session = __webpack_require__(22);
+var _session = __webpack_require__(6);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -227,7 +155,83 @@ _session2.default.setSession();
 
 /***/ }),
 
-/***/ 9:
+/***/ 6:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/4/2017.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _cookie_handler = __webpack_require__(11);
+
+var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
+
+var _settings = __webpack_require__(7);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var sessionID = null;
+
+var Session = function () {
+    function Session() {
+        _classCallCheck(this, Session);
+    }
+
+    _createClass(Session, null, [{
+        key: 'getSession',
+
+
+        /**
+         * @param name, name of the session identifier
+         * @default from Zeeguu Settings
+         * */
+        value: function getSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+
+            if (sessionID) return sessionID;
+            sessionID = _cookie_handler2.default.getCookie(name);
+            return sessionID;
+        }
+
+        /**
+         *  Set the zeeguu sessionID cookie to the default session
+         * @param name, cookie identifier
+         * @param value, value of the cookie
+         * @param days, expiration time
+         * @default form Zeeguu Settings
+         * */
+
+    }, {
+        key: 'setSession',
+        value: function setSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFUALT_SESSION;
+            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFUALT_COOKIE_EXPIRATION;
+
+            _cookie_handler2.default.setCookie(name, value, days);
+        }
+    }]);
+
+    return Session;
+}();
+
+exports.default = Session;
+
+/***/ }),
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

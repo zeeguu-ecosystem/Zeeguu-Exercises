@@ -4,6 +4,8 @@
 import CookieHander from './cookie_handler';
 import Settings from './settings';
 
+let sessionID = null;
+
 export default class Session {
 
     /**
@@ -11,7 +13,9 @@ export default class Session {
      * @default from Zeeguu Settings
      * */
     static getSession (name = Settings.ZEEGUU_SESSION_ID) {
-        return CookieHander.getCookie(name);
+        if(sessionID) return sessionID;
+        sessionID = CookieHander.getCookie(name);
+        return sessionID
     }
 
     /**

@@ -13,7 +13,7 @@ import Ex4 from './ex4';
 import ProgressBar from './progress_bar';
 import events from './pubsub';
 import swal from 'sweetalert';
-
+import Session from './session';
 
  
 var Generator = function(set){
@@ -27,7 +27,7 @@ Generator.prototype = {
     size: 0,		//total count of bookmakrs
     index: 0,		//current index from set
     startTime: 0,
-    session: sessionID  , //Example of session id 34563456 or 11010001
+    session: Session.getSession()  , //Example of session id 34563456 or 11010001
     bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
     templateURL: 'static/template/exercise.html',
     submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",

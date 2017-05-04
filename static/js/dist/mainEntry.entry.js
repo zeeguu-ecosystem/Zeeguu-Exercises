@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)(module)))
 
 /***/ }),
 /* 1 */
@@ -10118,7 +10118,7 @@ var _hexToRgb = __webpack_require__(3);
 
 var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(1);
 
-var _defaultParams = __webpack_require__(7);
+var _defaultParams = __webpack_require__(9);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
@@ -10126,7 +10126,7 @@ var _defaultParams2 = _interopRequireWildcard(_defaultParams);
  * Add modal + overlay to DOM
  */
 
-var _injectedHTML = __webpack_require__(13);
+var _injectedHTML = __webpack_require__(15);
 
 var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
 
@@ -10368,7 +10368,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _sweetalert = __webpack_require__(8);
+var _sweetalert = __webpack_require__(10);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
@@ -10376,23 +10376,29 @@ var _pubsub = __webpack_require__(5);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _util = __webpack_require__(6);
+var _util = __webpack_require__(8);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _settings = __webpack_require__(9);
+var _settings = __webpack_require__(7);
 
 var _settings2 = _interopRequireDefault(_settings);
 
+var _session = __webpack_require__(6);
+
+var _session2 = _interopRequireDefault(_session);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Modular Zeeguu Powered Exercise @author Martin Avagyan
+ *  @initialize it using: new Exercise();
+ *  @customize it by using prototypal inheritance 
+**/
 
 var Exercise = function Exercise(data, index, size) {
 	this.init(data, index, size);
 	//TODO unbind method
-}; /** Modular Zeeguu Powered Exercise @author Martin Avagyan
-    *  @initialize it using: new Exercise();
-    *  @customize it by using prototypal inheritance 
-   **/
+};
 
 Exercise.prototype = {
 
@@ -10403,7 +10409,7 @@ Exercise.prototype = {
 	startIndex: 0,
 	size: 0, //default number of bookmarks
 	description: "Solve the exercise", //default description
-	session: sessionID, //Example of session id 34563456 or 11010001
+	session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
 	startTime: 0,
 	isHintUsed: false,
 
@@ -10659,6 +10665,118 @@ exports.default = events;
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/4/2017.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _cookie_handler = __webpack_require__(11);
+
+var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
+
+var _settings = __webpack_require__(7);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var sessionID = null;
+
+var Session = function () {
+    function Session() {
+        _classCallCheck(this, Session);
+    }
+
+    _createClass(Session, null, [{
+        key: 'getSession',
+
+
+        /**
+         * @param name, name of the session identifier
+         * @default from Zeeguu Settings
+         * */
+        value: function getSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+
+            if (sessionID) return sessionID;
+            sessionID = _cookie_handler2.default.getCookie(name);
+            return sessionID;
+        }
+
+        /**
+         *  Set the zeeguu sessionID cookie to the default session
+         * @param name, cookie identifier
+         * @param value, value of the cookie
+         * @param days, expiration time
+         * @default form Zeeguu Settings
+         * */
+
+    }, {
+        key: 'setSession',
+        value: function setSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFUALT_SESSION;
+            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFUALT_COOKIE_EXPIRATION;
+
+            _cookie_handler2.default.setCookie(name, value, days);
+        }
+    }]);
+
+    return Session;
+}();
+
+exports.default = Session;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * File containing global settings for exercises
+ * */
+
+exports.default = {
+    /*********************** Exercise API Parameters **************************/
+
+    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION_ID: 'sessionID',
+    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFUALT_SESSION: 34563456,
+
+    /*********************** Exercise Outcome Parameters **************************/
+
+    /** Current endpoint for submitting the result*/
+    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+
+    /** Source types for exercise outcome */
+    ZEEGUU_EX_SOURCE_RECOGNIZE: "/Recognize",
+
+    /** Outcome types for exercise */
+    ZEEGUU_EX_OUTCOME_CORRECT: "/Correct",
+    ZEEGUU_EX_OUTCOME_WRONG: "/Wrong",
+    ZEEGUU_EX_OUTCOME_HINT: "/asked_for_hint"
+
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 var ut,
@@ -10727,7 +10845,7 @@ var extendObject = function extendObject(child, parent) {
 exports.default = Util;
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10765,7 +10883,7 @@ exports['default'] = defaultParams;
 module.exports = exports['default'];
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10804,19 +10922,19 @@ var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$r
 
 // Handle button events and keyboard events
 
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(11);
+var _handleButton$handleConfirm$handleCancel = __webpack_require__(13);
 
-var _handleKeyDown = __webpack_require__(12);
+var _handleKeyDown = __webpack_require__(14);
 
 var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
 // Default values
 
-var _defaultParams = __webpack_require__(7);
+var _defaultParams = __webpack_require__(9);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
-var _setParameters = __webpack_require__(14);
+var _setParameters = __webpack_require__(16);
 
 var _setParameters2 = _interopRequireWildcard(_setParameters);
 
@@ -11078,7 +11196,7 @@ if (typeof window !== 'undefined') {
 module.exports = exports['default'];
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11087,35 +11205,68 @@ module.exports = exports['default'];
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 /**
- * File containing global settings for exercises
- * */
+ * Created by Martin on 5/4/2017.
+ */
 
-exports.default = {
-    /*********************** Exercise API Parameters **************************/
+var cookieHandler = function () {
+    function cookieHandler() {
+        _classCallCheck(this, cookieHandler);
+    }
 
-    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFUALT_SESSION: 34563456,
+    _createClass(cookieHandler, null, [{
+        key: 'getCookie',
 
-    /*********************** Exercise Outcome Parameters **************************/
+        /**
+         * Retrive cookie given the
+         * @param name
+         * */
+        value: function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1, c.length);
+                }if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return '';
+        }
 
-    /** Current endpoint for submitting the result*/
-    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+        /**
+         * Set cookie given the
+         * @param name, cookie identifier
+         * @param value, value of the cookie
+         * @param days, expiration time
+         * */
 
-    /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: "/Recognize",
+    }, {
+        key: 'setCookie',
+        value: function setCookie(name, value, days) {
+            var expires;
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                expires = "; expires=" + date.toGMTString();
+            } else {
+                expires = '';
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+    }]);
 
-    /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: "/Correct",
-    ZEEGUU_EX_OUTCOME_WRONG: "/Wrong",
-    ZEEGUU_EX_OUTCOME_HINT: "/asked_for_hint"
+    return cookieHandler;
+}();
 
-};
+exports.default = cookieHandler;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11129,23 +11280,23 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ex = __webpack_require__(16);
+var _ex = __webpack_require__(18);
 
 var _ex2 = _interopRequireDefault(_ex);
 
-var _ex3 = __webpack_require__(17);
+var _ex3 = __webpack_require__(19);
 
 var _ex4 = _interopRequireDefault(_ex3);
 
-var _ex5 = __webpack_require__(18);
+var _ex5 = __webpack_require__(20);
 
 var _ex6 = _interopRequireDefault(_ex5);
 
-var _ex7 = __webpack_require__(19);
+var _ex7 = __webpack_require__(21);
 
 var _ex8 = _interopRequireDefault(_ex7);
 
-var _progress_bar = __webpack_require__(20);
+var _progress_bar = __webpack_require__(22);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
@@ -11153,22 +11304,24 @@ var _pubsub = __webpack_require__(5);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _sweetalert = __webpack_require__(8);
+var _sweetalert = __webpack_require__(10);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _session = __webpack_require__(6);
 
-/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
- *  @initialize it using: new Generator(args);
- *  @param args is matrix of exercise name and number of bookmarks,
- *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
- *  @customize it by using prototypal inheritance
- **/
+var _session2 = _interopRequireDefault(_session);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Generator = function Generator(set) {
     this.init(set);
-};
+}; /** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
+    *  @initialize it using: new Generator(args);
+    *  @param args is matrix of exercise name and number of bookmarks,
+    *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+    *  @customize it by using prototypal inheritance
+    **/
 
 Generator.prototype = {
     /************************** SETTINGS ********************************/
@@ -11177,7 +11330,7 @@ Generator.prototype = {
     size: 0, //total count of bookmakrs
     index: 0, //current index from set
     startTime: 0,
-    session: sessionID, //Example of session id 34563456 or 11010001
+    session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
     bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
     templateURL: 'static/template/exercise.html',
     submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",
@@ -11400,7 +11553,7 @@ Generator.prototype = {
 exports.default = Generator;
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11541,7 +11694,7 @@ exports['default'] = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11626,7 +11779,7 @@ exports['default'] = handleKeyDown;
 module.exports = exports['default'];
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11674,7 +11827,7 @@ exports["default"] = injectedHTML;
 module.exports = exports["default"];
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11907,7 +12060,7 @@ exports['default'] = setParameters;
 module.exports = exports['default'];
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11937,7 +12090,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11955,7 +12108,7 @@ var _exercise = __webpack_require__(4);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(6);
+var _util = __webpack_require__(8);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -12034,7 +12187,7 @@ Ex1.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex1;
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12192,7 +12345,7 @@ Ex2.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex2;
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12441,7 +12594,7 @@ Ex3.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex3;
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12459,7 +12612,7 @@ var _exercise = __webpack_require__(4);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(6);
+var _util = __webpack_require__(8);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -12566,7 +12719,7 @@ Ex4.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex4;
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12625,7 +12778,7 @@ var bar,
 exports.default = ProgressBar;
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12639,7 +12792,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _generator = __webpack_require__(10);
+var _generator = __webpack_require__(12);
 
 var _generator2 = _interopRequireDefault(_generator);
 
@@ -12647,7 +12800,7 @@ var _pubsub = __webpack_require__(5);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _mustache = __webpack_require__(23);
+var _mustache = __webpack_require__(24);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
@@ -12784,8 +12937,7 @@ Home.prototype = {
 exports.default = Home;
 
 /***/ }),
-/* 22 */,
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13405,23 +13557,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 24 */,
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _home = __webpack_require__(21);
+var _home = __webpack_require__(23);
 
 var _home2 = _interopRequireDefault(_home);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
-	if (sessionID = null) {
-		console.log("The session is not given");
-	}
 	window.onload = new _home2.default();
 })();
 

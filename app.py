@@ -1,5 +1,5 @@
 import functools
-from flask import Flask, render_template, make_response, request, redirect, g, url_for
+from flask import Flask, render_template, make_response, request, redirect, g, url_for, make_response
 import requests
 import flask
 from functools import wraps
@@ -29,10 +29,7 @@ def with_session(f):
     def decorated_function(*args, **kwargs):
         print(request.args.get)
         request.sessionID = None
-        if request.args.get('sessionID'):
-            print("Session is supplied as a query string")
-            request.sessionID = int(request.args['sessionID'])
-        elif ZEEGUU_SESSION in request.cookies:
+        if ZEEGUU_SESSION in request.cookies:
             print("Session is retrived from cookies")
             request.sessionID = request.cookies.get(ZEEGUU_SESSION)
         else:
@@ -42,14 +39,13 @@ def with_session(f):
 
     return decorated_function
 
-
 @app.route('/', methods=['GET'])
 @with_session
 def index():
     """
 	Main entry point
 	"""
-    return home_page(request.sessionID)
+    return render_template('index.html')
 
 
 @app.route('/get-ex', methods=['GET'])
@@ -58,7 +54,7 @@ def getex():
     """
 	Temporary route for distraction shield testing
 	"""
-    return test_page(request.sessionID)
+    return render_template('test.html')
 
 @app.route('/test-setcookie', methods=['GET'])
 def setCookie():
@@ -67,13 +63,12 @@ def setCookie():
 	"""
     return render_template('set_cookie.html')
 
-
-def home_page(session_id):
-    return render_template('index.html', sessionID=session_id)
-
-
-def test_page(session_id):
-    return render_template('test.html', sessionID=session_id)
-
+"""
+TODO consider this option
+def home_page(session):
+    response = make_response(render_template('index.html'))
+    response.set_cookie('sessionID', session)
+    return response
+"""
 if __name__ == "__main__":
     app.run(debug=True)
