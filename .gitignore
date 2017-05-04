@@ -55,3 +55,5 @@ fabric.properties
 # .idea/misc.xml 
 # *.ipr
 venv
+.idea
+npm-debug.log.3409570137

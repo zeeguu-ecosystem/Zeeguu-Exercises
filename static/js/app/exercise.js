@@ -2,7 +2,15 @@
  *  @initialize it using: new Exercise();
  *  @customize it by using prototypal inheritance 
 **/
-Exercise = function(data,index,size){
+
+import $ from 'jquery';
+import swal from 'sweetalert';
+import events from './pubsub';
+import Util from './util';
+import Settings from './settings';
+import  Session from './session';
+
+var Exercise = function(data,index,size){
 	this.init(data,index,size);	
 	//TODO unbind method
 };
@@ -15,13 +23,10 @@ Exercise.prototype = {
 	index: 0,
 	startIndex: 0,
 	size: 0, //default number of bookmarks
-	description:  "Solve the exercise",  //default description	
-    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome",
-	correctSolution: "Correct",
-	wrongSolution: "Wrong",
-	exType: "Recognize",
-	session: sessionID  , //Example of session id 34563456 or 11010001
+	description:  "Solve the exercise",  //default description
+	session: Session.getSession(), //Example of session id 34563456 or 11010001
 	startTime: 0,
+	isHintUsed: false,
 	
 	/*********************** General Functions ***************************/	
 	/**
@@ -104,7 +109,7 @@ Exercise.prototype = {
 			return;
 		}			
 		this.wrongAnswerAnimation();
-		this.submitResult(this.data[this.index].id,this.wrongSolution);
+		this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_WRONG);
 	},
 	
 	/**
@@ -114,7 +119,7 @@ Exercise.prototype = {
 		var _this = this;
 		this.animateSuccess();
 		//Submit the result of translation
-		this.submitResult(this.data[this.index].id,this.correctSolution);
+		this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_CORRECT);
 		// Notify the observer
 		events.emit('progress');
 		this.index++;
@@ -130,9 +135,18 @@ Exercise.prototype = {
      *	Request the submit to the Zeeguu API
 	 *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 
      **/
-    submitResult: function(id,exResult){
+    submitResult: function(id,exOutcome){
+		//If the user used the hint, do not register correct solution, resent the hint, move on
+		if(this.isHintUsed && exOutcome == Settings.ZEEGUU_EX_OUTCOME_CORRECT) {
+			this.isHintUsed = false;
+			return;
+		}
+		//If hint is used twice, ignore request
+		if(this.isHintUsed && exOutcome == Settings.ZEEGUU_EX_OUTCOME_HINT) return;
+		//Calculate time taken for single exercise
 		var exTime = Util.calcTimeInMilliseconds(this.startTime);
-        $.post(this.submitResutsUrl + "/" + exResult + "/" + this.exType + "/" + exTime + "/" + id + "?session="+this.session);
+		//Request back to the server with the outcome
+        $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  Settings.ZEEGUU_EX_SOURCE_RECOGNIZE + "/" + exTime + "/" + id + "?session="+this.session);
     },
 
 	
@@ -141,6 +155,16 @@ Exercise.prototype = {
 	**/
 	prepareDocument: function(){
 		if (document.activeElement != document.body) document.activeElement.blur();
+	},
+	
+	/**
+	*	User hint handler
+	**/
+	handleHint: function(){
+		this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_HINT);
+		this.isHintUsed = true;
+
+		this.giveHint();
 	},
 	
 	
@@ -155,6 +179,7 @@ Exercise.prototype = {
 	*	If true, then a correct answer was given
 	**/
 	successCondition: function(){},
+	
 	
 	/**
 	*	Gives a hint when the hint button is pressed
@@ -177,7 +202,7 @@ Exercise.prototype = {
 	/**
 	*	Animation for wrong solution
 	**/
-	wrongAnswerAnimation: function(){
+	wrongAnswerAnimation: function(){		
 		swal({
 			title: "Wrong answer...",
 			allowOutsideClick: true,
@@ -203,3 +228,5 @@ Exercise.prototype = {
 		}, 2000);	
 	},	
 };
+
+export default Exercise;

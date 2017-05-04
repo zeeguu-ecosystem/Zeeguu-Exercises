@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Current session -->
-		<script>
-			var sessionID =  {{ sessionID }};				
-		</script>
 		<!-- Hotjar Tracking Code for https://zeeguu.herokuapp.com/ -->
 		<script>
 			(function(h,o,t,j,a,r){
@@ -24,34 +20,21 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">	
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300">	
 		<!-- Add Local styles -->		
-		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/custom.css') }}" 	type= "text/css">
-		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/sweetalert.css') }}" type= "text/css">
-		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/success.css') }}" 	type= "text/css">
-		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/loader.css') }}" 	type= "text/css">
+		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/custom.css') }}" 	type = "text/css">
+		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/success.css') }}" 	type = "text/css">
+		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/loader.css') }}" 	type = "text/css">
+		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/sweetalert.css') }}" 	type = "text/css">
 		<!-- Add favicon -->
 		<link rel="icon" 	   href= "{{ url_for('static',filename='img/favicon.png') }}"  		type="image/x-icon"/>		
-		<!-- Add External scripts -->	
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+		<!-- Add External scripts -->
+		
 	</head>	
 	<body class = "home-body">	
 	
 	<div id = "main-content">		
-	</div>	
-	
+	</div>
 	<!-- Add Local scripts -->	
-	<script src="{{ url_for('static',filename='js/home.js') }}" 			></script>	
-	<script src="{{ url_for('static',filename='js/generator.js') }}"		></script>	
-	<script src="{{ url_for('static',filename='js/pubsub.js') }}"			></script>	
-	<script src="{{ url_for('static',filename='js/exercise.js') }}"			></script>	
-	<script src="{{ url_for('static',filename='js/ex1.js') }}"				></script>	
-	<script src="{{ url_for('static',filename='js/ex2.js') }}"				></script>
-	<script src="{{ url_for('static',filename='js/ex3.js') }}"				></script>
-	<script src="{{ url_for('static',filename='js/ex4.js') }}"				></script>		
-	<script src="{{ url_for('static',filename='js/main2.js') }}"				></script>	
-	<script src="{{ url_for('static',filename='js/dist/sweetalert.min.js') }}"></script>	
-	<script src="{{ url_for('static',filename='js/util.js') }}"				></script>
-	<script src="{{ url_for('static',filename='js/progress_bar.js') }}"		></script>
+	<script src="{{ url_for('static',filename='js/dist/testEntry.entry.js') }}"></script>
+
 	</body>
 </html>

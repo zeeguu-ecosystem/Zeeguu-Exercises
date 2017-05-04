@@ -2,6 +2,8 @@
  *  Initialize it using ProgressBar.init(percent,size);
  *  Add progress using  ProgressBar.move();
 **/
+import events from './pubsub';
+
 var bar,ProgressBar = {
 	settings:{
 		percent: 0, //default starting point
@@ -38,3 +40,5 @@ var bar,ProgressBar = {
 		}
 	},
 };
+
+export default ProgressBar;

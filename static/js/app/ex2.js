@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import Exercise from './exercise';
+
 function Ex2(data,index,size){
 	this.init(data,index,size);
 	
@@ -15,7 +18,7 @@ function Ex2(data,index,size){
 	this.bindUIActions = function(){
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.giveHint.bind(this));
+		this.$showSolution.on("click", _this.handleHint.bind(this));
 		
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
@@ -109,7 +112,7 @@ function Ex2(data,index,size){
 		var contextString = this.data[this.index].context;
 		var res = this.data[this.index].from.split(" ");	
 		
-		for (i = 0; i <res.length; i++){
+		for (var i = 0; i <res.length; i++){
 			contextString = contextString.replace(res[i]," ______ ");
 		}
 		this.$context.html(contextString);
@@ -119,7 +122,7 @@ function Ex2(data,index,size){
 		var contextString = this.$context.html();
 		var res = chosenWord.split(" ");	
 		
-		for (i = 0; i <res.length; i++){
+		for (var i = 0; i <res.length; i++){
 			contextString = contextString.replace(" ______ ",res[i].bold());
 		}	
 		this.$context.html (contextString);
@@ -137,3 +140,5 @@ Ex2.prototype = Object.create(Exercise.prototype, {
 	optionNum:	 {value: 3},
 	/*******************************************************************/
 });
+
+export default Ex2;

@@ -3,6 +3,11 @@
  *  @customize it by using prototypal inheritance 
 **/
 
+import $ from 'jquery';
+import Exercise from './exercise';
+import Util from './util';
+
+
 function Ex1(data,index,size){
 	
 	this.init(data,index,size);
@@ -21,16 +26,16 @@ function Ex1(data,index,size){
 	this.bindUIActions = function(){
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.giveHint.bind(this));
+		this.$showSolution.on("click", _this.handleHint.bind(this));
 		
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
 		
 		//Bind UI Text click		
-		this.$clickableText.on("click",updateInput.bind(this));
+		this.$clickableText.on("click",_this.updateInput.bind(this));
 		
 		// Bind UI Enter Key
-		  this.$input.keyup(enterKeyup.bind(this));
+		this.$input.keyup(_this.enterKeyup.bind(this));
 	}
 	
 	/** @Override */
@@ -40,12 +45,12 @@ function Ex1(data,index,size){
 		this.$input.val("");
 	}
 	
-	updateInput = function() {
+	this.updateInput = function() {
 		var t = Util.getSelectedText();
 		this.$input.val(t);
 	}
 	
-	enterKeyup = function(event){
+	this.enterKeyup = function(event){
 		if(event.keyCode == 13){
 			this.$checkAnswer.click();
 		}
@@ -68,3 +73,4 @@ Ex1.prototype = Object.create(Exercise.prototype, {
 	customTemplateURL: {value: 'static/template/ex1.html'},	
 });
 
+export default Ex1;

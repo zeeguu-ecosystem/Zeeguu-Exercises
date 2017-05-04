@@ -3,6 +3,10 @@
  *  @customize it by using prototypal inheritance 
 **/
 
+import $ from 'jquery';
+import Exercise from './exercise';
+import Util from './util';
+
 function Ex4(data,index,size){
 	
 	this.init(data,index,size);
@@ -21,7 +25,7 @@ function Ex4(data,index,size){
 	this.bindUIActions = function(){
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.giveHint.bind(this));
+		this.$showSolution.on("click", _this.handleHint.bind(this));
 		
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
@@ -30,7 +34,7 @@ function Ex4(data,index,size){
 		//this.$clickableText.on("click",updateInput.bind(this));
 		
 		// Bind UI Enter Key
-		  this.$input.keyup(enterKeyup.bind(this));
+		this.$input.keyup(_this.enterKeyup.bind(this));
 	}
 	
 	/** @Override */
@@ -40,12 +44,12 @@ function Ex4(data,index,size){
 		this.$input.val("");
 	}
 	
-	updateInput = function() {
+	this.updateInput = function() {
 		var t = Util.getSelectedText();
 		this.$input.val(t);
 	}
 	
-	enterKeyup = function(event){
+	this.enterKeyup = function(event){
 		if(event.keyCode == 13){
 			this.$checkAnswer.click();
 		}
@@ -55,7 +59,7 @@ function Ex4(data,index,size){
 		var contextString = this.data[this.index].context;
 		var res = this.data[this.index].from.split(" ");	
 		
-		for (i = 0; i <res.length; i++){
+		for (var i = 0; i <res.length; i++){
 			contextString = contextString.replace(res[i], res[i].bold());
 		}
 			
@@ -98,4 +102,6 @@ Ex4.prototype = Object.create(Exercise.prototype, {
 	description: {value: "Translate the word given in the context."},
 	customTemplateURL: {value: 'static/template/ex4.html'},	
 });
+
+export default Ex4;
 
