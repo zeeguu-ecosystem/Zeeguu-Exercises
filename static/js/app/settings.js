@@ -6,7 +6,9 @@ export default {
     /*********************** Exercise API Parameters **************************/
 
     ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION: 'sessionID',
+    ZEEGUU_SESSION_ID: 'sessionID',
+    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFUALT_SESSION: 34563456,
 
     /*********************** Exercise Outcome Parameters **************************/
 

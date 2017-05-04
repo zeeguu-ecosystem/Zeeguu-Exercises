@@ -8,6 +8,7 @@ module.exports = {
 	entry: {
 		mainEntry: './static/js/app/main.js',
 		testEntry: './static/js/app/test/main2.js',
+		setCookieEntry: './static/js/app/test/set_cookie_test.js',
     },
 	output: {		
 		path: path.join(__dirname, './static/js/dist'),

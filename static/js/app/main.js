@@ -1,5 +1,8 @@
 import Home from './home';
 
-(function() {	
+(function() {
+	if (sessionID = null){
+		console.log("The session is not given");
+	}
 	window.onload = new Home();	
 })();
