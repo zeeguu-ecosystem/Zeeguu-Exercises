@@ -6,10 +6,10 @@
  **/
  
 import $ from 'jquery';
-import Ex1 from './ex1';
-import Ex2 from './ex2';
-import Ex3 from './ex3';
-import Ex4 from './ex4';
+import Ex1 from './exercises/ex1';
+import Ex2 from './exercises/ex2';
+import Ex3 from './exercises/ex3';
+import Ex4 from './exercises/ex4';
 import ProgressBar from './progress_bar';
 import events from './pubsub';
 import swal from 'sweetalert';

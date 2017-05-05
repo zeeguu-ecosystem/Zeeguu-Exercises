@@ -5,7 +5,7 @@
 
 import $ from 'jquery';
 import Exercise from './exercise';
-import Util from './util';
+import Util from '../util';
 
 
 function Ex1(data,index,size){

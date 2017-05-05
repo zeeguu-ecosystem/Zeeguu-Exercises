@@ -5,10 +5,10 @@
 
 import $ from 'jquery';
 import swal from 'sweetalert';
-import events from './pubsub';
-import Util from './util';
-import Settings from './settings';
-import  Session from './session';
+import events from '../pubsub';
+import Util from '../util';
+import Settings from '../settings';
+import  Session from '../session';
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
