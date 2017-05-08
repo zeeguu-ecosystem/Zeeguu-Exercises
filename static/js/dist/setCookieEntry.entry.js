@@ -145,7 +145,7 @@ exports.default = cookieHandler;
 "use strict";
 
 
-var _session = __webpack_require__(6);
+var _session = __webpack_require__(7);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -155,7 +155,48 @@ _session2.default.setSession();
 
 /***/ }),
 
-/***/ 6:
+/***/ 5:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * File containing global settings for exercises
+ * */
+
+exports.default = {
+    /*********************** Exercise API Parameters **************************/
+
+    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION_ID: 'sessionID',
+    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFUALT_SESSION: 34563456,
+
+    /******************** Exercise Bookmark Parameters ************************/
+    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
+
+    /*********************** Exercise Outcome Parameters **************************/
+
+    /** Current endpoint for submitting the result*/
+    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+
+    /** Source types for exercise outcome */
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
+
+    /** Outcome types for exercise */
+    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
+    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
+    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint'
+
+};
+
+/***/ }),
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -174,7 +215,7 @@ var _cookie_handler = __webpack_require__(11);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(5);
 
 var _settings2 = _interopRequireDefault(_settings);
 
@@ -228,44 +269,6 @@ var Session = function () {
 }();
 
 exports.default = Session;
-
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * File containing global settings for exercises
- * */
-
-exports.default = {
-    /*********************** Exercise API Parameters **************************/
-
-    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFUALT_SESSION: 34563456,
-
-    /*********************** Exercise Outcome Parameters **************************/
-
-    /** Current endpoint for submitting the result*/
-    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
-
-    /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: "/Recognize",
-
-    /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: "/Correct",
-    ZEEGUU_EX_OUTCOME_WRONG: "/Wrong",
-    ZEEGUU_EX_OUTCOME_HINT: "/asked_for_hint"
-
-};
 
 /***/ })
 

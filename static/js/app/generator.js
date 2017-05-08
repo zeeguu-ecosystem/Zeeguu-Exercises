@@ -14,6 +14,7 @@ import ProgressBar from './progress_bar';
 import events from './pubsub';
 import swal from 'sweetalert';
 import Session from './session';
+import Settings from './settings';
 
  
 var Generator = function(set){
@@ -28,9 +29,7 @@ Generator.prototype = {
     index: 0,		//current index from set
     startTime: 0,
     session: Session.getSession()  , //Example of session id 34563456 or 11010001
-    bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
     templateURL: 'static/template/exercise.html',
-    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",
 
 
     /**
@@ -140,19 +139,14 @@ Generator.prototype = {
             sum += set[i][1];
         }
         return sum;
-
     },
 
     /**
      *	Request the submit API
      **/
     submitResults: function(){
-        for(var i = 0; i< this.data.length;i++){
-            $.post(this.submitResutsUrl+this.data[i].id+"?session="+this.session);
-        }
+        //TODO submit user feedback
     },
-
-    
 
     /**
      *	When the ex are done perform an action
@@ -211,7 +205,7 @@ Generator.prototype = {
     getBookmarks: function(){
         var _this = this;
         this.loadingAnimation(true);
-        var address = this.bookmarksURL+this.size+"?session="+this.session;
+        var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS+this.size+"?session="+this.session;
         return $.ajax({
             type: 'GET',
             dataType: 'json',

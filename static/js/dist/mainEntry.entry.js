@@ -10372,7 +10372,7 @@ var _sweetalert = __webpack_require__(10);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _pubsub = __webpack_require__(5);
+var _pubsub = __webpack_require__(6);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -10380,11 +10380,11 @@ var _util = __webpack_require__(8);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(5);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(6);
+var _session = __webpack_require__(7);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -10624,6 +10624,46 @@ exports.default = Exercise;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+/**
+ * File containing global settings for exercises
+ * */
+
+exports.default = {
+    /*********************** Exercise API Parameters **************************/
+
+    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION_ID: 'sessionID',
+    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFUALT_SESSION: 34563456,
+
+    /******************** Exercise Bookmark Parameters ************************/
+    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
+
+    /*********************** Exercise Outcome Parameters **************************/
+
+    /** Current endpoint for submitting the result*/
+    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+
+    /** Source types for exercise outcome */
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
+
+    /** Outcome types for exercise */
+    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
+    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
+    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint'
+
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var events = function () {
     var events = {};
 
@@ -10658,7 +10698,7 @@ var events = function () {
 exports.default = events;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10677,7 +10717,7 @@ var _cookie_handler = __webpack_require__(11);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(5);
 
 var _settings2 = _interopRequireDefault(_settings);
 
@@ -10731,43 +10771,6 @@ var Session = function () {
 }();
 
 exports.default = Session;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * File containing global settings for exercises
- * */
-
-exports.default = {
-    /*********************** Exercise API Parameters **************************/
-
-    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFUALT_SESSION: 34563456,
-
-    /*********************** Exercise Outcome Parameters **************************/
-
-    /** Current endpoint for submitting the result*/
-    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
-
-    /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: "/Recognize",
-
-    /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: "/Correct",
-    ZEEGUU_EX_OUTCOME_WRONG: "/Wrong",
-    ZEEGUU_EX_OUTCOME_HINT: "/asked_for_hint"
-
-};
 
 /***/ }),
 /* 8 */
@@ -11300,7 +11303,7 @@ var _progress_bar = __webpack_require__(22);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
-var _pubsub = __webpack_require__(5);
+var _pubsub = __webpack_require__(6);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -11308,20 +11311,26 @@ var _sweetalert = __webpack_require__(10);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _session = __webpack_require__(6);
+var _session = __webpack_require__(7);
 
 var _session2 = _interopRequireDefault(_session);
 
+var _settings = __webpack_require__(5);
+
+var _settings2 = _interopRequireDefault(_settings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
+ *  @initialize it using: new Generator(args);
+ *  @param args is matrix of exercise name and number of bookmarks,
+ *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+ *  @customize it by using prototypal inheritance
+ **/
 
 var Generator = function Generator(set) {
     this.init(set);
-}; /** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
-    *  @initialize it using: new Generator(args);
-    *  @param args is matrix of exercise name and number of bookmarks,
-    *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
-    *  @customize it by using prototypal inheritance
-    **/
+};
 
 Generator.prototype = {
     /************************** SETTINGS ********************************/
@@ -11331,9 +11340,7 @@ Generator.prototype = {
     index: 0, //current index from set
     startTime: 0,
     session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
-    bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
     templateURL: 'static/template/exercise.html',
-    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",
 
     /**
      *	Saves the common dom in chache
@@ -11446,9 +11453,7 @@ Generator.prototype = {
      *	Request the submit API
      **/
     submitResults: function submitResults() {
-        for (var i = 0; i < this.data.length; i++) {
-            _jquery2.default.post(this.submitResutsUrl + this.data[i].id + "?session=" + this.session);
-        }
+        //TODO submit user feedback
     },
 
     /**
@@ -11506,7 +11511,7 @@ Generator.prototype = {
     getBookmarks: function getBookmarks() {
         var _this = this;
         this.loadingAnimation(true);
-        var address = this.bookmarksURL + this.size + "?session=" + this.session;
+        var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + this.size + "?session=" + this.session;
         return _jquery2.default.ajax({
             type: 'GET',
             dataType: 'json',
@@ -12729,7 +12734,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _pubsub = __webpack_require__(5);
+var _pubsub = __webpack_require__(6);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -12796,7 +12801,7 @@ var _generator = __webpack_require__(12);
 
 var _generator2 = _interopRequireDefault(_generator);
 
-var _pubsub = __webpack_require__(5);
+var _pubsub = __webpack_require__(6);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 

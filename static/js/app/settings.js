@@ -5,10 +5,13 @@
 export default {
     /*********************** Exercise API Parameters **************************/
 
-    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
     ZEEGUU_DEFUALT_SESSION: 34563456,
+
+    /******************** Exercise Bookmark Parameters ************************/
+    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
 
     /*********************** Exercise Outcome Parameters **************************/
 
@@ -16,11 +19,11 @@ export default {
     ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
 
     /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: "/Recognize",
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
 
     /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: "/Correct",
-	ZEEGUU_EX_OUTCOME_WRONG: "/Wrong",
-	ZEEGUU_EX_OUTCOME_HINT: "/asked_for_hint",
+    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
+	ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
+	ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint',
 
 };
