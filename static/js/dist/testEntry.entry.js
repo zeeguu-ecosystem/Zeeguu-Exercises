@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 27);
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10372,7 +10372,7 @@ var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _pubsub = __webpack_require__(7);
+var _pubsub = __webpack_require__(8);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -10384,11 +10384,11 @@ var _settings = __webpack_require__(5);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(8);
+var _session = __webpack_require__(9);
 
 var _session2 = _interopRequireDefault(_session);
 
-var _loader = __webpack_require__(9);
+var _loader = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10637,7 +10637,7 @@ exports.default = {
     ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456
+    ZEEGUU_DEFAULT_SESSION: '11010001', //00926044 34563456 11010001
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
@@ -10742,124 +10742,6 @@ exports.default = Util;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var events = function () {
-    var events = {};
-
-    function on(eventName, fn) {
-        events[eventName] = events[eventName] || [];
-        events[eventName].push(fn);
-    }
-    function off(eventName, fn) {
-        if (events[eventName]) {
-            for (var i = 0; i < events[eventName].length; i++) {
-                if (events[eventName][i] === fn) {
-                    events[eventName].splice(i, 1);
-                    break;
-                }
-            }
-        }
-    }
-    function emit(eventName, data) {
-        if (events[eventName]) {
-            events[eventName].forEach(function (fn) {
-                fn(data);
-            });
-        }
-    }
-    return {
-        on: on,
-        off: off,
-        emit: emit
-    };
-}();
-
-exports.default = events;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/4/2017.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _cookie_handler = __webpack_require__(12);
-
-var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
-
-var _settings = __webpack_require__(5);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var sessionID = null;
-
-var Session = function () {
-    function Session() {
-        _classCallCheck(this, Session);
-    }
-
-    _createClass(Session, null, [{
-        key: 'getSession',
-
-
-        /**
-         * @param name, name of the session identifier
-         * @default from Zeeguu Settings
-         * */
-        value: function getSession() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
-
-            if (sessionID) return sessionID;
-            sessionID = _cookie_handler2.default.getCookie(name);
-            return sessionID;
-        }
-
-        /**
-         *  Set the zeeguu sessionID cookie to the default session
-         * @param name, cookie identifier
-         * @param value, value of the cookie
-         * @param days, expiration time
-         * @default form Zeeguu Settings
-         * */
-
-    }, {
-        key: 'setSession',
-        value: function setSession() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
-            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFAULT_SESSION;
-            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFAULT_COOKIE_EXPIRATION;
-
-            _cookie_handler2.default.setCookie(name, value, days);
-        }
-    }]);
-
-    return Session;
-}();
-
-exports.default = Session;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 exports.Requests = exports.Loader = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
@@ -10948,6 +10830,124 @@ var Requests = function Requests() {
 
 exports.Loader = Loader;
 exports.Requests = Requests;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var events = function () {
+    var events = {};
+
+    function on(eventName, fn) {
+        events[eventName] = events[eventName] || [];
+        events[eventName].push(fn);
+    }
+    function off(eventName, fn) {
+        if (events[eventName]) {
+            for (var i = 0; i < events[eventName].length; i++) {
+                if (events[eventName][i] === fn) {
+                    events[eventName].splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+    function emit(eventName, data) {
+        if (events[eventName]) {
+            events[eventName].forEach(function (fn) {
+                fn(data);
+            });
+        }
+    }
+    return {
+        on: on,
+        off: off,
+        emit: emit
+    };
+}();
+
+exports.default = events;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/4/2017.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _cookie_handler = __webpack_require__(12);
+
+var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
+
+var _settings = __webpack_require__(5);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var sessionID = null;
+
+var Session = function () {
+    function Session() {
+        _classCallCheck(this, Session);
+    }
+
+    _createClass(Session, null, [{
+        key: 'getSession',
+
+
+        /**
+         * @param name, name of the session identifier
+         * @default from Zeeguu Settings
+         * */
+        value: function getSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+
+            if (sessionID) return sessionID;
+            sessionID = _cookie_handler2.default.getCookie(name);
+            return sessionID;
+        }
+
+        /**
+         *  Set the zeeguu sessionID cookie to the default session
+         * @param name, cookie identifier
+         * @param value, value of the cookie
+         * @param days, expiration time
+         * @default form Zeeguu Settings
+         * */
+
+    }, {
+        key: 'setSession',
+        value: function setSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFAULT_SESSION;
+            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFAULT_COOKIE_EXPIRATION;
+
+            _cookie_handler2.default.setCookie(name, value, days);
+        }
+    }]);
+
+    return Session;
+}();
+
+exports.default = Session;
 
 /***/ }),
 /* 10 */
@@ -11385,27 +11385,27 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ex = __webpack_require__(19);
+var _ex = __webpack_require__(20);
 
 var _ex2 = _interopRequireDefault(_ex);
 
-var _ex3 = __webpack_require__(20);
+var _ex3 = __webpack_require__(21);
 
 var _ex4 = _interopRequireDefault(_ex3);
 
-var _ex5 = __webpack_require__(21);
+var _ex5 = __webpack_require__(22);
 
 var _ex6 = _interopRequireDefault(_ex5);
 
-var _ex7 = __webpack_require__(22);
+var _ex7 = __webpack_require__(23);
 
 var _ex8 = _interopRequireDefault(_ex7);
 
-var _progress_bar = __webpack_require__(23);
+var _progress_bar = __webpack_require__(24);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
-var _pubsub = __webpack_require__(7);
+var _pubsub = __webpack_require__(8);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -11413,7 +11413,7 @@ var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _session = __webpack_require__(8);
+var _session = __webpack_require__(9);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -11421,27 +11421,26 @@ var _settings = __webpack_require__(5);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _loader = __webpack_require__(9);
+var _loader = __webpack_require__(7);
 
 var _util = __webpack_require__(6);
 
 var _util2 = _interopRequireDefault(_util);
 
+var _animation = __webpack_require__(19);
+
+var _animation2 = _interopRequireDefault(_animation);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//import LoadingAnimation from './animation';
-
-
-/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
- *  @initialize it using: new Generator(args);
- *  @param args is matrix of exercise name and number of bookmarks,
- *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
- *  @customize it by using prototypal inheritance
- **/
 
 var Generator = function Generator(set) {
     this.init(set);
-};
+}; /** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
+    *  @initialize it using: new Generator(args);
+    *  @param args is matrix of exercise name and number of bookmarks,
+    *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+    *  @customize it by using prototypal inheritance
+    **/
 
 Generator.prototype = {
     /************************** SETTINGS ********************************/
@@ -11602,7 +11601,7 @@ Generator.prototype = {
      **/
     getBookmarks: function getBookmarks() {
         var _this = this;
-        //LoadingAnimation.loadingAnimation(true);
+        _animation2.default.loadingAnimation(true);
         var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + this.size + "?session=" + this.session;
         return _jquery2.default.ajax({
             type: 'GET',
@@ -11610,7 +11609,7 @@ Generator.prototype = {
             url: address,
             data: this.data,
             success: function success(data) {
-                //LoadingAnimation.loadingAnimation(false);
+                _animation2.default.loadingAnimation(false);
             },
             async: true
         });
@@ -12194,6 +12193,91 @@ module.exports = function (module) {
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _loader = __webpack_require__(7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var animationInstance = null;
+
+var LoadingAnimation = function () {
+    function LoadingAnimation() {
+        _classCallCheck(this, LoadingAnimation);
+
+        if (animationInstance) {
+            return animationInstance;
+        }
+        /** Class parameters*/
+        this.animationURL = 'static/template/animation.html';
+        this.$loader = null;
+        this.createDom();
+    }
+
+    /**
+     * Load the dom from the specified file
+     * */
+
+
+    _createClass(LoadingAnimation, [{
+        key: 'createDom',
+        value: function createDom() {
+            var _this = this;
+            _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.animationURL, (0, _jquery2.default)('body'), true)).done(function () {
+                _this.updateCache();
+            });
+        }
+
+        /**
+         * Update/save the cache of the dom
+         * */
+
+    }, {
+        key: 'updateCache',
+        value: function updateCache() {
+            this.$loader = (0, _jquery2.default)('#loader');
+        }
+    }], [{
+        key: 'loadingAnimation',
+        value: function loadingAnimation(activate) {
+            console.log("Just came here");
+            if (activate === true) {
+                (0, _jquery2.default)('body').children('div').addClass('hide');
+                (0, _jquery2.default)('#loader').removeClass('hide');
+            } else {
+                (0, _jquery2.default)('body').children('div').removeClass('hide');
+                (0, _jquery2.default)('#loader').addClass('hide');
+            }
+        }
+    }]);
+
+    return LoadingAnimation;
+}();
+
+exports.default = LoadingAnimation;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
@@ -12284,7 +12368,7 @@ Ex1.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex1;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12442,7 +12526,7 @@ Ex2.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex2;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12686,7 +12770,7 @@ Ex3.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex3;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12811,7 +12895,7 @@ Ex4.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex4;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12821,7 +12905,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _pubsub = __webpack_require__(7);
+var _pubsub = __webpack_require__(8);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -12870,10 +12954,10 @@ var bar,
 exports.default = ProgressBar;
 
 /***/ }),
-/* 24 */,
 /* 25 */,
 /* 26 */,
-/* 27 */
+/* 27 */,
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

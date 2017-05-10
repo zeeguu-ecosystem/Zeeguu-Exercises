@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -139,13 +139,13 @@ exports.default = cookieHandler;
 
 /***/ }),
 
-/***/ 28:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _session = __webpack_require__(8);
+var _session = __webpack_require__(9);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -175,7 +175,7 @@ exports.default = {
     ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456
+    ZEEGUU_DEFAULT_SESSION: '11010001', //00926044 34563456 11010001
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
@@ -197,7 +197,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 8:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

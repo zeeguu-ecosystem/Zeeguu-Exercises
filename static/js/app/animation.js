@@ -14,7 +14,7 @@ class LoadingAnimation {
             return animationInstance;
         }
         /** Class parameters*/
-        this.animationURL =  'static/template/exercise.html';
+        this.animationURL =  'static/template/animation.html';
         this.$loader = null;
         this.createDom();
     }
@@ -39,10 +39,10 @@ class LoadingAnimation {
     static loadingAnimation(activate) {
         console.log("Just came here");
         if (activate === true) {
-            //$('body').children('div').addClass('hide');
-            $('#loader').removeClass('hide');
+            $('body').children('div').addClass('hide');
+             $('#loader').removeClass('hide');
         } else {
-            //$('body').children('div').removeClass('hide');
+            $('body').children('div').removeClass('hide');
             $('#loader').addClass('hide');
         }
     }

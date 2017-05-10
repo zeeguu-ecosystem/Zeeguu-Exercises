@@ -17,7 +17,7 @@ import Session from './session';
 import Settings from './settings';
 import {Loader} from './loader';
 import Util from './util';
-//import LoadingAnimation from './animation';
+import LoadingAnimation from './animation';
 
  
 var Generator = function(set){
@@ -189,7 +189,7 @@ Generator.prototype = {
      **/
     getBookmarks: function(){
         var _this = this;
-        //LoadingAnimation.loadingAnimation(true);
+        LoadingAnimation.loadingAnimation(true);
         var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS+this.size+"?session="+this.session;
         return $.ajax({
             type: 'GET',
@@ -197,7 +197,7 @@ Generator.prototype = {
             url: address,
             data: this.data,
             success: function(data) {
-                //LoadingAnimation.loadingAnimation(false);
+                LoadingAnimation.loadingAnimation(false);
             },
             async: true
         });
