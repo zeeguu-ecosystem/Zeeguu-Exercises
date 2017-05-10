@@ -4,7 +4,7 @@
  *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
  *  @customize it by using prototypal inheritance
  **/
- 
+
 import $ from 'jquery';
 import Ex1 from './exercises/ex1';
 import Ex2 from './exercises/ex2';
@@ -15,6 +15,8 @@ import events from './pubsub';
 import swal from 'sweetalert';
 import Session from './session';
 import Settings from './settings';
+import Loader from './loader';
+import Util from "./util";
 
  
 var Generator = function(set){
@@ -52,13 +54,14 @@ Generator.prototype = {
         this.$eventFunc = function(){_this.nextEx()};
         events.on('exerciseCompleted',this.$eventFunc);
 
-        // Create the DOM and initialize
-        $.when(this.createDom()).done(function(){
+
+        //Loads the HTML general exercise template from static
+        $.when(Loader.loadTemplateIntoElem(_this.templateURL,$("#main-content"))).done(function(){
+            // Create the DOM and start the generator
             _this.cacheDom();
             _this.start();
         });
     },
-
 
     restart: function(){
         this.start();
@@ -145,7 +148,7 @@ Generator.prototype = {
      *	Request the submit API
      **/
     submitResults: function(){
-        //TODO submit user feedback
+        //TODO submit user feedback if any
     },
 
     /**
@@ -181,23 +184,7 @@ Generator.prototype = {
         events.off('exerciseCompleted',this.$eventFunc);
         events.emit('generatorCompleted');
     },
-    /**
-     *	Loads the HTML general exercise template from static
-     **/
-    createDom: function(){
-        var _this = this;
-        return $.ajax({
-            type: 'GET',
-            dataType: 'html',
-            url: _this.templateURL,
-            data: this.data,
-            success: function(data) {
-                $("#main-content").html(data);
-            },
-            async: true
-        });
-    },
-
+    
 
     /**
      *	Ajax get request to the Zeeguu API to get new bookmarks
@@ -206,6 +193,7 @@ Generator.prototype = {
         var _this = this;
         this.loadingAnimation(true);
         var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS+this.size+"?session="+this.session;
+        console.log(address);
         return $.ajax({
             type: 'GET',
             dataType: 'json',

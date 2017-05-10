@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Generator from './generator';
 import events from './pubsub';
 import Mustache from 'mustache';
+import Loader from './loader';
 
 var Home = function(){
 	this.init();
@@ -31,16 +32,7 @@ Home.prototype = {
 	*	Loads the HTML exercise template from static
 	**/
 	createDom: function(){
-		$("#main-content").html(this.loadTemplate(this.homeTemplateURL));	
-	},
-	
-	loadTemplate: function(tempUrl){
-		return $.ajax({	  
-		  type: 'GET',
-		  dataType: 'html',
-		  url: tempUrl,
-		  async: false
-		}).responseText;		
+		$("#main-content").html(Loader.loadTemplate(this.homeTemplateURL));
 	},
 	
 	
@@ -81,13 +73,11 @@ Home.prototype = {
 		});	
 	},
 
-	bindUIActions: function(){	
-	
-		//Bind UI action of button clicks to the function
+	bindUIActions: function(){
+        var _this = this;
+        //Bind UI action of button clicks to the function
 		var exs = this.$exCards.children();
-		
-		//Bind UI action of credits to the function		
-		var _this = this;		
+		//Bind UI action of credits to the function
 		this.$credits.on("click", _this.giveCredits.bind(this));
 		
 		for(var i = 0; i<exs.length; i++){
@@ -107,7 +97,7 @@ Home.prototype = {
 	},
 	
 	generateEx: function(){		
-		var cardTemplate = this.loadTemplate(this.cardTemplateURL);		
+		var cardTemplate = Loader.loadTemplate(this.cardTemplateURL);
 		var cardNames = {Exercises: this.exNames};	
 		
 		this.$exCards.append(Mustache.render(cardTemplate,cardNames));

@@ -22,8 +22,6 @@ function Ex3(data,index,size){
 		this.$btn6 					= this.$elem.find("#btn6");
 	};
 	
-	//this.get = () => { return this["$btn1"]; };
-	
 	/** @Override */
 	this.bindUIActions = function(){
 		//Bind UI action of Hint/Show solution to the function		

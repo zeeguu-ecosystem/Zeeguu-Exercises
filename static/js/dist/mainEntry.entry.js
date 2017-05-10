@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)(module)))
 
 /***/ }),
 /* 1 */
@@ -10118,7 +10118,7 @@ var _hexToRgb = __webpack_require__(3);
 
 var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(1);
 
-var _defaultParams = __webpack_require__(9);
+var _defaultParams = __webpack_require__(10);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
@@ -10126,7 +10126,7 @@ var _defaultParams2 = _interopRequireWildcard(_defaultParams);
  * Add modal + overlay to DOM
  */
 
-var _injectedHTML = __webpack_require__(15);
+var _injectedHTML = __webpack_require__(16);
 
 var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
 
@@ -10368,15 +10368,15 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _sweetalert = __webpack_require__(10);
+var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _pubsub = __webpack_require__(6);
+var _pubsub = __webpack_require__(7);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(6);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -10384,21 +10384,23 @@ var _settings = __webpack_require__(5);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(7);
+var _session = __webpack_require__(8);
 
 var _session2 = _interopRequireDefault(_session);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _loader = __webpack_require__(9);
 
-/** Modular Zeeguu Powered Exercise @author Martin Avagyan
- *  @initialize it using: new Exercise();
- *  @customize it by using prototypal inheritance 
-**/
+var _loader2 = _interopRequireDefault(_loader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Exercise = function Exercise(data, index, size) {
 	this.init(data, index, size);
 	//TODO unbind method
-};
+}; /** Modular Zeeguu Powered Exercise @author Martin Avagyan
+    *  @initialize it using: new Exercise();
+    *  @customize it by using prototypal inheritance 
+   **/
 
 Exercise.prototype = {
 
@@ -10419,17 +10421,19 @@ Exercise.prototype = {
  **/
 
 	createCustomDom: function createCustomDom() {
-		var _this = this;
-		return _jquery2.default.ajax({
-			type: 'GET',
-			dataType: 'html',
-			url: _this.customTemplateURL,
-			data: this.data,
-			success: function success(data) {
-				(0, _jquery2.default)("#custom-content").html(data);
-			},
-			async: true
-		});
+		_loader2.default.loadTemplateIntoElem(this.customTemplateURL, (0, _jquery2.default)("#custom-content"));
+		//$("#custom-content").html(Loader.loadTemplate(this.customTemplateURL));
+		/* var _this = this;
+   return $.ajax({
+       type: 'GET',
+       dataType: 'html',
+       url: _this.customTemplateURL,
+       data: this.data,
+       success: function(data) {
+           $("#custom-content").html(data);
+       },
+       async: true
+   });*/
 	},
 
 	/**
@@ -10450,7 +10454,7 @@ Exercise.prototype = {
  **/
 	init: function init(data, index, size) {
 		var _this = this;
-		_jquery2.default.when(_this.createCustomDom()).done(function () {
+		_jquery2.default.when(_loader2.default.loadTemplateIntoElem(_this.customTemplateURL, (0, _jquery2.default)("#custom-content"))).done(function () {
 			_this.cacheDom();
 			_this.bindUIActions();
 			_this._constructor(data, index, size);
@@ -10624,6 +10628,7 @@ exports.default = Exercise;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+//noinspection JSAnnotator
 /**
  * File containing global settings for exercises
  * */
@@ -10631,10 +10636,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     /*********************** Exercise API Parameters **************************/
 
-    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFUALT_SESSION: 34563456,
+    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
@@ -10656,124 +10661,6 @@ exports.default = {
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var events = function () {
-    var events = {};
-
-    function on(eventName, fn) {
-        events[eventName] = events[eventName] || [];
-        events[eventName].push(fn);
-    }
-    function off(eventName, fn) {
-        if (events[eventName]) {
-            for (var i = 0; i < events[eventName].length; i++) {
-                if (events[eventName][i] === fn) {
-                    events[eventName].splice(i, 1);
-                    break;
-                }
-            }
-        }
-    }
-    function emit(eventName, data) {
-        if (events[eventName]) {
-            events[eventName].forEach(function (fn) {
-                fn(data);
-            });
-        }
-    }
-    return {
-        on: on,
-        off: off,
-        emit: emit
-    };
-}();
-
-exports.default = events;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/4/2017.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _cookie_handler = __webpack_require__(11);
-
-var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
-
-var _settings = __webpack_require__(5);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var sessionID = null;
-
-var Session = function () {
-    function Session() {
-        _classCallCheck(this, Session);
-    }
-
-    _createClass(Session, null, [{
-        key: 'getSession',
-
-
-        /**
-         * @param name, name of the session identifier
-         * @default from Zeeguu Settings
-         * */
-        value: function getSession() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
-
-            if (sessionID) return sessionID;
-            sessionID = _cookie_handler2.default.getCookie(name);
-            return sessionID;
-        }
-
-        /**
-         *  Set the zeeguu sessionID cookie to the default session
-         * @param name, cookie identifier
-         * @param value, value of the cookie
-         * @param days, expiration time
-         * @default form Zeeguu Settings
-         * */
-
-    }, {
-        key: 'setSession',
-        value: function setSession() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
-            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFUALT_SESSION;
-            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFUALT_COOKIE_EXPIRATION;
-
-            _cookie_handler2.default.setCookie(name, value, days);
-        }
-    }]);
-
-    return Session;
-}();
-
-exports.default = Session;
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10848,7 +10735,207 @@ var extendObject = function extendObject(child, parent) {
 exports.default = Util;
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var events = function () {
+    var events = {};
+
+    function on(eventName, fn) {
+        events[eventName] = events[eventName] || [];
+        events[eventName].push(fn);
+    }
+    function off(eventName, fn) {
+        if (events[eventName]) {
+            for (var i = 0; i < events[eventName].length; i++) {
+                if (events[eventName][i] === fn) {
+                    events[eventName].splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+    function emit(eventName, data) {
+        if (events[eventName]) {
+            events[eventName].forEach(function (fn) {
+                fn(data);
+            });
+        }
+    }
+    return {
+        on: on,
+        off: off,
+        emit: emit
+    };
+}();
+
+exports.default = events;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/4/2017.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _cookie_handler = __webpack_require__(12);
+
+var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
+
+var _settings = __webpack_require__(5);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var sessionID = null;
+
+var Session = function () {
+    function Session() {
+        _classCallCheck(this, Session);
+    }
+
+    _createClass(Session, null, [{
+        key: 'getSession',
+
+
+        /**
+         * @param name, name of the session identifier
+         * @default from Zeeguu Settings
+         * */
+        value: function getSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+
+            if (sessionID) return sessionID;
+            sessionID = _cookie_handler2.default.getCookie(name);
+            return sessionID;
+        }
+
+        /**
+         *  Set the zeeguu sessionID cookie to the default session
+         * @param name, cookie identifier
+         * @param value, value of the cookie
+         * @param days, expiration time
+         * @default form Zeeguu Settings
+         * */
+
+    }, {
+        key: 'setSession',
+        value: function setSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFAULT_SESSION;
+            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFAULT_COOKIE_EXPIRATION;
+
+            _cookie_handler2.default.setCookie(name, value, days);
+        }
+    }]);
+
+    return Session;
+}();
+
+exports.default = Session;
+
+/***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/10/2017.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+/**
+ * A class responsible for loading templates and other resources
+ * */
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Loader = function () {
+    function Loader() {
+        _classCallCheck(this, Loader);
+    }
+
+    _createClass(Loader, null, [{
+        key: 'loadTemplate',
+
+        /**
+         * Return html template
+         * @param {String} name of the template
+         * @param {bool} asyncQUery, allows to choose the loading method
+         *        @default asyncQuery is set to false
+         * */
+        value: function loadTemplate(tempUrl) {
+            var asyncQuery = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return _jquery2.default.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: tempUrl,
+                async: asyncQuery
+            }).responseText;
+        }
+
+        /**
+         * Return html template and loads it in the given element
+         * @param {String} tempUrl of the template
+         * @param {jquery object} elem, load the html in this element
+         * @param {bool} asyncQUery, allows to choose the loading method
+         *        @default asyncQuery is set to true
+         * */
+
+    }, {
+        key: 'loadTemplateIntoElem',
+        value: function loadTemplateIntoElem(tempUrl, elem) {
+            var asyncQuery = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+            return _jquery2.default.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: tempUrl,
+                data: this.data,
+                success: function success(data) {
+                    elem.html(data);
+                },
+                async: asyncQuery
+            });
+        }
+    }]);
+
+    return Loader;
+}();
+
+exports.default = Loader;
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10886,7 +10973,7 @@ exports['default'] = defaultParams;
 module.exports = exports['default'];
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10925,19 +11012,19 @@ var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$r
 
 // Handle button events and keyboard events
 
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(13);
+var _handleButton$handleConfirm$handleCancel = __webpack_require__(14);
 
-var _handleKeyDown = __webpack_require__(14);
+var _handleKeyDown = __webpack_require__(15);
 
 var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
 // Default values
 
-var _defaultParams = __webpack_require__(9);
+var _defaultParams = __webpack_require__(10);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
-var _setParameters = __webpack_require__(16);
+var _setParameters = __webpack_require__(17);
 
 var _setParameters2 = _interopRequireWildcard(_setParameters);
 
@@ -11199,7 +11286,7 @@ if (typeof window !== 'undefined') {
 module.exports = exports['default'];
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11269,7 +11356,7 @@ var cookieHandler = function () {
 exports.default = cookieHandler;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11283,41 +11370,49 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ex = __webpack_require__(18);
+var _ex = __webpack_require__(19);
 
 var _ex2 = _interopRequireDefault(_ex);
 
-var _ex3 = __webpack_require__(19);
+var _ex3 = __webpack_require__(20);
 
 var _ex4 = _interopRequireDefault(_ex3);
 
-var _ex5 = __webpack_require__(20);
+var _ex5 = __webpack_require__(21);
 
 var _ex6 = _interopRequireDefault(_ex5);
 
-var _ex7 = __webpack_require__(21);
+var _ex7 = __webpack_require__(22);
 
 var _ex8 = _interopRequireDefault(_ex7);
 
-var _progress_bar = __webpack_require__(22);
+var _progress_bar = __webpack_require__(23);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
-var _pubsub = __webpack_require__(6);
+var _pubsub = __webpack_require__(7);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _sweetalert = __webpack_require__(10);
+var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _session = __webpack_require__(7);
+var _session = __webpack_require__(8);
 
 var _session2 = _interopRequireDefault(_session);
 
 var _settings = __webpack_require__(5);
 
 var _settings2 = _interopRequireDefault(_settings);
+
+var _loader = __webpack_require__(9);
+
+var _loader2 = _interopRequireDefault(_loader);
+
+var _util = __webpack_require__(6);
+
+var _util2 = _interopRequireDefault(_util);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11364,8 +11459,9 @@ Generator.prototype = {
         };
         _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
 
-        // Create the DOM and initialize
-        _jquery2.default.when(this.createDom()).done(function () {
+        //Loads the HTML general exercise template from static
+        _jquery2.default.when(_loader2.default.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
+            // Create the DOM and start the generator
             _this.cacheDom();
             _this.start();
         });
@@ -11453,7 +11549,7 @@ Generator.prototype = {
      *	Request the submit API
      **/
     submitResults: function submitResults() {
-        //TODO submit user feedback
+        //TODO submit user feedback if any
     },
 
     /**
@@ -11465,7 +11561,7 @@ Generator.prototype = {
         _this.submitResults();
         (0, _sweetalert2.default)({
             title: "You rock!",
-            text: "That took less than " + Util.calcTimeInMinutes(_this.startTime) + ". practice more?",
+            text: "That took less than " + _util2.default.calcTimeInMinutes(_this.startTime) + ". practice more?",
             type: "success",
             showCancelButton: true,
             confirmButtonColor: "#7eb530",
@@ -11488,22 +11584,6 @@ Generator.prototype = {
         _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
         _pubsub2.default.emit('generatorCompleted');
     },
-    /**
-     *	Loads the HTML general exercise template from static
-     **/
-    createDom: function createDom() {
-        var _this = this;
-        return _jquery2.default.ajax({
-            type: 'GET',
-            dataType: 'html',
-            url: _this.templateURL,
-            data: this.data,
-            success: function success(data) {
-                (0, _jquery2.default)("#main-content").html(data);
-            },
-            async: true
-        });
-    },
 
     /**
      *	Ajax get request to the Zeeguu API to get new bookmarks
@@ -11512,6 +11592,7 @@ Generator.prototype = {
         var _this = this;
         this.loadingAnimation(true);
         var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + this.size + "?session=" + this.session;
+        console.log(address);
         return _jquery2.default.ajax({
             type: 'GET',
             dataType: 'json',
@@ -11558,7 +11639,7 @@ Generator.prototype = {
 exports.default = Generator;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11699,7 +11780,7 @@ exports['default'] = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11784,7 +11865,7 @@ exports['default'] = handleKeyDown;
 module.exports = exports['default'];
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11832,7 +11913,7 @@ exports["default"] = injectedHTML;
 module.exports = exports["default"];
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12065,7 +12146,7 @@ exports['default'] = setParameters;
 module.exports = exports['default'];
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12095,7 +12176,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12113,7 +12194,7 @@ var _exercise = __webpack_require__(4);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(6);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -12192,7 +12273,7 @@ Ex1.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex1;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12304,8 +12385,8 @@ function Ex2(data, index, size) {
 	};
 
 	/** Generates an array of random numbers of given size
- * @param size:  defines how many random numbers we want
- * @param range: defines the upper limit of the numbers: [1,range]
+ * @param {int} size:  defines how many random numbers we want
+ * @param {int} range: defines the upper limit of the numbers: [1,range]
  */
 	this.randomNumsInRange = function (size, range) {
 		var arr = [];
@@ -12340,7 +12421,7 @@ function Ex2(data, index, size) {
 
 Ex2.prototype = Object.create(_exercise2.default.prototype, {
 	constructor: Ex2,
-	/************************** SETTINGS ********************************/
+	/** ************************** SETTINGS **************************** **/
 	description: { value: "Choose the word that fits the context" },
 	customTemplateURL: { value: 'static/template/ex2.html' },
 	btns: { writable: true, value: [1, 2, 3] },
@@ -12350,7 +12431,7 @@ Ex2.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex2;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12390,8 +12471,6 @@ function Ex3(data, index, size) {
 		this.$btn5 = this.$elem.find("#btn5");
 		this.$btn6 = this.$elem.find("#btn6");
 	};
-
-	//this.get = () => { return this["$btn1"]; };
 
 	/** @Override */
 	this.bindUIActions = function () {
@@ -12599,7 +12678,7 @@ Ex3.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex3;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12617,7 +12696,7 @@ var _exercise = __webpack_require__(4);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(6);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -12724,7 +12803,7 @@ Ex4.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex4;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12734,7 +12813,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _pubsub = __webpack_require__(6);
+var _pubsub = __webpack_require__(7);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -12783,7 +12862,7 @@ var bar,
 exports.default = ProgressBar;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12797,17 +12876,21 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _generator = __webpack_require__(12);
+var _generator = __webpack_require__(13);
 
 var _generator2 = _interopRequireDefault(_generator);
 
-var _pubsub = __webpack_require__(6);
+var _pubsub = __webpack_require__(7);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _mustache = __webpack_require__(24);
+var _mustache = __webpack_require__(25);
 
 var _mustache2 = _interopRequireDefault(_mustache);
+
+var _loader = __webpack_require__(9);
+
+var _loader2 = _interopRequireDefault(_loader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12830,16 +12913,7 @@ Home.prototype = {
  *	Loads the HTML exercise template from static
  **/
 	createDom: function createDom() {
-		(0, _jquery2.default)("#main-content").html(this.loadTemplate(this.homeTemplateURL));
-	},
-
-	loadTemplate: function loadTemplate(tempUrl) {
-		return _jquery2.default.ajax({
-			type: 'GET',
-			dataType: 'html',
-			url: tempUrl,
-			async: false
-		}).responseText;
+		(0, _jquery2.default)("#main-content").html(_loader2.default.loadTemplate(this.homeTemplateURL));
 	},
 
 	/**
@@ -12880,12 +12954,10 @@ Home.prototype = {
 	},
 
 	bindUIActions: function bindUIActions() {
-
+		var _this = this;
 		//Bind UI action of button clicks to the function
 		var exs = this.$exCards.children();
-
-		//Bind UI action of credits to the function		
-		var _this = this;
+		//Bind UI action of credits to the function
 		this.$credits.on("click", _this.giveCredits.bind(this));
 
 		for (var i = 0; i < exs.length; i++) {
@@ -12905,7 +12977,7 @@ Home.prototype = {
 	},
 
 	generateEx: function generateEx() {
-		var cardTemplate = this.loadTemplate(this.cardTemplateURL);
+		var cardTemplate = _loader2.default.loadTemplate(this.cardTemplateURL);
 		var cardNames = { Exercises: this.exNames };
 
 		this.$exCards.append(_mustache2.default.render(cardTemplate, cardNames));
@@ -12942,7 +13014,7 @@ Home.prototype = {
 exports.default = Home;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13562,13 +13634,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _home = __webpack_require__(23);
+var _home = __webpack_require__(24);
 
 var _home2 = _interopRequireDefault(_home);
 

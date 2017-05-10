@@ -9,6 +9,7 @@ import events from '../pubsub';
 import Util from '../util';
 import Settings from '../settings';
 import  Session from '../session';
+import  Loader from '../loader';
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
@@ -34,17 +35,19 @@ Exercise.prototype = {
 	**/
 	
 	createCustomDom: function(){
-		var _this = this;
-		return $.ajax({	  
-		  type: 'GET',
-		  dataType: 'html',
-		  url: _this.customTemplateURL,
-		  data: this.data,
-		  success: function(data) {
-			$("#custom-content").html(data);	
-		  },
-		  async: true
-		});
+        Loader.loadTemplateIntoElem(this.customTemplateURL,$("#custom-content"));
+        //$("#custom-content").html(Loader.loadTemplate(this.customTemplateURL));
+       /* var _this = this;
+        return $.ajax({
+            type: 'GET',
+            dataType: 'html',
+            url: _this.customTemplateURL,
+            data: this.data,
+            success: function(data) {
+                $("#custom-content").html(data);
+            },
+            async: true
+        });*/
 	},
 	
 	/**
@@ -65,7 +68,7 @@ Exercise.prototype = {
 	**/
 	init: function(data,index,size){	
 		var _this = this;
-		$.when(_this.createCustomDom()).done(function(){
+		$.when(Loader.loadTemplateIntoElem(_this.customTemplateURL,$("#custom-content"))).done(function(){
 			_this.cacheDom();	
 			_this.bindUIActions();
 			_this._constructor(data,index,size);	
