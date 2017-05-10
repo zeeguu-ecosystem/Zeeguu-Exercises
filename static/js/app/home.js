@@ -2,7 +2,7 @@ import $ from 'jquery';
 import Generator from './generator';
 import events from './pubsub';
 import Mustache from 'mustache';
-import Loader from './loader';
+import {Loader} from './loader';
 
 var Home = function(){
 	this.init();

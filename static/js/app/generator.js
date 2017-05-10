@@ -15,8 +15,9 @@ import events from './pubsub';
 import swal from 'sweetalert';
 import Session from './session';
 import Settings from './settings';
-import Loader from './loader';
-import Util from "./util";
+import {Loader} from './loader';
+import Util from './util';
+//import LoadingAnimation from './animation';
 
  
 var Generator = function(set){
@@ -38,9 +39,6 @@ Generator.prototype = {
      *	Saves the common dom in chache
      **/
     cacheDom: function(){
-        this.$elem 				= $("#ex-module");
-        this.$container  		= this.$elem.find("#ex-container");
-        this.$loader 			= this.$elem.find('#loader');
     },
 
     /**
@@ -191,16 +189,15 @@ Generator.prototype = {
      **/
     getBookmarks: function(){
         var _this = this;
-        this.loadingAnimation(true);
+        //LoadingAnimation.loadingAnimation(true);
         var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS+this.size+"?session="+this.session;
-        console.log(address);
         return $.ajax({
             type: 'GET',
             dataType: 'json',
             url: address,
             data: this.data,
             success: function(data) {
-                _this.loadingAnimation(false);
+                //LoadingAnimation.loadingAnimation(false);
             },
             async: true
         });

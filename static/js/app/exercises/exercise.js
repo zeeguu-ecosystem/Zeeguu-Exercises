@@ -8,8 +8,8 @@ import swal from 'sweetalert';
 import events from '../pubsub';
 import Util from '../util';
 import Settings from '../settings';
-import  Session from '../session';
-import  Loader from '../loader';
+import Session from '../session';
+import {Loader} from '../loader';
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	

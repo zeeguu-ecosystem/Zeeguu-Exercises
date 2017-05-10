@@ -10390,8 +10390,6 @@ var _session2 = _interopRequireDefault(_session);
 
 var _loader = __webpack_require__(9);
 
-var _loader2 = _interopRequireDefault(_loader);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Exercise = function Exercise(data, index, size) {
@@ -10421,7 +10419,7 @@ Exercise.prototype = {
  **/
 
 	createCustomDom: function createCustomDom() {
-		_loader2.default.loadTemplateIntoElem(this.customTemplateURL, (0, _jquery2.default)("#custom-content"));
+		_loader.Loader.loadTemplateIntoElem(this.customTemplateURL, (0, _jquery2.default)("#custom-content"));
 		//$("#custom-content").html(Loader.loadTemplate(this.customTemplateURL));
 		/* var _this = this;
    return $.ajax({
@@ -10454,7 +10452,7 @@ Exercise.prototype = {
  **/
 	init: function init(data, index, size) {
 		var _this = this;
-		_jquery2.default.when(_loader2.default.loadTemplateIntoElem(_this.customTemplateURL, (0, _jquery2.default)("#custom-content"))).done(function () {
+		_jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.customTemplateURL, (0, _jquery2.default)("#custom-content"))).done(function () {
 			_this.cacheDom();
 			_this.bindUIActions();
 			_this._constructor(data, index, size);
@@ -10862,13 +10860,11 @@ exports.default = Session;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Requests = exports.Loader = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by Martin on 5/10/2017.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
-/**
- * A class responsible for loading templates and other resources
- * */
 
 var _jquery = __webpack_require__(0);
 
@@ -10878,6 +10874,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * A class responsible for loading templates and other resources
+ * */
 var Loader = function () {
     function Loader() {
         _classCallCheck(this, Loader);
@@ -10907,14 +10906,16 @@ var Loader = function () {
          * Return html template and loads it in the given element
          * @param {String} tempUrl of the template
          * @param {jquery object} elem, load the html in this element
-         * @param {bool} asyncQUery, allows to choose the loading method
+         * @param {boolean} append
+         * @param {boolean} asyncQUery, allows to choose the loading method
          *        @default asyncQuery is set to true
          * */
 
     }, {
         key: 'loadTemplateIntoElem',
         value: function loadTemplateIntoElem(tempUrl, elem) {
-            var asyncQuery = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+            var append = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+            var asyncQuery = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
 
             return _jquery2.default.ajax({
                 type: 'GET',
@@ -10922,7 +10923,11 @@ var Loader = function () {
                 url: tempUrl,
                 data: this.data,
                 success: function success(data) {
-                    elem.html(data);
+                    if (!append) {
+                        elem.html(data);
+                    } else {
+                        elem.append(data);
+                    }
                 },
                 async: asyncQuery
             });
@@ -10932,7 +10937,17 @@ var Loader = function () {
     return Loader;
 }();
 
-exports.default = Loader;
+/**
+ * A class responsible for API requests
+ * */
+
+
+var Requests = function Requests() {
+    _classCallCheck(this, Requests);
+};
+
+exports.Loader = Loader;
+exports.Requests = Requests;
 
 /***/ }),
 /* 10 */
@@ -11408,13 +11423,14 @@ var _settings2 = _interopRequireDefault(_settings);
 
 var _loader = __webpack_require__(9);
 
-var _loader2 = _interopRequireDefault(_loader);
-
 var _util = __webpack_require__(6);
 
 var _util2 = _interopRequireDefault(_util);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//import LoadingAnimation from './animation';
+
 
 /** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
  *  @initialize it using: new Generator(args);
@@ -11440,11 +11456,7 @@ Generator.prototype = {
     /**
      *	Saves the common dom in chache
      **/
-    cacheDom: function cacheDom() {
-        this.$elem = (0, _jquery2.default)("#ex-module");
-        this.$container = this.$elem.find("#ex-container");
-        this.$loader = this.$elem.find('#loader');
-    },
+    cacheDom: function cacheDom() {},
 
     /**
      *	Generator initialaizer
@@ -11460,7 +11472,7 @@ Generator.prototype = {
         _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
 
         //Loads the HTML general exercise template from static
-        _jquery2.default.when(_loader2.default.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
+        _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
             // Create the DOM and start the generator
             _this.cacheDom();
             _this.start();
@@ -11590,16 +11602,15 @@ Generator.prototype = {
      **/
     getBookmarks: function getBookmarks() {
         var _this = this;
-        this.loadingAnimation(true);
+        //LoadingAnimation.loadingAnimation(true);
         var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + this.size + "?session=" + this.session;
-        console.log(address);
         return _jquery2.default.ajax({
             type: 'GET',
             dataType: 'json',
             url: address,
             data: this.data,
             success: function success(data) {
-                _this.loadingAnimation(false);
+                //LoadingAnimation.loadingAnimation(false);
             },
             async: true
         });
@@ -12476,9 +12487,6 @@ function Ex3(data, index, size) {
 	this.bindUIActions = function () {
 		//Bind UI action of Hint/Show solution to the function		
 		this.$showSolution.on("click", this.handleHint.bind(this));
-
-		//Bind UI action of Check answer to the function
-		//this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
 
 		//Bind UI action of button 1 click to the function
 		this.$btn1.on("click", this.selectChoice.bind(this, 1));
