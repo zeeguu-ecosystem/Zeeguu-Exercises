@@ -19,6 +19,7 @@ import {Loader} from './loader';
 import Util from './util';
 import LoadingAnimation from './loading_animation';
 
+
  
 var Generator = function(set){
     this.init(set);
@@ -191,6 +192,7 @@ Generator.prototype = {
     getBookmarks: function(){
         var _this = this;
         this.loadingAnimation.loadingAnimation(true);
+
         var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS+this.size+"?session="+this.session;
         return $.ajax({
             type: 'GET',
