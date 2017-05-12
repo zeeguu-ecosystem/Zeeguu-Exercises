@@ -28,6 +28,7 @@ Exercise.prototype = {
 	session: Session.getSession(), //Example of session id 34563456 or 11010001
 	startTime: 0,
 	isHintUsed: false,
+    minNumber: 1,
 	
 	/*********************** General Functions ***************************/	
 	/**

@@ -18,6 +18,7 @@ import Settings from './settings';
 import {Loader} from './loader';
 import Util from './util';
 import LoadingAnimation from './loading_animation';
+import Validator from './validator';
 
 
  
@@ -29,7 +30,6 @@ Generator.prototype = {
     /************************** SETTINGS ********************************/
     data: 0,		//bookmakrs from zeeguu api
     set: 0,			//matrix for initialaizer
-    size: 0,		//total count of bookmakrs
     index: 0,		//current index from set
     startTime: 0,
     session: Session.getSession()  , //Example of session id 34563456 or 11010001
@@ -48,6 +48,8 @@ Generator.prototype = {
     init: function(set){
         this.set = set;
         var _this = this;
+
+        this.validator = new Validator(set);
 
         // "bind" event
         this.$eventFunc = function(){_this.nextEx()};
@@ -73,12 +75,11 @@ Generator.prototype = {
     start: function ()
     {
         var _this = this;
-        this.size = this.calcSize(this.set,this.set.length);
-        ProgressBar.init(0,this.size);
-        $.when(this.getBookmarks()).done(function (ldata) {
-            _this.data = (ldata);
-            _this._constructor();
-        });
+        this.size = Util.calcSize(this.set,this.set.length);
+        _this.data = this.validator.getValidBookMarks();
+        //Init the Progress bar with initialized bookmarks
+        ProgressBar.init(0, this.validator.totalValidSize);
+        _this._constructor();
     },
 
     filterArray: function(bookmarksData)
@@ -114,7 +115,7 @@ Generator.prototype = {
         }
         var ex = this.set[this.index][0];
         var size = this.set[this.index][1];
-        var startingIndex = this.calcSize(this.set,this.index);
+        var startingIndex = Util.calcSize(this.set,this.index);
 
         this.$currentEx = null;
         delete this.$currentEx;
@@ -135,15 +136,6 @@ Generator.prototype = {
 
         this.index++;
     },
-
-    calcSize: function(set,length){
-        var sum = 0;
-        for(var i = 0; i<length; i++){
-            sum += set[i][1];
-        }
-        return sum;
-    },
-
     /**
      *	Request the submit API
      **/
@@ -184,28 +176,6 @@ Generator.prototype = {
         events.off('exerciseCompleted',this.$eventFunc);
         events.emit('generatorCompleted');
     },
-    
-
-    /**
-     *	Ajax get request to the Zeeguu API to get new bookmarks
-     **/
-    getBookmarks: function(){
-        var _this = this;
-        this.loadingAnimation.loadingAnimation(true);
-
-        var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS+this.size+"?session="+this.session;
-        return $.ajax({
-            type: 'GET',
-            dataType: 'json',
-            url: address,
-            data: this.data,
-            success: function(data) {
-                _this.loadingAnimation.loadingAnimation(false);
-            },
-            async: true
-        });
-    },
-
     /**
      *	Animation used for loading
      **/

@@ -136,6 +136,7 @@ Ex2.prototype = Object.create(Exercise.prototype, {
 	customTemplateURL: {value: 'static/template/ex2.html'},
 	btns: 		 {writable: true, value:[1,2,3]}, 
 	optionNum:	 {value: 3},
+    minNumber: { writable: true, value:3},	// minimum number required for the ex
 	/** *************************************************************** **/
 });
 
