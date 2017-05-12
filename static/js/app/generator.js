@@ -14,10 +14,8 @@ import ProgressBar from './progress_bar';
 import events from './pubsub';
 import swal from 'sweetalert';
 import Session from './session';
-import Settings from './settings';
 import {Loader} from './loader';
 import Util from './util';
-import LoadingAnimation from './loading_animation';
 import Validator from './validator';
 
 
@@ -55,8 +53,6 @@ Generator.prototype = {
         this.$eventFunc = function(){_this.nextEx()};
         events.on('exerciseCompleted',this.$eventFunc);
 
-        this.loadingAnimation = new LoadingAnimation();
-
         //Loads the HTML general exercise template from static
         $.when(Loader.loadTemplateIntoElem(_this.templateURL,$("#main-content"))).done(function(){
             // Create the DOM and start the generator
@@ -74,12 +70,11 @@ Generator.prototype = {
      **/
     start: function ()
     {
-        var _this = this;
         this.size = Util.calcSize(this.set,this.set.length);
-        _this.data = this.validator.getValidBookMarks();
+        this.data = this.validator.getValidBookMarks();
         //Init the Progress bar with initialized bookmarks
         ProgressBar.init(0, this.validator.totalValidSize);
-        _this._constructor();
+        this._constructor();
     },
 
     filterArray: function(bookmarksData)
@@ -175,18 +170,6 @@ Generator.prototype = {
     terminateGenerator: function(){
         events.off('exerciseCompleted',this.$eventFunc);
         events.emit('generatorCompleted');
-    },
-    /**
-     *	Animation used for loading
-     **/
-    loadingAnimation: function(activate){
-        if(activate === true){
-            this.$container.addClass('hide');
-            this.$loader.removeClass('hide');
-        }else{
-            this.$container.removeClass('hide');
-            this.$loader.addClass('hide');
-        }
     },
 
     /**

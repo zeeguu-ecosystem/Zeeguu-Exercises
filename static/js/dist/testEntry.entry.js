@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10107,53 +10107,6 @@ exports.stopEventPropagation = stopEventPropagation;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//noinspection JSAnnotator
-/**
- * File containing global settings for exercises
- * */
-
-exports.default = {
-    /*********************** Exercise API Parameters **************************/
-
-    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '34563456', //00926044 34563456 11010001
-
-    /******************** Exercise Bookmark Parameters ************************/
-    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
-
-    /*********************** Exercise Outcome Parameters **************************/
-
-    /** Current endpoint for submitting the result*/
-    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
-
-    /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
-
-    /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
-    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
-    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint',
-
-    /** Ex settings*/
-    EX1_MIN_SIZE: 1,
-    EX2_MIN_SIZE: 3,
-    EX3_MIN_SIZE: 3,
-    EX4_MIN_SIZE: 1
-
-};
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 var ut,
@@ -10235,7 +10188,7 @@ var extendObject = function extendObject(child, parent) {
 exports.default = Util;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10254,7 +10207,7 @@ var _cookie_handler = __webpack_require__(12);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
-var _settings = __webpack_require__(2);
+var _settings = __webpack_require__(7);
 
 var _settings2 = _interopRequireDefault(_settings);
 
@@ -10310,7 +10263,7 @@ var Session = function () {
 exports.default = Session;
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10324,7 +10277,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _hexToRgb = __webpack_require__(6);
+var _hexToRgb = __webpack_require__(5);
 
 var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(1);
 
@@ -10485,7 +10438,7 @@ exports.resetInputError = resetInputError;
 exports.fixVerticalPosition = fixVerticalPosition;
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10564,7 +10517,7 @@ exports.logStr = logStr;
 exports.colorLuminance = colorLuminance;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10586,15 +10539,15 @@ var _pubsub = __webpack_require__(8);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _util = __webpack_require__(3);
+var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _settings = __webpack_require__(2);
+var _settings = __webpack_require__(7);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(4);
+var _session = __webpack_require__(3);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -10828,6 +10781,53 @@ Exercise.prototype = {
 exports.default = Exercise;
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//noinspection JSAnnotator
+/**
+ * File containing global settings for exercises
+ * */
+
+exports.default = {
+    /*********************** Exercise API Parameters **************************/
+
+    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION_ID: 'sessionID',
+    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
+
+    /******************** Exercise Bookmark Parameters ************************/
+    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
+
+    /*********************** Exercise Outcome Parameters **************************/
+
+    /** Current endpoint for submitting the result*/
+    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+
+    /** Source types for exercise outcome */
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
+
+    /** Outcome types for exercise */
+    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
+    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
+    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint',
+
+    /** Ex settings*/
+    EX1_MIN_SIZE: 1,
+    EX2_MIN_SIZE: 3,
+    EX3_MIN_SIZE: 3,
+    EX4_MIN_SIZE: 1
+
+};
+
+/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11037,13 +11037,13 @@ var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant
  * Handy utilities
  */
 
-var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(6);
+var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(5);
 
 /*
  *  Handle sweetAlert's DOM elements
  */
 
-var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(5);
+var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(4);
 
 // Handle button events and keyboard events
 
@@ -11508,23 +11508,15 @@ var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _session = __webpack_require__(4);
+var _session = __webpack_require__(3);
 
 var _session2 = _interopRequireDefault(_session);
 
-var _settings = __webpack_require__(2);
-
-var _settings2 = _interopRequireDefault(_settings);
-
 var _loader = __webpack_require__(9);
 
-var _util = __webpack_require__(3);
+var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
-
-var _loading_animation = __webpack_require__(13);
-
-var _loading_animation2 = _interopRequireDefault(_loading_animation);
 
 var _validator = __webpack_require__(25);
 
@@ -11572,8 +11564,6 @@ Generator.prototype = {
         };
         _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
 
-        this.loadingAnimation = new _loading_animation2.default();
-
         //Loads the HTML general exercise template from static
         _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
             // Create the DOM and start the generator
@@ -11590,12 +11580,11 @@ Generator.prototype = {
      *	Call to load the data from API
      **/
     start: function start() {
-        var _this = this;
         this.size = _util2.default.calcSize(this.set, this.set.length);
-        _this.data = this.validator.getValidBookMarks();
+        this.data = this.validator.getValidBookMarks();
         //Init the Progress bar with initialized bookmarks
         _progress_bar2.default.init(0, this.validator.totalValidSize);
-        _this._constructor();
+        this._constructor();
     },
 
     filterArray: function filterArray(bookmarksData) {
@@ -11689,18 +11678,6 @@ Generator.prototype = {
         _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
         _pubsub2.default.emit('generatorCompleted');
     },
-    /**
-     *	Animation used for loading
-     **/
-    loadingAnimation: function loadingAnimation(activate) {
-        if (activate === true) {
-            this.$container.addClass('hide');
-            this.$loader.removeClass('hide');
-        } else {
-            this.$container.removeClass('hide');
-            this.$loader.addClass('hide');
-        }
-    },
 
     /**
      * Extraction of redirect url for Distraction Shield
@@ -11733,9 +11710,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _colorLuminance = __webpack_require__(6);
+var _colorLuminance = __webpack_require__(5);
 
-var _getModal = __webpack_require__(5);
+var _getModal = __webpack_require__(4);
 
 var _hasClass$isDescendant = __webpack_require__(1);
 
@@ -11876,7 +11853,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _stopEventPropagation$fireClick = __webpack_require__(1);
 
-var _setFocusStyle = __webpack_require__(5);
+var _setFocusStyle = __webpack_require__(4);
 
 var handleKeyDown = function handleKeyDown(event, params, modal) {
   var e = event || window.event;
@@ -12009,9 +11986,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _isIE8 = __webpack_require__(6);
+var _isIE8 = __webpack_require__(5);
 
-var _getModal$getInput$setFocusStyle = __webpack_require__(5);
+var _getModal$getInput$setFocusStyle = __webpack_require__(4);
 
 var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
 
@@ -12274,11 +12251,11 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(7);
+var _exercise = __webpack_require__(6);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(3);
+var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -12371,7 +12348,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(7);
+var _exercise = __webpack_require__(6);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -12529,7 +12506,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(7);
+var _exercise = __webpack_require__(6);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -12772,11 +12749,11 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(7);
+var _exercise = __webpack_require__(6);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(3);
+var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -12969,15 +12946,15 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _settings = __webpack_require__(2);
+var _settings = __webpack_require__(7);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(4);
+var _session = __webpack_require__(3);
 
 var _session2 = _interopRequireDefault(_session);
 
-var _util = __webpack_require__(3);
+var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -13006,17 +12983,14 @@ var Validator = function () {
         key: 'getBookmarks',
         value: function getBookmarks(totalSize) {
             var _this = this;
-            this.loadingAnimation.loadingAnimation(true);
-            var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + totalSize + "?session=" + this.session;
+            var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + totalSize + "?session=" + _this.session;
             return _jquery2.default.ajax({
                 type: 'GET',
                 dataType: 'json',
                 url: address,
                 data: this.data,
-                success: function success(data) {
-                    _this.loadingAnimation.loadingAnimation(false);
-                },
-                async: true
+                success: function success(data) {},
+                async: false
             });
         }
         /**
@@ -13033,7 +13007,9 @@ var Validator = function () {
             console.log(this.set);
             var totalSize = _util2.default.calcSize(this.set, this.set.length);
 
+            this.loadingAnimation.loadingAnimation(true);
             _jquery2.default.when(this.getBookmarks(totalSize)).done(function (ldata) {
+                _this.loadingAnimation.loadingAnimation(false);
                 _this.data = ldata;
             });
             //Main check
@@ -13068,7 +13044,8 @@ exports.default = Validator;
 /* 26 */,
 /* 27 */,
 /* 28 */,
-/* 29 */
+/* 29 */,
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

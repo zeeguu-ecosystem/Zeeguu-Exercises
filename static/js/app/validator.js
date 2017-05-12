@@ -27,18 +27,16 @@ class Validator{
     *	Ajax get request to the Zeeguu API to get new bookmarks
     **/
     getBookmarks(totalSize){
-        var _this = this;
-        this.loadingAnimation.loadingAnimation(true);
-        var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS+totalSize+"?session="+this.session;
+        let _this = this;
+        var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS + totalSize + "?session=" + _this.session;
         return $.ajax({
             type: 'GET',
             dataType: 'json',
             url: address,
             data: this.data,
-            success: function(data) {
-                _this.loadingAnimation.loadingAnimation(false);
+            success: function (data) {
             },
-            async: true
+            async: false
         });
     }
     /**
@@ -52,7 +50,9 @@ class Validator{
         console.log(this.set);
         let totalSize = Util.calcSize(this.set,this.set.length);
 
+        this.loadingAnimation.loadingAnimation(true);
         $.when(this.getBookmarks(totalSize)).done(function (ldata) {
+            _this.loadingAnimation.loadingAnimation(false);
             _this.data = (ldata);
         });
         //Main check

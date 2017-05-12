@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -139,71 +139,7 @@ exports.default = cookieHandler;
 
 /***/ }),
 
-/***/ 2:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//noinspection JSAnnotator
-/**
- * File containing global settings for exercises
- * */
-
-exports.default = {
-    /*********************** Exercise API Parameters **************************/
-
-    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '34563456', //00926044 34563456 11010001
-
-    /******************** Exercise Bookmark Parameters ************************/
-    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
-
-    /*********************** Exercise Outcome Parameters **************************/
-
-    /** Current endpoint for submitting the result*/
-    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
-
-    /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
-
-    /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
-    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
-    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint',
-
-    /** Ex settings*/
-    EX1_MIN_SIZE: 1,
-    EX2_MIN_SIZE: 3,
-    EX3_MIN_SIZE: 3,
-    EX4_MIN_SIZE: 1
-
-};
-
-/***/ }),
-
-/***/ 30:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _session = __webpack_require__(4);
-
-var _session2 = _interopRequireDefault(_session);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_session2.default.setSession();
-
-/***/ }),
-
-/***/ 4:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -222,7 +158,7 @@ var _cookie_handler = __webpack_require__(12);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
-var _settings = __webpack_require__(2);
+var _settings = __webpack_require__(7);
 
 var _settings2 = _interopRequireDefault(_settings);
 
@@ -276,6 +212,70 @@ var Session = function () {
 }();
 
 exports.default = Session;
+
+/***/ }),
+
+/***/ 31:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _session = __webpack_require__(3);
+
+var _session2 = _interopRequireDefault(_session);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_session2.default.setSession();
+
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//noinspection JSAnnotator
+/**
+ * File containing global settings for exercises
+ * */
+
+exports.default = {
+    /*********************** Exercise API Parameters **************************/
+
+    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION_ID: 'sessionID',
+    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
+
+    /******************** Exercise Bookmark Parameters ************************/
+    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
+
+    /*********************** Exercise Outcome Parameters **************************/
+
+    /** Current endpoint for submitting the result*/
+    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+
+    /** Source types for exercise outcome */
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
+
+    /** Outcome types for exercise */
+    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
+    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
+    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint',
+
+    /** Ex settings*/
+    EX1_MIN_SIZE: 1,
+    EX2_MIN_SIZE: 3,
+    EX3_MIN_SIZE: 3,
+    EX4_MIN_SIZE: 1
+
+};
 
 /***/ })
 
