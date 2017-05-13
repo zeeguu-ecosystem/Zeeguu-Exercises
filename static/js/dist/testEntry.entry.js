@@ -10801,7 +10801,7 @@ exports.default = {
     ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
+    ZEEGUU_DEFAULT_SESSION: '34563456', //00926044 34563456 11010001
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
@@ -10817,13 +10817,7 @@ exports.default = {
     /** Outcome types for exercise */
     ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
     ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
-    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint',
-
-    /** Ex settings*/
-    EX1_MIN_SIZE: 1,
-    EX2_MIN_SIZE: 3,
-    EX3_MIN_SIZE: 3,
-    EX4_MIN_SIZE: 1
+    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint'
 
 };
 
@@ -12125,9 +12119,11 @@ Generator.prototype = {
         //Callback wait until the bookmarks are loaded
         this.validator.getValidBookMarks(function (ldata) {
             _this.data = ldata;
-            _progress_bar2.default.init(0, _this.validator.totalValidSize);
+            console.log(_this.set);
+            _this.set = _this.validator.validSet;
+            console.log(_this.set);
+            _progress_bar2.default.init(0, _this.validator.validSize);
             _this._constructor();
-            return ldata;
         });
     },
 
@@ -12926,12 +12922,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /** Validator class takes care of the input for generator
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  It asks for bookmarks from the server
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  Based on the result, it decided on how to generate exercises
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks == 0 then show no bookmarks page
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks < requested number then generate exercises that fit
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks >= requested number simply generate exercises
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  @param  example: [[2,3],[1,3],[3,3],[4,3],[1,3]]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Init with @param {array} set: [[2,3],[1,3],[3,3],[4,3],[1,3]]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  IMPORTANT: the @function getValidBookMarks assumes the set is created
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  considering the minimum requirements for each exercise
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       **/
 
 var _loading_animation = __webpack_require__(23);
@@ -12980,6 +12979,7 @@ var Validator = function () {
 
         /** Class parameters*/
         this.set = set;
+        this.validFinalSet = [[]];
         this.loadingAnimation = new _loading_animation2.default();
         this.data = 0;
         this.session = _session2.default.getSession();
@@ -12989,7 +12989,7 @@ var Validator = function () {
     }
 
     /**
-     * The function caches imports in local scope for later to be referenced by a string
+     * The function caches imports in local scope for later to be referenced as a string
      * */
 
 
@@ -13035,49 +13035,120 @@ var Validator = function () {
         value: function getValidBookMarks(callback) {
             var _this = this;
             //Calculate the size
-            console.log(this.set);
             var totalSize = _util2.default.calcSize(this.set, this.set.length);
+            //TODO change the follwoing line to proper return value
             this.totalValidSize = totalSize;
-            _jquery2.default.when(this.getBookmarks(totalSize)).done(function (ldata) {
-                _this.data = ldata;
-                console.log("Pass1");
-                _this.validateSet(totalSize);
-                callback(ldata);
+            _jquery2.default.when(this.getBookmarks(totalSize)).done(function (data) {
+                _this.validFinalSet = _this.validateSet(totalSize, data);
+                callback(data);
             });
-            console.log("Pass2");
         }
+
+        /**
+         *  Given the set and the bookmarks create a new set for generator
+         *  Three possibilities:
+         *  number of bookmarks == 0 then show no bookmarks page
+         *  number of bookmarks < requested number then generate exercises that fit
+         *  number of bookmarks >= requested number simply generate exercises
+         *  @return {array} set, the validated ex set
+         * */
+
     }, {
         key: 'validateSet',
-        value: function validateSet(totalSize) {
-            this.isProperEx(1, 2);
-            this.isProperEx(2, 2);
-            this.isProperEx(3, 2);
-            this.isProperEx(4, 2);
-            //Main check
-            if (this.data.length == 0) {
-                /** bookmarks.length == 0, no-bookmarks page*/
-                //TODO no bookmarks page
-                alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
-            } else if (this.data.length < totalSize) {
-                /** bookmarks.length < set.length, fit the ex*/
-                alert("does not fit" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
-            } else {
-                /** bookmarks.length < set.length, gen the ex*/
-                alert("its all good" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
-            }
+        value: function validateSet(totalSetLength, data) {
+            this.data = data;
+            var bookmarkLength = this.data.length;
+
+            if (bookmarkLength <= 0) return this.noBookmarkPage();
+            if (bookmarkLength < totalSetLength) return this.notEnoughBookmarks(bookmarkLength, this.set);
+            return this.enoughBookmarks(this.set);
         }
+
+        /**
+         * number of bookmarks >= requested number simply generate exercises
+         * Assumes the given set has valid minimal sizes for exercises
+         */
+
+    }, {
+        key: 'enoughBookmarks',
+        value: function enoughBookmarks(set) {
+            console.log('Enough bookmarks');
+            return set;
+        }
+
+        /**
+         * Number of bookmarks < requested number, generate exercises that fit
+         * @return {array} set
+         * TODO add testing
+        */
+
+    }, {
+        key: 'notEnoughBookmarks',
+        value: function notEnoughBookmarks(bookmarkLength, set) {
+            console.log('not enough bookmarks, bkmrLen: ' + bookmarkLength);
+            var newSet = [];
+            var setIndex = 0;
+            while (bookmarkLength > 0) {
+                var delta = bookmarkLength - set[setIndex][1];
+                if (delta >= 0) {
+                    newSet.push(set[setIndex]);
+                } else if (this.isProperEx(set[setIndex][0], -delta)) {
+                    //delta < 0 && the set is good with the number
+                    newSet.push([set[setIndex][0], -delta]);
+                }
+                bookmarkLength = delta;
+                setIndex++;
+            }
+            //TODO if set is still empty not enough bookmarks page
+            return newSet;
+        }
+
+        /**
+         * Number of bookmarks == 0 then show no bookmarks page
+         * Signals the generator to terminate, load no bookmark page
+         * */
+
+    }, {
+        key: 'noBookmarkPage',
+        value: function noBookmarkPage() {
+            console.log('No bookmarks');
+            //TODO implement no bookmarks page
+            alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
+        }
+
+        /**
+         * Compares the minimum requirement for the given ex and the assigned amount
+         * @param {int} exNum, the id of the ex
+         * @param {int} exSize, the amount the ex is generated
+         * @return {boolean}, true if the minReq >= givenAmount, else false
+         * @example this.isProperEx(1,2), Ex1 2 times
+         * */
+
     }, {
         key: 'isProperEx',
         value: function isProperEx(exNum, exSize) {
-            console.log("the min for Ex" + exNum + " is:" + this['Ex' + exNum].prototype.minRequirement);
+            var minReqForEx = this['Ex' + exNum].prototype.minRequirement;
+            return minReqForEx <= exSize;
         }
-    }, {
-        key: 'noBookmarkPage',
-        value: function noBookmarkPage() {}
+
+        /**
+         * Getter for final valid size of the generated bookmarks
+         * */
+
     }, {
         key: 'validSize',
         get: function get() {
-            return this.totalValidSize;
+            return _util2.default.calcSize(this.validFinalSet, this.validFinalSet.length);
+        }
+
+        /**
+         * Getter for final valid set for exercise generator
+         * */
+
+    }, {
+        key: 'validSet',
+        get: function get() {
+            return this.validFinalSet;
         }
     }]);
 

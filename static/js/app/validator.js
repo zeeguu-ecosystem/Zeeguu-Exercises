@@ -1,10 +1,13 @@
 /** Validator class takes care of the input for generator
- *  It asks for bookmarks from the server
+ *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
  *  Based on the result, it decided on how to generate exercises
  *  If number of bookmarks == 0 then show no bookmarks page
  *  If number of bookmarks < requested number then generate exercises that fit
  *  If number of bookmarks >= requested number simply generate exercises
- *  @param  example: [[2,3],[1,3],[3,3],[4,3],[1,3]]
+ *  Init with @param {array} set: [[2,3],[1,3],[3,3],[4,3],[1,3]]
+ *
+ *  IMPORTANT: the @function getValidBookMarks assumes the set is created
+ *  considering the minimum requirements for each exercise
  **/
 
 import LoadingAnimation from './loading_animation';
@@ -21,6 +24,7 @@ class Validator{
     constructor(set){
         /** Class parameters*/
         this.set = set;
+        this.validFinalSet = [[]];
         this.loadingAnimation = new LoadingAnimation();
         this.data = 0;
         this.session = Session.getSession();
@@ -30,7 +34,7 @@ class Validator{
     }
 
     /**
-     * The function caches imports in local scope for later to be referenced by a string
+     * The function caches imports in local scope for later to be referenced as a string
      * */
     cacheExerciseImports(){
         this.Ex1 = Ex1;
@@ -66,46 +70,101 @@ class Validator{
     getValidBookMarks(callback){
         let _this = this;
         //Calculate the size
-        console.log(this.set);
         let totalSize = Util.calcSize(this.set,this.set.length);
+        //TODO change the follwoing line to proper return value
         this.totalValidSize = totalSize;
-        $.when(this.getBookmarks(totalSize)).done(function (ldata) {
-            _this.data = (ldata);
-            console.log("Pass1");
-            _this.validateSet(totalSize);
-            callback(ldata);
+        $.when(this.getBookmarks(totalSize)).done(function (data) {
+            _this.validFinalSet = _this.validateSet(totalSize,data);
+            callback(data);
         });
-        console.log("Pass2");
     }
 
-    validateSet(totalSize){
-        this.isProperEx(1,2);
-        this.isProperEx(2,2);
-        this.isProperEx(3,2);
-        this.isProperEx(4,2);
-        //Main check
-        if(this.data.length == 0){/** bookmarks.length == 0, no-bookmarks page*/
-            //TODO no bookmarks page
-            alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
-        }
-        else if(this.data.length < totalSize){/** bookmarks.length < set.length, fit the ex*/
-            alert("does not fit" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
-        }
-        else{/** bookmarks.length < set.length, gen the ex*/
-            alert("its all good" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
-        }
+    /**
+     *  Given the set and the bookmarks create a new set for generator
+     *  Three possibilities:
+     *  number of bookmarks == 0 then show no bookmarks page
+     *  number of bookmarks < requested number then generate exercises that fit
+     *  number of bookmarks >= requested number simply generate exercises
+     *  @return {array} set, the validated ex set
+     * */
+    validateSet(totalSetLength,data){
+        this.data = data;
+        let bookmarkLength = this.data.length;
+
+        if(bookmarkLength <= 0)
+            return this.noBookmarkPage();
+        if(bookmarkLength < totalSetLength)
+            return this.notEnoughBookmarks(bookmarkLength,this.set);
+        return this.enoughBookmarks(this.set);
     }
 
-    isProperEx(exNum,exSize){
-        console.log("the min for Ex"+ exNum + " is:" + (this['Ex'+exNum]).prototype.minRequirement);
+    /**
+     * number of bookmarks >= requested number simply generate exercises
+     * Assumes the given set has valid minimal sizes for exercises
+     */
+    enoughBookmarks(set){
+        console.log('Enough bookmarks');
+        return set;
     }
 
+    /**
+     * Number of bookmarks < requested number, generate exercises that fit
+     * @return {array} set
+     * TODO add testing
+     * TODO has a bug should give 2 gave 4
+    */
+    notEnoughBookmarks(bookmarkLength,set){
+        console.log('not enough bookmarks, bkmrLen: ' + bookmarkLength);
+        let newSet = [];
+        let setIndex = 0;
+        while(bookmarkLength>0){
+            let delta = bookmarkLength - set[setIndex][1];
+            if(delta >=0){
+                newSet.push(set[setIndex]);
+            }else if(this.isProperEx(set[setIndex][0],-delta)) {//delta < 0 && the set is good with the number
+                newSet.push([set[setIndex][0],-delta]);
+            }
+            bookmarkLength = delta;
+            setIndex++;
+        }
+        //TODO if set is still empty not enough bookmarks page
+        return newSet;
+    }
+
+    /**
+     * Number of bookmarks == 0 then show no bookmarks page
+     * Signals the generator to terminate, load no bookmark page
+     * */
     noBookmarkPage(){
-
+        console.log('No bookmarks');
+        //TODO implement no bookmarks page
+        alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
     }
 
+    /**
+     * Compares the minimum requirement for the given ex and the assigned amount
+     * @param {int} exNum, the id of the ex
+     * @param {int} exSize, the amount the ex is generated
+     * @return {boolean}, true if the minReq >= givenAmount, else false
+     * @example this.isProperEx(1,2), Ex1 2 times
+     * */
+    isProperEx(exNum,exSize){
+        let minReqForEx = (this['Ex'+exNum]).prototype.minRequirement;
+        return minReqForEx <= exSize;
+    }
+
+    /**
+     * Getter for final valid size of the generated bookmarks
+     * */
     get validSize(){
-        return this.totalValidSize;
+        return Util.calcSize(this.validFinalSet,this.validFinalSet.length);
+    }
+
+    /**
+     * Getter for final valid set for exercise generator
+     * */
+    get validSet(){
+        return this.validFinalSet;
     }
 }
 

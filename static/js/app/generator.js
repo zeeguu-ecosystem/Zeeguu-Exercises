@@ -76,9 +76,11 @@ Generator.prototype = {
         //Callback wait until the bookmarks are loaded
         this.validator.getValidBookMarks(function(ldata) {
             _this.data = (ldata);
-            ProgressBar.init(0, _this.validator.totalValidSize);
+            console.log(_this.set);
+            _this.set = _this.validator.validSet;
+            console.log(_this.set);
+            ProgressBar.init(0, _this.validator.validSize);
             _this._constructor();
-            return ldata;
         });
     },
 
