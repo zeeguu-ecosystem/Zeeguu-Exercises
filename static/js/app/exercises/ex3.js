@@ -226,7 +226,7 @@ Ex3.prototype = Object.create(Exercise.prototype, {
 	chosenButton: { writable: true, value:-1},  	// ID of currently selected button; -1 means no button is selected
 	correctAnswers: { writable: true, value:0},	// number of correct answers
 	hints: {writable:true, value:0},			// max number of possible hints is 1
-    minNumber: { writable: true, value:3},	// minimum number required for the ex
+    minRequirement: { writable: true, value:3},	// minimum number required for the ex
 	/*******************************************************************/
 });
 

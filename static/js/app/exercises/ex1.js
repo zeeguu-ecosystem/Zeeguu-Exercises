@@ -71,7 +71,6 @@ Ex1.prototype = Object.create(Exercise.prototype, {
 	/************************** SETTINGS ********************************/	
 	description: {value: "Find the word in the context:"},
 	customTemplateURL: {value: 'static/template/ex1.html'},
-    minNumber: { writable: true, value:3},	// minimum number required for the ex
 });
 
 export default Ex1;

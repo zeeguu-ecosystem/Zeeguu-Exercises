@@ -101,7 +101,6 @@ Ex4.prototype = Object.create(Exercise.prototype, {
 	/************************** SETTINGS ********************************/	
 	description: {value: "Translate the word given in the context."},
 	customTemplateURL: {value: 'static/template/ex4.html'},
-    minNumber: { writable: true, value:1},	// minimum number required for the ex
 });
 
 export default Ex4;

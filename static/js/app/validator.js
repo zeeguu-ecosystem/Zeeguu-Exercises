@@ -12,6 +12,10 @@ import $ from 'jquery';
 import Settings from "./settings";
 import Session from "./session";
 import Util from "./util";
+import Ex1 from './exercises/ex1';
+import Ex2 from './exercises/ex2';
+import Ex3 from './exercises/ex3';
+import Ex4 from './exercises/ex4';
 
 class Validator{
     constructor(set){
@@ -21,8 +25,19 @@ class Validator{
         this.data = 0;
         this.session = Session.getSession();
         this.totalValidSize = 0;
+        //Cache the imports for later reference
+        this.cacheExerciseImports();
     }
 
+    /**
+     * The function caches imports in local scope for later to be referenced by a string
+     * */
+    cacheExerciseImports(){
+        this.Ex1 = Ex1;
+        this.Ex2 = Ex2;
+        this.Ex3 = Ex3;
+        this.Ex4 = Ex4;
+    }
     /**
     *	Ajax get request to the Zeeguu API to get new bookmarks
     **/
@@ -64,6 +79,10 @@ class Validator{
     }
 
     validateSet(totalSize){
+        this.isProperEx(1,2);
+        this.isProperEx(2,2);
+        this.isProperEx(3,2);
+        this.isProperEx(4,2);
         //Main check
         if(this.data.length == 0){/** bookmarks.length == 0, no-bookmarks page*/
             //TODO no bookmarks page
@@ -75,6 +94,10 @@ class Validator{
         else{/** bookmarks.length < set.length, gen the ex*/
             alert("its all good" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
         }
+    }
+
+    isProperEx(exNum,exSize){
+        console.log("the min for Ex"+ exNum + " is:" + (this['Ex'+exNum]).prototype.minRequirement);
     }
 
     noBookmarkPage(){

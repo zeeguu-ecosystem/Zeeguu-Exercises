@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module)))
 
 /***/ }),
 /* 1 */
@@ -10289,7 +10289,7 @@ var _defaultParams2 = _interopRequireWildcard(_defaultParams);
  * Add modal + overlay to DOM
  */
 
-var _injectedHTML = __webpack_require__(16);
+var _injectedHTML = __webpack_require__(20);
 
 var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
 
@@ -10575,7 +10575,7 @@ Exercise.prototype = {
 	session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
 	startTime: 0,
 	isHintUsed: false,
-	minNumber: 1,
+	minRequirement: 1,
 
 	/*********************** General Functions ***************************/
 	/**
@@ -11037,9 +11037,9 @@ var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$r
 
 // Handle button events and keyboard events
 
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(14);
+var _handleButton$handleConfirm$handleCancel = __webpack_require__(18);
 
-var _handleKeyDown = __webpack_require__(15);
+var _handleKeyDown = __webpack_require__(19);
 
 var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
@@ -11049,7 +11049,7 @@ var _defaultParams = __webpack_require__(10);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
-var _setParameters = __webpack_require__(17);
+var _setParameters = __webpack_require__(21);
 
 var _setParameters2 = _interopRequireWildcard(_setParameters);
 
@@ -11388,790 +11388,6 @@ exports.default = cookieHandler;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _ex = __webpack_require__(19);
-
-var _ex2 = _interopRequireDefault(_ex);
-
-var _ex3 = __webpack_require__(20);
-
-var _ex4 = _interopRequireDefault(_ex3);
-
-var _ex5 = __webpack_require__(21);
-
-var _ex6 = _interopRequireDefault(_ex5);
-
-var _ex7 = __webpack_require__(22);
-
-var _ex8 = _interopRequireDefault(_ex7);
-
-var _progress_bar = __webpack_require__(24);
-
-var _progress_bar2 = _interopRequireDefault(_progress_bar);
-
-var _pubsub = __webpack_require__(8);
-
-var _pubsub2 = _interopRequireDefault(_pubsub);
-
-var _sweetalert = __webpack_require__(11);
-
-var _sweetalert2 = _interopRequireDefault(_sweetalert);
-
-var _session = __webpack_require__(3);
-
-var _session2 = _interopRequireDefault(_session);
-
-var _loader = __webpack_require__(9);
-
-var _util = __webpack_require__(2);
-
-var _util2 = _interopRequireDefault(_util);
-
-var _validator = __webpack_require__(25);
-
-var _validator2 = _interopRequireDefault(_validator);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
- *  @initialize it using: new Generator(args);
- *  @param args is matrix of exercise name and number of bookmarks,
- *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
- *  @customize it by using prototypal inheritance
- **/
-
-var Generator = function Generator(set) {
-    this.init(set);
-};
-
-Generator.prototype = {
-    /************************** SETTINGS ********************************/
-    data: 0, //bookmakrs from zeeguu api
-    set: 0, //matrix for initialaizer
-    index: 0, //current index from set
-    startTime: 0,
-    session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
-    templateURL: 'static/template/exercise.html',
-
-    /**
-     *	Saves the common dom in chache
-     **/
-    cacheDom: function cacheDom() {},
-
-    /**
-     *	Generator initialaizer
-     **/
-    init: function init(set) {
-        this.set = set;
-        var _this = this;
-
-        this.validator = new _validator2.default(set);
-
-        // "bind" event
-        this.$eventFunc = function () {
-            _this.nextEx();
-        };
-        _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
-
-        //Loads the HTML general exercise template from static
-        _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
-            // Create the DOM and start the generator
-            _this.cacheDom();
-            _this.start();
-        });
-    },
-
-    restart: function restart() {
-        this.start();
-    },
-
-    /**
-     *	Call to load the data from API
-     **/
-    start: function start() {
-        this.size = _util2.default.calcSize(this.set, this.set.length);
-
-        var _this = this;
-
-        this.validator.getValidBookMarks(function (ldata) {
-            _this.data = ldata;
-            _progress_bar2.default.init(0, _this.validator.totalValidSize);
-            _this._constructor();
-            console.log("pass3");
-            return ldata;
-        });
-
-        console.log("pass4");
-
-        /*this.data = this.validator.getValidBookMarks();
-        //Init the Progress bar with initialized bookmarks
-        ProgressBar.init(0, this.validator.totalValidSize);
-        this._constructor();*/
-    },
-
-    filterArray: function filterArray(bookmarksData) {
-        for (var i = 0; i < bookmarksData.length; i++) {
-            var tempIdx = indexOf(bookmarksData[i]);
-            if (tempIdx == -1 || tempIdx == i) {
-                continue;
-            }
-            bookmarksData.splice(i, 1);
-        }
-        console.log(bookmarksData);
-        return bookmarksData;
-    },
-
-    /**
-     *	The main constructor
-     **/
-    _constructor: function _constructor() {
-        this.index = 0;
-        this.startTime = new Date();
-        this.nextEx();
-    },
-
-    /**
-     *	Add Ex here
-     **/
-    nextEx: function nextEx() {
-        if (this.index === this.set.length) {
-            this.onExSetComplete();
-            return;
-        }
-        var ex = this.set[this.index][0];
-        var size = this.set[this.index][1];
-        var startingIndex = _util2.default.calcSize(this.set, this.index);
-
-        this.$currentEx = null;
-        delete this.$currentEx;
-        switch (ex) {
-            case 1:
-                this.$currentEx = new _ex2.default(this.data, startingIndex, size);
-                break;
-            case 2:
-                this.$currentEx = new _ex4.default(this.data, startingIndex, size);
-                break;
-            case 3:
-                this.$currentEx = new _ex6.default(this.data, startingIndex, size);
-                break;
-            case 4:
-                this.$currentEx = new _ex8.default(this.data, startingIndex, size);
-                break;
-        }
-
-        this.index++;
-    },
-    /**
-     *	Request the submit API
-     **/
-    submitResults: function submitResults() {
-        //TODO submit user feedback if any
-    },
-
-    /**
-     *	When the ex are done perform an action
-     **/
-    onExSetComplete: function onExSetComplete() {
-        var _this = this;
-        var redirect = _this.distractionShieldOriginalDestination();
-        _this.submitResults();
-        (0, _sweetalert2.default)({
-            title: "You rock!",
-            text: "That took less than " + _util2.default.calcTimeInMinutes(_this.startTime) + ". practice more?",
-            type: "success",
-            showCancelButton: true,
-            confirmButtonColor: "#7eb530",
-            confirmButtonText: "Let's do it!",
-            cancelButtonText: redirect != null ? "Take me away!" : "Go home!",
-            closeOnConfirm: true
-        }, function (isConfirm) {
-            if (isConfirm) {
-                _this.restart();
-                return;
-            }
-            _this.terminateGenerator();
-            if (redirect != null) {
-                window.location = redirect;
-            }
-        });
-    },
-
-    terminateGenerator: function terminateGenerator() {
-        _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
-        _pubsub2.default.emit('generatorCompleted');
-    },
-
-    /**
-     * Extraction of redirect url for Distraction Shield
-     **/
-    distractionShieldOriginalDestination: function distractionShieldOriginalDestination() {
-        var url = window.location.href;
-        var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)");
-        var results = regex.exec(url);
-        if (!results || !results[2]) return null;
-        var newUrl = decodeURIComponent(results[2].replace(/\+/g, " "));
-        if (newUrl.indexOf('?') > -1) {
-            newUrl += "&tds_exComplete=true";
-        } else {
-            newUrl += "?tds_exComplete=true";
-        }
-        return newUrl;
-    }
-};
-
-exports.default = Generator;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _colorLuminance = __webpack_require__(5);
-
-var _getModal = __webpack_require__(4);
-
-var _hasClass$isDescendant = __webpack_require__(1);
-
-/*
- * User clicked on "Confirm"/"OK" or "Cancel"
- */
-var handleButton = function handleButton(event, params, modal) {
-  var e = event || window.event;
-  var target = e.target || e.srcElement;
-
-  var targetedConfirm = target.className.indexOf('confirm') !== -1;
-  var targetedOverlay = target.className.indexOf('sweet-overlay') !== -1;
-  var modalIsVisible = _hasClass$isDescendant.hasClass(modal, 'visible');
-  var doneFunctionExists = params.doneFunction && modal.getAttribute('data-has-done-function') === 'true';
-
-  // Since the user can change the background-color of the confirm button programmatically,
-  // we must calculate what the color should be on hover/active
-  var normalColor, hoverColor, activeColor;
-  if (targetedConfirm && params.confirmButtonColor) {
-    normalColor = params.confirmButtonColor;
-    hoverColor = _colorLuminance.colorLuminance(normalColor, -0.04);
-    activeColor = _colorLuminance.colorLuminance(normalColor, -0.14);
-  }
-
-  function shouldSetConfirmButtonColor(color) {
-    if (targetedConfirm && params.confirmButtonColor) {
-      target.style.backgroundColor = color;
-    }
-  }
-
-  switch (e.type) {
-    case 'mouseover':
-      shouldSetConfirmButtonColor(hoverColor);
-      break;
-
-    case 'mouseout':
-      shouldSetConfirmButtonColor(normalColor);
-      break;
-
-    case 'mousedown':
-      shouldSetConfirmButtonColor(activeColor);
-      break;
-
-    case 'mouseup':
-      shouldSetConfirmButtonColor(hoverColor);
-      break;
-
-    case 'focus':
-      var $confirmButton = modal.querySelector('button.confirm');
-      var $cancelButton = modal.querySelector('button.cancel');
-
-      if (targetedConfirm) {
-        $cancelButton.style.boxShadow = 'none';
-      } else {
-        $confirmButton.style.boxShadow = 'none';
-      }
-      break;
-
-    case 'click':
-      var clickedOnModal = modal === target;
-      var clickedOnModalChild = _hasClass$isDescendant.isDescendant(modal, target);
-
-      // Ignore click outside if allowOutsideClick is false
-      if (!clickedOnModal && !clickedOnModalChild && modalIsVisible && !params.allowOutsideClick) {
-        break;
-      }
-
-      if (targetedConfirm && doneFunctionExists && modalIsVisible) {
-        handleConfirm(modal, params);
-      } else if (doneFunctionExists && modalIsVisible || targetedOverlay) {
-        handleCancel(modal, params);
-      } else if (_hasClass$isDescendant.isDescendant(modal, target) && target.tagName === 'BUTTON') {
-        sweetAlert.close();
-      }
-      break;
-  }
-};
-
-/*
- *  User clicked on "Confirm"/"OK"
- */
-var handleConfirm = function handleConfirm(modal, params) {
-  var callbackValue = true;
-
-  if (_hasClass$isDescendant.hasClass(modal, 'show-input')) {
-    callbackValue = modal.querySelector('input').value;
-
-    if (!callbackValue) {
-      callbackValue = '';
-    }
-  }
-
-  params.doneFunction(callbackValue);
-
-  if (params.closeOnConfirm) {
-    sweetAlert.close();
-  }
-  // Disable cancel and confirm button if the parameter is true
-  if (params.showLoaderOnConfirm) {
-    sweetAlert.disableButtons();
-  }
-};
-
-/*
- *  User clicked on "Cancel"
- */
-var handleCancel = function handleCancel(modal, params) {
-  // Check if callback function expects a parameter (to track cancel actions)
-  var functionAsStr = String(params.doneFunction).replace(/\s/g, '');
-  var functionHandlesCancel = functionAsStr.substring(0, 9) === 'function(' && functionAsStr.substring(9, 10) !== ')';
-
-  if (functionHandlesCancel) {
-    params.doneFunction(false);
-  }
-
-  if (params.closeOnCancel) {
-    sweetAlert.close();
-  }
-};
-
-exports['default'] = {
-  handleButton: handleButton,
-  handleConfirm: handleConfirm,
-  handleCancel: handleCancel
-};
-module.exports = exports['default'];
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _stopEventPropagation$fireClick = __webpack_require__(1);
-
-var _setFocusStyle = __webpack_require__(4);
-
-var handleKeyDown = function handleKeyDown(event, params, modal) {
-  var e = event || window.event;
-  var keyCode = e.keyCode || e.which;
-
-  var $okButton = modal.querySelector('button.confirm');
-  var $cancelButton = modal.querySelector('button.cancel');
-  var $modalButtons = modal.querySelectorAll('button[tabindex]');
-
-  if ([9, 13, 32, 27].indexOf(keyCode) === -1) {
-    // Don't do work on keys we don't care about.
-    return;
-  }
-
-  var $targetElement = e.target || e.srcElement;
-
-  var btnIndex = -1; // Find the button - note, this is a nodelist, not an array.
-  for (var i = 0; i < $modalButtons.length; i++) {
-    if ($targetElement === $modalButtons[i]) {
-      btnIndex = i;
-      break;
-    }
-  }
-
-  if (keyCode === 9) {
-    // TAB
-    if (btnIndex === -1) {
-      // No button focused. Jump to the confirm button.
-      $targetElement = $okButton;
-    } else {
-      // Cycle to the next button
-      if (btnIndex === $modalButtons.length - 1) {
-        $targetElement = $modalButtons[0];
-      } else {
-        $targetElement = $modalButtons[btnIndex + 1];
-      }
-    }
-
-    _stopEventPropagation$fireClick.stopEventPropagation(e);
-    $targetElement.focus();
-
-    if (params.confirmButtonColor) {
-      _setFocusStyle.setFocusStyle($targetElement, params.confirmButtonColor);
-    }
-  } else {
-    if (keyCode === 13) {
-      if ($targetElement.tagName === 'INPUT') {
-        $targetElement = $okButton;
-        $okButton.focus();
-      }
-
-      if (btnIndex === -1) {
-        // ENTER/SPACE clicked outside of a button.
-        $targetElement = $okButton;
-      } else {
-        // Do nothing - let the browser handle it.
-        $targetElement = undefined;
-      }
-    } else if (keyCode === 27 && params.allowEscapeKey === true) {
-      $targetElement = $cancelButton;
-      _stopEventPropagation$fireClick.fireClick($targetElement, e);
-    } else {
-      // Fallback - let the browser handle it.
-      $targetElement = undefined;
-    }
-  }
-};
-
-exports['default'] = handleKeyDown;
-module.exports = exports['default'];
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var injectedHTML =
-
-// Dark overlay
-"<div class=\"sweet-overlay\" tabIndex=\"-1\"></div>" +
-
-// Modal
-"<div class=\"sweet-alert\">" +
-
-// Error icon
-"<div class=\"sa-icon sa-error\">\n      <span class=\"sa-x-mark\">\n        <span class=\"sa-line sa-left\"></span>\n        <span class=\"sa-line sa-right\"></span>\n      </span>\n    </div>" +
-
-// Warning icon
-"<div class=\"sa-icon sa-warning\">\n      <span class=\"sa-body\"></span>\n      <span class=\"sa-dot\"></span>\n    </div>" +
-
-// Info icon
-"<div class=\"sa-icon sa-info\"></div>" +
-
-// Success icon
-"<div class=\"sa-icon sa-success\">\n      <span class=\"sa-line sa-tip\"></span>\n      <span class=\"sa-line sa-long\"></span>\n\n      <div class=\"sa-placeholder\"></div>\n      <div class=\"sa-fix\"></div>\n    </div>" + "<div class=\"sa-icon sa-custom\"></div>" +
-
-// Title, text and input
-"<h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type=\"text\" tabIndex=\"3\" />\n      <div class=\"sa-input-error\"></div>\n    </fieldset>" +
-
-// Input errors
-"<div class=\"sa-error-container\">\n      <div class=\"icon\">!</div>\n      <p>Not valid!</p>\n    </div>" +
-
-// Cancel and confirm buttons
-"<div class=\"sa-button-container\">\n      <button class=\"cancel\" tabIndex=\"2\">Cancel</button>\n      <div class=\"sa-confirm-button-container\">\n        <button class=\"confirm\" tabIndex=\"1\">OK</button>" +
-
-// Loading animation
-"<div class=\"la-ball-fall\">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div>" +
-
-// End of modal
-"</div>";
-
-exports["default"] = injectedHTML;
-module.exports = exports["default"];
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _isIE8 = __webpack_require__(5);
-
-var _getModal$getInput$setFocusStyle = __webpack_require__(4);
-
-var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
-
-var alertTypes = ['error', 'warning', 'info', 'success', 'input', 'prompt'];
-
-/*
- * Set type, text and actions on modal
- */
-var setParameters = function setParameters(params) {
-  var modal = _getModal$getInput$setFocusStyle.getModal();
-
-  var $title = modal.querySelector('h2');
-  var $text = modal.querySelector('p');
-  var $cancelBtn = modal.querySelector('button.cancel');
-  var $confirmBtn = modal.querySelector('button.confirm');
-
-  /*
-   * Title
-   */
-  $title.innerHTML = params.html ? params.title : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.title).split('\n').join('<br>');
-
-  /*
-   * Text
-   */
-  $text.innerHTML = params.html ? params.text : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.text || '').split('\n').join('<br>');
-  if (params.text) _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($text);
-
-  /*
-   * Custom class
-   */
-  if (params.customClass) {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, params.customClass);
-    modal.setAttribute('data-custom-class', params.customClass);
-  } else {
-    // Find previously set classes and remove them
-    var customClass = modal.getAttribute('data-custom-class');
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.removeClass(modal, customClass);
-    modal.setAttribute('data-custom-class', '');
-  }
-
-  /*
-   * Icon
-   */
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide(modal.querySelectorAll('.sa-icon'));
-
-  if (params.type && !_isIE8.isIE8()) {
-    var _ret = function () {
-
-      var validType = false;
-
-      for (var i = 0; i < alertTypes.length; i++) {
-        if (params.type === alertTypes[i]) {
-          validType = true;
-          break;
-        }
-      }
-
-      if (!validType) {
-        logStr('Unknown alert type: ' + params.type);
-        return {
-          v: false
-        };
-      }
-
-      var typesWithIcons = ['success', 'error', 'warning', 'info'];
-      var $icon = undefined;
-
-      if (typesWithIcons.indexOf(params.type) !== -1) {
-        $icon = modal.querySelector('.sa-icon.' + 'sa-' + params.type);
-        _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($icon);
-      }
-
-      var $input = _getModal$getInput$setFocusStyle.getInput();
-
-      // Animate icon
-      switch (params.type) {
-
-        case 'success':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animate');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-tip'), 'animateSuccessTip');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-long'), 'animateSuccessLong');
-          break;
-
-        case 'error':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animateErrorIcon');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-x-mark'), 'animateXMark');
-          break;
-
-        case 'warning':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'pulseWarning');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-body'), 'pulseWarningIns');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-dot'), 'pulseWarningIns');
-          break;
-
-        case 'input':
-        case 'prompt':
-          $input.setAttribute('type', params.inputType);
-          $input.value = params.inputValue;
-          $input.setAttribute('placeholder', params.inputPlaceholder);
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, 'show-input');
-          setTimeout(function () {
-            $input.focus();
-            $input.addEventListener('keyup', swal.resetInputError);
-          }, 400);
-          break;
-      }
-    }();
-
-    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === 'object') {
-      return _ret.v;
-    }
-  }
-
-  /*
-   * Custom image
-   */
-  if (params.imageUrl) {
-    var $customIcon = modal.querySelector('.sa-icon.sa-custom');
-
-    $customIcon.style.backgroundImage = 'url(' + params.imageUrl + ')';
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($customIcon);
-
-    var _imgWidth = 80;
-    var _imgHeight = 80;
-
-    if (params.imageSize) {
-      var dimensions = params.imageSize.toString().split('x');
-      var imgWidth = dimensions[0];
-      var imgHeight = dimensions[1];
-
-      if (!imgWidth || !imgHeight) {
-        logStr('Parameter imageSize expects value with format WIDTHxHEIGHT, got ' + params.imageSize);
-      } else {
-        _imgWidth = imgWidth;
-        _imgHeight = imgHeight;
-      }
-    }
-
-    $customIcon.setAttribute('style', $customIcon.getAttribute('style') + 'width:' + _imgWidth + 'px; height:' + _imgHeight + 'px');
-  }
-
-  /*
-   * Show cancel button?
-   */
-  modal.setAttribute('data-has-cancel-button', params.showCancelButton);
-  if (params.showCancelButton) {
-    $cancelBtn.style.display = 'inline-block';
-  } else {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($cancelBtn);
-  }
-
-  /*
-   * Show confirm button?
-   */
-  modal.setAttribute('data-has-confirm-button', params.showConfirmButton);
-  if (params.showConfirmButton) {
-    $confirmBtn.style.display = 'inline-block';
-  } else {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($confirmBtn);
-  }
-
-  /*
-   * Custom text on cancel/confirm buttons
-   */
-  if (params.cancelButtonText) {
-    $cancelBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.cancelButtonText);
-  }
-  if (params.confirmButtonText) {
-    $confirmBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.confirmButtonText);
-  }
-
-  /*
-   * Custom color on confirm button
-   */
-  if (params.confirmButtonColor) {
-    // Set confirm button to selected background color
-    $confirmBtn.style.backgroundColor = params.confirmButtonColor;
-
-    // Set the confirm button color to the loading ring
-    $confirmBtn.style.borderLeftColor = params.confirmLoadingButtonColor;
-    $confirmBtn.style.borderRightColor = params.confirmLoadingButtonColor;
-
-    // Set box-shadow to default focused button
-    _getModal$getInput$setFocusStyle.setFocusStyle($confirmBtn, params.confirmButtonColor);
-  }
-
-  /*
-   * Allow outside click
-   */
-  modal.setAttribute('data-allow-outside-click', params.allowOutsideClick);
-
-  /*
-   * Callback function
-   */
-  var hasDoneFunction = params.doneFunction ? true : false;
-  modal.setAttribute('data-has-done-function', hasDoneFunction);
-
-  /*
-   * Animation
-   */
-  if (!params.animation) {
-    modal.setAttribute('data-animation', 'none');
-  } else if (typeof params.animation === 'string') {
-    modal.setAttribute('data-animation', params.animation); // Custom animation
-  } else {
-    modal.setAttribute('data-animation', 'pop');
-  }
-
-  /*
-   * Timer
-   */
-  modal.setAttribute('data-timer', params.timer);
-};
-
-exports['default'] = setParameters;
-module.exports = exports['default'];
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function (module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function () {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function get() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function get() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
@@ -12256,13 +11472,13 @@ Ex1.prototype = Object.create(_exercise2.default.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/
 	description: { value: "Find the word in the context:" },
-	customTemplateURL: { value: 'static/template/ex1.html' },
-	minNumber: { writable: true, value: 3 } });
+	customTemplateURL: { value: 'static/template/ex1.html' }
+});
 
 exports.default = Ex1;
 
 /***/ }),
-/* 20 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12415,12 +11631,12 @@ Ex2.prototype = Object.create(_exercise2.default.prototype, {
 	customTemplateURL: { value: 'static/template/ex2.html' },
 	btns: { writable: true, value: [1, 2, 3] },
 	optionNum: { value: 3 },
-	minNumber: { writable: true, value: 3 } });
+	minRequirement: { writable: true, value: 3 } });
 
 exports.default = Ex2;
 
 /***/ }),
-/* 21 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12658,12 +11874,12 @@ Ex3.prototype = Object.create(_exercise2.default.prototype, {
 	chosenButton: { writable: true, value: -1 }, // ID of currently selected button; -1 means no button is selected
 	correctAnswers: { writable: true, value: 0 }, // number of correct answers
 	hints: { writable: true, value: 0 }, // max number of possible hints is 1
-	minNumber: { writable: true, value: 3 } });
+	minRequirement: { writable: true, value: 3 } });
 
 exports.default = Ex3;
 
 /***/ }),
-/* 22 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12782,10 +11998,787 @@ Ex4.prototype = Object.create(_exercise2.default.prototype, {
 	constructor: Ex4,
 	/************************** SETTINGS ********************************/
 	description: { value: "Translate the word given in the context." },
-	customTemplateURL: { value: 'static/template/ex4.html' },
-	minNumber: { writable: true, value: 1 } });
+	customTemplateURL: { value: 'static/template/ex4.html' }
+});
 
 exports.default = Ex4;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _ex = __webpack_require__(13);
+
+var _ex2 = _interopRequireDefault(_ex);
+
+var _ex3 = __webpack_require__(14);
+
+var _ex4 = _interopRequireDefault(_ex3);
+
+var _ex5 = __webpack_require__(15);
+
+var _ex6 = _interopRequireDefault(_ex5);
+
+var _ex7 = __webpack_require__(16);
+
+var _ex8 = _interopRequireDefault(_ex7);
+
+var _progress_bar = __webpack_require__(24);
+
+var _progress_bar2 = _interopRequireDefault(_progress_bar);
+
+var _pubsub = __webpack_require__(8);
+
+var _pubsub2 = _interopRequireDefault(_pubsub);
+
+var _sweetalert = __webpack_require__(11);
+
+var _sweetalert2 = _interopRequireDefault(_sweetalert);
+
+var _session = __webpack_require__(3);
+
+var _session2 = _interopRequireDefault(_session);
+
+var _loader = __webpack_require__(9);
+
+var _util = __webpack_require__(2);
+
+var _util2 = _interopRequireDefault(_util);
+
+var _validator = __webpack_require__(25);
+
+var _validator2 = _interopRequireDefault(_validator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
+ *  @initialize it using: new Generator(args);
+ *  @param args is matrix of exercise name and number of bookmarks,
+ *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+ *  @customize it by using prototypal inheritance
+ **/
+
+var Generator = function Generator(set) {
+    this.init(set);
+};
+
+Generator.prototype = {
+    /************************** SETTINGS ********************************/
+    data: 0, //bookmakrs from zeeguu api
+    set: 0, //matrix for initialaizer
+    index: 0, //current index from set
+    startTime: 0,
+    session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
+    templateURL: 'static/template/exercise.html',
+
+    /**
+     *	Saves the common dom in chache
+     **/
+    cacheDom: function cacheDom() {},
+
+    /**
+     *	Generator initialaizer
+     **/
+    init: function init(set) {
+        this.set = set;
+        var _this = this;
+
+        this.validator = new _validator2.default(set);
+
+        // "bind" event
+        this.$eventFunc = function () {
+            _this.nextEx();
+        };
+        _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
+
+        //Loads the HTML general exercise template from static
+        _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
+            // Create the DOM and start the generator
+            _this.cacheDom();
+            _this.start();
+        });
+    },
+
+    restart: function restart() {
+        this.start();
+    },
+
+    /**
+     *	Call to load the data from API
+     **/
+    start: function start() {
+        this.size = _util2.default.calcSize(this.set, this.set.length);
+
+        var _this = this;
+
+        //Callback wait until the bookmarks are loaded
+        this.validator.getValidBookMarks(function (ldata) {
+            _this.data = ldata;
+            _progress_bar2.default.init(0, _this.validator.totalValidSize);
+            _this._constructor();
+            return ldata;
+        });
+    },
+
+    filterArray: function filterArray(bookmarksData) {
+        for (var i = 0; i < bookmarksData.length; i++) {
+            var tempIdx = indexOf(bookmarksData[i]);
+            if (tempIdx == -1 || tempIdx == i) {
+                continue;
+            }
+            bookmarksData.splice(i, 1);
+        }
+        console.log(bookmarksData);
+        return bookmarksData;
+    },
+
+    /**
+     *	The main constructor
+     **/
+    _constructor: function _constructor() {
+        this.index = 0;
+        this.startTime = new Date();
+        this.nextEx();
+    },
+
+    /**
+     *	Add Ex here
+     **/
+    nextEx: function nextEx() {
+        if (this.index === this.set.length) {
+            this.onExSetComplete();
+            return;
+        }
+        var ex = this.set[this.index][0];
+        var size = this.set[this.index][1];
+        var startingIndex = _util2.default.calcSize(this.set, this.index);
+
+        this.$currentEx = null;
+        delete this.$currentEx;
+        switch (ex) {
+            case 1:
+                this.$currentEx = new _ex2.default(this.data, startingIndex, size);
+                break;
+            case 2:
+                this.$currentEx = new _ex4.default(this.data, startingIndex, size);
+                break;
+            case 3:
+                this.$currentEx = new _ex6.default(this.data, startingIndex, size);
+                break;
+            case 4:
+                this.$currentEx = new _ex8.default(this.data, startingIndex, size);
+                break;
+        }
+
+        this.index++;
+    },
+    /**
+     *	Request the submit API
+     **/
+    submitResults: function submitResults() {
+        //TODO submit user feedback if any
+    },
+
+    /**
+     *	When the ex are done perform an action
+     **/
+    onExSetComplete: function onExSetComplete() {
+        var _this = this;
+        var redirect = _this.distractionShieldOriginalDestination();
+        _this.submitResults();
+        (0, _sweetalert2.default)({
+            title: "You rock!",
+            text: "That took less than " + _util2.default.calcTimeInMinutes(_this.startTime) + ". practice more?",
+            type: "success",
+            showCancelButton: true,
+            confirmButtonColor: "#7eb530",
+            confirmButtonText: "Let's do it!",
+            cancelButtonText: redirect != null ? "Take me away!" : "Go home!",
+            closeOnConfirm: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                _this.restart();
+                return;
+            }
+            _this.terminateGenerator();
+            if (redirect != null) {
+                window.location = redirect;
+            }
+        });
+    },
+
+    terminateGenerator: function terminateGenerator() {
+        _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
+        _pubsub2.default.emit('generatorCompleted');
+    },
+
+    /**
+     * Extraction of redirect url for Distraction Shield
+     **/
+    distractionShieldOriginalDestination: function distractionShieldOriginalDestination() {
+        var url = window.location.href;
+        var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)");
+        var results = regex.exec(url);
+        if (!results || !results[2]) return null;
+        var newUrl = decodeURIComponent(results[2].replace(/\+/g, " "));
+        if (newUrl.indexOf('?') > -1) {
+            newUrl += "&tds_exComplete=true";
+        } else {
+            newUrl += "?tds_exComplete=true";
+        }
+        return newUrl;
+    }
+};
+
+exports.default = Generator;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _colorLuminance = __webpack_require__(5);
+
+var _getModal = __webpack_require__(4);
+
+var _hasClass$isDescendant = __webpack_require__(1);
+
+/*
+ * User clicked on "Confirm"/"OK" or "Cancel"
+ */
+var handleButton = function handleButton(event, params, modal) {
+  var e = event || window.event;
+  var target = e.target || e.srcElement;
+
+  var targetedConfirm = target.className.indexOf('confirm') !== -1;
+  var targetedOverlay = target.className.indexOf('sweet-overlay') !== -1;
+  var modalIsVisible = _hasClass$isDescendant.hasClass(modal, 'visible');
+  var doneFunctionExists = params.doneFunction && modal.getAttribute('data-has-done-function') === 'true';
+
+  // Since the user can change the background-color of the confirm button programmatically,
+  // we must calculate what the color should be on hover/active
+  var normalColor, hoverColor, activeColor;
+  if (targetedConfirm && params.confirmButtonColor) {
+    normalColor = params.confirmButtonColor;
+    hoverColor = _colorLuminance.colorLuminance(normalColor, -0.04);
+    activeColor = _colorLuminance.colorLuminance(normalColor, -0.14);
+  }
+
+  function shouldSetConfirmButtonColor(color) {
+    if (targetedConfirm && params.confirmButtonColor) {
+      target.style.backgroundColor = color;
+    }
+  }
+
+  switch (e.type) {
+    case 'mouseover':
+      shouldSetConfirmButtonColor(hoverColor);
+      break;
+
+    case 'mouseout':
+      shouldSetConfirmButtonColor(normalColor);
+      break;
+
+    case 'mousedown':
+      shouldSetConfirmButtonColor(activeColor);
+      break;
+
+    case 'mouseup':
+      shouldSetConfirmButtonColor(hoverColor);
+      break;
+
+    case 'focus':
+      var $confirmButton = modal.querySelector('button.confirm');
+      var $cancelButton = modal.querySelector('button.cancel');
+
+      if (targetedConfirm) {
+        $cancelButton.style.boxShadow = 'none';
+      } else {
+        $confirmButton.style.boxShadow = 'none';
+      }
+      break;
+
+    case 'click':
+      var clickedOnModal = modal === target;
+      var clickedOnModalChild = _hasClass$isDescendant.isDescendant(modal, target);
+
+      // Ignore click outside if allowOutsideClick is false
+      if (!clickedOnModal && !clickedOnModalChild && modalIsVisible && !params.allowOutsideClick) {
+        break;
+      }
+
+      if (targetedConfirm && doneFunctionExists && modalIsVisible) {
+        handleConfirm(modal, params);
+      } else if (doneFunctionExists && modalIsVisible || targetedOverlay) {
+        handleCancel(modal, params);
+      } else if (_hasClass$isDescendant.isDescendant(modal, target) && target.tagName === 'BUTTON') {
+        sweetAlert.close();
+      }
+      break;
+  }
+};
+
+/*
+ *  User clicked on "Confirm"/"OK"
+ */
+var handleConfirm = function handleConfirm(modal, params) {
+  var callbackValue = true;
+
+  if (_hasClass$isDescendant.hasClass(modal, 'show-input')) {
+    callbackValue = modal.querySelector('input').value;
+
+    if (!callbackValue) {
+      callbackValue = '';
+    }
+  }
+
+  params.doneFunction(callbackValue);
+
+  if (params.closeOnConfirm) {
+    sweetAlert.close();
+  }
+  // Disable cancel and confirm button if the parameter is true
+  if (params.showLoaderOnConfirm) {
+    sweetAlert.disableButtons();
+  }
+};
+
+/*
+ *  User clicked on "Cancel"
+ */
+var handleCancel = function handleCancel(modal, params) {
+  // Check if callback function expects a parameter (to track cancel actions)
+  var functionAsStr = String(params.doneFunction).replace(/\s/g, '');
+  var functionHandlesCancel = functionAsStr.substring(0, 9) === 'function(' && functionAsStr.substring(9, 10) !== ')';
+
+  if (functionHandlesCancel) {
+    params.doneFunction(false);
+  }
+
+  if (params.closeOnCancel) {
+    sweetAlert.close();
+  }
+};
+
+exports['default'] = {
+  handleButton: handleButton,
+  handleConfirm: handleConfirm,
+  handleCancel: handleCancel
+};
+module.exports = exports['default'];
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _stopEventPropagation$fireClick = __webpack_require__(1);
+
+var _setFocusStyle = __webpack_require__(4);
+
+var handleKeyDown = function handleKeyDown(event, params, modal) {
+  var e = event || window.event;
+  var keyCode = e.keyCode || e.which;
+
+  var $okButton = modal.querySelector('button.confirm');
+  var $cancelButton = modal.querySelector('button.cancel');
+  var $modalButtons = modal.querySelectorAll('button[tabindex]');
+
+  if ([9, 13, 32, 27].indexOf(keyCode) === -1) {
+    // Don't do work on keys we don't care about.
+    return;
+  }
+
+  var $targetElement = e.target || e.srcElement;
+
+  var btnIndex = -1; // Find the button - note, this is a nodelist, not an array.
+  for (var i = 0; i < $modalButtons.length; i++) {
+    if ($targetElement === $modalButtons[i]) {
+      btnIndex = i;
+      break;
+    }
+  }
+
+  if (keyCode === 9) {
+    // TAB
+    if (btnIndex === -1) {
+      // No button focused. Jump to the confirm button.
+      $targetElement = $okButton;
+    } else {
+      // Cycle to the next button
+      if (btnIndex === $modalButtons.length - 1) {
+        $targetElement = $modalButtons[0];
+      } else {
+        $targetElement = $modalButtons[btnIndex + 1];
+      }
+    }
+
+    _stopEventPropagation$fireClick.stopEventPropagation(e);
+    $targetElement.focus();
+
+    if (params.confirmButtonColor) {
+      _setFocusStyle.setFocusStyle($targetElement, params.confirmButtonColor);
+    }
+  } else {
+    if (keyCode === 13) {
+      if ($targetElement.tagName === 'INPUT') {
+        $targetElement = $okButton;
+        $okButton.focus();
+      }
+
+      if (btnIndex === -1) {
+        // ENTER/SPACE clicked outside of a button.
+        $targetElement = $okButton;
+      } else {
+        // Do nothing - let the browser handle it.
+        $targetElement = undefined;
+      }
+    } else if (keyCode === 27 && params.allowEscapeKey === true) {
+      $targetElement = $cancelButton;
+      _stopEventPropagation$fireClick.fireClick($targetElement, e);
+    } else {
+      // Fallback - let the browser handle it.
+      $targetElement = undefined;
+    }
+  }
+};
+
+exports['default'] = handleKeyDown;
+module.exports = exports['default'];
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var injectedHTML =
+
+// Dark overlay
+"<div class=\"sweet-overlay\" tabIndex=\"-1\"></div>" +
+
+// Modal
+"<div class=\"sweet-alert\">" +
+
+// Error icon
+"<div class=\"sa-icon sa-error\">\n      <span class=\"sa-x-mark\">\n        <span class=\"sa-line sa-left\"></span>\n        <span class=\"sa-line sa-right\"></span>\n      </span>\n    </div>" +
+
+// Warning icon
+"<div class=\"sa-icon sa-warning\">\n      <span class=\"sa-body\"></span>\n      <span class=\"sa-dot\"></span>\n    </div>" +
+
+// Info icon
+"<div class=\"sa-icon sa-info\"></div>" +
+
+// Success icon
+"<div class=\"sa-icon sa-success\">\n      <span class=\"sa-line sa-tip\"></span>\n      <span class=\"sa-line sa-long\"></span>\n\n      <div class=\"sa-placeholder\"></div>\n      <div class=\"sa-fix\"></div>\n    </div>" + "<div class=\"sa-icon sa-custom\"></div>" +
+
+// Title, text and input
+"<h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type=\"text\" tabIndex=\"3\" />\n      <div class=\"sa-input-error\"></div>\n    </fieldset>" +
+
+// Input errors
+"<div class=\"sa-error-container\">\n      <div class=\"icon\">!</div>\n      <p>Not valid!</p>\n    </div>" +
+
+// Cancel and confirm buttons
+"<div class=\"sa-button-container\">\n      <button class=\"cancel\" tabIndex=\"2\">Cancel</button>\n      <div class=\"sa-confirm-button-container\">\n        <button class=\"confirm\" tabIndex=\"1\">OK</button>" +
+
+// Loading animation
+"<div class=\"la-ball-fall\">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div>" +
+
+// End of modal
+"</div>";
+
+exports["default"] = injectedHTML;
+module.exports = exports["default"];
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _isIE8 = __webpack_require__(5);
+
+var _getModal$getInput$setFocusStyle = __webpack_require__(4);
+
+var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
+
+var alertTypes = ['error', 'warning', 'info', 'success', 'input', 'prompt'];
+
+/*
+ * Set type, text and actions on modal
+ */
+var setParameters = function setParameters(params) {
+  var modal = _getModal$getInput$setFocusStyle.getModal();
+
+  var $title = modal.querySelector('h2');
+  var $text = modal.querySelector('p');
+  var $cancelBtn = modal.querySelector('button.cancel');
+  var $confirmBtn = modal.querySelector('button.confirm');
+
+  /*
+   * Title
+   */
+  $title.innerHTML = params.html ? params.title : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.title).split('\n').join('<br>');
+
+  /*
+   * Text
+   */
+  $text.innerHTML = params.html ? params.text : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.text || '').split('\n').join('<br>');
+  if (params.text) _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($text);
+
+  /*
+   * Custom class
+   */
+  if (params.customClass) {
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, params.customClass);
+    modal.setAttribute('data-custom-class', params.customClass);
+  } else {
+    // Find previously set classes and remove them
+    var customClass = modal.getAttribute('data-custom-class');
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.removeClass(modal, customClass);
+    modal.setAttribute('data-custom-class', '');
+  }
+
+  /*
+   * Icon
+   */
+  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide(modal.querySelectorAll('.sa-icon'));
+
+  if (params.type && !_isIE8.isIE8()) {
+    var _ret = function () {
+
+      var validType = false;
+
+      for (var i = 0; i < alertTypes.length; i++) {
+        if (params.type === alertTypes[i]) {
+          validType = true;
+          break;
+        }
+      }
+
+      if (!validType) {
+        logStr('Unknown alert type: ' + params.type);
+        return {
+          v: false
+        };
+      }
+
+      var typesWithIcons = ['success', 'error', 'warning', 'info'];
+      var $icon = undefined;
+
+      if (typesWithIcons.indexOf(params.type) !== -1) {
+        $icon = modal.querySelector('.sa-icon.' + 'sa-' + params.type);
+        _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($icon);
+      }
+
+      var $input = _getModal$getInput$setFocusStyle.getInput();
+
+      // Animate icon
+      switch (params.type) {
+
+        case 'success':
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animate');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-tip'), 'animateSuccessTip');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-long'), 'animateSuccessLong');
+          break;
+
+        case 'error':
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animateErrorIcon');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-x-mark'), 'animateXMark');
+          break;
+
+        case 'warning':
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'pulseWarning');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-body'), 'pulseWarningIns');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-dot'), 'pulseWarningIns');
+          break;
+
+        case 'input':
+        case 'prompt':
+          $input.setAttribute('type', params.inputType);
+          $input.value = params.inputValue;
+          $input.setAttribute('placeholder', params.inputPlaceholder);
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, 'show-input');
+          setTimeout(function () {
+            $input.focus();
+            $input.addEventListener('keyup', swal.resetInputError);
+          }, 400);
+          break;
+      }
+    }();
+
+    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === 'object') {
+      return _ret.v;
+    }
+  }
+
+  /*
+   * Custom image
+   */
+  if (params.imageUrl) {
+    var $customIcon = modal.querySelector('.sa-icon.sa-custom');
+
+    $customIcon.style.backgroundImage = 'url(' + params.imageUrl + ')';
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($customIcon);
+
+    var _imgWidth = 80;
+    var _imgHeight = 80;
+
+    if (params.imageSize) {
+      var dimensions = params.imageSize.toString().split('x');
+      var imgWidth = dimensions[0];
+      var imgHeight = dimensions[1];
+
+      if (!imgWidth || !imgHeight) {
+        logStr('Parameter imageSize expects value with format WIDTHxHEIGHT, got ' + params.imageSize);
+      } else {
+        _imgWidth = imgWidth;
+        _imgHeight = imgHeight;
+      }
+    }
+
+    $customIcon.setAttribute('style', $customIcon.getAttribute('style') + 'width:' + _imgWidth + 'px; height:' + _imgHeight + 'px');
+  }
+
+  /*
+   * Show cancel button?
+   */
+  modal.setAttribute('data-has-cancel-button', params.showCancelButton);
+  if (params.showCancelButton) {
+    $cancelBtn.style.display = 'inline-block';
+  } else {
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($cancelBtn);
+  }
+
+  /*
+   * Show confirm button?
+   */
+  modal.setAttribute('data-has-confirm-button', params.showConfirmButton);
+  if (params.showConfirmButton) {
+    $confirmBtn.style.display = 'inline-block';
+  } else {
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($confirmBtn);
+  }
+
+  /*
+   * Custom text on cancel/confirm buttons
+   */
+  if (params.cancelButtonText) {
+    $cancelBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.cancelButtonText);
+  }
+  if (params.confirmButtonText) {
+    $confirmBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.confirmButtonText);
+  }
+
+  /*
+   * Custom color on confirm button
+   */
+  if (params.confirmButtonColor) {
+    // Set confirm button to selected background color
+    $confirmBtn.style.backgroundColor = params.confirmButtonColor;
+
+    // Set the confirm button color to the loading ring
+    $confirmBtn.style.borderLeftColor = params.confirmLoadingButtonColor;
+    $confirmBtn.style.borderRightColor = params.confirmLoadingButtonColor;
+
+    // Set box-shadow to default focused button
+    _getModal$getInput$setFocusStyle.setFocusStyle($confirmBtn, params.confirmButtonColor);
+  }
+
+  /*
+   * Allow outside click
+   */
+  modal.setAttribute('data-allow-outside-click', params.allowOutsideClick);
+
+  /*
+   * Callback function
+   */
+  var hasDoneFunction = params.doneFunction ? true : false;
+  modal.setAttribute('data-has-done-function', hasDoneFunction);
+
+  /*
+   * Animation
+   */
+  if (!params.animation) {
+    modal.setAttribute('data-animation', 'none');
+  } else if (typeof params.animation === 'string') {
+    modal.setAttribute('data-animation', params.animation); // Custom animation
+  } else {
+    modal.setAttribute('data-animation', 'pop');
+  }
+
+  /*
+   * Timer
+   */
+  modal.setAttribute('data-timer', params.timer);
+};
+
+exports['default'] = setParameters;
+module.exports = exports['default'];
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function () {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function get() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function get() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
 
 /***/ }),
 /* 23 */
@@ -12961,6 +12954,22 @@ var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
 
+var _ex = __webpack_require__(13);
+
+var _ex2 = _interopRequireDefault(_ex);
+
+var _ex3 = __webpack_require__(14);
+
+var _ex4 = _interopRequireDefault(_ex3);
+
+var _ex5 = __webpack_require__(15);
+
+var _ex6 = _interopRequireDefault(_ex5);
+
+var _ex7 = __webpack_require__(16);
+
+var _ex8 = _interopRequireDefault(_ex7);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12975,14 +12984,28 @@ var Validator = function () {
         this.data = 0;
         this.session = _session2.default.getSession();
         this.totalValidSize = 0;
+        //Cache the imports for later reference
+        this.cacheExerciseImports();
     }
 
     /**
-    *	Ajax get request to the Zeeguu API to get new bookmarks
-    **/
+     * The function caches imports in local scope for later to be referenced by a string
+     * */
 
 
     _createClass(Validator, [{
+        key: 'cacheExerciseImports',
+        value: function cacheExerciseImports() {
+            this.Ex1 = _ex2.default;
+            this.Ex2 = _ex4.default;
+            this.Ex3 = _ex6.default;
+            this.Ex4 = _ex8.default;
+        }
+        /**
+        *	Ajax get request to the Zeeguu API to get new bookmarks
+        **/
+
+    }, {
         key: 'getBookmarks',
         value: function getBookmarks(totalSize) {
             var _this = this;
@@ -13015,15 +13038,6 @@ var Validator = function () {
             console.log(this.set);
             var totalSize = _util2.default.calcSize(this.set, this.set.length);
             this.totalValidSize = totalSize;
-
-            /*this.getBookmarks(totalSize,function(ldata) {
-                _this.data = (ldata);
-                console.log("Pass1");
-                console.log(ldata);
-                _this.validateSet(totalSize);
-                callback(ldata);
-            });*/
-
             _jquery2.default.when(this.getBookmarks(totalSize)).done(function (ldata) {
                 _this.data = ldata;
                 console.log("Pass1");
@@ -13035,6 +13049,10 @@ var Validator = function () {
     }, {
         key: 'validateSet',
         value: function validateSet(totalSize) {
+            this.isProperEx(1, 2);
+            this.isProperEx(2, 2);
+            this.isProperEx(3, 2);
+            this.isProperEx(4, 2);
             //Main check
             if (this.data.length == 0) {
                 /** bookmarks.length == 0, no-bookmarks page*/
@@ -13047,6 +13065,11 @@ var Validator = function () {
                 /** bookmarks.length < set.length, gen the ex*/
                 alert("its all good" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
             }
+        }
+    }, {
+        key: 'isProperEx',
+        value: function isProperEx(exNum, exSize) {
+            console.log("the min for Ex" + exNum + " is:" + this['Ex' + exNum].prototype.minRequirement);
         }
     }, {
         key: 'noBookmarkPage',
@@ -13073,7 +13096,7 @@ exports.default = Validator;
 "use strict";
 
 
-var _generator = __webpack_require__(13);
+var _generator = __webpack_require__(17);
 
 var _generator2 = _interopRequireDefault(_generator);
 
