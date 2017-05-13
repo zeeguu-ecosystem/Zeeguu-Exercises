@@ -30,13 +30,17 @@ class Validator{
         let _this = this;
         var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS + totalSize + "?session=" + _this.session;
         return $.ajax({
+            beforeSend: function(){
+                _this.loadingAnimation.loadingAnimation(true);
+            },
+            complete: function(){
+                _this.loadingAnimation.loadingAnimation(false);
+            },
             type: 'GET',
             dataType: 'json',
             url: address,
             data: this.data,
-            success: function (data) {
-            },
-            async: false
+            async: true,
         });
     }
     /**
@@ -44,31 +48,33 @@ class Validator{
      *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
      *  @return matrix of exercises similar to its input
      * */
-    getValidBookMarks(){
+    getValidBookMarks(callback){
         let _this = this;
         //Calculate the size
         console.log(this.set);
         let totalSize = Util.calcSize(this.set,this.set.length);
-
-        this.loadingAnimation.loadingAnimation(true);
+        this.totalValidSize = totalSize;
         $.when(this.getBookmarks(totalSize)).done(function (ldata) {
-            _this.loadingAnimation.loadingAnimation(false);
             _this.data = (ldata);
+            console.log("Pass1");
+            _this.validateSet(totalSize);
+            callback(ldata);
         });
+        console.log("Pass2");
+    }
+
+    validateSet(totalSize){
         //Main check
         if(this.data.length == 0){/** bookmarks.length == 0, no-bookmarks page*/
             //TODO no bookmarks page
-            //alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
+            alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
         }
         else if(this.data.length < totalSize){/** bookmarks.length < set.length, fit the ex*/
-            //alert("does not fit" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
+            alert("does not fit" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
         }
         else{/** bookmarks.length < set.length, gen the ex*/
-            //alert("its all good" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
+            alert("its all good" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
         }
-
-        this.totalValidSize = totalSize;
-        return this.data;
     }
 
     noBookmarkPage(){

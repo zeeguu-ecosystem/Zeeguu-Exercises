@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)(module)))
 
 /***/ }),
 /* 1 */
@@ -10289,7 +10289,7 @@ var _defaultParams2 = _interopRequireWildcard(_defaultParams);
  * Add modal + overlay to DOM
  */
 
-var _injectedHTML = __webpack_require__(17);
+var _injectedHTML = __webpack_require__(16);
 
 var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
 
@@ -10880,7 +10880,7 @@ exports.default = events;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Requests = exports.Loader = undefined;
+exports.Loader = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by Martin on 5/10/2017.
@@ -10957,17 +10957,7 @@ var Loader = function () {
     return Loader;
 }();
 
-/**
- * A class responsible for API requests
- * */
-
-
-var Requests = function Requests() {
-    _classCallCheck(this, Requests);
-};
-
 exports.Loader = Loader;
-exports.Requests = Requests;
 
 /***/ }),
 /* 10 */
@@ -11047,9 +11037,9 @@ var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$r
 
 // Handle button events and keyboard events
 
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(15);
+var _handleButton$handleConfirm$handleCancel = __webpack_require__(14);
 
-var _handleKeyDown = __webpack_require__(16);
+var _handleKeyDown = __webpack_require__(15);
 
 var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
@@ -11059,7 +11049,7 @@ var _defaultParams = __webpack_require__(10);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
-var _setParameters = __webpack_require__(18);
+var _setParameters = __webpack_require__(17);
 
 var _setParameters2 = _interopRequireWildcard(_setParameters);
 
@@ -11401,98 +11391,23 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
-
-
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var animationInstance = null;
-
-var LoadingAnimation = function () {
-    function LoadingAnimation() {
-        _classCallCheck(this, LoadingAnimation);
-
-        if (animationInstance) {
-            return animationInstance;
-        }
-        /** Class parameters*/
-        this.$loader = null;
-        this.$content = null;
-        this.updateCache();
-    }
-    /**
-     * Update/save the cache of the dom
-     * */
-
-
-    _createClass(LoadingAnimation, [{
-        key: 'updateCache',
-        value: function updateCache() {
-            this.$loader = (0, _jquery2.default)('#loader');
-            this.$content = (0, _jquery2.default)('#main-content');
-        }
-    }, {
-        key: 'loadingAnimation',
-        value: function loadingAnimation(activate) {
-            //If cache is not available
-            if (this.$loader == null || this.$content == null) {
-                this.updateCache();
-            }
-            //Turn on the animation
-            if (activate === true) {
-                this.$content.addClass('hide');
-                this.$loader.removeClass('hide');
-            } else {
-                //Turn off the animation unhide the content
-                this.$content.removeClass('hide');
-                this.$loader.addClass('hide');
-            }
-        }
-    }]);
-
-    return LoadingAnimation;
-}();
-
-exports.default = LoadingAnimation;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _ex = __webpack_require__(20);
+var _ex = __webpack_require__(19);
 
 var _ex2 = _interopRequireDefault(_ex);
 
-var _ex3 = __webpack_require__(21);
+var _ex3 = __webpack_require__(20);
 
 var _ex4 = _interopRequireDefault(_ex3);
 
-var _ex5 = __webpack_require__(22);
+var _ex5 = __webpack_require__(21);
 
 var _ex6 = _interopRequireDefault(_ex5);
 
-var _ex7 = __webpack_require__(23);
+var _ex7 = __webpack_require__(22);
 
 var _ex8 = _interopRequireDefault(_ex7);
 
@@ -11581,10 +11496,23 @@ Generator.prototype = {
      **/
     start: function start() {
         this.size = _util2.default.calcSize(this.set, this.set.length);
-        this.data = this.validator.getValidBookMarks();
+
+        var _this = this;
+
+        this.validator.getValidBookMarks(function (ldata) {
+            _this.data = ldata;
+            _progress_bar2.default.init(0, _this.validator.totalValidSize);
+            _this._constructor();
+            console.log("pass3");
+            return ldata;
+        });
+
+        console.log("pass4");
+
+        /*this.data = this.validator.getValidBookMarks();
         //Init the Progress bar with initialized bookmarks
-        _progress_bar2.default.init(0, this.validator.totalValidSize);
-        this._constructor();
+        ProgressBar.init(0, this.validator.totalValidSize);
+        this._constructor();*/
     },
 
     filterArray: function filterArray(bookmarksData) {
@@ -11700,7 +11628,7 @@ Generator.prototype = {
 exports.default = Generator;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11841,7 +11769,7 @@ exports['default'] = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11926,7 +11854,7 @@ exports['default'] = handleKeyDown;
 module.exports = exports['default'];
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11974,7 +11902,7 @@ exports["default"] = injectedHTML;
 module.exports = exports["default"];
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12207,7 +12135,7 @@ exports['default'] = setParameters;
 module.exports = exports['default'];
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12237,7 +12165,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12334,7 +12262,7 @@ Ex1.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex1;
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12492,7 +12420,7 @@ Ex2.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex2;
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12735,7 +12663,7 @@ Ex3.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex3;
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12860,6 +12788,81 @@ Ex4.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex4;
 
 /***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var animationInstance = null;
+
+var LoadingAnimation = function () {
+    function LoadingAnimation() {
+        _classCallCheck(this, LoadingAnimation);
+
+        if (animationInstance) {
+            return animationInstance;
+        }
+        /** Class parameters*/
+        this.$loader = null;
+        this.$content = null;
+        this.updateCache();
+    }
+    /**
+     * Update/save the cache of the dom
+     * */
+
+
+    _createClass(LoadingAnimation, [{
+        key: 'updateCache',
+        value: function updateCache() {
+            this.$loader = (0, _jquery2.default)('#loader');
+            this.$content = (0, _jquery2.default)('#main-content');
+        }
+    }, {
+        key: 'loadingAnimation',
+        value: function loadingAnimation(activate) {
+            //If cache is not available
+            if (this.$loader == null || this.$content == null) {
+                this.updateCache();
+            }
+            //Turn on the animation
+            if (activate === true) {
+                this.$content.addClass('hide');
+                this.$loader.removeClass('hide');
+            } else {
+                //Turn off the animation unhide the content
+                this.$content.removeClass('hide');
+                this.$loader.addClass('hide');
+            }
+        }
+    }]);
+
+    return LoadingAnimation;
+}();
+
+exports.default = LoadingAnimation;
+
+/***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12938,7 +12941,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  @param  example: [[2,3],[1,3],[3,3],[4,3],[1,3]]
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       **/
 
-var _loading_animation = __webpack_require__(13);
+var _loading_animation = __webpack_require__(23);
 
 var _loading_animation2 = _interopRequireDefault(_loading_animation);
 
@@ -12985,12 +12988,17 @@ var Validator = function () {
             var _this = this;
             var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + totalSize + "?session=" + _this.session;
             return _jquery2.default.ajax({
+                beforeSend: function beforeSend() {
+                    _this.loadingAnimation.loadingAnimation(true);
+                },
+                complete: function complete() {
+                    _this.loadingAnimation.loadingAnimation(false);
+                },
                 type: 'GET',
                 dataType: 'json',
                 url: address,
                 data: this.data,
-                success: function success(data) {},
-                async: false
+                async: true
             });
         }
         /**
@@ -13001,29 +13009,44 @@ var Validator = function () {
 
     }, {
         key: 'getValidBookMarks',
-        value: function getValidBookMarks() {
+        value: function getValidBookMarks(callback) {
             var _this = this;
             //Calculate the size
             console.log(this.set);
             var totalSize = _util2.default.calcSize(this.set, this.set.length);
-
-            this.loadingAnimation.loadingAnimation(true);
-            _jquery2.default.when(this.getBookmarks(totalSize)).done(function (ldata) {
-                _this.loadingAnimation.loadingAnimation(false);
-                _this.data = ldata;
-            });
-            //Main check
-            if (this.data.length == 0) {/** bookmarks.length == 0, no-bookmarks page*/
-                //TODO no bookmarks page
-                //alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
-            } else if (this.data.length < totalSize) {/** bookmarks.length < set.length, fit the ex*/
-                //alert("does not fit" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
-            } else {/** bookmarks.length < set.length, gen the ex*/
-                    //alert("its all good" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
-                }
-
             this.totalValidSize = totalSize;
-            return this.data;
+
+            /*this.getBookmarks(totalSize,function(ldata) {
+                _this.data = (ldata);
+                console.log("Pass1");
+                console.log(ldata);
+                _this.validateSet(totalSize);
+                callback(ldata);
+            });*/
+
+            _jquery2.default.when(this.getBookmarks(totalSize)).done(function (ldata) {
+                _this.data = ldata;
+                console.log("Pass1");
+                _this.validateSet(totalSize);
+                callback(ldata);
+            });
+            console.log("Pass2");
+        }
+    }, {
+        key: 'validateSet',
+        value: function validateSet(totalSize) {
+            //Main check
+            if (this.data.length == 0) {
+                /** bookmarks.length == 0, no-bookmarks page*/
+                //TODO no bookmarks page
+                alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
+            } else if (this.data.length < totalSize) {
+                /** bookmarks.length < set.length, fit the ex*/
+                alert("does not fit" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
+            } else {
+                /** bookmarks.length < set.length, gen the ex*/
+                alert("its all good" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
+            }
         }
     }, {
         key: 'noBookmarkPage',
@@ -13048,59 +13071,6 @@ exports.default = Validator;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/12/2017.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _loading_animation = __webpack_require__(13);
-
-var _loading_animation2 = _interopRequireDefault(_loading_animation);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Environment = function () {
-    function Environment() {
-        _classCallCheck(this, Environment);
-    }
-
-    _createClass(Environment, null, [{
-        key: 'setAjaxEnviromentFunctions',
-        value: function setAjaxEnviromentFunctions() {
-            var loadingAnimation = new _loading_animation2.default();
-            var $_document = (0, _jquery2.default)(document);
-
-            $_document.ajaxStart(function () {
-                loadingAnimation.loadingAnimation(true);
-            });
-
-            $_document.ajaxComplete(function () {
-                loadingAnimation.loadingAnimation(false);
-            });
-        }
-    }]);
-
-    return Environment;
-}();
-
-exports.default = Environment;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
@@ -13108,7 +13078,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _generator = __webpack_require__(14);
+var _generator = __webpack_require__(13);
 
 var _generator2 = _interopRequireDefault(_generator);
 
@@ -13116,7 +13086,7 @@ var _pubsub = __webpack_require__(8);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _mustache = __webpack_require__(28);
+var _mustache = __webpack_require__(27);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
@@ -13244,7 +13214,7 @@ Home.prototype = {
 exports.default = Home;
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13864,25 +13834,22 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _home = __webpack_require__(27);
+var _home = __webpack_require__(26);
 
 var _home2 = _interopRequireDefault(_home);
-
-var _environment = __webpack_require__(26);
-
-var _environment2 = _interopRequireDefault(_environment);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
-    _environment2.default.setAjaxEnviromentFunctions();
-    window.onload = new _home2.default();
+	window.onload = function () {
+		new _home2.default();
+	};
 })();
 
 /***/ })

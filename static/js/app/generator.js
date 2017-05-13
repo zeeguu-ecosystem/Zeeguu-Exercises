@@ -33,7 +33,6 @@ Generator.prototype = {
     session: Session.getSession()  , //Example of session id 34563456 or 11010001
     templateURL: 'static/template/exercise.html',
 
-
     /**
      *	Saves the common dom in chache
      **/
@@ -71,10 +70,16 @@ Generator.prototype = {
     start: function ()
     {
         this.size = Util.calcSize(this.set,this.set.length);
-        this.data = this.validator.getValidBookMarks();
-        //Init the Progress bar with initialized bookmarks
-        ProgressBar.init(0, this.validator.totalValidSize);
-        this._constructor();
+
+        let _this= this;
+
+        //Callback wait until the bookmarks are loaded
+        this.validator.getValidBookMarks(function(ldata) {
+            _this.data = (ldata);
+            ProgressBar.init(0, _this.validator.totalValidSize);
+            _this._constructor();
+            return ldata;
+        });
     },
 
     filterArray: function(bookmarksData)

@@ -45,32 +45,6 @@ class Loader {
         });
     }
 }
-
-/**
- * A class responsible for API requests
- * */
-class Requests{
-    /**
-     *	Ajax get request to the Zeeguu API to get new bookmarks
-     **/
-   /* static getBookmarks(){
-        var _this = this;
-        this.loadingAnimation(true);
-        var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS+this.size+"?session="+this.session;
-        return $.ajax({
-            type: 'GET',
-            dataType: 'json',
-            url: address,
-            data: this.data,
-            success: function(data) {
-                _this.loadingAnimation(false);
-            },
-            async: true
-        });
-    }*/
-}
-
 export {
     Loader,
-    Requests
 }
