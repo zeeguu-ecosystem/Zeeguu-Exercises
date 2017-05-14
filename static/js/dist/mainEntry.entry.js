@@ -13257,9 +13257,8 @@ Home.prototype = {
 	start: function start() {
 		var _this = this;
 		_jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.homeTemplateURL, (0, _jquery2.default)("#main-content")), _loader.Loader.loadTemplate(this.cardTemplateURL)).done(function (homeData, cardData) {
-			console.log(homeData);
-			console.log(cardData);
-			_this.cardTemplate = cardData.toString();
+
+			_this.cardTemplate = cardData[0]; //cardData[0] string html
 			// Create the DOM and start the generator
 			_this.cacheDom();
 			_this.generateEx();

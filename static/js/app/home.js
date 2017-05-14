@@ -62,9 +62,8 @@ Home.prototype = {
 		var _this = this;
         $.when(Loader.loadTemplateIntoElem(_this.homeTemplateURL,$("#main-content")),
 			   Loader.loadTemplate(this.cardTemplateURL)).done(function(homeData,cardData){
-			console.log(homeData.toString());
-            console.log(cardData.toString());
-			_this.cardTemplate = cardData.toString();
+
+			_this.cardTemplate = cardData[0];//cardData[0] string html
             // Create the DOM and start the generator
             _this.cacheDom();
             _this.generateEx();
