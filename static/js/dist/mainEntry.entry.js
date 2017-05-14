@@ -13523,7 +13523,7 @@ EmptyPage.prototype = {
         icon: 'static/img/illustrations/ntd_cloud.png',
         title: "No Bookmarks Yet",
         info: 'You can get bookmarks when you read articles.',
-        btnText: 'LET\'S READ',
+        btnText: 'Let\'s Read',
         btnLink: 'https://www.zeeguu.unibe.ch/reading'
     },
     emptyTemplate: 0,
