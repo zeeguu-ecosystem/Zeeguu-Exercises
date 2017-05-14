@@ -29,7 +29,7 @@ Generator.prototype = {
     data: 0,		//bookmakrs from zeeguu api
     set: 0,			//matrix for initialaizer
     index: 0,		//current index from set
-    startTime: 0,
+    startTime: new Date(),
     session: Session.getSession()  , //Example of session id 34563456 or 11010001
     templateURL: 'static/template/exercise.html',
 
@@ -70,18 +70,20 @@ Generator.prototype = {
     start: function ()
     {
         this.size = Util.calcSize(this.set,this.set.length);
-
         let _this= this;
-
         //Callback wait until the bookmarks are loaded
         this.validator.getValidBookMarks(function(ldata) {
             _this.data = (ldata);
             console.log(_this.set);
             _this.set = _this.validator.validSet;
-            //Terminate if not enough bookmarks
-            if(_this.set ==null || _this.set <=0) return;
+            //Terminate generator if not enough bookmarks
+            if(_this.set ==null || _this.set <=0) {
+                _this.terminateGenerator();
+                return;
+            }
 
             console.log(_this.set);
+            console.log('size: ' + _this.validator.validSize);
             ProgressBar.init(0, _this.validator.validSize);
             _this._constructor();
         });
@@ -114,7 +116,8 @@ Generator.prototype = {
      *	Add Ex here
      **/
     nextEx: function(){
-        if(this.index === this.set.length){
+        console.log("index of ex: " + this.index + "length of ex: " + this.set.length);
+        if(this.index >= this.set.length){
             this.onExSetComplete();
             return;
         }

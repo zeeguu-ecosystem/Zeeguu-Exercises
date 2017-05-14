@@ -10844,7 +10844,7 @@ exports.default = {
     ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '11010001', //00926044 34563456 11010001
+    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
@@ -12072,7 +12072,7 @@ Generator.prototype = {
     data: 0, //bookmakrs from zeeguu api
     set: 0, //matrix for initialaizer
     index: 0, //current index from set
-    startTime: 0,
+    startTime: new Date(),
     session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
     templateURL: 'static/template/exercise.html',
 
@@ -12113,18 +12113,20 @@ Generator.prototype = {
      **/
     start: function start() {
         this.size = _util2.default.calcSize(this.set, this.set.length);
-
         var _this = this;
-
         //Callback wait until the bookmarks are loaded
         this.validator.getValidBookMarks(function (ldata) {
             _this.data = ldata;
             console.log(_this.set);
             _this.set = _this.validator.validSet;
-            //Terminate if not enough bookmarks
-            if (_this.set == null || _this.set <= 0) return;
+            //Terminate generator if not enough bookmarks
+            if (_this.set == null || _this.set <= 0) {
+                _this.terminateGenerator();
+                return;
+            }
 
             console.log(_this.set);
+            console.log('size: ' + _this.validator.validSize);
             _progress_bar2.default.init(0, _this.validator.validSize);
             _this._constructor();
         });
@@ -12155,7 +12157,8 @@ Generator.prototype = {
      *	Add Ex here
      **/
     nextEx: function nextEx() {
-        if (this.index === this.set.length) {
+        console.log("index of ex: " + this.index + "length of ex: " + this.set.length);
+        if (this.index >= this.set.length) {
             this.onExSetComplete();
             return;
         }
@@ -13098,11 +13101,9 @@ var Validator = function () {
             while (bookmarkLength > 0) {
                 var delta = bookmarkLength - set[setIndex][1];
                 if (delta >= 0) {
-                    console.log('gothere if');
                     newSet.push(set[setIndex]);
                 } else if (this.isProperEx(set[setIndex][0], bookmarkLength)) {
                     //delta < 0 && the ex requirement is met
-                    console.log('gothere elseif');
                     newSet.push([set[setIndex][0], bookmarkLength]);
                 }
                 bookmarkLength = delta;
@@ -13121,7 +13122,6 @@ var Validator = function () {
         key: 'noBookmarkPage',
         value: function noBookmarkPage() {
             console.log('No bookmarks, bksLen: ' + this.data.length);
-            _pubsub2.default.emit('generatorCompleted');
             return [];
             //TODO implement no bookmarks page
         }
@@ -13289,6 +13289,7 @@ Home.prototype = {
 
 	/**
  * Parse string into 2D array for generator arguments
+  * TODO can be overriten by eval
  */
 	exArrayParser: function exArrayParser(stringArray) {
 		var arr = stringArray.split(",").map(function (x) {

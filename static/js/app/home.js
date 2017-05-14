@@ -105,6 +105,7 @@ Home.prototype = {
 	
 	/**
 	* Parse string into 2D array for generator arguments
+	 * TODO can be overriten by eval
 	*/
 	exArrayParser: function(stringArray){		
 		var arr = stringArray.split(",").map(function(x){return parseInt(x)});

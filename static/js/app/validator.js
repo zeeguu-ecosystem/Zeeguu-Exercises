@@ -120,10 +120,8 @@ class Validator{
         while(bookmarkLength>0){
             let delta = bookmarkLength - set[setIndex][1];
             if(delta >=0){
-                console.log('gothere if');
                 newSet.push(set[setIndex]);
             }else if(this.isProperEx(set[setIndex][0],bookmarkLength)){//delta < 0 && the ex requirement is met
-                console.log('gothere elseif');
                 newSet.push([set[setIndex][0],bookmarkLength]);
             }
             bookmarkLength = delta;
@@ -139,7 +137,6 @@ class Validator{
      * */
     noBookmarkPage(){
         console.log('No bookmarks, bksLen: '+ this.data.length);
-        events.emit('generatorCompleted');
         return [];
         //TODO implement no bookmarks page
     }
