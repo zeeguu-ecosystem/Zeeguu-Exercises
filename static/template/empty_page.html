@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Not Enough Bookmarks</title>
-</head>
-<body>
-<span>No bookmarks</span>>
-</body>
-</html>
+<!--Card template using Mustache.js-->
+
+<!--icon: 'static/img/icons/search-engine.svg',
+title: "No Bookmarks Yet",
+info: 'You can get bookmarks when you read articles',
+btnText: 'Let\'s read',
+btnLink: 'https://www.zeeguu.unibe.ch/reading',-->
+
+<div class = "empty-page-content">
+    <div class="col-xs-12 col-sm-12 col-md-12" id = "emptyPage">
+        <div class = "row empty-page-container">
+            <div class="empty-page-content-img" style = "background-image: url({{icon}});" ></div>
+            <span class = "empty-page-title h3">{{title}}</span>
+            <span class = "empty-page-info h5">{{info}}</span>
+            <a type="button" class="btn btn-primary" href = "{{btnLink}}">{{btnText}}</a>
+        </div>
+    </div>
+</div>

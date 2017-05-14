@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)(module)))
 
 /***/ }),
 /* 1 */
@@ -10289,7 +10289,7 @@ var _defaultParams2 = _interopRequireWildcard(_defaultParams);
  * Add modal + overlay to DOM
  */
 
-var _injectedHTML = __webpack_require__(21);
+var _injectedHTML = __webpack_require__(22);
 
 var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
 
@@ -10535,7 +10535,7 @@ var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _pubsub = __webpack_require__(8);
+var _pubsub = __webpack_require__(9);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -10551,7 +10551,7 @@ var _session = __webpack_require__(3);
 
 var _session2 = _interopRequireDefault(_session);
 
-var _loader = __webpack_require__(9);
+var _loader = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10831,49 +10831,6 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var events = function () {
-    var events = {};
-
-    function on(eventName, fn) {
-        events[eventName] = events[eventName] || [];
-        events[eventName].push(fn);
-    }
-    function off(eventName, fn) {
-        if (events[eventName]) {
-            for (var i = 0; i < events[eventName].length; i++) {
-                if (events[eventName][i] === fn) {
-                    events[eventName].splice(i, 1);
-                    break;
-                }
-            }
-        }
-    }
-    function emit(eventName, data) {
-        if (events[eventName]) {
-            events[eventName].forEach(function (fn) {
-                fn(data);
-            });
-        }
-    }
-    return {
-        on: on,
-        off: off,
-        emit: emit
-    };
-}();
-
-exports.default = events;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 exports.Loader = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
@@ -10936,14 +10893,7 @@ var Loader = function () {
             var append = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
             var asyncQuery = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
 
-            var loadingAnimation = new _loading_animation2.default();
             return _jquery2.default.ajax({
-                beforeSend: function beforeSend() {
-                    loadingAnimation.loadingAnimation(true);
-                },
-                complete: function complete() {
-                    loadingAnimation.loadingAnimation(false);
-                },
                 type: 'GET',
                 dataType: 'html',
                 url: tempUrl,
@@ -10964,6 +10914,49 @@ var Loader = function () {
 }();
 
 exports.Loader = Loader;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var events = function () {
+    var events = {};
+
+    function on(eventName, fn) {
+        events[eventName] = events[eventName] || [];
+        events[eventName].push(fn);
+    }
+    function off(eventName, fn) {
+        if (events[eventName]) {
+            for (var i = 0; i < events[eventName].length; i++) {
+                if (events[eventName][i] === fn) {
+                    events[eventName].splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+    function emit(eventName, data) {
+        if (events[eventName]) {
+            events[eventName].forEach(function (fn) {
+                fn(data);
+            });
+        }
+    }
+    return {
+        on: on,
+        off: off,
+        emit: emit
+    };
+}();
+
+exports.default = events;
 
 /***/ }),
 /* 10 */
@@ -11043,9 +11036,9 @@ var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$r
 
 // Handle button events and keyboard events
 
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(19);
+var _handleButton$handleConfirm$handleCancel = __webpack_require__(20);
 
-var _handleKeyDown = __webpack_require__(20);
+var _handleKeyDown = __webpack_require__(21);
 
 var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
@@ -11055,7 +11048,7 @@ var _defaultParams = __webpack_require__(10);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
-var _setParameters = __webpack_require__(22);
+var _setParameters = __webpack_require__(23);
 
 var _setParameters2 = _interopRequireWildcard(_setParameters);
 
@@ -12089,1252 +12082,6 @@ exports.default = LoadingAnimation;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _ex = __webpack_require__(13);
-
-var _ex2 = _interopRequireDefault(_ex);
-
-var _ex3 = __webpack_require__(14);
-
-var _ex4 = _interopRequireDefault(_ex3);
-
-var _ex5 = __webpack_require__(15);
-
-var _ex6 = _interopRequireDefault(_ex5);
-
-var _ex7 = __webpack_require__(16);
-
-var _ex8 = _interopRequireDefault(_ex7);
-
-var _progress_bar = __webpack_require__(24);
-
-var _progress_bar2 = _interopRequireDefault(_progress_bar);
-
-var _pubsub = __webpack_require__(8);
-
-var _pubsub2 = _interopRequireDefault(_pubsub);
-
-var _sweetalert = __webpack_require__(11);
-
-var _sweetalert2 = _interopRequireDefault(_sweetalert);
-
-var _session = __webpack_require__(3);
-
-var _session2 = _interopRequireDefault(_session);
-
-var _loader = __webpack_require__(9);
-
-var _util = __webpack_require__(2);
-
-var _util2 = _interopRequireDefault(_util);
-
-var _validator = __webpack_require__(25);
-
-var _validator2 = _interopRequireDefault(_validator);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
- *  @initialize it using: new Generator(args);
- *  @param args is matrix of exercise name and number of bookmarks,
- *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
- *  @customize it by using prototypal inheritance
- **/
-
-var Generator = function Generator(set) {
-    this.init(set);
-};
-
-Generator.prototype = {
-    /************************** SETTINGS ********************************/
-    data: 0, //bookmakrs from zeeguu api
-    set: 0, //matrix for initialaizer
-    index: 0, //current index from set
-    startTime: new Date(),
-    session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
-    templateURL: 'static/template/exercise.html',
-
-    /**
-     *	Saves the common dom in chache
-     **/
-    cacheDom: function cacheDom() {},
-
-    /**
-     *	Generator initialaizer
-     **/
-    init: function init(set) {
-        this.set = set;
-        var _this = this;
-
-        this.validator = new _validator2.default(set);
-
-        // "bind" event
-        this.$eventFunc = function () {
-            _this.nextEx();
-        };
-        _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
-
-        //Loads the HTML general exercise template from static
-        _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
-            // Create the DOM and start the generator
-            _this.cacheDom();
-            _this.start();
-        });
-    },
-
-    restart: function restart() {
-        this.start();
-    },
-
-    /**
-     *	Call to load the data from API
-     **/
-    start: function start() {
-        this.size = _util2.default.calcSize(this.set, this.set.length);
-        var _this = this;
-        //Callback wait until the bookmarks are loaded
-        this.validator.getValidBookMarks(function (ldata) {
-            _this.data = ldata;
-            console.log(_this.set);
-            _this.set = _this.validator.validSet;
-            //Terminate generator if not enough bookmarks
-            if (_this.set == null || _this.set <= 0) {
-                _this.terminateGenerator();
-                return;
-            }
-
-            console.log(_this.set);
-            console.log('size: ' + _this.validator.validSize);
-            _progress_bar2.default.init(0, _this.validator.validSize);
-            _this._constructor();
-        });
-    },
-
-    filterArray: function filterArray(bookmarksData) {
-        for (var i = 0; i < bookmarksData.length; i++) {
-            var tempIdx = indexOf(bookmarksData[i]);
-            if (tempIdx == -1 || tempIdx == i) {
-                continue;
-            }
-            bookmarksData.splice(i, 1);
-        }
-        console.log(bookmarksData);
-        return bookmarksData;
-    },
-    /**
-     *	The main constructor
-     **/
-    _constructor: function _constructor() {
-        this.index = 0;
-        this.startTime = new Date();
-        this.nextEx();
-    },
-
-    /**
-     *	Add Ex here
-     **/
-    nextEx: function nextEx() {
-        console.log("index of ex: " + this.index + "length of ex: " + this.set.length);
-        if (this.index >= this.set.length) {
-            this.onExSetComplete();
-            return;
-        }
-        var ex = this.set[this.index][0];
-        var size = this.set[this.index][1];
-        var startingIndex = _util2.default.calcSize(this.set, this.index);
-
-        this.$currentEx = null;
-        delete this.$currentEx;
-        switch (ex) {
-            case 1:
-                this.$currentEx = new _ex2.default(this.data, startingIndex, size);
-                break;
-            case 2:
-                this.$currentEx = new _ex4.default(this.data, startingIndex, size);
-                break;
-            case 3:
-                this.$currentEx = new _ex6.default(this.data, startingIndex, size);
-                break;
-            case 4:
-                this.$currentEx = new _ex8.default(this.data, startingIndex, size);
-                break;
-        }
-
-        this.index++;
-    },
-    /**
-     *	Request the submit API
-     **/
-    submitResults: function submitResults() {
-        //TODO submit user feedback if any
-    },
-
-    /**
-     *	When the ex are done perform an action
-     **/
-    onExSetComplete: function onExSetComplete() {
-        var _this = this;
-        var redirect = _this.distractionShieldOriginalDestination();
-        _this.submitResults();
-        (0, _sweetalert2.default)({
-            title: "You rock!",
-            text: "That took less than " + _util2.default.calcTimeInMinutes(_this.startTime) + ". practice more?",
-            type: "success",
-            showCancelButton: true,
-            confirmButtonColor: "#7eb530",
-            confirmButtonText: "Let's do it!",
-            cancelButtonText: redirect != null ? "Take me away!" : "Go home!",
-            closeOnConfirm: true
-        }, function (isConfirm) {
-            if (isConfirm) {
-                _this.restart();
-                return;
-            }
-            _this.terminateGenerator();
-            _this.restartHome();
-            if (redirect != null) {
-                window.location = redirect;
-            }
-        });
-    },
-
-    terminateGenerator: function terminateGenerator() {
-        _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
-        _pubsub2.default.emit('generatorCompleted');
-    },
-    restartHome: function restartHome() {
-        _pubsub2.default.emit('homeRestart');
-    },
-
-    /**
-     * Extraction of redirect url for Distraction Shield
-     **/
-    distractionShieldOriginalDestination: function distractionShieldOriginalDestination() {
-        var url = window.location.href;
-        var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)");
-        var results = regex.exec(url);
-        if (!results || !results[2]) return null;
-        var newUrl = decodeURIComponent(results[2].replace(/\+/g, " "));
-        if (newUrl.indexOf('?') > -1) {
-            newUrl += "&tds_exComplete=true";
-        } else {
-            newUrl += "?tds_exComplete=true";
-        }
-        return newUrl;
-    }
-};
-
-exports.default = Generator;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _colorLuminance = __webpack_require__(5);
-
-var _getModal = __webpack_require__(4);
-
-var _hasClass$isDescendant = __webpack_require__(1);
-
-/*
- * User clicked on "Confirm"/"OK" or "Cancel"
- */
-var handleButton = function handleButton(event, params, modal) {
-  var e = event || window.event;
-  var target = e.target || e.srcElement;
-
-  var targetedConfirm = target.className.indexOf('confirm') !== -1;
-  var targetedOverlay = target.className.indexOf('sweet-overlay') !== -1;
-  var modalIsVisible = _hasClass$isDescendant.hasClass(modal, 'visible');
-  var doneFunctionExists = params.doneFunction && modal.getAttribute('data-has-done-function') === 'true';
-
-  // Since the user can change the background-color of the confirm button programmatically,
-  // we must calculate what the color should be on hover/active
-  var normalColor, hoverColor, activeColor;
-  if (targetedConfirm && params.confirmButtonColor) {
-    normalColor = params.confirmButtonColor;
-    hoverColor = _colorLuminance.colorLuminance(normalColor, -0.04);
-    activeColor = _colorLuminance.colorLuminance(normalColor, -0.14);
-  }
-
-  function shouldSetConfirmButtonColor(color) {
-    if (targetedConfirm && params.confirmButtonColor) {
-      target.style.backgroundColor = color;
-    }
-  }
-
-  switch (e.type) {
-    case 'mouseover':
-      shouldSetConfirmButtonColor(hoverColor);
-      break;
-
-    case 'mouseout':
-      shouldSetConfirmButtonColor(normalColor);
-      break;
-
-    case 'mousedown':
-      shouldSetConfirmButtonColor(activeColor);
-      break;
-
-    case 'mouseup':
-      shouldSetConfirmButtonColor(hoverColor);
-      break;
-
-    case 'focus':
-      var $confirmButton = modal.querySelector('button.confirm');
-      var $cancelButton = modal.querySelector('button.cancel');
-
-      if (targetedConfirm) {
-        $cancelButton.style.boxShadow = 'none';
-      } else {
-        $confirmButton.style.boxShadow = 'none';
-      }
-      break;
-
-    case 'click':
-      var clickedOnModal = modal === target;
-      var clickedOnModalChild = _hasClass$isDescendant.isDescendant(modal, target);
-
-      // Ignore click outside if allowOutsideClick is false
-      if (!clickedOnModal && !clickedOnModalChild && modalIsVisible && !params.allowOutsideClick) {
-        break;
-      }
-
-      if (targetedConfirm && doneFunctionExists && modalIsVisible) {
-        handleConfirm(modal, params);
-      } else if (doneFunctionExists && modalIsVisible || targetedOverlay) {
-        handleCancel(modal, params);
-      } else if (_hasClass$isDescendant.isDescendant(modal, target) && target.tagName === 'BUTTON') {
-        sweetAlert.close();
-      }
-      break;
-  }
-};
-
-/*
- *  User clicked on "Confirm"/"OK"
- */
-var handleConfirm = function handleConfirm(modal, params) {
-  var callbackValue = true;
-
-  if (_hasClass$isDescendant.hasClass(modal, 'show-input')) {
-    callbackValue = modal.querySelector('input').value;
-
-    if (!callbackValue) {
-      callbackValue = '';
-    }
-  }
-
-  params.doneFunction(callbackValue);
-
-  if (params.closeOnConfirm) {
-    sweetAlert.close();
-  }
-  // Disable cancel and confirm button if the parameter is true
-  if (params.showLoaderOnConfirm) {
-    sweetAlert.disableButtons();
-  }
-};
-
-/*
- *  User clicked on "Cancel"
- */
-var handleCancel = function handleCancel(modal, params) {
-  // Check if callback function expects a parameter (to track cancel actions)
-  var functionAsStr = String(params.doneFunction).replace(/\s/g, '');
-  var functionHandlesCancel = functionAsStr.substring(0, 9) === 'function(' && functionAsStr.substring(9, 10) !== ')';
-
-  if (functionHandlesCancel) {
-    params.doneFunction(false);
-  }
-
-  if (params.closeOnCancel) {
-    sweetAlert.close();
-  }
-};
-
-exports['default'] = {
-  handleButton: handleButton,
-  handleConfirm: handleConfirm,
-  handleCancel: handleCancel
-};
-module.exports = exports['default'];
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _stopEventPropagation$fireClick = __webpack_require__(1);
-
-var _setFocusStyle = __webpack_require__(4);
-
-var handleKeyDown = function handleKeyDown(event, params, modal) {
-  var e = event || window.event;
-  var keyCode = e.keyCode || e.which;
-
-  var $okButton = modal.querySelector('button.confirm');
-  var $cancelButton = modal.querySelector('button.cancel');
-  var $modalButtons = modal.querySelectorAll('button[tabindex]');
-
-  if ([9, 13, 32, 27].indexOf(keyCode) === -1) {
-    // Don't do work on keys we don't care about.
-    return;
-  }
-
-  var $targetElement = e.target || e.srcElement;
-
-  var btnIndex = -1; // Find the button - note, this is a nodelist, not an array.
-  for (var i = 0; i < $modalButtons.length; i++) {
-    if ($targetElement === $modalButtons[i]) {
-      btnIndex = i;
-      break;
-    }
-  }
-
-  if (keyCode === 9) {
-    // TAB
-    if (btnIndex === -1) {
-      // No button focused. Jump to the confirm button.
-      $targetElement = $okButton;
-    } else {
-      // Cycle to the next button
-      if (btnIndex === $modalButtons.length - 1) {
-        $targetElement = $modalButtons[0];
-      } else {
-        $targetElement = $modalButtons[btnIndex + 1];
-      }
-    }
-
-    _stopEventPropagation$fireClick.stopEventPropagation(e);
-    $targetElement.focus();
-
-    if (params.confirmButtonColor) {
-      _setFocusStyle.setFocusStyle($targetElement, params.confirmButtonColor);
-    }
-  } else {
-    if (keyCode === 13) {
-      if ($targetElement.tagName === 'INPUT') {
-        $targetElement = $okButton;
-        $okButton.focus();
-      }
-
-      if (btnIndex === -1) {
-        // ENTER/SPACE clicked outside of a button.
-        $targetElement = $okButton;
-      } else {
-        // Do nothing - let the browser handle it.
-        $targetElement = undefined;
-      }
-    } else if (keyCode === 27 && params.allowEscapeKey === true) {
-      $targetElement = $cancelButton;
-      _stopEventPropagation$fireClick.fireClick($targetElement, e);
-    } else {
-      // Fallback - let the browser handle it.
-      $targetElement = undefined;
-    }
-  }
-};
-
-exports['default'] = handleKeyDown;
-module.exports = exports['default'];
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var injectedHTML =
-
-// Dark overlay
-"<div class=\"sweet-overlay\" tabIndex=\"-1\"></div>" +
-
-// Modal
-"<div class=\"sweet-alert\">" +
-
-// Error icon
-"<div class=\"sa-icon sa-error\">\n      <span class=\"sa-x-mark\">\n        <span class=\"sa-line sa-left\"></span>\n        <span class=\"sa-line sa-right\"></span>\n      </span>\n    </div>" +
-
-// Warning icon
-"<div class=\"sa-icon sa-warning\">\n      <span class=\"sa-body\"></span>\n      <span class=\"sa-dot\"></span>\n    </div>" +
-
-// Info icon
-"<div class=\"sa-icon sa-info\"></div>" +
-
-// Success icon
-"<div class=\"sa-icon sa-success\">\n      <span class=\"sa-line sa-tip\"></span>\n      <span class=\"sa-line sa-long\"></span>\n\n      <div class=\"sa-placeholder\"></div>\n      <div class=\"sa-fix\"></div>\n    </div>" + "<div class=\"sa-icon sa-custom\"></div>" +
-
-// Title, text and input
-"<h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type=\"text\" tabIndex=\"3\" />\n      <div class=\"sa-input-error\"></div>\n    </fieldset>" +
-
-// Input errors
-"<div class=\"sa-error-container\">\n      <div class=\"icon\">!</div>\n      <p>Not valid!</p>\n    </div>" +
-
-// Cancel and confirm buttons
-"<div class=\"sa-button-container\">\n      <button class=\"cancel\" tabIndex=\"2\">Cancel</button>\n      <div class=\"sa-confirm-button-container\">\n        <button class=\"confirm\" tabIndex=\"1\">OK</button>" +
-
-// Loading animation
-"<div class=\"la-ball-fall\">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div>" +
-
-// End of modal
-"</div>";
-
-exports["default"] = injectedHTML;
-module.exports = exports["default"];
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _isIE8 = __webpack_require__(5);
-
-var _getModal$getInput$setFocusStyle = __webpack_require__(4);
-
-var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
-
-var alertTypes = ['error', 'warning', 'info', 'success', 'input', 'prompt'];
-
-/*
- * Set type, text and actions on modal
- */
-var setParameters = function setParameters(params) {
-  var modal = _getModal$getInput$setFocusStyle.getModal();
-
-  var $title = modal.querySelector('h2');
-  var $text = modal.querySelector('p');
-  var $cancelBtn = modal.querySelector('button.cancel');
-  var $confirmBtn = modal.querySelector('button.confirm');
-
-  /*
-   * Title
-   */
-  $title.innerHTML = params.html ? params.title : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.title).split('\n').join('<br>');
-
-  /*
-   * Text
-   */
-  $text.innerHTML = params.html ? params.text : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.text || '').split('\n').join('<br>');
-  if (params.text) _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($text);
-
-  /*
-   * Custom class
-   */
-  if (params.customClass) {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, params.customClass);
-    modal.setAttribute('data-custom-class', params.customClass);
-  } else {
-    // Find previously set classes and remove them
-    var customClass = modal.getAttribute('data-custom-class');
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.removeClass(modal, customClass);
-    modal.setAttribute('data-custom-class', '');
-  }
-
-  /*
-   * Icon
-   */
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide(modal.querySelectorAll('.sa-icon'));
-
-  if (params.type && !_isIE8.isIE8()) {
-    var _ret = function () {
-
-      var validType = false;
-
-      for (var i = 0; i < alertTypes.length; i++) {
-        if (params.type === alertTypes[i]) {
-          validType = true;
-          break;
-        }
-      }
-
-      if (!validType) {
-        logStr('Unknown alert type: ' + params.type);
-        return {
-          v: false
-        };
-      }
-
-      var typesWithIcons = ['success', 'error', 'warning', 'info'];
-      var $icon = undefined;
-
-      if (typesWithIcons.indexOf(params.type) !== -1) {
-        $icon = modal.querySelector('.sa-icon.' + 'sa-' + params.type);
-        _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($icon);
-      }
-
-      var $input = _getModal$getInput$setFocusStyle.getInput();
-
-      // Animate icon
-      switch (params.type) {
-
-        case 'success':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animate');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-tip'), 'animateSuccessTip');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-long'), 'animateSuccessLong');
-          break;
-
-        case 'error':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animateErrorIcon');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-x-mark'), 'animateXMark');
-          break;
-
-        case 'warning':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'pulseWarning');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-body'), 'pulseWarningIns');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-dot'), 'pulseWarningIns');
-          break;
-
-        case 'input':
-        case 'prompt':
-          $input.setAttribute('type', params.inputType);
-          $input.value = params.inputValue;
-          $input.setAttribute('placeholder', params.inputPlaceholder);
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, 'show-input');
-          setTimeout(function () {
-            $input.focus();
-            $input.addEventListener('keyup', swal.resetInputError);
-          }, 400);
-          break;
-      }
-    }();
-
-    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === 'object') {
-      return _ret.v;
-    }
-  }
-
-  /*
-   * Custom image
-   */
-  if (params.imageUrl) {
-    var $customIcon = modal.querySelector('.sa-icon.sa-custom');
-
-    $customIcon.style.backgroundImage = 'url(' + params.imageUrl + ')';
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($customIcon);
-
-    var _imgWidth = 80;
-    var _imgHeight = 80;
-
-    if (params.imageSize) {
-      var dimensions = params.imageSize.toString().split('x');
-      var imgWidth = dimensions[0];
-      var imgHeight = dimensions[1];
-
-      if (!imgWidth || !imgHeight) {
-        logStr('Parameter imageSize expects value with format WIDTHxHEIGHT, got ' + params.imageSize);
-      } else {
-        _imgWidth = imgWidth;
-        _imgHeight = imgHeight;
-      }
-    }
-
-    $customIcon.setAttribute('style', $customIcon.getAttribute('style') + 'width:' + _imgWidth + 'px; height:' + _imgHeight + 'px');
-  }
-
-  /*
-   * Show cancel button?
-   */
-  modal.setAttribute('data-has-cancel-button', params.showCancelButton);
-  if (params.showCancelButton) {
-    $cancelBtn.style.display = 'inline-block';
-  } else {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($cancelBtn);
-  }
-
-  /*
-   * Show confirm button?
-   */
-  modal.setAttribute('data-has-confirm-button', params.showConfirmButton);
-  if (params.showConfirmButton) {
-    $confirmBtn.style.display = 'inline-block';
-  } else {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($confirmBtn);
-  }
-
-  /*
-   * Custom text on cancel/confirm buttons
-   */
-  if (params.cancelButtonText) {
-    $cancelBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.cancelButtonText);
-  }
-  if (params.confirmButtonText) {
-    $confirmBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.confirmButtonText);
-  }
-
-  /*
-   * Custom color on confirm button
-   */
-  if (params.confirmButtonColor) {
-    // Set confirm button to selected background color
-    $confirmBtn.style.backgroundColor = params.confirmButtonColor;
-
-    // Set the confirm button color to the loading ring
-    $confirmBtn.style.borderLeftColor = params.confirmLoadingButtonColor;
-    $confirmBtn.style.borderRightColor = params.confirmLoadingButtonColor;
-
-    // Set box-shadow to default focused button
-    _getModal$getInput$setFocusStyle.setFocusStyle($confirmBtn, params.confirmButtonColor);
-  }
-
-  /*
-   * Allow outside click
-   */
-  modal.setAttribute('data-allow-outside-click', params.allowOutsideClick);
-
-  /*
-   * Callback function
-   */
-  var hasDoneFunction = params.doneFunction ? true : false;
-  modal.setAttribute('data-has-done-function', hasDoneFunction);
-
-  /*
-   * Animation
-   */
-  if (!params.animation) {
-    modal.setAttribute('data-animation', 'none');
-  } else if (typeof params.animation === 'string') {
-    modal.setAttribute('data-animation', params.animation); // Custom animation
-  } else {
-    modal.setAttribute('data-animation', 'pop');
-  }
-
-  /*
-   * Timer
-   */
-  modal.setAttribute('data-timer', params.timer);
-};
-
-exports['default'] = setParameters;
-module.exports = exports['default'];
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function (module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function () {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function get() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function get() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _pubsub = __webpack_require__(8);
-
-var _pubsub2 = _interopRequireDefault(_pubsub);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var bar,
-    ProgressBar = {
-	settings: {
-		percent: 0, //default starting point
-		amount: 25, //default value for progress amount
-		elem: 0
-	},
-	init: function init(percent, size) {
-		this.bindUIActions();
-		bar = this.settings;
-		bar.percent = percent;
-		bar.amount = 100 / size;
-		bar.elem = document.getElementById("ex-bar");
-		bar.elem.style.width = bar.percent;
-		// "bind" event
-		_pubsub2.default.on('progress', this.move);
-	},
-	restart: function restart() {
-		bar.percent = 0;
-		bar.elem.style.width = bar.percent;
-	},
-	bindUIActions: function bindUIActions() {},
-	move: function move() {
-		var width = bar.percent;
-		var id = setInterval(frame, 10);
-		var max_move = bar.percent + bar.amount;
-		function frame() {
-			if (width >= max_move || width >= 100) {
-				clearInterval(id);
-			} else {
-				width++;
-				bar.elem.style.width = width + '%';
-			}
-			bar.percent = max_move;
-		}
-	}
-}; /** Modular progress bar @author Martin Avagyan
-    *  Initialize it using ProgressBar.init(percent,size);
-    *  Add progress using  ProgressBar.move();
-   **/
-exports.default = ProgressBar;
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /** Validator class takes care of the input for generator
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Based on the result, it decided on how to generate exercises
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks == 0 then no bookmarks page
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks < requested number then generate exercises that fit
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks >= requested number simply generate exercises
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Init with @param {array} set: [[2,3],[1,3],[3,3],[4,3],[1,3]]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  IMPORTANT: the function @getValidBookMarks assumes the set is created
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  considering the minimum requirements for each exercise
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      **/
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _settings = __webpack_require__(7);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-var _session = __webpack_require__(3);
-
-var _session2 = _interopRequireDefault(_session);
-
-var _util = __webpack_require__(2);
-
-var _util2 = _interopRequireDefault(_util);
-
-var _loading_animation = __webpack_require__(17);
-
-var _loading_animation2 = _interopRequireDefault(_loading_animation);
-
-var _ex = __webpack_require__(13);
-
-var _ex2 = _interopRequireDefault(_ex);
-
-var _ex3 = __webpack_require__(14);
-
-var _ex4 = _interopRequireDefault(_ex3);
-
-var _ex5 = __webpack_require__(15);
-
-var _ex6 = _interopRequireDefault(_ex5);
-
-var _ex7 = __webpack_require__(16);
-
-var _ex8 = _interopRequireDefault(_ex7);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Validator = function () {
-    function Validator(set) {
-        _classCallCheck(this, Validator);
-
-        /** Class parameters*/
-        this.set = set;
-        this.validFinalSet = [[]];
-        this.loadingAnimation = new _loading_animation2.default();
-        this.data = 0;
-        this.session = _session2.default.getSession();
-        this.totalValidSize = 0;
-        //Cache the imports for later reference
-        this.cacheExerciseImports();
-    }
-
-    /**
-     * The function caches imports in local scope for later to be referenced as a string
-     * */
-
-
-    _createClass(Validator, [{
-        key: "cacheExerciseImports",
-        value: function cacheExerciseImports() {
-            this.Ex1 = _ex2.default;
-            this.Ex2 = _ex4.default;
-            this.Ex3 = _ex6.default;
-            this.Ex4 = _ex8.default;
-        }
-        /**
-        *	Ajax get request to the Zeeguu API to get new bookmarks
-        **/
-
-    }, {
-        key: "getBookmarks",
-        value: function getBookmarks(totalSize) {
-            var _this = this;
-            var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + totalSize + "?session=" + _this.session;
-            return _jquery2.default.ajax({
-                beforeSend: function beforeSend() {
-                    _this.loadingAnimation.loadingAnimation(true);
-                },
-                complete: function complete() {
-                    _this.loadingAnimation.loadingAnimation(false);
-                },
-                type: 'GET',
-                dataType: 'json',
-                url: address,
-                data: this.data,
-                async: true
-            });
-        }
-        /**
-         *  @param args is matrix of exercise name and number of bookmarks,
-         *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
-         *  @return matrix of exercises similar to its input
-         * */
-
-    }, {
-        key: "getValidBookMarks",
-        value: function getValidBookMarks(callback) {
-            var _this = this;
-            //Calculate the size
-            var totalSize = _util2.default.calcSize(this.set, this.set.length);
-            //TODO change the follwoing line to proper return value
-            this.totalValidSize = totalSize;
-            _jquery2.default.when(this.getBookmarks(totalSize)).done(function (data) {
-                _this.validFinalSet = _this.validateSet(totalSize, data);
-                callback(data);
-            });
-        }
-
-        /**
-         *  Given the set and the bookmarks create a new set for generator
-         *  Three possibilities:
-         *  number of bookmarks == 0 then show no bookmarks page
-         *  number of bookmarks < requested number then generate exercises that fit
-         *  number of bookmarks >= requested number simply generate exercises
-         *  @return {Array} set, the validated ex set
-         * */
-
-    }, {
-        key: "validateSet",
-        value: function validateSet(totalSetLength, data) {
-            this.data = data;
-            var bookmarkLength = this.data.length;
-
-            if (bookmarkLength <= 0) return this.noBookmarkPage();
-            if (bookmarkLength < totalSetLength) return this.notEnoughBookmarks(bookmarkLength, this.set);
-            return this.enoughBookmarks(this.set);
-        }
-
-        /**
-         * number of bookmarks >= requested number simply generate exercises
-         * Assumes the given set has valid minimal sizes for exercises
-         */
-
-    }, {
-        key: "enoughBookmarks",
-        value: function enoughBookmarks(set) {
-            console.log('Enough bookmarks');
-            return set;
-        }
-
-        /**
-         * Number of bookmarks < requested number, generate exercises that fit
-         * @return {Array} set
-         * TODO add testing
-        */
-
-    }, {
-        key: "notEnoughBookmarks",
-        value: function notEnoughBookmarks(bookmarkLength, set) {
-            console.log('not enough bookmarks, bkmrLen: ' + bookmarkLength);
-            var newSet = [];
-            var setIndex = 0;
-            while (bookmarkLength > 0) {
-                var delta = bookmarkLength - set[setIndex][1];
-                if (delta >= 0) {
-                    newSet.push(set[setIndex]);
-                } else if (this.isProperEx(set[setIndex][0], bookmarkLength)) {
-                    //delta < 0 && the ex requirement is met
-                    newSet.push([set[setIndex][0], bookmarkLength]);
-                }
-                bookmarkLength = delta;
-                setIndex++;
-            }
-            return newSet.length > 0 ? newSet : this.noBookmarkPage(); //Bookmarks is still 0, throw noBookmarks page
-        }
-
-        /**
-         * Number of bookmarks == 0 then show no bookmarks page
-         * Signals the generator to terminate, load no bookmark page
-         * @return {Array} empty array
-         * */
-
-    }, {
-        key: "noBookmarkPage",
-        value: function noBookmarkPage() {
-            console.log('No bookmarks, bksLen: ' + this.data.length);
-            window.location.replace("static/template/empty_page.html");
-            return [];
-        }
-
-        /**
-         * Compares the minimum requirement for the given ex and the assigned amount
-         * @param {int} exNum, the id of the ex
-         * @param {int} exSize, the amount the ex is generated
-         * @return {boolean}, true if the minReq >= givenAmount, else false
-         * @example this.isProperEx(1,2), Ex1 2 times
-         * */
-
-    }, {
-        key: "isProperEx",
-        value: function isProperEx(exNum, exSize) {
-            var minReqForEx = this['Ex' + exNum].prototype.minRequirement;
-            return minReqForEx <= exSize;
-        }
-
-        /**
-         * Getter for final valid size of the generated bookmarks
-         * */
-
-    }, {
-        key: "validSize",
-        get: function get() {
-            return _util2.default.calcSize(this.validFinalSet, this.validFinalSet.length);
-        }
-
-        /**
-         * Getter for final valid set for exercise generator
-         * */
-
-    }, {
-        key: "validSet",
-        get: function get() {
-            return this.validFinalSet;
-        }
-    }]);
-
-    return Validator;
-}();
-
-exports.default = Validator;
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _generator = __webpack_require__(18);
-
-var _generator2 = _interopRequireDefault(_generator);
-
-var _pubsub = __webpack_require__(8);
-
-var _pubsub2 = _interopRequireDefault(_pubsub);
-
-var _mustache = __webpack_require__(27);
-
-var _mustache2 = _interopRequireDefault(_mustache);
-
-var _loader = __webpack_require__(9);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Home = function Home() {
-	this.init();
-};
-
-Home.prototype = {
-
-	/************************** SETTINGS ********************************/
-	homeTemplateURL: 'static/template/home.html',
-	cardTemplateURL: 'static/template/card.html',
-	defaultIcon: 'img/icons/placeholder.svg',
-	exNames: [{ name: "Find", exID: [[1, 6]], info: 'Find the word in the context', icon: 'static/img/icons/search-engine.svg', time: 2 }, { name: "Choose", exID: [[2, 6]], info: 'Choose the word that fits the context', icon: 'static/img/icons/test.svg', time: 2 }, { name: "Match", exID: [[3, 6]], info: 'Match each word with its translation', icon: 'static/img/icons/question.svg', time: 3 }, { name: "Translate", exID: [[4, 6]], info: 'Translate the word given in the context', icon: 'static/img/icons/translator.svg', time: 2 }, { name: "Short Practice", exID: [[1, 3], [2, 3]], info: 'General exercise for short practice', icon: 'static/img/icons/placeholder.svg', time: 3 }, { name: "Long Practice", exID: [[1, 3], [2, 3], [3, 3], [4, 3]], info: 'General exerciese for short practice', icon: 'static/img/icons/placeholder.svg', time: 4 }, { name: "Random", exID: [[2, 3], [1, 3], [3, 3], [4, 3], [1, 3]], info: 'Repeat via random exercises', icon: 'static/img/icons/shuffle.svg', time: 6 }],
-	currentGenerator: 0,
-	eventGeneratorCompletedFunc: 0,
-	eventHomeRestartFunc: 0,
-	creditsOn: false,
-	cardTemplate: 0,
-	/*********************** General Functions ***************************/
-	/**
- *	Saves the dom 
- **/
-	cacheDom: function cacheDom() {
-		this.$elem = (0, _jquery2.default)("#home-body");
-		this.$exCards = this.$elem.find("#exercieses-cards");
-		this.$attribution = this.$elem.find("#attribution");
-		this.$credits = this.$elem.find("#credits");
-	},
-
-	/**
- *	Exercise initialaizer
- **/
-	init: function init() {
-		var _this = this;
-
-		// "bind" event
-		this.eventGeneratorCompletedFunc = function () {
-			_this.reset();
-		};
-		this.eventHomeRestartFunc = function () {
-			_this.start();
-		};
-		_pubsub2.default.on('generatorCompleted', this.eventGeneratorCompletedFunc);
-		_pubsub2.default.on('homeRestart', this.eventHomeRestartFunc);
-
-		this.start();
-	},
-
-	/**
- *	The main constructor
- **/
-	start: function start() {
-		var _this = this;
-		_jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.homeTemplateURL, (0, _jquery2.default)("#main-content")), _loader.Loader.loadTemplate(this.cardTemplateURL)).done(function (homeData, cardData) {
-
-			_this.cardTemplate = cardData[0]; //cardData[0] string html
-			// Create the DOM and start the generator
-			_this.cacheDom();
-			_this.generateEx();
-			_this.bindUIActions();
-		});
-	},
-
-	bindUIActions: function bindUIActions() {
-		var _this = this;
-		//Bind UI action of button clicks to the function
-		var exs = this.$exCards.children();
-		//Bind UI action of credits to the function
-		this.$credits.on("click", _this.giveCredits.bind(this));
-
-		for (var i = 0; i < exs.length; i++) {
-			var id = exs[i].getAttribute("ex-id");
-			(0, _jquery2.default)(exs[i]).on("click", this.newEx.bind(this, id));
-		}
-	},
-
-	giveCredits: function giveCredits() {
-		if (this.creditsOn) {
-			this.creditsOn = false;
-			this.$attribution.addClass("hide");
-			return;
-		}
-		this.creditsOn = true;
-		this.$attribution.removeClass("hide");
-	},
-
-	generateEx: function generateEx() {
-		var cardNames = { Exercises: this.exNames };
-		this.$exCards.append(_mustache2.default.render(this.cardTemplate, cardNames));
-	},
-
-	/**
- * Parse string into 2D array for generator arguments
-  * TODO can be overriten by eval
- */
-	exArrayParser: function exArrayParser(stringArray) {
-		var arr = stringArray.split(",").map(function (x) {
-			return parseInt(x);
-		});
-		var newArr = [];
-		while (arr.length) {
-			newArr.push(arr.splice(0, 2));
-		}return newArr;
-	},
-
-	reset: function reset() {
-		this.currentGenerator = null;
-		delete this.currentGenerator;
-	},
-
-	terminate: function terminate() {
-		_pubsub2.default.off('generatorCompleted', this.eventGeneratorCompletedFunc);
-		_pubsub2.default.off('homeRestart', this.eventHomeRestartFunc);
-		//emit listeners that the home is terminated
-	},
-
-	newEx: function newEx(exID) {
-		this.currentGenerator = new _generator2.default(this.exArrayParser(exID));
-	}
-};
-
-exports.default = Home;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -13951,13 +12698,1348 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _ex = __webpack_require__(13);
+
+var _ex2 = _interopRequireDefault(_ex);
+
+var _ex3 = __webpack_require__(14);
+
+var _ex4 = _interopRequireDefault(_ex3);
+
+var _ex5 = __webpack_require__(15);
+
+var _ex6 = _interopRequireDefault(_ex5);
+
+var _ex7 = __webpack_require__(16);
+
+var _ex8 = _interopRequireDefault(_ex7);
+
+var _progress_bar = __webpack_require__(26);
+
+var _progress_bar2 = _interopRequireDefault(_progress_bar);
+
+var _pubsub = __webpack_require__(9);
+
+var _pubsub2 = _interopRequireDefault(_pubsub);
+
+var _sweetalert = __webpack_require__(11);
+
+var _sweetalert2 = _interopRequireDefault(_sweetalert);
+
+var _session = __webpack_require__(3);
+
+var _session2 = _interopRequireDefault(_session);
+
+var _loader = __webpack_require__(8);
+
+var _util = __webpack_require__(2);
+
+var _util2 = _interopRequireDefault(_util);
+
+var _validator = __webpack_require__(27);
+
+var _validator2 = _interopRequireDefault(_validator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
+ *  @initialize it using: new Generator(args);
+ *  @param args is matrix of exercise name and number of bookmarks,
+ *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+ *  @customize it by using prototypal inheritance
+ **/
+
+var Generator = function Generator(set) {
+    this.init(set);
+};
+
+Generator.prototype = {
+    /************************** SETTINGS ********************************/
+    data: 0, //bookmakrs from zeeguu api
+    set: 0, //matrix for initialaizer
+    index: 0, //current index from set
+    startTime: new Date(),
+    session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
+    templateURL: 'static/template/exercise.html',
+
+    /**
+     *	Saves the common dom in chache
+     **/
+    cacheDom: function cacheDom() {},
+
+    /**
+     *	Generator initialaizer
+     **/
+    init: function init(set) {
+        this.set = set;
+        var _this = this;
+
+        this.validator = new _validator2.default(set);
+
+        // "bind" event
+        this.$eventFunc = function () {
+            _this.nextEx();
+        };
+        _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
+
+        //Loads the HTML general exercise template from static
+        _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
+            // Create the DOM and start the generator
+            _this.cacheDom();
+            _this.start();
+        });
+    },
+
+    restart: function restart() {
+        this.start();
+    },
+
+    /**
+     *	Call to load the data from API
+     **/
+    start: function start() {
+        this.size = _util2.default.calcSize(this.set, this.set.length);
+        var _this = this;
+        //Callback wait until the bookmarks are loaded
+        this.validator.getValidBookMarks(function (ldata) {
+            _this.data = ldata;
+            console.log(_this.set);
+            _this.set = _this.validator.validSet;
+            //Terminate generator if not enough bookmarks
+            if (_this.set == null || _this.set <= 0) {
+                _this.terminateGenerator();
+                return;
+            }
+
+            console.log(_this.set);
+            console.log('size: ' + _this.validator.validSize);
+            _progress_bar2.default.init(0, _this.validator.validSize);
+            _this._constructor();
+        });
+    },
+
+    filterArray: function filterArray(bookmarksData) {
+        for (var i = 0; i < bookmarksData.length; i++) {
+            var tempIdx = indexOf(bookmarksData[i]);
+            if (tempIdx == -1 || tempIdx == i) {
+                continue;
+            }
+            bookmarksData.splice(i, 1);
+        }
+        console.log(bookmarksData);
+        return bookmarksData;
+    },
+    /**
+     *	The main constructor
+     **/
+    _constructor: function _constructor() {
+        this.index = 0;
+        this.startTime = new Date();
+        this.nextEx();
+    },
+
+    /**
+     *	Add Ex here
+     **/
+    nextEx: function nextEx() {
+        console.log("index of ex: " + this.index + "length of ex: " + this.set.length);
+        if (this.index >= this.set.length) {
+            this.onExSetComplete();
+            return;
+        }
+        var ex = this.set[this.index][0];
+        var size = this.set[this.index][1];
+        var startingIndex = _util2.default.calcSize(this.set, this.index);
+
+        this.$currentEx = null;
+        delete this.$currentEx;
+        switch (ex) {
+            case 1:
+                this.$currentEx = new _ex2.default(this.data, startingIndex, size);
+                break;
+            case 2:
+                this.$currentEx = new _ex4.default(this.data, startingIndex, size);
+                break;
+            case 3:
+                this.$currentEx = new _ex6.default(this.data, startingIndex, size);
+                break;
+            case 4:
+                this.$currentEx = new _ex8.default(this.data, startingIndex, size);
+                break;
+        }
+
+        this.index++;
+    },
+    /**
+     *	Request the submit API
+     **/
+    submitResults: function submitResults() {
+        //TODO submit user feedback if any
+    },
+
+    /**
+     *	When the ex are done perform an action
+     **/
+    onExSetComplete: function onExSetComplete() {
+        var _this = this;
+        var redirect = _this.distractionShieldOriginalDestination();
+        _this.submitResults();
+        (0, _sweetalert2.default)({
+            title: "You rock!",
+            text: "That took less than " + _util2.default.calcTimeInMinutes(_this.startTime) + ". practice more?",
+            type: "success",
+            showCancelButton: true,
+            confirmButtonColor: "#7eb530",
+            confirmButtonText: "Let's do it!",
+            cancelButtonText: redirect != null ? "Take me away!" : "Go home!",
+            closeOnConfirm: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                _this.restart();
+                return;
+            }
+            _this.terminateGenerator();
+            _this.restartHome();
+            if (redirect != null) {
+                window.location = redirect;
+            }
+        });
+    },
+
+    terminateGenerator: function terminateGenerator() {
+        _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
+        _pubsub2.default.emit('generatorCompleted');
+    },
+    restartHome: function restartHome() {
+        _pubsub2.default.emit('homeRestart');
+    },
+
+    /**
+     * Extraction of redirect url for Distraction Shield
+     **/
+    distractionShieldOriginalDestination: function distractionShieldOriginalDestination() {
+        var url = window.location.href;
+        var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)");
+        var results = regex.exec(url);
+        if (!results || !results[2]) return null;
+        var newUrl = decodeURIComponent(results[2].replace(/\+/g, " "));
+        if (newUrl.indexOf('?') > -1) {
+            newUrl += "&tds_exComplete=true";
+        } else {
+            newUrl += "?tds_exComplete=true";
+        }
+        return newUrl;
+    }
+};
+
+exports.default = Generator;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _colorLuminance = __webpack_require__(5);
+
+var _getModal = __webpack_require__(4);
+
+var _hasClass$isDescendant = __webpack_require__(1);
+
+/*
+ * User clicked on "Confirm"/"OK" or "Cancel"
+ */
+var handleButton = function handleButton(event, params, modal) {
+  var e = event || window.event;
+  var target = e.target || e.srcElement;
+
+  var targetedConfirm = target.className.indexOf('confirm') !== -1;
+  var targetedOverlay = target.className.indexOf('sweet-overlay') !== -1;
+  var modalIsVisible = _hasClass$isDescendant.hasClass(modal, 'visible');
+  var doneFunctionExists = params.doneFunction && modal.getAttribute('data-has-done-function') === 'true';
+
+  // Since the user can change the background-color of the confirm button programmatically,
+  // we must calculate what the color should be on hover/active
+  var normalColor, hoverColor, activeColor;
+  if (targetedConfirm && params.confirmButtonColor) {
+    normalColor = params.confirmButtonColor;
+    hoverColor = _colorLuminance.colorLuminance(normalColor, -0.04);
+    activeColor = _colorLuminance.colorLuminance(normalColor, -0.14);
+  }
+
+  function shouldSetConfirmButtonColor(color) {
+    if (targetedConfirm && params.confirmButtonColor) {
+      target.style.backgroundColor = color;
+    }
+  }
+
+  switch (e.type) {
+    case 'mouseover':
+      shouldSetConfirmButtonColor(hoverColor);
+      break;
+
+    case 'mouseout':
+      shouldSetConfirmButtonColor(normalColor);
+      break;
+
+    case 'mousedown':
+      shouldSetConfirmButtonColor(activeColor);
+      break;
+
+    case 'mouseup':
+      shouldSetConfirmButtonColor(hoverColor);
+      break;
+
+    case 'focus':
+      var $confirmButton = modal.querySelector('button.confirm');
+      var $cancelButton = modal.querySelector('button.cancel');
+
+      if (targetedConfirm) {
+        $cancelButton.style.boxShadow = 'none';
+      } else {
+        $confirmButton.style.boxShadow = 'none';
+      }
+      break;
+
+    case 'click':
+      var clickedOnModal = modal === target;
+      var clickedOnModalChild = _hasClass$isDescendant.isDescendant(modal, target);
+
+      // Ignore click outside if allowOutsideClick is false
+      if (!clickedOnModal && !clickedOnModalChild && modalIsVisible && !params.allowOutsideClick) {
+        break;
+      }
+
+      if (targetedConfirm && doneFunctionExists && modalIsVisible) {
+        handleConfirm(modal, params);
+      } else if (doneFunctionExists && modalIsVisible || targetedOverlay) {
+        handleCancel(modal, params);
+      } else if (_hasClass$isDescendant.isDescendant(modal, target) && target.tagName === 'BUTTON') {
+        sweetAlert.close();
+      }
+      break;
+  }
+};
+
+/*
+ *  User clicked on "Confirm"/"OK"
+ */
+var handleConfirm = function handleConfirm(modal, params) {
+  var callbackValue = true;
+
+  if (_hasClass$isDescendant.hasClass(modal, 'show-input')) {
+    callbackValue = modal.querySelector('input').value;
+
+    if (!callbackValue) {
+      callbackValue = '';
+    }
+  }
+
+  params.doneFunction(callbackValue);
+
+  if (params.closeOnConfirm) {
+    sweetAlert.close();
+  }
+  // Disable cancel and confirm button if the parameter is true
+  if (params.showLoaderOnConfirm) {
+    sweetAlert.disableButtons();
+  }
+};
+
+/*
+ *  User clicked on "Cancel"
+ */
+var handleCancel = function handleCancel(modal, params) {
+  // Check if callback function expects a parameter (to track cancel actions)
+  var functionAsStr = String(params.doneFunction).replace(/\s/g, '');
+  var functionHandlesCancel = functionAsStr.substring(0, 9) === 'function(' && functionAsStr.substring(9, 10) !== ')';
+
+  if (functionHandlesCancel) {
+    params.doneFunction(false);
+  }
+
+  if (params.closeOnCancel) {
+    sweetAlert.close();
+  }
+};
+
+exports['default'] = {
+  handleButton: handleButton,
+  handleConfirm: handleConfirm,
+  handleCancel: handleCancel
+};
+module.exports = exports['default'];
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _stopEventPropagation$fireClick = __webpack_require__(1);
+
+var _setFocusStyle = __webpack_require__(4);
+
+var handleKeyDown = function handleKeyDown(event, params, modal) {
+  var e = event || window.event;
+  var keyCode = e.keyCode || e.which;
+
+  var $okButton = modal.querySelector('button.confirm');
+  var $cancelButton = modal.querySelector('button.cancel');
+  var $modalButtons = modal.querySelectorAll('button[tabindex]');
+
+  if ([9, 13, 32, 27].indexOf(keyCode) === -1) {
+    // Don't do work on keys we don't care about.
+    return;
+  }
+
+  var $targetElement = e.target || e.srcElement;
+
+  var btnIndex = -1; // Find the button - note, this is a nodelist, not an array.
+  for (var i = 0; i < $modalButtons.length; i++) {
+    if ($targetElement === $modalButtons[i]) {
+      btnIndex = i;
+      break;
+    }
+  }
+
+  if (keyCode === 9) {
+    // TAB
+    if (btnIndex === -1) {
+      // No button focused. Jump to the confirm button.
+      $targetElement = $okButton;
+    } else {
+      // Cycle to the next button
+      if (btnIndex === $modalButtons.length - 1) {
+        $targetElement = $modalButtons[0];
+      } else {
+        $targetElement = $modalButtons[btnIndex + 1];
+      }
+    }
+
+    _stopEventPropagation$fireClick.stopEventPropagation(e);
+    $targetElement.focus();
+
+    if (params.confirmButtonColor) {
+      _setFocusStyle.setFocusStyle($targetElement, params.confirmButtonColor);
+    }
+  } else {
+    if (keyCode === 13) {
+      if ($targetElement.tagName === 'INPUT') {
+        $targetElement = $okButton;
+        $okButton.focus();
+      }
+
+      if (btnIndex === -1) {
+        // ENTER/SPACE clicked outside of a button.
+        $targetElement = $okButton;
+      } else {
+        // Do nothing - let the browser handle it.
+        $targetElement = undefined;
+      }
+    } else if (keyCode === 27 && params.allowEscapeKey === true) {
+      $targetElement = $cancelButton;
+      _stopEventPropagation$fireClick.fireClick($targetElement, e);
+    } else {
+      // Fallback - let the browser handle it.
+      $targetElement = undefined;
+    }
+  }
+};
+
+exports['default'] = handleKeyDown;
+module.exports = exports['default'];
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var injectedHTML =
+
+// Dark overlay
+"<div class=\"sweet-overlay\" tabIndex=\"-1\"></div>" +
+
+// Modal
+"<div class=\"sweet-alert\">" +
+
+// Error icon
+"<div class=\"sa-icon sa-error\">\n      <span class=\"sa-x-mark\">\n        <span class=\"sa-line sa-left\"></span>\n        <span class=\"sa-line sa-right\"></span>\n      </span>\n    </div>" +
+
+// Warning icon
+"<div class=\"sa-icon sa-warning\">\n      <span class=\"sa-body\"></span>\n      <span class=\"sa-dot\"></span>\n    </div>" +
+
+// Info icon
+"<div class=\"sa-icon sa-info\"></div>" +
+
+// Success icon
+"<div class=\"sa-icon sa-success\">\n      <span class=\"sa-line sa-tip\"></span>\n      <span class=\"sa-line sa-long\"></span>\n\n      <div class=\"sa-placeholder\"></div>\n      <div class=\"sa-fix\"></div>\n    </div>" + "<div class=\"sa-icon sa-custom\"></div>" +
+
+// Title, text and input
+"<h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type=\"text\" tabIndex=\"3\" />\n      <div class=\"sa-input-error\"></div>\n    </fieldset>" +
+
+// Input errors
+"<div class=\"sa-error-container\">\n      <div class=\"icon\">!</div>\n      <p>Not valid!</p>\n    </div>" +
+
+// Cancel and confirm buttons
+"<div class=\"sa-button-container\">\n      <button class=\"cancel\" tabIndex=\"2\">Cancel</button>\n      <div class=\"sa-confirm-button-container\">\n        <button class=\"confirm\" tabIndex=\"1\">OK</button>" +
+
+// Loading animation
+"<div class=\"la-ball-fall\">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div>" +
+
+// End of modal
+"</div>";
+
+exports["default"] = injectedHTML;
+module.exports = exports["default"];
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _isIE8 = __webpack_require__(5);
+
+var _getModal$getInput$setFocusStyle = __webpack_require__(4);
+
+var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
+
+var alertTypes = ['error', 'warning', 'info', 'success', 'input', 'prompt'];
+
+/*
+ * Set type, text and actions on modal
+ */
+var setParameters = function setParameters(params) {
+  var modal = _getModal$getInput$setFocusStyle.getModal();
+
+  var $title = modal.querySelector('h2');
+  var $text = modal.querySelector('p');
+  var $cancelBtn = modal.querySelector('button.cancel');
+  var $confirmBtn = modal.querySelector('button.confirm');
+
+  /*
+   * Title
+   */
+  $title.innerHTML = params.html ? params.title : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.title).split('\n').join('<br>');
+
+  /*
+   * Text
+   */
+  $text.innerHTML = params.html ? params.text : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.text || '').split('\n').join('<br>');
+  if (params.text) _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($text);
+
+  /*
+   * Custom class
+   */
+  if (params.customClass) {
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, params.customClass);
+    modal.setAttribute('data-custom-class', params.customClass);
+  } else {
+    // Find previously set classes and remove them
+    var customClass = modal.getAttribute('data-custom-class');
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.removeClass(modal, customClass);
+    modal.setAttribute('data-custom-class', '');
+  }
+
+  /*
+   * Icon
+   */
+  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide(modal.querySelectorAll('.sa-icon'));
+
+  if (params.type && !_isIE8.isIE8()) {
+    var _ret = function () {
+
+      var validType = false;
+
+      for (var i = 0; i < alertTypes.length; i++) {
+        if (params.type === alertTypes[i]) {
+          validType = true;
+          break;
+        }
+      }
+
+      if (!validType) {
+        logStr('Unknown alert type: ' + params.type);
+        return {
+          v: false
+        };
+      }
+
+      var typesWithIcons = ['success', 'error', 'warning', 'info'];
+      var $icon = undefined;
+
+      if (typesWithIcons.indexOf(params.type) !== -1) {
+        $icon = modal.querySelector('.sa-icon.' + 'sa-' + params.type);
+        _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($icon);
+      }
+
+      var $input = _getModal$getInput$setFocusStyle.getInput();
+
+      // Animate icon
+      switch (params.type) {
+
+        case 'success':
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animate');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-tip'), 'animateSuccessTip');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-long'), 'animateSuccessLong');
+          break;
+
+        case 'error':
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animateErrorIcon');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-x-mark'), 'animateXMark');
+          break;
+
+        case 'warning':
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'pulseWarning');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-body'), 'pulseWarningIns');
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-dot'), 'pulseWarningIns');
+          break;
+
+        case 'input':
+        case 'prompt':
+          $input.setAttribute('type', params.inputType);
+          $input.value = params.inputValue;
+          $input.setAttribute('placeholder', params.inputPlaceholder);
+          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, 'show-input');
+          setTimeout(function () {
+            $input.focus();
+            $input.addEventListener('keyup', swal.resetInputError);
+          }, 400);
+          break;
+      }
+    }();
+
+    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === 'object') {
+      return _ret.v;
+    }
+  }
+
+  /*
+   * Custom image
+   */
+  if (params.imageUrl) {
+    var $customIcon = modal.querySelector('.sa-icon.sa-custom');
+
+    $customIcon.style.backgroundImage = 'url(' + params.imageUrl + ')';
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($customIcon);
+
+    var _imgWidth = 80;
+    var _imgHeight = 80;
+
+    if (params.imageSize) {
+      var dimensions = params.imageSize.toString().split('x');
+      var imgWidth = dimensions[0];
+      var imgHeight = dimensions[1];
+
+      if (!imgWidth || !imgHeight) {
+        logStr('Parameter imageSize expects value with format WIDTHxHEIGHT, got ' + params.imageSize);
+      } else {
+        _imgWidth = imgWidth;
+        _imgHeight = imgHeight;
+      }
+    }
+
+    $customIcon.setAttribute('style', $customIcon.getAttribute('style') + 'width:' + _imgWidth + 'px; height:' + _imgHeight + 'px');
+  }
+
+  /*
+   * Show cancel button?
+   */
+  modal.setAttribute('data-has-cancel-button', params.showCancelButton);
+  if (params.showCancelButton) {
+    $cancelBtn.style.display = 'inline-block';
+  } else {
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($cancelBtn);
+  }
+
+  /*
+   * Show confirm button?
+   */
+  modal.setAttribute('data-has-confirm-button', params.showConfirmButton);
+  if (params.showConfirmButton) {
+    $confirmBtn.style.display = 'inline-block';
+  } else {
+    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($confirmBtn);
+  }
+
+  /*
+   * Custom text on cancel/confirm buttons
+   */
+  if (params.cancelButtonText) {
+    $cancelBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.cancelButtonText);
+  }
+  if (params.confirmButtonText) {
+    $confirmBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.confirmButtonText);
+  }
+
+  /*
+   * Custom color on confirm button
+   */
+  if (params.confirmButtonColor) {
+    // Set confirm button to selected background color
+    $confirmBtn.style.backgroundColor = params.confirmButtonColor;
+
+    // Set the confirm button color to the loading ring
+    $confirmBtn.style.borderLeftColor = params.confirmLoadingButtonColor;
+    $confirmBtn.style.borderRightColor = params.confirmLoadingButtonColor;
+
+    // Set box-shadow to default focused button
+    _getModal$getInput$setFocusStyle.setFocusStyle($confirmBtn, params.confirmButtonColor);
+  }
+
+  /*
+   * Allow outside click
+   */
+  modal.setAttribute('data-allow-outside-click', params.allowOutsideClick);
+
+  /*
+   * Callback function
+   */
+  var hasDoneFunction = params.doneFunction ? true : false;
+  modal.setAttribute('data-has-done-function', hasDoneFunction);
+
+  /*
+   * Animation
+   */
+  if (!params.animation) {
+    modal.setAttribute('data-animation', 'none');
+  } else if (typeof params.animation === 'string') {
+    modal.setAttribute('data-animation', params.animation); // Custom animation
+  } else {
+    modal.setAttribute('data-animation', 'pop');
+  }
+
+  /*
+   * Timer
+   */
+  modal.setAttribute('data-timer', params.timer);
+};
+
+exports['default'] = setParameters;
+module.exports = exports['default'];
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function () {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function get() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function get() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _loader = __webpack_require__(8);
+
+var _mustache = __webpack_require__(18);
+
+var _mustache2 = _interopRequireDefault(_mustache);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EmptyPage = function EmptyPage() {
+    this.init();
+}; /**
+    * Created by Martin on 5/14/2017.
+    */
+
+
+EmptyPage.prototype = {
+
+    /************************** SETTINGS ********************************/
+    emptyTemplateURL: 'static/template/empty_page.html',
+    templateFields: {
+        icon: 'static/img/illustrations/ntd_cloud.png',
+        title: "No Bookmarks Yet",
+        info: 'You can get bookmarks when you read articles.',
+        btnText: 'LET\'S READ',
+        btnLink: 'https://www.zeeguu.unibe.ch/reading'
+    },
+    emptyTemplate: 0,
+
+    /*********************** General Functions ***************************/
+    /**
+     *	Saves the dom
+     **/
+    cacheDom: function cacheDom() {},
+
+    /**
+     *	Exercise initialaizer
+     **/
+    init: function init() {
+        this.start();
+    },
+
+    /**
+     *	The main constructor
+     **/
+    start: function start() {
+        var _this = this;
+        _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.emptyTemplateURL, (0, _jquery2.default)("#main-content"))).done(function (data) {
+            // Create the DOM and start the generator
+            _this.emptyTemplate = data;
+            _this.cacheDom();
+            _this.genPage();
+            _this.bindUIActions();
+        });
+    },
+
+    genPage: function genPage() {
+        console.log(this.emptyTemplate);
+        var html = _mustache2.default.to_html(this.emptyTemplate, this.templateFields);
+        (0, _jquery2.default)("#main-content").html(html);
+    },
+
+    bindUIActions: function bindUIActions() {},
+
+    terminate: function terminate() {
+        //If any events terminate here
+    }
+};
+
+exports.default = EmptyPage;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _pubsub = __webpack_require__(9);
+
+var _pubsub2 = _interopRequireDefault(_pubsub);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var bar,
+    ProgressBar = {
+	settings: {
+		percent: 0, //default starting point
+		amount: 25, //default value for progress amount
+		elem: 0
+	},
+	init: function init(percent, size) {
+		this.bindUIActions();
+		bar = this.settings;
+		bar.percent = percent;
+		bar.amount = 100 / size;
+		bar.elem = document.getElementById("ex-bar");
+		bar.elem.style.width = bar.percent;
+		// "bind" event
+		_pubsub2.default.on('progress', this.move);
+	},
+	restart: function restart() {
+		bar.percent = 0;
+		bar.elem.style.width = bar.percent;
+	},
+	bindUIActions: function bindUIActions() {},
+	move: function move() {
+		var width = bar.percent;
+		var id = setInterval(frame, 10);
+		var max_move = bar.percent + bar.amount;
+		function frame() {
+			if (width >= max_move || width >= 100) {
+				clearInterval(id);
+			} else {
+				width++;
+				bar.elem.style.width = width + '%';
+			}
+			bar.percent = max_move;
+		}
+	}
+}; /** Modular progress bar @author Martin Avagyan
+    *  Initialize it using ProgressBar.init(percent,size);
+    *  Add progress using  ProgressBar.move();
+   **/
+exports.default = ProgressBar;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /** Validator class takes care of the input for generator
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Based on the result, it decided on how to generate exercises
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks == 0 then no bookmarks page
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks < requested number then generate exercises that fit
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks >= requested number simply generate exercises
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Init with @param {array} set: [[2,3],[1,3],[3,3],[4,3],[1,3]]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  IMPORTANT: the function @getValidBookMarks assumes the set is created
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  considering the minimum requirements for each exercise
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      **/
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _settings = __webpack_require__(7);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+var _session = __webpack_require__(3);
+
+var _session2 = _interopRequireDefault(_session);
+
+var _util = __webpack_require__(2);
+
+var _util2 = _interopRequireDefault(_util);
+
+var _empty_page = __webpack_require__(25);
+
+var _empty_page2 = _interopRequireDefault(_empty_page);
+
+var _loading_animation = __webpack_require__(17);
+
+var _loading_animation2 = _interopRequireDefault(_loading_animation);
+
+var _ex = __webpack_require__(13);
+
+var _ex2 = _interopRequireDefault(_ex);
+
+var _ex3 = __webpack_require__(14);
+
+var _ex4 = _interopRequireDefault(_ex3);
+
+var _ex5 = __webpack_require__(15);
+
+var _ex6 = _interopRequireDefault(_ex5);
+
+var _ex7 = __webpack_require__(16);
+
+var _ex8 = _interopRequireDefault(_ex7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Validator = function () {
+    function Validator(set) {
+        _classCallCheck(this, Validator);
+
+        /** Class parameters*/
+        this.set = set;
+        this.validFinalSet = [[]];
+        this.loadingAnimation = new _loading_animation2.default();
+        this.data = 0;
+        this.session = _session2.default.getSession();
+        this.totalValidSize = 0;
+        //Cache the imports for later reference
+        this.cacheExerciseImports();
+    }
+
+    /**
+     * The function caches imports in local scope for later to be referenced as a string
+     * */
+
+
+    _createClass(Validator, [{
+        key: "cacheExerciseImports",
+        value: function cacheExerciseImports() {
+            this.Ex1 = _ex2.default;
+            this.Ex2 = _ex4.default;
+            this.Ex3 = _ex6.default;
+            this.Ex4 = _ex8.default;
+        }
+        /**
+        *	Ajax get request to the Zeeguu API to get new bookmarks
+        **/
+
+    }, {
+        key: "getBookmarks",
+        value: function getBookmarks(totalSize) {
+            var _this = this;
+            var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + totalSize + "?session=" + _this.session;
+            return _jquery2.default.ajax({
+                beforeSend: function beforeSend() {
+                    _this.loadingAnimation.loadingAnimation(true);
+                },
+                complete: function complete() {
+                    _this.loadingAnimation.loadingAnimation(false);
+                },
+                type: 'GET',
+                dataType: 'json',
+                url: address,
+                data: this.data,
+                async: true
+            });
+        }
+        /**
+         *  @param args is matrix of exercise name and number of bookmarks,
+         *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+         *  @return matrix of exercises similar to its input
+         * */
+
+    }, {
+        key: "getValidBookMarks",
+        value: function getValidBookMarks(callback) {
+            var _this = this;
+            //Calculate the size
+            var totalSize = _util2.default.calcSize(this.set, this.set.length);
+            //TODO change the follwoing line to proper return value
+            this.totalValidSize = totalSize;
+            _jquery2.default.when(this.getBookmarks(totalSize)).done(function (data) {
+                _this.validFinalSet = _this.validateSet(totalSize, data);
+                callback(data);
+            });
+        }
+
+        /**
+         *  Given the set and the bookmarks create a new set for generator
+         *  Three possibilities:
+         *  number of bookmarks == 0 then show no bookmarks page
+         *  number of bookmarks < requested number then generate exercises that fit
+         *  number of bookmarks >= requested number simply generate exercises
+         *  @return {Array} set, the validated ex set
+         * */
+
+    }, {
+        key: "validateSet",
+        value: function validateSet(totalSetLength, data) {
+            this.data = data;
+            var bookmarkLength = this.data.length;
+
+            if (bookmarkLength <= 0) return this.noBookmarkPage();
+            if (bookmarkLength < totalSetLength) return this.notEnoughBookmarks(bookmarkLength, this.set);
+            return this.enoughBookmarks(this.set);
+        }
+
+        /**
+         * number of bookmarks >= requested number simply generate exercises
+         * Assumes the given set has valid minimal sizes for exercises
+         */
+
+    }, {
+        key: "enoughBookmarks",
+        value: function enoughBookmarks(set) {
+            console.log('Enough bookmarks');
+            return set;
+        }
+
+        /**
+         * Number of bookmarks < requested number, generate exercises that fit
+         * @return {Array} set
+         * TODO add testing
+        */
+
+    }, {
+        key: "notEnoughBookmarks",
+        value: function notEnoughBookmarks(bookmarkLength, set) {
+            console.log('not enough bookmarks, bkmrLen: ' + bookmarkLength);
+            var newSet = [];
+            var setIndex = 0;
+            while (bookmarkLength > 0) {
+                var delta = bookmarkLength - set[setIndex][1];
+                if (delta >= 0) {
+                    newSet.push(set[setIndex]);
+                } else if (this.isProperEx(set[setIndex][0], bookmarkLength)) {
+                    //delta < 0 && the ex requirement is met
+                    newSet.push([set[setIndex][0], bookmarkLength]);
+                }
+                bookmarkLength = delta;
+                setIndex++;
+            }
+            return newSet.length > 0 ? newSet : this.noBookmarkPage(); //Bookmarks is still 0, throw noBookmarks page
+        }
+
+        /**
+         * Number of bookmarks == 0 then show no bookmarks page
+         * Signals the generator to terminate, load no bookmark page
+         * @return {Array} empty array
+         * */
+
+    }, {
+        key: "noBookmarkPage",
+        value: function noBookmarkPage() {
+            console.log('No bookmarks, bksLen: ' + this.data.length);
+            var emptPg = new _empty_page2.default();
+            return [];
+        }
+
+        /**
+         * Compares the minimum requirement for the given ex and the assigned amount
+         * @param {int} exNum, the id of the ex
+         * @param {int} exSize, the amount the ex is generated
+         * @return {boolean}, true if the minReq >= givenAmount, else false
+         * @example this.isProperEx(1,2), Ex1 2 times
+         * */
+
+    }, {
+        key: "isProperEx",
+        value: function isProperEx(exNum, exSize) {
+            var minReqForEx = this['Ex' + exNum].prototype.minRequirement;
+            return minReqForEx <= exSize;
+        }
+
+        /**
+         * Getter for final valid size of the generated bookmarks
+         * */
+
+    }, {
+        key: "validSize",
+        get: function get() {
+            return _util2.default.calcSize(this.validFinalSet, this.validFinalSet.length);
+        }
+
+        /**
+         * Getter for final valid set for exercise generator
+         * */
+
+    }, {
+        key: "validSet",
+        get: function get() {
+            return this.validFinalSet;
+        }
+    }]);
+
+    return Validator;
+}();
+
+exports.default = Validator;
+
+/***/ }),
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _home = __webpack_require__(26);
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _generator = __webpack_require__(19);
+
+var _generator2 = _interopRequireDefault(_generator);
+
+var _pubsub = __webpack_require__(9);
+
+var _pubsub2 = _interopRequireDefault(_pubsub);
+
+var _mustache = __webpack_require__(18);
+
+var _mustache2 = _interopRequireDefault(_mustache);
+
+var _loader = __webpack_require__(8);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Home = function Home() {
+	this.init();
+};
+
+Home.prototype = {
+
+	/************************** SETTINGS ********************************/
+	homeTemplateURL: 'static/template/home.html',
+	cardTemplateURL: 'static/template/card.html',
+	defaultIcon: 'img/icons/placeholder.svg',
+	exNames: [{ name: "Find", exID: [[1, 6]], info: 'Find the word in the context', icon: 'static/img/icons/search-engine.svg', time: 2 }, { name: "Choose", exID: [[2, 6]], info: 'Choose the word that fits the context', icon: 'static/img/icons/test.svg', time: 2 }, { name: "Match", exID: [[3, 6]], info: 'Match each word with its translation', icon: 'static/img/icons/question.svg', time: 3 }, { name: "Translate", exID: [[4, 6]], info: 'Translate the word given in the context', icon: 'static/img/icons/translator.svg', time: 2 }, { name: "Short Practice", exID: [[1, 3], [2, 3]], info: 'General exercise for short practice', icon: 'static/img/icons/placeholder.svg', time: 3 }, { name: "Long Practice", exID: [[1, 3], [2, 3], [3, 3], [4, 3]], info: 'General exerciese for short practice', icon: 'static/img/icons/placeholder.svg', time: 4 }, { name: "Random", exID: [[2, 3], [1, 3], [3, 3], [4, 3], [1, 3]], info: 'Repeat via random exercises', icon: 'static/img/icons/shuffle.svg', time: 6 }],
+	currentGenerator: 0,
+	eventGeneratorCompletedFunc: 0,
+	eventHomeRestartFunc: 0,
+	creditsOn: false,
+	cardTemplate: 0,
+	/*********************** General Functions ***************************/
+	/**
+ *	Saves the dom 
+ **/
+	cacheDom: function cacheDom() {
+		this.$elem = (0, _jquery2.default)("#home-body");
+		this.$exCards = this.$elem.find("#exercieses-cards");
+		this.$attribution = this.$elem.find("#attribution");
+		this.$credits = this.$elem.find("#credits");
+	},
+
+	/**
+ *	Exercise initialaizer
+ **/
+	init: function init() {
+		var _this = this;
+
+		// "bind" event
+		this.eventGeneratorCompletedFunc = function () {
+			_this.reset();
+		};
+		this.eventHomeRestartFunc = function () {
+			_this.start();
+		};
+		_pubsub2.default.on('generatorCompleted', this.eventGeneratorCompletedFunc);
+		_pubsub2.default.on('homeRestart', this.eventHomeRestartFunc);
+
+		this.start();
+	},
+
+	/**
+ *	The main constructor
+ **/
+	start: function start() {
+		var _this = this;
+		_jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.homeTemplateURL, (0, _jquery2.default)("#main-content")), _loader.Loader.loadTemplate(this.cardTemplateURL)).done(function (homeData, cardData) {
+
+			_this.cardTemplate = cardData[0]; //cardData[0] string html
+			// Create the DOM and start the generator
+			_this.cacheDom();
+			_this.generateEx();
+			_this.bindUIActions();
+		});
+	},
+
+	bindUIActions: function bindUIActions() {
+		var _this = this;
+		//Bind UI action of button clicks to the function
+		var exs = this.$exCards.children();
+		//Bind UI action of credits to the function
+		this.$credits.on("click", _this.giveCredits.bind(this));
+
+		for (var i = 0; i < exs.length; i++) {
+			var id = exs[i].getAttribute("ex-id");
+			(0, _jquery2.default)(exs[i]).on("click", this.newEx.bind(this, id));
+		}
+	},
+
+	giveCredits: function giveCredits() {
+		if (this.creditsOn) {
+			this.creditsOn = false;
+			this.$attribution.addClass("hide");
+			return;
+		}
+		this.creditsOn = true;
+		this.$attribution.removeClass("hide");
+	},
+
+	generateEx: function generateEx() {
+		var cardNames = { Exercises: this.exNames };
+		this.$exCards.append(_mustache2.default.render(this.cardTemplate, cardNames));
+	},
+
+	/**
+ * Parse string into 2D array for generator arguments
+  * TODO can be overriten by eval
+ */
+	exArrayParser: function exArrayParser(stringArray) {
+		var arr = stringArray.split(",").map(function (x) {
+			return parseInt(x);
+		});
+		var newArr = [];
+		while (arr.length) {
+			newArr.push(arr.splice(0, 2));
+		}return newArr;
+	},
+
+	reset: function reset() {
+		this.currentGenerator = null;
+		delete this.currentGenerator;
+	},
+
+	terminate: function terminate() {
+		_pubsub2.default.off('generatorCompleted', this.eventGeneratorCompletedFunc);
+		_pubsub2.default.off('homeRestart', this.eventHomeRestartFunc);
+		//emit listeners that the home is terminated
+	},
+
+	newEx: function newEx(exID) {
+		this.currentGenerator = new _generator2.default(this.exArrayParser(exID));
+	}
+};
+
+exports.default = Home;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _home = __webpack_require__(28);
 
 var _home2 = _interopRequireDefault(_home);
 

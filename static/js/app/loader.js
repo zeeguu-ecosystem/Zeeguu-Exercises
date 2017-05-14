@@ -35,14 +35,7 @@ class Loader {
      *        @default asyncQuery is set to true
      * */
     static loadTemplateIntoElem(tempUrl,elem,append = false, asyncQuery = true){
-        let loadingAnimation = new LoadingAnimation();
         return $.ajax({
-            beforeSend: function(){
-                loadingAnimation.loadingAnimation(true);
-            },
-            complete: function(){
-                loadingAnimation.loadingAnimation(false);
-            },
             type: 'GET',
             dataType: 'html',
             url: tempUrl,

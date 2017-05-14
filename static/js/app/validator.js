@@ -14,6 +14,7 @@ import $ from 'jquery';
 import Settings from "./settings";
 import Session from "./session";
 import Util from "./util";
+import EmptyPage from "./empty_page";
 import LoadingAnimation from './loading_animation';
 import Ex1 from './exercises/ex1';
 import Ex2 from './exercises/ex2';
@@ -136,7 +137,7 @@ class Validator{
      * */
     noBookmarkPage(){
         console.log('No bookmarks, bksLen: '+ this.data.length);
-        window.location.replace("static/template/empty_page.html");
+        let emptPg = new EmptyPage();
         return [];
     }
 

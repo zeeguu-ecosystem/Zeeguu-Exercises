@@ -3,6 +3,7 @@
  */
 import $ from 'jquery';
 import {Loader} from "./loader";
+import Mustache from 'mustache';
 
 var EmptyPage = function(){
     this.init();
@@ -11,7 +12,16 @@ var EmptyPage = function(){
 EmptyPage.prototype = {
 
     /************************** SETTINGS ********************************/
-    emptyTemplate: 'static/template/empty_page.html',
+    emptyTemplateURL: 'static/template/empty_page.html',
+    templateFields:
+                    {
+                         icon: 'static/img/illustrations/ntd_cloud.png',
+                         title: "No Bookmarks Yet",
+                         info: 'You can get bookmarks when you read articles.',
+                         btnText: 'Let\'s Read',
+                         btnLink: 'https://www.zeeguu.unibe.ch/reading',
+                    },
+    emptyTemplate: 0,
 
     /*********************** General Functions ***************************/
     /**
@@ -33,11 +43,19 @@ EmptyPage.prototype = {
      **/
     start: function (){
         var _this = this;
-        $.when(Loader.loadTemplateIntoElem(_this.emptyTemplate,$("#main-content"))).done(function(){
+        $.when(Loader.loadTemplateIntoElem(_this.emptyTemplateURL,$("#main-content"))).done(function(data){
             // Create the DOM and start the generator
+            _this.emptyTemplate = data;
             _this.cacheDom();
+            _this.genPage();
             _this.bindUIActions();
         });
+    },
+
+    genPage: function () {
+        console.log(this.emptyTemplate);
+        let html = Mustache.to_html(this.emptyTemplate,this.templateFields);
+        $("#main-content").html(html);
     },
 
     bindUIActions: function(){
@@ -48,5 +66,5 @@ EmptyPage.prototype = {
     },
 };
 
-export default Home;
+export default EmptyPage;
 
