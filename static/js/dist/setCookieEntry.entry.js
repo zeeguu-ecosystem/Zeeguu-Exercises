@@ -139,7 +139,23 @@ exports.default = cookieHandler;
 
 /***/ }),
 
-/***/ 3:
+/***/ 30:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _session = __webpack_require__(4);
+
+var _session2 = _interopRequireDefault(_session);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_session2.default.setSession();
+
+/***/ }),
+
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -158,7 +174,7 @@ var _cookie_handler = __webpack_require__(12);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(8);
 
 var _settings2 = _interopRequireDefault(_settings);
 
@@ -215,23 +231,7 @@ exports.default = Session;
 
 /***/ }),
 
-/***/ 30:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _session = __webpack_require__(3);
-
-var _session2 = _interopRequireDefault(_session);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_session2.default.setSession();
-
-/***/ }),
-
-/***/ 7:
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -251,7 +251,7 @@ exports.default = {
     ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '34563456', //00926044 34563456 11010001
+    ZEEGUU_DEFAULT_SESSION: '11010001', //00926044 34563456 11010001
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',

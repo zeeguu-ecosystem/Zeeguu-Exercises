@@ -78,6 +78,9 @@ Generator.prototype = {
             _this.data = (ldata);
             console.log(_this.set);
             _this.set = _this.validator.validSet;
+            //Terminate if not enough bookmarks
+            if(_this.set ==null || _this.set <=0) return;
+
             console.log(_this.set);
             ProgressBar.init(0, _this.validator.validSize);
             _this._constructor();

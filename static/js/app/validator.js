@@ -15,6 +15,7 @@ import $ from 'jquery';
 import Settings from "./settings";
 import Session from "./session";
 import Util from "./util";
+import events from './pubsub';
 import Ex1 from './exercises/ex1';
 import Ex2 from './exercises/ex2';
 import Ex3 from './exercises/ex3';
@@ -109,9 +110,8 @@ class Validator{
 
     /**
      * Number of bookmarks < requested number, generate exercises that fit
-     * @return {array} set
+     * @return {Array} set
      * TODO add testing
-     * TODO has a bug should give 2 gave 4
     */
     notEnoughBookmarks(bookmarkLength,set){
         console.log('not enough bookmarks, bkmrLen: ' + bookmarkLength);
@@ -120,25 +120,28 @@ class Validator{
         while(bookmarkLength>0){
             let delta = bookmarkLength - set[setIndex][1];
             if(delta >=0){
+                console.log('gothere if');
                 newSet.push(set[setIndex]);
-            }else if(this.isProperEx(set[setIndex][0],-delta)) {//delta < 0 && the set is good with the number
-                newSet.push([set[setIndex][0],-delta]);
+            }else if(this.isProperEx(set[setIndex][0],bookmarkLength)){//delta < 0 && the ex requirement is met
+                console.log('gothere elseif');
+                newSet.push([set[setIndex][0],bookmarkLength]);
             }
             bookmarkLength = delta;
             setIndex++;
         }
-        //TODO if set is still empty not enough bookmarks page
-        return newSet;
+        return (newSet.length>0)?newSet:this.noBookmarkPage();//Bookmarks is still 0, throw noBookmarks page
     }
 
     /**
      * Number of bookmarks == 0 then show no bookmarks page
      * Signals the generator to terminate, load no bookmark page
+     * @return {Array} empty array
      * */
     noBookmarkPage(){
-        console.log('No bookmarks');
+        console.log('No bookmarks, bksLen: '+ this.data.length);
+        events.emit('generatorCompleted');
+        return [];
         //TODO implement no bookmarks page
-        alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
     }
 
     /**

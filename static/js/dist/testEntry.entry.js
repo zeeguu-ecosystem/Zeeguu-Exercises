@@ -10197,6 +10197,49 @@ exports.default = Util;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var events = function () {
+    var events = {};
+
+    function on(eventName, fn) {
+        events[eventName] = events[eventName] || [];
+        events[eventName].push(fn);
+    }
+    function off(eventName, fn) {
+        if (events[eventName]) {
+            for (var i = 0; i < events[eventName].length; i++) {
+                if (events[eventName][i] === fn) {
+                    events[eventName].splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+    function emit(eventName, data) {
+        if (events[eventName]) {
+            events[eventName].forEach(function (fn) {
+                fn(data);
+            });
+        }
+    }
+    return {
+        on: on,
+        off: off,
+        emit: emit
+    };
+}();
+
+exports.default = events;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by Martin on 5/4/2017.
@@ -10207,7 +10250,7 @@ var _cookie_handler = __webpack_require__(12);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(8);
 
 var _settings2 = _interopRequireDefault(_settings);
 
@@ -10263,7 +10306,7 @@ var Session = function () {
 exports.default = Session;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10277,7 +10320,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _hexToRgb = __webpack_require__(5);
+var _hexToRgb = __webpack_require__(6);
 
 var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(1);
 
@@ -10438,7 +10481,7 @@ exports.resetInputError = resetInputError;
 exports.fixVerticalPosition = fixVerticalPosition;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10517,7 +10560,7 @@ exports.logStr = logStr;
 exports.colorLuminance = colorLuminance;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10535,7 +10578,7 @@ var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _pubsub = __webpack_require__(8);
+var _pubsub = __webpack_require__(3);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -10543,11 +10586,11 @@ var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(8);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(3);
+var _session = __webpack_require__(4);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -10781,7 +10824,7 @@ Exercise.prototype = {
 exports.default = Exercise;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10801,7 +10844,7 @@ exports.default = {
     ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '34563456', //00926044 34563456 11010001
+    ZEEGUU_DEFAULT_SESSION: '11010001', //00926044 34563456 11010001
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
@@ -10820,49 +10863,6 @@ exports.default = {
     ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint'
 
 };
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var events = function () {
-    var events = {};
-
-    function on(eventName, fn) {
-        events[eventName] = events[eventName] || [];
-        events[eventName].push(fn);
-    }
-    function off(eventName, fn) {
-        if (events[eventName]) {
-            for (var i = 0; i < events[eventName].length; i++) {
-                if (events[eventName][i] === fn) {
-                    events[eventName].splice(i, 1);
-                    break;
-                }
-            }
-        }
-    }
-    function emit(eventName, data) {
-        if (events[eventName]) {
-            events[eventName].forEach(function (fn) {
-                fn(data);
-            });
-        }
-    }
-    return {
-        on: on,
-        off: off,
-        emit: emit
-    };
-}();
-
-exports.default = events;
 
 /***/ }),
 /* 9 */
@@ -11021,13 +11021,13 @@ var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant
  * Handy utilities
  */
 
-var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(5);
+var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(6);
 
 /*
  *  Handle sweetAlert's DOM elements
  */
 
-var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(4);
+var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(5);
 
 // Handle button events and keyboard events
 
@@ -11389,7 +11389,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(6);
+var _exercise = __webpack_require__(7);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -11486,7 +11486,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(6);
+var _exercise = __webpack_require__(7);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -11644,7 +11644,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(6);
+var _exercise = __webpack_require__(7);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -11887,7 +11887,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(6);
+var _exercise = __webpack_require__(7);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -12032,7 +12032,7 @@ var _progress_bar = __webpack_require__(24);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
-var _pubsub = __webpack_require__(8);
+var _pubsub = __webpack_require__(3);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -12040,7 +12040,7 @@ var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _session = __webpack_require__(3);
+var _session = __webpack_require__(4);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -12121,6 +12121,9 @@ Generator.prototype = {
             _this.data = ldata;
             console.log(_this.set);
             _this.set = _this.validator.validSet;
+            //Terminate if not enough bookmarks
+            if (_this.set == null || _this.set <= 0) return;
+
             console.log(_this.set);
             _progress_bar2.default.init(0, _this.validator.validSize);
             _this._constructor();
@@ -12250,9 +12253,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _colorLuminance = __webpack_require__(5);
+var _colorLuminance = __webpack_require__(6);
 
-var _getModal = __webpack_require__(4);
+var _getModal = __webpack_require__(5);
 
 var _hasClass$isDescendant = __webpack_require__(1);
 
@@ -12393,7 +12396,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _stopEventPropagation$fireClick = __webpack_require__(1);
 
-var _setFocusStyle = __webpack_require__(4);
+var _setFocusStyle = __webpack_require__(5);
 
 var handleKeyDown = function handleKeyDown(event, params, modal) {
   var e = event || window.event;
@@ -12526,9 +12529,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _isIE8 = __webpack_require__(5);
+var _isIE8 = __webpack_require__(6);
 
-var _getModal$getInput$setFocusStyle = __webpack_require__(4);
+var _getModal$getInput$setFocusStyle = __webpack_require__(5);
 
 var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
 
@@ -12862,7 +12865,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _pubsub = __webpack_require__(8);
+var _pubsub = __webpack_require__(3);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -12941,17 +12944,21 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(8);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(3);
+var _session = __webpack_require__(4);
 
 var _session2 = _interopRequireDefault(_session);
 
 var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
+
+var _pubsub = __webpack_require__(3);
+
+var _pubsub2 = _interopRequireDefault(_pubsub);
 
 var _ex = __webpack_require__(13);
 
@@ -13078,7 +13085,7 @@ var Validator = function () {
 
         /**
          * Number of bookmarks < requested number, generate exercises that fit
-         * @return {array} set
+         * @return {Array} set
          * TODO add testing
         */
 
@@ -13091,29 +13098,32 @@ var Validator = function () {
             while (bookmarkLength > 0) {
                 var delta = bookmarkLength - set[setIndex][1];
                 if (delta >= 0) {
+                    console.log('gothere if');
                     newSet.push(set[setIndex]);
-                } else if (this.isProperEx(set[setIndex][0], -delta)) {
-                    //delta < 0 && the set is good with the number
-                    newSet.push([set[setIndex][0], -delta]);
+                } else if (this.isProperEx(set[setIndex][0], bookmarkLength)) {
+                    //delta < 0 && the ex requirement is met
+                    console.log('gothere elseif');
+                    newSet.push([set[setIndex][0], bookmarkLength]);
                 }
                 bookmarkLength = delta;
                 setIndex++;
             }
-            //TODO if set is still empty not enough bookmarks page
-            return newSet;
+            return newSet.length > 0 ? newSet : this.noBookmarkPage(); //Bookmarks is still 0, throw noBookmarks page
         }
 
         /**
          * Number of bookmarks == 0 then show no bookmarks page
          * Signals the generator to terminate, load no bookmark page
+         * @return {Array} empty array
          * */
 
     }, {
         key: 'noBookmarkPage',
         value: function noBookmarkPage() {
-            console.log('No bookmarks');
+            console.log('No bookmarks, bksLen: ' + this.data.length);
+            _pubsub2.default.emit('generatorCompleted');
+            return [];
             //TODO implement no bookmarks page
-            alert("no bookmarks" + " bokmrLen: " + this.data.length + ", needLen: " + totalSize);
         }
 
         /**
