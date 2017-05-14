@@ -25,7 +25,8 @@ Home.prototype = {
 			  
 			  ],
 	currentGenerator: 0,
-	eventFunc: 0,
+	eventGeneratorCompletedFunc: 0,
+    eventHomeRestartFunc: 0,
 	creditsOn: false,
     cardTemplate: 0,
 	/*********************** General Functions ***************************/	
@@ -47,8 +48,10 @@ Home.prototype = {
 		var _this = this;
 		
 		// "bind" event
-		this.eventFunc = function(){_this.reset();};
-		events.on('generatorCompleted',this.eventFunc);
+		this.eventGeneratorCompletedFunc = function(){_this.reset();};
+        this.eventHomeRestartFunc = function(){_this.start();};
+		events.on('generatorCompleted',this.eventGeneratorCompletedFunc);
+        events.on('homeRestart',this.eventHomeRestartFunc);
 	
 		this.start();		
 	},
@@ -112,12 +115,13 @@ Home.prototype = {
 	
 	reset: function(){
 		this.currentGenerator = null;
-		delete this.currentGenerator;	
-		this.start();
+        delete this.currentGenerator;
 	},
 	
 	terminate: function(){
-		events.off('generatorCompleted',this.eventFunc);
+		events.off('generatorCompleted',this.eventGeneratorCompletedFunc);
+        events.off('homeRestart',this.eventHomeRestartFunc);
+		//emit listeners that the home is terminated
 	},
 	
 	newEx: function(exID){

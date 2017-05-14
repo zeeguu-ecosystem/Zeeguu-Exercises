@@ -101,8 +101,6 @@ Generator.prototype = {
         console.log(bookmarksData);
         return bookmarksData;
     },
-
-
     /**
      *	The main constructor
      **/
@@ -174,6 +172,7 @@ Generator.prototype = {
                     return;
                 }
                 _this.terminateGenerator();
+                _this.restartHome();
                 if (redirect!=null) {
                     window.location = redirect;
                 }
@@ -183,6 +182,9 @@ Generator.prototype = {
     terminateGenerator: function(){
         events.off('exerciseCompleted',this.$eventFunc);
         events.emit('generatorCompleted');
+    },
+    restartHome: function(){
+        events.emit('homeRestart');
     },
 
     /**

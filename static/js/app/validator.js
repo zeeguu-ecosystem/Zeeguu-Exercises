@@ -1,12 +1,12 @@
 /** Validator class takes care of the input for generator
  *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
  *  Based on the result, it decided on how to generate exercises
- *  If number of bookmarks == 0 then show no bookmarks page
+ *  If number of bookmarks == 0 then no bookmarks page
  *  If number of bookmarks < requested number then generate exercises that fit
  *  If number of bookmarks >= requested number simply generate exercises
  *  Init with @param {array} set: [[2,3],[1,3],[3,3],[4,3],[1,3]]
  *
- *  IMPORTANT: the @function getValidBookMarks assumes the set is created
+ *  IMPORTANT: the function @getValidBookMarks assumes the set is created
  *  considering the minimum requirements for each exercise
  **/
 
@@ -14,7 +14,6 @@ import $ from 'jquery';
 import Settings from "./settings";
 import Session from "./session";
 import Util from "./util";
-import events from './pubsub';
 import LoadingAnimation from './loading_animation';
 import Ex1 from './exercises/ex1';
 import Ex2 from './exercises/ex2';
@@ -86,7 +85,7 @@ class Validator{
      *  number of bookmarks == 0 then show no bookmarks page
      *  number of bookmarks < requested number then generate exercises that fit
      *  number of bookmarks >= requested number simply generate exercises
-     *  @return {array} set, the validated ex set
+     *  @return {Array} set, the validated ex set
      * */
     validateSet(totalSetLength,data){
         this.data = data;
@@ -137,8 +136,8 @@ class Validator{
      * */
     noBookmarkPage(){
         console.log('No bookmarks, bksLen: '+ this.data.length);
+        window.location.replace("static/template/empty_page.html");
         return [];
-        //TODO implement no bookmarks page
     }
 
     /**

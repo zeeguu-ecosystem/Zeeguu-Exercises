@@ -10197,49 +10197,6 @@ exports.default = Util;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var events = function () {
-    var events = {};
-
-    function on(eventName, fn) {
-        events[eventName] = events[eventName] || [];
-        events[eventName].push(fn);
-    }
-    function off(eventName, fn) {
-        if (events[eventName]) {
-            for (var i = 0; i < events[eventName].length; i++) {
-                if (events[eventName][i] === fn) {
-                    events[eventName].splice(i, 1);
-                    break;
-                }
-            }
-        }
-    }
-    function emit(eventName, data) {
-        if (events[eventName]) {
-            events[eventName].forEach(function (fn) {
-                fn(data);
-            });
-        }
-    }
-    return {
-        on: on,
-        off: off,
-        emit: emit
-    };
-}();
-
-exports.default = events;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by Martin on 5/4/2017.
@@ -10250,7 +10207,7 @@ var _cookie_handler = __webpack_require__(12);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
-var _settings = __webpack_require__(8);
+var _settings = __webpack_require__(7);
 
 var _settings2 = _interopRequireDefault(_settings);
 
@@ -10306,7 +10263,7 @@ var Session = function () {
 exports.default = Session;
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10320,7 +10277,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _hexToRgb = __webpack_require__(6);
+var _hexToRgb = __webpack_require__(5);
 
 var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(1);
 
@@ -10481,7 +10438,7 @@ exports.resetInputError = resetInputError;
 exports.fixVerticalPosition = fixVerticalPosition;
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10560,7 +10517,7 @@ exports.logStr = logStr;
 exports.colorLuminance = colorLuminance;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10578,7 +10535,7 @@ var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _pubsub = __webpack_require__(3);
+var _pubsub = __webpack_require__(8);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -10586,11 +10543,11 @@ var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _settings = __webpack_require__(8);
+var _settings = __webpack_require__(7);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(4);
+var _session = __webpack_require__(3);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -10824,7 +10781,7 @@ Exercise.prototype = {
 exports.default = Exercise;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10863,6 +10820,49 @@ exports.default = {
     ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint'
 
 };
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var events = function () {
+    var events = {};
+
+    function on(eventName, fn) {
+        events[eventName] = events[eventName] || [];
+        events[eventName].push(fn);
+    }
+    function off(eventName, fn) {
+        if (events[eventName]) {
+            for (var i = 0; i < events[eventName].length; i++) {
+                if (events[eventName][i] === fn) {
+                    events[eventName].splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+    function emit(eventName, data) {
+        if (events[eventName]) {
+            events[eventName].forEach(function (fn) {
+                fn(data);
+            });
+        }
+    }
+    return {
+        on: on,
+        off: off,
+        emit: emit
+    };
+}();
+
+exports.default = events;
 
 /***/ }),
 /* 9 */
@@ -11033,13 +11033,13 @@ var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant
  * Handy utilities
  */
 
-var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(6);
+var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(5);
 
 /*
  *  Handle sweetAlert's DOM elements
  */
 
-var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(5);
+var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(4);
 
 // Handle button events and keyboard events
 
@@ -11401,7 +11401,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(7);
+var _exercise = __webpack_require__(6);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -11498,7 +11498,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(7);
+var _exercise = __webpack_require__(6);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -11656,7 +11656,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(7);
+var _exercise = __webpack_require__(6);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -11899,7 +11899,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(7);
+var _exercise = __webpack_require__(6);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
@@ -12119,7 +12119,7 @@ var _progress_bar = __webpack_require__(24);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
-var _pubsub = __webpack_require__(3);
+var _pubsub = __webpack_require__(8);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -12127,7 +12127,7 @@ var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _session = __webpack_require__(4);
+var _session = __webpack_require__(3);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -12230,7 +12230,6 @@ Generator.prototype = {
         console.log(bookmarksData);
         return bookmarksData;
     },
-
     /**
      *	The main constructor
      **/
@@ -12301,6 +12300,7 @@ Generator.prototype = {
                 return;
             }
             _this.terminateGenerator();
+            _this.restartHome();
             if (redirect != null) {
                 window.location = redirect;
             }
@@ -12310,6 +12310,9 @@ Generator.prototype = {
     terminateGenerator: function terminateGenerator() {
         _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
         _pubsub2.default.emit('generatorCompleted');
+    },
+    restartHome: function restartHome() {
+        _pubsub2.default.emit('homeRestart');
     },
 
     /**
@@ -12343,9 +12346,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _colorLuminance = __webpack_require__(6);
+var _colorLuminance = __webpack_require__(5);
 
-var _getModal = __webpack_require__(5);
+var _getModal = __webpack_require__(4);
 
 var _hasClass$isDescendant = __webpack_require__(1);
 
@@ -12486,7 +12489,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _stopEventPropagation$fireClick = __webpack_require__(1);
 
-var _setFocusStyle = __webpack_require__(5);
+var _setFocusStyle = __webpack_require__(4);
 
 var handleKeyDown = function handleKeyDown(event, params, modal) {
   var e = event || window.event;
@@ -12619,9 +12622,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _isIE8 = __webpack_require__(6);
+var _isIE8 = __webpack_require__(5);
 
-var _getModal$getInput$setFocusStyle = __webpack_require__(5);
+var _getModal$getInput$setFocusStyle = __webpack_require__(4);
 
 var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
 
@@ -12880,7 +12883,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _pubsub = __webpack_require__(3);
+var _pubsub = __webpack_require__(8);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -12942,12 +12945,12 @@ Object.defineProperty(exports, "__esModule", {
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /** Validator class takes care of the input for generator
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  Based on the result, it decided on how to generate exercises
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks == 0 then show no bookmarks page
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks == 0 then no bookmarks page
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks < requested number then generate exercises that fit
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks >= requested number simply generate exercises
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  Init with @param {array} set: [[2,3],[1,3],[3,3],[4,3],[1,3]]
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  IMPORTANT: the @function getValidBookMarks assumes the set is created
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  IMPORTANT: the function @getValidBookMarks assumes the set is created
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  considering the minimum requirements for each exercise
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       **/
 
@@ -12955,21 +12958,17 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _settings = __webpack_require__(8);
+var _settings = __webpack_require__(7);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(4);
+var _session = __webpack_require__(3);
 
 var _session2 = _interopRequireDefault(_session);
 
 var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
-
-var _pubsub = __webpack_require__(3);
-
-var _pubsub2 = _interopRequireDefault(_pubsub);
 
 var _loading_animation = __webpack_require__(17);
 
@@ -13072,7 +13071,7 @@ var Validator = function () {
          *  number of bookmarks == 0 then show no bookmarks page
          *  number of bookmarks < requested number then generate exercises that fit
          *  number of bookmarks >= requested number simply generate exercises
-         *  @return {array} set, the validated ex set
+         *  @return {Array} set, the validated ex set
          * */
 
     }, {
@@ -13134,8 +13133,8 @@ var Validator = function () {
         key: "noBookmarkPage",
         value: function noBookmarkPage() {
             console.log('No bookmarks, bksLen: ' + this.data.length);
+            window.location.replace("static/template/empty_page.html");
             return [];
-            //TODO implement no bookmarks page
         }
 
         /**
