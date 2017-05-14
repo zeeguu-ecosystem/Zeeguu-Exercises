@@ -27,16 +27,8 @@ Home.prototype = {
 	currentGenerator: 0,
 	eventFunc: 0,
 	creditsOn: false,
+    cardTemplate: 0,
 	/*********************** General Functions ***************************/	
-	/**
-	*	Loads the HTML exercise template from static
-	**/
-	createDom: function(){
-		$("#main-content").html(Loader.loadTemplate(this.homeTemplateURL));
-	},
-	
-	
-	
 	/**
 	*	Saves the dom 
 	**/
@@ -59,18 +51,25 @@ Home.prototype = {
 		events.on('generatorCompleted',this.eventFunc);
 	
 		this.start();		
-	},	
-	
-	/**
+	},
+
+
+
+    /**
 	*	The main constructor
 	**/
 	start: function (){	
 		var _this = this;
-		$.when(this.createDom()).done(function(){		
-			_this.cacheDom();		
-			_this.generateEx();			
-			_this.bindUIActions();
-		});	
+        $.when(Loader.loadTemplateIntoElem(_this.homeTemplateURL,$("#main-content")),
+			   Loader.loadTemplate(this.cardTemplateURL)).done(function(homeData,cardData){
+			console.log(homeData.toString());
+            console.log(cardData.toString());
+			_this.cardTemplate = cardData.toString();
+            // Create the DOM and start the generator
+            _this.cacheDom();
+            _this.generateEx();
+            _this.bindUIActions();
+        });
 	},
 
 	bindUIActions: function(){
@@ -96,11 +95,9 @@ Home.prototype = {
 		this.$attribution.removeClass("hide");
 	},
 	
-	generateEx: function(){		
-		var cardTemplate = Loader.loadTemplate(this.cardTemplateURL);
-		var cardNames = {Exercises: this.exNames};	
-		
-		this.$exCards.append(Mustache.render(cardTemplate,cardNames));
+	generateEx: function(){
+        var cardNames = {Exercises: this.exNames};
+		this.$exCards.append(Mustache.render(this.cardTemplate,cardNames));
 	},
 	
 	/**

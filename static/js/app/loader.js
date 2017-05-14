@@ -3,6 +3,8 @@
  */
 
 import $ from 'jquery';
+import LoadingAnimation from './loading_animation';
+
 
 /**
  * A class responsible for loading templates and other resources
@@ -14,13 +16,14 @@ class Loader {
      * @param {bool} asyncQUery, allows to choose the loading method
      *        @default asyncQuery is set to false
      * */
-    static loadTemplate(tempUrl, asyncQuery = false) {
+    static loadTemplate(tempUrl, asyncQuery = true) {
         return $.ajax({
             type: 'GET',
             dataType: 'html',
             url: tempUrl,
+            data: this.data,
             async: asyncQuery
-        }).responseText;
+        });
     }
 
     /**
@@ -32,7 +35,14 @@ class Loader {
      *        @default asyncQuery is set to true
      * */
     static loadTemplateIntoElem(tempUrl,elem,append = false, asyncQuery = true){
+        let loadingAnimation = new LoadingAnimation();
         return $.ajax({
+            beforeSend: function(){
+                loadingAnimation.loadingAnimation(true);
+            },
+            complete: function(){
+                loadingAnimation.loadingAnimation(false);
+            },
             type: 'GET',
             dataType: 'html',
             url: tempUrl,

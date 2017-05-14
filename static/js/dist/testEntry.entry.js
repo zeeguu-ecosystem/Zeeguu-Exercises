@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module)))
 
 /***/ }),
 /* 1 */
@@ -10332,7 +10332,7 @@ var _defaultParams2 = _interopRequireWildcard(_defaultParams);
  * Add modal + overlay to DOM
  */
 
-var _injectedHTML = __webpack_require__(20);
+var _injectedHTML = __webpack_require__(21);
 
 var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
 
@@ -10884,6 +10884,10 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _loading_animation = __webpack_require__(17);
+
+var _loading_animation2 = _interopRequireDefault(_loading_animation);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10906,14 +10910,15 @@ var Loader = function () {
          *        @default asyncQuery is set to false
          * */
         value: function loadTemplate(tempUrl) {
-            var asyncQuery = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+            var asyncQuery = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
             return _jquery2.default.ajax({
                 type: 'GET',
                 dataType: 'html',
                 url: tempUrl,
+                data: this.data,
                 async: asyncQuery
-            }).responseText;
+            });
         }
 
         /**
@@ -10931,7 +10936,14 @@ var Loader = function () {
             var append = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
             var asyncQuery = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
 
+            var loadingAnimation = new _loading_animation2.default();
             return _jquery2.default.ajax({
+                beforeSend: function beforeSend() {
+                    loadingAnimation.loadingAnimation(true);
+                },
+                complete: function complete() {
+                    loadingAnimation.loadingAnimation(false);
+                },
                 type: 'GET',
                 dataType: 'html',
                 url: tempUrl,
@@ -11031,9 +11043,9 @@ var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$r
 
 // Handle button events and keyboard events
 
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(18);
+var _handleButton$handleConfirm$handleCancel = __webpack_require__(19);
 
-var _handleKeyDown = __webpack_require__(19);
+var _handleKeyDown = __webpack_require__(20);
 
 var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
@@ -11043,7 +11055,7 @@ var _defaultParams = __webpack_require__(10);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
-var _setParameters = __webpack_require__(21);
+var _setParameters = __webpack_require__(22);
 
 var _setParameters2 = _interopRequireWildcard(_setParameters);
 
@@ -12008,6 +12020,81 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var animationInstance = null;
+
+var LoadingAnimation = function () {
+    function LoadingAnimation() {
+        _classCallCheck(this, LoadingAnimation);
+
+        if (animationInstance) {
+            return animationInstance;
+        }
+        /** Class parameters*/
+        this.$loader = null;
+        this.$content = null;
+        this.updateCache();
+    }
+    /**
+     * Update/save the cache of the dom
+     * */
+
+
+    _createClass(LoadingAnimation, [{
+        key: 'updateCache',
+        value: function updateCache() {
+            this.$loader = (0, _jquery2.default)('#loader');
+            this.$content = (0, _jquery2.default)('#main-content');
+        }
+    }, {
+        key: 'loadingAnimation',
+        value: function loadingAnimation(activate) {
+            //If cache is not available
+            if (this.$loader == null || this.$content == null) {
+                this.updateCache();
+            }
+            //Turn on the animation
+            if (activate === true) {
+                this.$content.addClass('hide');
+                this.$loader.removeClass('hide');
+            } else {
+                //Turn off the animation unhide the content
+                this.$content.removeClass('hide');
+                this.$loader.addClass('hide');
+            }
+        }
+    }]);
+
+    return LoadingAnimation;
+}();
+
+exports.default = LoadingAnimation;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -12246,7 +12333,7 @@ Generator.prototype = {
 exports.default = Generator;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12387,7 +12474,7 @@ exports['default'] = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12472,7 +12559,7 @@ exports['default'] = handleKeyDown;
 module.exports = exports['default'];
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12520,7 +12607,7 @@ exports["default"] = injectedHTML;
 module.exports = exports["default"];
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12753,7 +12840,7 @@ exports['default'] = setParameters;
 module.exports = exports['default'];
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12781,81 +12868,6 @@ module.exports = function (module) {
 	}
 	return module;
 };
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
-
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var animationInstance = null;
-
-var LoadingAnimation = function () {
-    function LoadingAnimation() {
-        _classCallCheck(this, LoadingAnimation);
-
-        if (animationInstance) {
-            return animationInstance;
-        }
-        /** Class parameters*/
-        this.$loader = null;
-        this.$content = null;
-        this.updateCache();
-    }
-    /**
-     * Update/save the cache of the dom
-     * */
-
-
-    _createClass(LoadingAnimation, [{
-        key: 'updateCache',
-        value: function updateCache() {
-            this.$loader = (0, _jquery2.default)('#loader');
-            this.$content = (0, _jquery2.default)('#main-content');
-        }
-    }, {
-        key: 'loadingAnimation',
-        value: function loadingAnimation(activate) {
-            //If cache is not available
-            if (this.$loader == null || this.$content == null) {
-                this.updateCache();
-            }
-            //Turn on the animation
-            if (activate === true) {
-                this.$content.addClass('hide');
-                this.$loader.removeClass('hide');
-            } else {
-                //Turn off the animation unhide the content
-                this.$content.removeClass('hide');
-                this.$loader.addClass('hide');
-            }
-        }
-    }]);
-
-    return LoadingAnimation;
-}();
-
-exports.default = LoadingAnimation;
 
 /***/ }),
 /* 24 */
@@ -12939,10 +12951,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  considering the minimum requirements for each exercise
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       **/
 
-var _loading_animation = __webpack_require__(23);
-
-var _loading_animation2 = _interopRequireDefault(_loading_animation);
-
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -12962,6 +12970,10 @@ var _util2 = _interopRequireDefault(_util);
 var _pubsub = __webpack_require__(3);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
+
+var _loading_animation = __webpack_require__(17);
+
+var _loading_animation2 = _interopRequireDefault(_loading_animation);
 
 var _ex = __webpack_require__(13);
 
@@ -13004,7 +13016,7 @@ var Validator = function () {
 
 
     _createClass(Validator, [{
-        key: 'cacheExerciseImports',
+        key: "cacheExerciseImports",
         value: function cacheExerciseImports() {
             this.Ex1 = _ex2.default;
             this.Ex2 = _ex4.default;
@@ -13016,7 +13028,7 @@ var Validator = function () {
         **/
 
     }, {
-        key: 'getBookmarks',
+        key: "getBookmarks",
         value: function getBookmarks(totalSize) {
             var _this = this;
             var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + totalSize + "?session=" + _this.session;
@@ -13041,7 +13053,7 @@ var Validator = function () {
          * */
 
     }, {
-        key: 'getValidBookMarks',
+        key: "getValidBookMarks",
         value: function getValidBookMarks(callback) {
             var _this = this;
             //Calculate the size
@@ -13064,7 +13076,7 @@ var Validator = function () {
          * */
 
     }, {
-        key: 'validateSet',
+        key: "validateSet",
         value: function validateSet(totalSetLength, data) {
             this.data = data;
             var bookmarkLength = this.data.length;
@@ -13080,7 +13092,7 @@ var Validator = function () {
          */
 
     }, {
-        key: 'enoughBookmarks',
+        key: "enoughBookmarks",
         value: function enoughBookmarks(set) {
             console.log('Enough bookmarks');
             return set;
@@ -13093,7 +13105,7 @@ var Validator = function () {
         */
 
     }, {
-        key: 'notEnoughBookmarks',
+        key: "notEnoughBookmarks",
         value: function notEnoughBookmarks(bookmarkLength, set) {
             console.log('not enough bookmarks, bkmrLen: ' + bookmarkLength);
             var newSet = [];
@@ -13119,7 +13131,7 @@ var Validator = function () {
          * */
 
     }, {
-        key: 'noBookmarkPage',
+        key: "noBookmarkPage",
         value: function noBookmarkPage() {
             console.log('No bookmarks, bksLen: ' + this.data.length);
             return [];
@@ -13135,7 +13147,7 @@ var Validator = function () {
          * */
 
     }, {
-        key: 'isProperEx',
+        key: "isProperEx",
         value: function isProperEx(exNum, exSize) {
             var minReqForEx = this['Ex' + exNum].prototype.minRequirement;
             return minReqForEx <= exSize;
@@ -13146,7 +13158,7 @@ var Validator = function () {
          * */
 
     }, {
-        key: 'validSize',
+        key: "validSize",
         get: function get() {
             return _util2.default.calcSize(this.validFinalSet, this.validFinalSet.length);
         }
@@ -13156,7 +13168,7 @@ var Validator = function () {
          * */
 
     }, {
-        key: 'validSet',
+        key: "validSet",
         get: function get() {
             return this.validFinalSet;
         }
@@ -13177,7 +13189,7 @@ exports.default = Validator;
 "use strict";
 
 
-var _generator = __webpack_require__(17);
+var _generator = __webpack_require__(18);
 
 var _generator2 = _interopRequireDefault(_generator);
 

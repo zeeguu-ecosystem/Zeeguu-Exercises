@@ -10,12 +10,12 @@
  *  considering the minimum requirements for each exercise
  **/
 
-import LoadingAnimation from './loading_animation';
 import $ from 'jquery';
 import Settings from "./settings";
 import Session from "./session";
 import Util from "./util";
 import events from './pubsub';
+import LoadingAnimation from './loading_animation';
 import Ex1 from './exercises/ex1';
 import Ex2 from './exercises/ex2';
 import Ex3 from './exercises/ex3';
