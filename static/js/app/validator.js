@@ -25,7 +25,7 @@ class Validator{
     constructor(set){
         /** Class parameters*/
         this.set = set;
-        this.validFinalSet = [[]];
+        this.validFinalSet = [];
         this.loadingAnimation = new LoadingAnimation();
         this.data = 0;
         this.session = Session.getSession();
@@ -43,6 +43,7 @@ class Validator{
         this.Ex3 = Ex3;
         this.Ex4 = Ex4;
     }
+
     /**
     *	Ajax get request to the Zeeguu API to get new bookmarks
     **/
@@ -52,9 +53,6 @@ class Validator{
         return $.ajax({
             beforeSend: function(){
                 _this.loadingAnimation.loadingAnimation(true);
-            },
-            complete: function(){
-                _this.loadingAnimation.loadingAnimation(false);
             },
             type: 'GET',
             dataType: 'json',

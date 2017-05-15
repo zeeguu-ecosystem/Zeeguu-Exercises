@@ -10576,6 +10576,7 @@ Exercise.prototype = {
 	startTime: 0,
 	isHintUsed: false,
 	minRequirement: 1,
+	resultSubmitSource: _settings2.default.ZEEGUU_EX_SOURCE_RECOGNIZE,
 
 	/*********************** General Functions ***************************/
 	/**
@@ -10584,18 +10585,6 @@ Exercise.prototype = {
 
 	createCustomDom: function createCustomDom() {
 		_loader.Loader.loadTemplateIntoElem(this.customTemplateURL, (0, _jquery2.default)("#custom-content"));
-		//$("#custom-content").html(Loader.loadTemplate(this.customTemplateURL));
-		/* var _this = this;
-   return $.ajax({
-       type: 'GET',
-       dataType: 'html',
-       url: _this.customTemplateURL,
-       data: this.data,
-       success: function(data) {
-           $("#custom-content").html(data);
-       },
-       async: true
-   });*/
 	},
 
 	/**
@@ -10690,6 +10679,7 @@ Exercise.prototype = {
   *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 
      **/
 	submitResult: function submitResult(id, exOutcome) {
+		var _this = this;
 		//If the user used the hint, do not register correct solution, resent the hint, move on
 		if (this.isHintUsed && exOutcome == _settings2.default.ZEEGUU_EX_OUTCOME_CORRECT) {
 			this.isHintUsed = false;
@@ -10700,7 +10690,7 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = _util2.default.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-		_jquery2.default.post(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _settings2.default.ZEEGUU_EX_SOURCE_RECOGNIZE + "/" + exTime + "/" + id + "?session=" + this.session);
+		_jquery2.default.post(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
 	},
 
 	/**
@@ -10893,7 +10883,11 @@ var Loader = function () {
             var append = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
             var asyncQuery = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
 
+            var loadingAnimation = new _loading_animation2.default();
             return _jquery2.default.ajax({
+                complete: function complete() {
+                    loadingAnimation.loadingAnimation(false);
+                },
                 type: 'GET',
                 dataType: 'html',
                 url: tempUrl,
@@ -12782,6 +12776,16 @@ Generator.prototype = {
     cacheDom: function cacheDom() {},
 
     /**
+     * The function caches imports in local scope for later to be referenced as a string
+     * */
+    cacheExerciseImports: function cacheExerciseImports() {
+        this.Ex1 = _ex2.default;
+        this.Ex2 = _ex4.default;
+        this.Ex3 = _ex6.default;
+        this.Ex4 = _ex8.default;
+    },
+
+    /**
      *	Generator initialaizer
      **/
     init: function init(set) {
@@ -12796,12 +12800,7 @@ Generator.prototype = {
         };
         _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
 
-        //Loads the HTML general exercise template from static
-        _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
-            // Create the DOM and start the generator
-            _this.cacheDom();
-            _this.start();
-        });
+        this.start();
     },
 
     restart: function restart() {
@@ -12812,23 +12811,23 @@ Generator.prototype = {
      *	Call to load the data from API
      **/
     start: function start() {
-        this.size = _util2.default.calcSize(this.set, this.set.length);
         var _this = this;
         //Callback wait until the bookmarks are loaded
         this.validator.getValidBookMarks(function (ldata) {
             _this.data = ldata;
-            console.log(_this.set);
             _this.set = _this.validator.validSet;
             //Terminate generator if not enough bookmarks
             if (_this.set == null || _this.set <= 0) {
                 _this.terminateGenerator();
                 return;
             }
-
-            console.log(_this.set);
-            console.log('size: ' + _this.validator.validSize);
-            _progress_bar2.default.init(0, _this.validator.validSize);
-            _this._constructor();
+            //Loads the HTML general exercise template from static
+            _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
+                // Create the DOM and start the generator
+                _progress_bar2.default.init(0, _this.validator.validSize);
+                _this.cacheDom();
+                _this._constructor();
+            });
         });
     },
 
@@ -13702,7 +13701,7 @@ var Validator = function () {
 
         /** Class parameters*/
         this.set = set;
-        this.validFinalSet = [[]];
+        this.validFinalSet = [];
         this.loadingAnimation = new _loading_animation2.default();
         this.data = 0;
         this.session = _session2.default.getSession();
@@ -13724,6 +13723,7 @@ var Validator = function () {
             this.Ex3 = _ex6.default;
             this.Ex4 = _ex8.default;
         }
+
         /**
         *	Ajax get request to the Zeeguu API to get new bookmarks
         **/
@@ -13736,9 +13736,6 @@ var Validator = function () {
             return _jquery2.default.ajax({
                 beforeSend: function beforeSend() {
                     _this.loadingAnimation.loadingAnimation(true);
-                },
-                complete: function complete() {
-                    _this.loadingAnimation.loadingAnimation(false);
                 },
                 type: 'GET',
                 dataType: 'json',

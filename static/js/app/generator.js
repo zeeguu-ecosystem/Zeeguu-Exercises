@@ -40,6 +40,16 @@ Generator.prototype = {
     },
 
     /**
+     * The function caches imports in local scope for later to be referenced as a string
+     * */
+    cacheExerciseImports: function(){
+        this.Ex1 = Ex1;
+        this.Ex2 = Ex2;
+        this.Ex3 = Ex3;
+        this.Ex4 = Ex4;
+    },
+
+    /**
      *	Generator initialaizer
      **/
     init: function(set){
@@ -52,12 +62,7 @@ Generator.prototype = {
         this.$eventFunc = function(){_this.nextEx()};
         events.on('exerciseCompleted',this.$eventFunc);
 
-        //Loads the HTML general exercise template from static
-        $.when(Loader.loadTemplateIntoElem(_this.templateURL,$("#main-content"))).done(function(){
-            // Create the DOM and start the generator
-            _this.cacheDom();
-            _this.start();
-        });
+        this.start();
     },
 
     restart: function(){
@@ -69,23 +74,23 @@ Generator.prototype = {
      **/
     start: function ()
     {
-        this.size = Util.calcSize(this.set,this.set.length);
         let _this= this;
         //Callback wait until the bookmarks are loaded
         this.validator.getValidBookMarks(function(ldata) {
             _this.data = (ldata);
-            console.log(_this.set);
             _this.set = _this.validator.validSet;
             //Terminate generator if not enough bookmarks
             if(_this.set ==null || _this.set <=0) {
                 _this.terminateGenerator();
                 return;
             }
-
-            console.log(_this.set);
-            console.log('size: ' + _this.validator.validSize);
-            ProgressBar.init(0, _this.validator.validSize);
-            _this._constructor();
+            //Loads the HTML general exercise template from static
+            $.when(Loader.loadTemplateIntoElem(_this.templateURL,$("#main-content"))).done(function(){
+                // Create the DOM and start the generator
+                ProgressBar.init(0, _this.validator.validSize);
+                _this.cacheDom();
+                _this._constructor();
+            });
         });
     },
 

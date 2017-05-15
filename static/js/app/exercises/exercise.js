@@ -29,6 +29,7 @@ Exercise.prototype = {
 	startTime: 0,
 	isHintUsed: false,
     minRequirement: 1,
+	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,
 	
 	/*********************** General Functions ***************************/	
 	/**
@@ -37,18 +38,6 @@ Exercise.prototype = {
 	
 	createCustomDom: function(){
         Loader.loadTemplateIntoElem(this.customTemplateURL,$("#custom-content"));
-        //$("#custom-content").html(Loader.loadTemplate(this.customTemplateURL));
-       /* var _this = this;
-        return $.ajax({
-            type: 'GET',
-            dataType: 'html',
-            url: _this.customTemplateURL,
-            data: this.data,
-            success: function(data) {
-                $("#custom-content").html(data);
-            },
-            async: true
-        });*/
 	},
 	
 	/**
@@ -140,6 +129,7 @@ Exercise.prototype = {
 	 *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 
      **/
     submitResult: function(id,exOutcome){
+    	let _this = this;
 		//If the user used the hint, do not register correct solution, resent the hint, move on
 		if(this.isHintUsed && exOutcome == Settings.ZEEGUU_EX_OUTCOME_CORRECT) {
 			this.isHintUsed = false;
@@ -150,7 +140,7 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = Util.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-        $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  Settings.ZEEGUU_EX_SOURCE_RECOGNIZE + "/" + exTime + "/" + id + "?session="+this.session);
+        $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
     },
 
 	

@@ -1,7 +1,7 @@
 body
 {
 	background-color: #e9e9e9;  
-	transition: all 0.5s;
+	transition: all 0.9s;
 	height: 100%;
 }
 
@@ -131,7 +131,6 @@ body
 {
 	color: #212121;
 	word-wrap: break-word;
-	position: left;
 }
 
 .home-btn:hover
@@ -340,14 +339,14 @@ body
     display: inline-block;
     width: 100%;
     color: #424242;
-    font-family: "Comic Sans MS", cursive, sans-serif
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 .empty-page-container a
 {
     border: solid #0091EA;
     border-radius: 2px;
     background-color: #0091EA;
-    font-family: "Comic Sans MS", cursive, sans-serif
+    font-family: "Comic Sans MS", cursive, sans-serif;
     display: inline-block;
     font-size: 11px;
     margin-bottom: 10px;
@@ -358,21 +357,26 @@ body
     border: solid #0085d8;
     background-color: #0085d8;
 }
-.empty-page-container
-{
+.empty-page-container {
 	width: 100%;
 	min-height: 200px;
-	display:block;
+	display: block;
 	margin: auto;
-	background-color: rgba(255,255,255,1);
-	border-radius:10px;
-	box-shadow: 0 0 4px rgba(0,0,0,0.08);
+	background-color: rgba(255, 255, 255, 1);
+	border-radius: 10px;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
 	border-radius: 4px;
 	overflow: hidden;
 	transition: all .5s;
 	margin: 5px;
 	padding: 0px 10px 10px 10px;
-    text-align: center;
+	text-align: center;
+	-webkit-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
+@keyframes fadeIn {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
 }
 
 .empty-page-content-img
