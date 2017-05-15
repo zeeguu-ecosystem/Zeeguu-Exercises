@@ -11849,7 +11849,6 @@ function Ex3(data, index, size) {
 		var arr = [];
 		while (arr.length < size) {
 			var randomnumber = Math.ceil(Math.random() * range);
-			//console.log(this.index + " : " + randomnumber);
 			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
 			arr[arr.length] = randomnumber;
 		}
@@ -12826,6 +12825,7 @@ Generator.prototype = {
                 // Create the DOM and start the generator
                 _progress_bar2.default.init(0, _this.validator.validSize);
                 _this.cacheDom();
+                _this.cacheExerciseImports();
                 _this._constructor();
             });
         });
@@ -12839,7 +12839,6 @@ Generator.prototype = {
             }
             bookmarksData.splice(i, 1);
         }
-        console.log(bookmarksData);
         return bookmarksData;
     },
     /**
@@ -12855,7 +12854,6 @@ Generator.prototype = {
      *	Add Ex here
      **/
     nextEx: function nextEx() {
-        console.log("index of ex: " + this.index + "length of ex: " + this.set.length);
         if (this.index >= this.set.length) {
             this.onExSetComplete();
             return;
@@ -12866,21 +12864,8 @@ Generator.prototype = {
 
         this.$currentEx = null;
         delete this.$currentEx;
-        switch (ex) {
-            case 1:
-                this.$currentEx = new _ex2.default(this.data, startingIndex, size);
-                break;
-            case 2:
-                this.$currentEx = new _ex4.default(this.data, startingIndex, size);
-                break;
-            case 3:
-                this.$currentEx = new _ex6.default(this.data, startingIndex, size);
-                break;
-            case 4:
-                this.$currentEx = new _ex8.default(this.data, startingIndex, size);
-                break;
-        }
-
+        //Local scope reference
+        this.$currentEx = new this['Ex' + ex](this.data, startingIndex, size);
         this.index++;
     },
     /**
@@ -13520,7 +13505,7 @@ EmptyPage.prototype = {
     emptyTemplateURL: 'static/template/empty_page.html',
     templateFields: {
         icon: 'static/img/illustrations/ntd_cloud.png',
-        title: "No Bookmarks Yet",
+        title: "Not Enough Bookmarks",
         info: 'You can get bookmarks when you read articles.',
         btnText: 'Let\'s Read',
         btnLink: 'https://www.zeeguu.unibe.ch/reading'
@@ -13555,7 +13540,6 @@ EmptyPage.prototype = {
     },
 
     genPage: function genPage() {
-        console.log(this.emptyTemplate);
         var html = _mustache2.default.to_html(this.emptyTemplate, this.templateFields);
         (0, _jquery2.default)("#main-content").html(html);
     },
@@ -13792,7 +13776,6 @@ var Validator = function () {
     }, {
         key: "enoughBookmarks",
         value: function enoughBookmarks(set) {
-            console.log('Enough bookmarks');
             return set;
         }
 
@@ -13805,18 +13788,18 @@ var Validator = function () {
     }, {
         key: "notEnoughBookmarks",
         value: function notEnoughBookmarks(bookmarkLength, set) {
-            console.log('not enough bookmarks, bkmrLen: ' + bookmarkLength);
             var newSet = [];
             var setIndex = 0;
-            while (bookmarkLength > 0) {
+            while (bookmarkLength > 0 && setIndex < set.length) {
                 var delta = bookmarkLength - set[setIndex][1];
                 if (delta >= 0) {
                     newSet.push(set[setIndex]);
+                    bookmarkLength = delta;
                 } else if (this.isProperEx(set[setIndex][0], bookmarkLength)) {
                     //delta < 0 && the ex requirement is met
                     newSet.push([set[setIndex][0], bookmarkLength]);
+                    bookmarkLength = delta;
                 }
-                bookmarkLength = delta;
                 setIndex++;
             }
             return newSet.length > 0 ? newSet : this.noBookmarkPage(); //Bookmarks is still 0, throw noBookmarks page
@@ -13831,7 +13814,6 @@ var Validator = function () {
     }, {
         key: "noBookmarkPage",
         value: function noBookmarkPage() {
-            console.log('No bookmarks, bksLen: ' + this.data.length);
             var emptPg = new _empty_page2.default();
             return [];
         }

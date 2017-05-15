@@ -102,7 +102,6 @@ class Validator{
      * Assumes the given set has valid minimal sizes for exercises
      */
     enoughBookmarks(set){
-        console.log('Enough bookmarks');
         return set;
     }
 
@@ -112,17 +111,17 @@ class Validator{
      * TODO add testing
     */
     notEnoughBookmarks(bookmarkLength,set){
-        console.log('not enough bookmarks, bkmrLen: ' + bookmarkLength);
         let newSet = [];
         let setIndex = 0;
-        while(bookmarkLength>0){
+        while(bookmarkLength>0 && setIndex < set.length){
             let delta = bookmarkLength - set[setIndex][1];
             if(delta >=0){
                 newSet.push(set[setIndex]);
+                bookmarkLength = delta;
             }else if(this.isProperEx(set[setIndex][0],bookmarkLength)){//delta < 0 && the ex requirement is met
                 newSet.push([set[setIndex][0],bookmarkLength]);
+                bookmarkLength = delta;
             }
-            bookmarkLength = delta;
             setIndex++;
         }
         return (newSet.length>0)?newSet:this.noBookmarkPage();//Bookmarks is still 0, throw noBookmarks page
@@ -134,7 +133,6 @@ class Validator{
      * @return {Array} empty array
      * */
     noBookmarkPage(){
-        console.log('No bookmarks, bksLen: '+ this.data.length);
         let emptPg = new EmptyPage();
         return [];
     }
