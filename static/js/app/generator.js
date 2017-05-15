@@ -89,6 +89,7 @@ Generator.prototype = {
                 // Create the DOM and start the generator
                 ProgressBar.init(0, _this.validator.validSize);
                 _this.cacheDom();
+                _this.cacheExerciseImports();
                 _this._constructor();
             });
         });
@@ -128,21 +129,8 @@ Generator.prototype = {
 
         this.$currentEx = null;
         delete this.$currentEx;
-        switch(ex) {
-            case 1:
-                this.$currentEx = new Ex1(this.data,startingIndex,size);
-                break;
-            case 2:
-                this.$currentEx = new Ex2(this.data,startingIndex,size);
-                break;
-            case 3:
-                this.$currentEx = new Ex3(this.data,startingIndex,size);
-                break;
-            case 4:
-                this.$currentEx = new Ex4(this.data,startingIndex,size);
-                break;
-        }
-
+        //Local scope reference
+        this.$currentEx = new (this['Ex'+ex])(this.data,startingIndex,size);
         this.index++;
     },
     /**

@@ -16,7 +16,7 @@ EmptyPage.prototype = {
     templateFields:
                     {
                          icon: 'static/img/illustrations/ntd_cloud.png',
-                         title: "No Bookmarks Yet",
+                         title: "Not Enough Bookmarks",
                          info: 'You can get bookmarks when you read articles.',
                          btnText: 'Let\'s Read',
                          btnLink: 'https://www.zeeguu.unibe.ch/reading',
