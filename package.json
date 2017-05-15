@@ -1,7 +1,7 @@
 {
-  "name": "An Open Adaptive Online Language Practice Platform",
+  "name": "language_practice_platform",
   "version": "0.3.0",
-  "description": "Language learning tools API",
+  "description": "An open adaptive online language practice platform",
   "main": "main.js",
   "scripts": {
     "dev": "./node_modules/.bin/webpack",
