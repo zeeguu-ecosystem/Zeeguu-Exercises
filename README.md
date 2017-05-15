@@ -8,11 +8,11 @@ At first clone the repository from
 <https://github.com/martinavagyan/zeeguu-exercises.git>  
 Note: you need to have python 2.7 installed in your machine.
 In order to run the code on the local machine, we need to install the
-following dependencies: Python Virtual environment, *F**l**a**s**k*,
-*G**u**n**i**c**o**r**n*, *R**e**q**u**e**s**t**s*.  
+following dependencies: Python Virtual environment, *Flask*,
+*Gunicorn*, *Requests*.  
   
 The following tutorial shows how to install
-*v**i**r**t**u**a**l**e**n**v* and *F**l**a**s**k*:  
+*virtualenv* and *Flask*:  
 <http://flask.pocoo.org/docs/0.12/installation/>  
 
 Note: to install virtual enviroment in windows simply type:  
@@ -27,14 +27,14 @@ using:
 ***Make sure the environment is activated before proceeding with the
 instructions***  
   
-To install *g**u**n**i**c**o**r**n* use the following command:
+To install *gunicorn* use the following command:
 
     pip install gunicorn
 
 More details here:  
 <http://docs.gunicorn.org/en/stable/install.html>  
-  
-To install the *r**e**q**u**e**s**t**s* package simply do:
+ 
+To install the *requests* package simply do:
 
     pip install requests
 
@@ -48,14 +48,14 @@ And then save it:
     pip install -r requirements.txt
 
    
-A batch file (*b**a**t**c**h**f**i**l**e*.*b**a**t*) is provided to
+A batch file (*batchfile*.*bat*) is provided to
 easily activate the virtual environment and start the local host, given
 that all the previous installations are successfully completed.
 
 Heroku Deployment
 -----------------
 
-The code is already deployed on the *H**e**r**o**k**u* server[1]. The
+The code is already deployed on the *Heroku* server[1]. The
 deployment is done through Github.  
 The link to our app:  
 [zeeguu.herokuapp.com]  
