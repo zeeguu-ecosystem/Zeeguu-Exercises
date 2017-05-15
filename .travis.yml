@@ -10,3 +10,8 @@ before_install:
  
 script:
   - npm test
+  
+branches:
+  only:
+    - master
+    - d
