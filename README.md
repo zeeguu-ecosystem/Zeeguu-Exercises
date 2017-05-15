@@ -1,3 +1,5 @@
+An adaptive online language practice platform
+=====
 [![Build Status](https://travis-ci.org/martinavagyan/zeeguu-exercises.svg?branch=master)](https://travis-ci.org/martinavagyan/zeeguu-exercises)
 
 Usage
