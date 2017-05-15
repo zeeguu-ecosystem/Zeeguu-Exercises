@@ -206,8 +206,7 @@ function Ex3(data,index,size){
 	this.randomNumsInRange = function(size,range){
 		var arr = [];	
 		while(arr.length < size){
-			var randomnumber = Math.ceil(Math.random()*range);	
-			//console.log(this.index + " : " + randomnumber);
+			var randomnumber = Math.ceil(Math.random()*range);
 			if((arr.indexOf(randomnumber) > -1) || randomnumber==this.index) continue;
 			arr[arr.length] = randomnumber;
 		}		

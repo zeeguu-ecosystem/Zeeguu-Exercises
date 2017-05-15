@@ -103,7 +103,6 @@ Generator.prototype = {
             }
             bookmarksData.splice(i, 1);
         }
-        console.log(bookmarksData);
         return bookmarksData;
     },
     /**
@@ -119,7 +118,6 @@ Generator.prototype = {
      *	Add Ex here
      **/
     nextEx: function(){
-        console.log("index of ex: " + this.index + "length of ex: " + this.set.length);
         if(this.index >= this.set.length){
             this.onExSetComplete();
             return;

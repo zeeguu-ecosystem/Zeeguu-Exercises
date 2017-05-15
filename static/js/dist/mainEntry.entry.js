@@ -11849,7 +11849,6 @@ function Ex3(data, index, size) {
 		var arr = [];
 		while (arr.length < size) {
 			var randomnumber = Math.ceil(Math.random() * range);
-			//console.log(this.index + " : " + randomnumber);
 			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
 			arr[arr.length] = randomnumber;
 		}
@@ -12839,7 +12838,6 @@ Generator.prototype = {
             }
             bookmarksData.splice(i, 1);
         }
-        console.log(bookmarksData);
         return bookmarksData;
     },
     /**
@@ -12855,7 +12853,6 @@ Generator.prototype = {
      *	Add Ex here
      **/
     nextEx: function nextEx() {
-        console.log("index of ex: " + this.index + "length of ex: " + this.set.length);
         if (this.index >= this.set.length) {
             this.onExSetComplete();
             return;
@@ -13555,7 +13552,6 @@ EmptyPage.prototype = {
     },
 
     genPage: function genPage() {
-        console.log(this.emptyTemplate);
         var html = _mustache2.default.to_html(this.emptyTemplate, this.templateFields);
         (0, _jquery2.default)("#main-content").html(html);
     },
@@ -13792,7 +13788,6 @@ var Validator = function () {
     }, {
         key: "enoughBookmarks",
         value: function enoughBookmarks(set) {
-            console.log('Enough bookmarks');
             return set;
         }
 
@@ -13805,7 +13800,6 @@ var Validator = function () {
     }, {
         key: "notEnoughBookmarks",
         value: function notEnoughBookmarks(bookmarkLength, set) {
-            console.log('not enough bookmarks, bkmrLen: ' + bookmarkLength);
             var newSet = [];
             var setIndex = 0;
             while (bookmarkLength > 0) {
@@ -13831,7 +13825,6 @@ var Validator = function () {
     }, {
         key: "noBookmarkPage",
         value: function noBookmarkPage() {
-            console.log('No bookmarks, bksLen: ' + this.data.length);
             var emptPg = new _empty_page2.default();
             return [];
         }

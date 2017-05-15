@@ -37,7 +37,6 @@ class LoadingAnimation {
     }
 
     static loadingAnimation(activate) {
-        console.log("Just came here");
         if (activate === true) {
             $('body').children('div').addClass('hide');
              $('#loader').removeClass('hide');
