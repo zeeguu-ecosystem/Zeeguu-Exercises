@@ -22,15 +22,10 @@ function Ex3(data,index,size){
 		this.$btn6 					= this.$elem.find("#btn6");
 	};
 	
-	//this.get = () => { return this["$btn1"]; };
-	
 	/** @Override */
 	this.bindUIActions = function(){
 		//Bind UI action of Hint/Show solution to the function		
 		this.$showSolution.on("click", this.handleHint.bind(this));
-		
-		//Bind UI action of Check answer to the function
-		//this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
 		
 		//Bind UI action of button 1 click to the function
 		this.$btn1.on("click", this.selectChoice.bind(this,1));
@@ -211,8 +206,7 @@ function Ex3(data,index,size){
 	this.randomNumsInRange = function(size,range){
 		var arr = [];	
 		while(arr.length < size){
-			var randomnumber = Math.ceil(Math.random()*range);	
-			//console.log(this.index + " : " + randomnumber);
+			var randomnumber = Math.ceil(Math.random()*range);
 			if((arr.indexOf(randomnumber) > -1) || randomnumber==this.index) continue;
 			arr[arr.length] = randomnumber;
 		}		
@@ -230,7 +224,8 @@ Ex3.prototype = Object.create(Exercise.prototype, {
 	answers: 	{ writable: true, value:[1,2,3]},				// arr of indexes of possible answers
 	chosenButton: { writable: true, value:-1},  	// ID of currently selected button; -1 means no button is selected
 	correctAnswers: { writable: true, value:0},	// number of correct answers
-	hints: {writable:true, value:0}				// max number of possible hints is 1
+	hints: {writable:true, value:0},			// max number of possible hints is 1
+    minRequirement: { writable: true, value:3},	// minimum number required for the ex
 	/*******************************************************************/
 });
 

@@ -5,7 +5,7 @@
 
 import $ from 'jquery';
 import Exercise from './exercise';
-import Util from './util';
+import Util from '../util';
 
 
 function Ex1(data,index,size){
@@ -70,7 +70,7 @@ Ex1.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/	
 	description: {value: "Find the word in the context:"},
-	customTemplateURL: {value: 'static/template/ex1.html'},	
+	customTemplateURL: {value: 'static/template/ex1.html'},
 });
 
 export default Ex1;

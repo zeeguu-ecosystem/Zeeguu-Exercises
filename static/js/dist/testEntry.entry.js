@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)(module)))
 
 /***/ }),
 /* 1 */
@@ -10106,6 +10106,169 @@ exports.stopEventPropagation = stopEventPropagation;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var ut,
+    Util = {
+	/**
+ *Returns selected text
+ **/
+	getSelectedText: function getSelectedText() {
+		// Gets clicked on word (or selected text if text is selected)
+		var t = '';
+		var sel;
+		if (window.getSelection && (sel = window.getSelection()).modify) {
+			var s = window.getSelection();
+			if (s.isCollapsed) {
+				s.modify('move', 'forward', 'character');
+				s.modify('move', 'backward', 'word');
+				s.modify('extend', 'forward', 'word');
+				t = s.toString();
+				s.modify('move', 'forward', 'character'); //clear selection
+			} else {
+				t = s.toString();
+			}
+		} else if ((sel = document.selection) && sel.type != "Control") {
+			// IE 4+
+			var textRange = sel.createRange();
+			if (!textRange.text) {
+				textRange.expand("word");
+			}
+			// Remove trailing spaces
+			while (/\s$/.test(textRange.text)) {
+				textRange.moveEnd("character", -1);
+			}
+			t = textRange.text;
+		}
+		return t;
+	},
+
+	/**
+     *	Calculate session time in minutes
+  *	@return string with appended minute
+     **/
+	calcTimeInMinutes: function calcTimeInMinutes(startTime) {
+		var endTime = new Date();
+		var total = endTime.getMinutes() - startTime.getMinutes();
+		return total <= 1 ? "1 minute" : total + " minutes";
+	},
+
+	/**
+     *	Calculate exercise time in milliseconds
+  *	@return {int} milliseconds
+     **/
+	calcTimeInMilliseconds: function calcTimeInMilliseconds(startTime) {
+		var endTime = Date.now();
+		var total = endTime - startTime;
+		return total;
+	},
+
+	/**
+  * Calculate size of elements in 2D array
+  * @param {int} length, do until that index
+  * @param {[int][int]} set, int array
+  * */
+	calcSize: function calcSize(set, length) {
+		var sum = 0;
+		for (var i = 0; i < length; i++) {
+			sum += set[i][1];
+		}
+		return sum;
+	}
+};
+
+var extendObject = function extendObject(child, parent) {
+	var temp = function temp() {};
+	temp.prototype = parent.prototype;
+	child.prototype = new temp();
+	child.prototype.constructor = child;
+};
+
+exports.default = Util;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/4/2017.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _cookie_handler = __webpack_require__(12);
+
+var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
+
+var _settings = __webpack_require__(7);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var sessionID = null;
+
+var Session = function () {
+    function Session() {
+        _classCallCheck(this, Session);
+    }
+
+    _createClass(Session, null, [{
+        key: 'getSession',
+
+
+        /**
+         * @param name, name of the session identifier
+         * @default from Zeeguu Settings
+         * */
+        value: function getSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+
+            if (sessionID) return sessionID;
+            sessionID = _cookie_handler2.default.getCookie(name);
+            return sessionID;
+        }
+
+        /**
+         *  Set the zeeguu sessionID cookie to the default session
+         * @param name, cookie identifier
+         * @param value, value of the cookie
+         * @param days, expiration time
+         * @default form Zeeguu Settings
+         * */
+
+    }, {
+        key: 'setSession',
+        value: function setSession() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
+            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFAULT_SESSION;
+            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFAULT_COOKIE_EXPIRATION;
+
+            _cookie_handler2.default.setCookie(name, value, days);
+        }
+    }]);
+
+    return Session;
+}();
+
+exports.default = Session;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _interopRequireWildcard = function _interopRequireWildcard(obj) {
   return obj && obj.__esModule ? obj : { 'default': obj };
 };
@@ -10114,11 +10277,11 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _hexToRgb = __webpack_require__(3);
+var _hexToRgb = __webpack_require__(5);
 
 var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(1);
 
-var _defaultParams = __webpack_require__(9);
+var _defaultParams = __webpack_require__(10);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
@@ -10126,7 +10289,7 @@ var _defaultParams2 = _interopRequireWildcard(_defaultParams);
  * Add modal + overlay to DOM
  */
 
-var _injectedHTML = __webpack_require__(15);
+var _injectedHTML = __webpack_require__(22);
 
 var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
 
@@ -10275,7 +10438,7 @@ exports.resetInputError = resetInputError;
 exports.fixVerticalPosition = fixVerticalPosition;
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10354,7 +10517,7 @@ exports.logStr = logStr;
 exports.colorLuminance = colorLuminance;
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10368,15 +10531,15 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _sweetalert = __webpack_require__(10);
+var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _pubsub = __webpack_require__(5);
+var _pubsub = __webpack_require__(9);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(2);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -10384,21 +10547,21 @@ var _settings = __webpack_require__(7);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(6);
+var _session = __webpack_require__(3);
 
 var _session2 = _interopRequireDefault(_session);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _loader = __webpack_require__(8);
 
-/** Modular Zeeguu Powered Exercise @author Martin Avagyan
- *  @initialize it using: new Exercise();
- *  @customize it by using prototypal inheritance 
-**/
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Exercise = function Exercise(data, index, size) {
 	this.init(data, index, size);
 	//TODO unbind method
-};
+}; /** Modular Zeeguu Powered Exercise @author Martin Avagyan
+    *  @initialize it using: new Exercise();
+    *  @customize it by using prototypal inheritance 
+   **/
 
 Exercise.prototype = {
 
@@ -10412,6 +10575,8 @@ Exercise.prototype = {
 	session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
 	startTime: 0,
 	isHintUsed: false,
+	minRequirement: 1,
+	resultSubmitSource: _settings2.default.ZEEGUU_EX_SOURCE_RECOGNIZE,
 
 	/*********************** General Functions ***************************/
 	/**
@@ -10419,17 +10584,7 @@ Exercise.prototype = {
  **/
 
 	createCustomDom: function createCustomDom() {
-		var _this = this;
-		return _jquery2.default.ajax({
-			type: 'GET',
-			dataType: 'html',
-			url: _this.customTemplateURL,
-			data: this.data,
-			success: function success(data) {
-				(0, _jquery2.default)("#custom-content").html(data);
-			},
-			async: true
-		});
+		_loader.Loader.loadTemplateIntoElem(this.customTemplateURL, (0, _jquery2.default)("#custom-content"));
 	},
 
 	/**
@@ -10450,7 +10605,7 @@ Exercise.prototype = {
  **/
 	init: function init(data, index, size) {
 		var _this = this;
-		_jquery2.default.when(_this.createCustomDom()).done(function () {
+		_jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.customTemplateURL, (0, _jquery2.default)("#custom-content"))).done(function () {
 			_this.cacheDom();
 			_this.bindUIActions();
 			_this._constructor(data, index, size);
@@ -10467,7 +10622,7 @@ Exercise.prototype = {
 		this.size = size;
 		this.setDescription();
 		this.next();
-		this.startTime = new Date();
+		this.startTime = Date.now();
 	},
 
 	/**
@@ -10515,7 +10670,7 @@ Exercise.prototype = {
 			return;
 		}
 		setTimeout(function () {
-			_this.next();
+			_this.next();_this.startTime = Date.now();
 		}, 2000);
 	},
 
@@ -10524,6 +10679,7 @@ Exercise.prototype = {
   *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 
      **/
 	submitResult: function submitResult(id, exOutcome) {
+		var _this = this;
 		//If the user used the hint, do not register correct solution, resent the hint, move on
 		if (this.isHintUsed && exOutcome == _settings2.default.ZEEGUU_EX_OUTCOME_CORRECT) {
 			this.isHintUsed = false;
@@ -10534,7 +10690,8 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = _util2.default.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-		_jquery2.default.post(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _settings2.default.ZEEGUU_EX_SOURCE_RECOGNIZE + "/" + exTime + "/" + id + "?session=" + this.session);
+		console.log(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
+		_jquery2.default.post(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
 	},
 
 	/**
@@ -10615,7 +10772,146 @@ Exercise.prototype = {
 exports.default = Exercise;
 
 /***/ }),
-/* 5 */
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//noinspection JSAnnotator
+/**
+ * File containing global settings for exercises
+ * */
+
+exports.default = {
+    /*********************** Exercise API Parameters **************************/
+
+    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION_ID: 'sessionID',
+    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
+
+    /******************** Exercise Bookmark Parameters ************************/
+    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
+
+    /*********************** Exercise Outcome Parameters **************************/
+
+    /** Current endpoint for submitting the result*/
+    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+
+    /** Source types for exercise outcome */
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
+
+    /** Outcome types for exercise */
+    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
+    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
+    ZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint'
+
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Loader = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/10/2017.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _loading_animation = __webpack_require__(17);
+
+var _loading_animation2 = _interopRequireDefault(_loading_animation);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * A class responsible for loading templates and other resources
+ * */
+var Loader = function () {
+    function Loader() {
+        _classCallCheck(this, Loader);
+    }
+
+    _createClass(Loader, null, [{
+        key: 'loadTemplate',
+
+        /**
+         * Return html template
+         * @param {String} name of the template
+         * @param {boolean} asyncQUery, allows to choose the loading method
+         *        @default asyncQuery is set to false
+         * */
+        value: function loadTemplate(tempUrl) {
+            var asyncQuery = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+            return _jquery2.default.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: tempUrl,
+                data: this.data,
+                async: asyncQuery
+            });
+        }
+
+        /**
+         * Return html template and loads it in the given element
+         * @param {String} tempUrl of the template
+         * @param {jquery object} elem, load the html in this element
+         * @param {boolean} append
+         * @param {boolean} asyncQUery, allows to choose the loading method
+         *        @default asyncQuery is set to true
+         * */
+
+    }, {
+        key: 'loadTemplateIntoElem',
+        value: function loadTemplateIntoElem(tempUrl, elem) {
+            var append = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+            var asyncQuery = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+
+            var loadingAnimation = new _loading_animation2.default();
+            return _jquery2.default.ajax({
+                complete: function complete() {
+                    loadingAnimation.loadingAnimation(false);
+                },
+                type: 'GET',
+                dataType: 'html',
+                url: tempUrl,
+                data: this.data,
+                success: function success(data) {
+                    if (!append) {
+                        elem.html(data);
+                    } else {
+                        elem.append(data);
+                    }
+                },
+                async: asyncQuery
+            });
+        }
+    }]);
+
+    return Loader;
+}();
+
+exports.Loader = Loader;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10658,194 +10954,7 @@ var events = function () {
 exports.default = events;
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Martin on 5/4/2017.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _cookie_handler = __webpack_require__(11);
-
-var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
-
-var _settings = __webpack_require__(7);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var sessionID = null;
-
-var Session = function () {
-    function Session() {
-        _classCallCheck(this, Session);
-    }
-
-    _createClass(Session, null, [{
-        key: 'getSession',
-
-
-        /**
-         * @param name, name of the session identifier
-         * @default from Zeeguu Settings
-         * */
-        value: function getSession() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
-
-            if (sessionID) return sessionID;
-            sessionID = _cookie_handler2.default.getCookie(name);
-            return sessionID;
-        }
-
-        /**
-         *  Set the zeeguu sessionID cookie to the default session
-         * @param name, cookie identifier
-         * @param value, value of the cookie
-         * @param days, expiration time
-         * @default form Zeeguu Settings
-         * */
-
-    }, {
-        key: 'setSession',
-        value: function setSession() {
-            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
-            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFUALT_SESSION;
-            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFUALT_COOKIE_EXPIRATION;
-
-            _cookie_handler2.default.setCookie(name, value, days);
-        }
-    }]);
-
-    return Session;
-}();
-
-exports.default = Session;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * File containing global settings for exercises
- * */
-
-exports.default = {
-    /*********************** Exercise API Parameters **************************/
-
-    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFUALT_SESSION: 34563456,
-
-    /*********************** Exercise Outcome Parameters **************************/
-
-    /** Current endpoint for submitting the result*/
-    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
-
-    /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: "/Recognize",
-
-    /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: "/Correct",
-    ZEEGUU_EX_OUTCOME_WRONG: "/Wrong",
-    ZEEGUU_EX_OUTCOME_HINT: "/asked_for_hint"
-
-};
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-var ut,
-    Util = {
-	/**
- *Returns selected text
- **/
-	getSelectedText: function getSelectedText() {
-		// Gets clicked on word (or selected text if text is selected)
-		var t = '';
-		var sel;
-		if (window.getSelection && (sel = window.getSelection()).modify) {
-			var s = window.getSelection();
-			if (s.isCollapsed) {
-				s.modify('move', 'forward', 'character');
-				s.modify('move', 'backward', 'word');
-				s.modify('extend', 'forward', 'word');
-				t = s.toString();
-				s.modify('move', 'forward', 'character'); //clear selection
-			} else {
-				t = s.toString();
-			}
-		} else if ((sel = document.selection) && sel.type != "Control") {
-			// IE 4+
-			var textRange = sel.createRange();
-			if (!textRange.text) {
-				textRange.expand("word");
-			}
-			// Remove trailing spaces
-			while (/\s$/.test(textRange.text)) {
-				textRange.moveEnd("character", -1);
-			}
-			t = textRange.text;
-		}
-		return t;
-	},
-
-	/**
-     *	Calculate session time in minutes
-  *	@return string with appended minute
-     **/
-	calcTimeInMinutes: function calcTimeInMinutes(startTime) {
-		var endTime = new Date();
-		var total = endTime.getMinutes() - startTime.getMinutes();
-		return total <= 1 ? "1 minute" : total + " minutes";
-	},
-
-	/**
-     *	Calculate exercise time in milliseconds
-  *	@return milliseconds
-     **/
-	calcTimeInMilliseconds: function calcTimeInMilliseconds(startTime) {
-		var endTime = new Date();
-		var total = endTime.getTime() - startTime.getTime();
-		return total;
-	}
-};
-
-var extendObject = function extendObject(child, parent) {
-	var temp = function temp() {};
-	temp.prototype = parent.prototype;
-	child.prototype = new temp();
-	child.prototype.constructor = child;
-};
-
-exports.default = Util;
-
-/***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10883,7 +10992,7 @@ exports['default'] = defaultParams;
 module.exports = exports['default'];
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10912,29 +11021,29 @@ var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant
  * Handy utilities
  */
 
-var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(3);
+var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(5);
 
 /*
  *  Handle sweetAlert's DOM elements
  */
 
-var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(2);
+var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(4);
 
 // Handle button events and keyboard events
 
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(13);
+var _handleButton$handleConfirm$handleCancel = __webpack_require__(20);
 
-var _handleKeyDown = __webpack_require__(14);
+var _handleKeyDown = __webpack_require__(21);
 
 var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
 // Default values
 
-var _defaultParams = __webpack_require__(9);
+var _defaultParams = __webpack_require__(10);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
-var _setParameters = __webpack_require__(16);
+var _setParameters = __webpack_require__(23);
 
 var _setParameters2 = _interopRequireWildcard(_setParameters);
 
@@ -11196,7 +11305,7 @@ if (typeof window !== 'undefined') {
 module.exports = exports['default'];
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11224,7 +11333,7 @@ var cookieHandler = function () {
 
         /**
          * Retrive cookie given the
-         * @param name
+         * @param {String} name, cookie name
          * */
         value: function getCookie(name) {
             var nameEQ = name + "=";
@@ -11240,9 +11349,9 @@ var cookieHandler = function () {
 
         /**
          * Set cookie given the
-         * @param name, cookie identifier
-         * @param value, value of the cookie
-         * @param days, expiration time
+         * @param {String} name, cookie identifier
+         * @param {Object} value, value of the cookie
+         * @param {int} days, expiration time
          * */
 
     }, {
@@ -11266,7 +11375,1324 @@ var cookieHandler = function () {
 exports.default = cookieHandler;
 
 /***/ }),
-/* 12 */
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _exercise = __webpack_require__(6);
+
+var _exercise2 = _interopRequireDefault(_exercise);
+
+var _util = __webpack_require__(2);
+
+var _util2 = _interopRequireDefault(_util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Ex1(data, index, size) {
+
+	this.init(data, index, size);
+
+	/** @Override */
+	this.cacheCustomDom = function () {
+		this.$to = this.$elem.find("#ex-to");
+		this.$context = this.$elem.find("#ex-context");
+		this.$input = this.$elem.find("#ex-main-input");
+		this.$showSolution = this.$elem.find("#show_solution");
+		this.$checkAnswer = this.$elem.find("#check_answer");
+		this.$clickableText = this.$elem.find(".clickable-text");
+	};
+
+	/** @Override */
+	this.bindUIActions = function () {
+		var _this = this;
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on("click", _this.handleHint.bind(this));
+
+		//Bind UI action of Check answer to the function
+		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+
+		//Bind UI Text click		
+		this.$clickableText.on("click", _this.updateInput.bind(this));
+
+		// Bind UI Enter Key
+		this.$input.keyup(_this.enterKeyup.bind(this));
+	};
+
+	/** @Override */
+	this.next = function () {
+		this.$to.html("\"" + this.data[this.index].to + "\"");
+		this.$context.html(this.data[this.index].context);
+		this.$input.val("");
+	};
+
+	this.updateInput = function () {
+		var t = _util2.default.getSelectedText();
+		this.$input.val(t);
+	};
+
+	this.enterKeyup = function (event) {
+		if (event.keyCode == 13) {
+			this.$checkAnswer.click();
+		}
+	};
+
+	/** @Override */
+	this.giveHint = function () {
+		this.$input.val(this.data[this.index].from);
+	};
+
+	/** @Override */
+	this.successCondition = function () {
+		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
+	};
+} /** Custom exercise form finding word in a context. Inherited from Exercise.js
+   *  @initialize it using: new Ex1();
+   *  @customize it by using prototypal inheritance 
+  **/
+
+;
+Ex1.prototype = Object.create(_exercise2.default.prototype, {
+	constructor: Ex1,
+	/************************** SETTINGS ********************************/
+	description: { value: "Find the word in the context:" },
+	customTemplateURL: { value: 'static/template/ex1.html' }
+});
+
+exports.default = Ex1;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _exercise = __webpack_require__(6);
+
+var _exercise2 = _interopRequireDefault(_exercise);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Ex2(data, index, size) {
+	this.init(data, index, size);
+
+	/** @Override */
+	this.cacheCustomDom = function () {
+		this.$context = this.$elem.find("#ex-context");
+		this.$showSolution = this.$elem.find("#show_solution");
+		this.$checkAnswer = this.$elem.find("#check_answer");
+		this.$btn1 = this.$elem.find("#btn1");
+		this.$btn2 = this.$elem.find("#btn2");
+		this.$btn3 = this.$elem.find("#btn3");
+	};
+
+	/** @Override */
+	this.bindUIActions = function () {
+		var _this = this;
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on("click", _this.handleHint.bind(this));
+
+		//Bind UI action of Check answer to the function
+		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+
+		//Bind UI action of button 1 click to the function
+		this.$btn1.on("click", _this.btnSelect.bind(this, 1));
+
+		//Bind UI action of button 2 click to the function
+		this.$btn2.on("click", _this.btnSelect.bind(this, 2));
+
+		//Bind UI action of button 3 click to the function
+		this.$btn3.on("click", _this.btnSelect.bind(this, 3));
+	};
+
+	/** @Override */
+	this.next = function () {
+
+		// Prepare the document
+		this.prepareDocument();
+
+		//Populate context
+		this.generateContext();
+		this.resetBtns();
+		var _this = this;
+
+		//Random options	
+		var idxs = this.randomNumsInRange(2, this.data.length - 1);
+		this.btns = this.arrayWithRandomNumsUpTo(this.optionNum);
+
+		//Populate buttons
+		function populateButton(buttonID, value) {
+			_this["$btn" + buttonID].text(value);
+		}
+
+		populateButton(this.btns[0], this.data[this.index].from);
+		populateButton(this.btns[1], this.data[idxs[0]].from);
+		populateButton(this.btns[2], this.data[idxs[1]].from);
+	};
+
+	/** @Override */
+	this.giveHint = function () {
+		var elem = (0, _jquery2.default)('#btn' + this.btns[1]);
+		elem.prop('disabled', true);
+		elem.addClass("btn-danger");
+	};
+
+	/** @Override */
+	this.successCondition = function (chosenWord) {
+		return chosenWord.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
+	};
+
+	this.btnSelect = function (arg) {
+		var chosenWord = this["$btn" + arg].text();
+		if (this.successCondition(chosenWord)) this.reGenerateContext(chosenWord);
+		this.checkAnswer(chosenWord);
+	};
+
+	this.resetBtns = function () {
+		var elem = (0, _jquery2.default)('#btn' + this.btns[1]);
+		elem.prop('disabled', false);
+		elem.removeClass("btn-danger");
+	};
+
+	this.arrayWithRandomNumsUpTo = function (size) {
+		var arr = [];
+		while (arr.length < size) {
+			var randomnumber = Math.ceil(Math.random() * size);
+			if (arr.indexOf(randomnumber) > -1) continue;
+			arr[arr.length] = randomnumber;
+		}
+		return arr;
+	};
+
+	/** Generates an array of random numbers of given size
+ * @param {int} size:  defines how many random numbers we want
+ * @param {int} range: defines the upper limit of the numbers: [1,range]
+ */
+	this.randomNumsInRange = function (size, range) {
+		var arr = [];
+		while (arr.length < size) {
+			var randomnumber = Math.ceil(Math.random() * range);
+			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
+			arr[arr.length] = randomnumber;
+		}
+		return arr;
+	};
+
+	this.generateContext = function () {
+		var contextString = this.data[this.index].context;
+		var res = this.data[this.index].from.split(" ");
+
+		for (var i = 0; i < res.length; i++) {
+			contextString = contextString.replace(res[i], " ______ ");
+		}
+		this.$context.html(contextString);
+	};
+
+	this.reGenerateContext = function (chosenWord) {
+		var contextString = this.$context.html();
+		var res = chosenWord.split(" ");
+
+		for (var i = 0; i < res.length; i++) {
+			contextString = contextString.replace(" ______ ", res[i].bold());
+		}
+		this.$context.html(contextString);
+	};
+};
+
+Ex2.prototype = Object.create(_exercise2.default.prototype, {
+	constructor: Ex2,
+	/** ************************** SETTINGS **************************** **/
+	description: { value: "Choose the word that fits the context" },
+	customTemplateURL: { value: 'static/template/ex2.html' },
+	btns: { writable: true, value: [1, 2, 3] },
+	optionNum: { value: 3 },
+	minRequirement: { writable: true, value: 3 } });
+
+exports.default = Ex2;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _exercise = __webpack_require__(6);
+
+var _exercise2 = _interopRequireDefault(_exercise);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Custom exercise formatching 3 words. Inherited from Exercise.js
+ *  @initialize it using: new Ex3();
+ *  @customize it by using prototypal inheritance 
+**/
+
+function Ex3(data, index, size) {
+	this.init(data, index, size);
+
+	/** @Override */
+	this.cacheCustomDom = function (data, index, size) {
+		this.$to = this.$elem.find("#ex-to");
+		this.$context = this.$elem.find("#ex-content");
+		this.$showSolution = this.$elem.find("#show_solution");
+		this.$btn1 = this.$elem.find("#btn1");
+		this.$btn2 = this.$elem.find("#btn2");
+		this.$btn3 = this.$elem.find("#btn3");
+		this.$btn4 = this.$elem.find("#btn4");
+		this.$btn5 = this.$elem.find("#btn5");
+		this.$btn6 = this.$elem.find("#btn6");
+	};
+
+	/** @Override */
+	this.bindUIActions = function () {
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on("click", this.handleHint.bind(this));
+
+		//Bind UI action of button 1 click to the function
+		this.$btn1.on("click", this.selectChoice.bind(this, 1));
+
+		//Bind UI action of button 2 click to the function
+		this.$btn2.on("click", this.selectChoice.bind(this, 2));
+
+		//Bind UI action of button 3 click to the function
+		this.$btn3.on("click", this.selectChoice.bind(this, 3));
+
+		//Bind UI action of button 4 click to the function
+		this.$btn4.on("click", this.selectChoice.bind(this, 4));
+
+		//Bind UI action of button 5 click to the function
+		this.$btn5.on("click", this.selectChoice.bind(this, 5));
+
+		//Bind UI action of button 6 click to the function
+		this.$btn6.on("click", this.selectChoice.bind(this, 6));
+	};
+
+	this.selectChoice = function (btnID) {
+		// if no button was previously selected, select it now
+		if (this.chosenButton == -1) {
+			this.chosenButton = btnID;
+		} else {
+			// otherwise check the selection
+			this.check(btnID);
+		}
+	};
+
+	// Disables correctly selected buttons
+	this.successDisableBtn = function (btnID) {
+		var elem = (0, _jquery2.default)("#btn" + btnID);
+		elem.prop('disabled', true);
+		elem.addClass("btn-success");
+	};
+
+	//Checks if a button is disabled
+	this.isDisabled = function (btnID) {
+		var elem = (0, _jquery2.default)("#btn" + btnID);
+		return elem.is(':disabled');
+	};
+
+	// Checks answers
+	this.check = function (btnID) {
+
+		if (this.checkCondition(btnID)) {
+
+			// Disable buttons		
+			this.successDisableBtn(btnID);
+			this.successDisableBtn(this.chosenButton);
+
+			this.correctAnswers++;
+			this.endExercise();
+		} else {
+			this.wrongAnswerAnimation();
+		}
+		this.chosenButton = -1;
+	};
+
+	this.endExercise = function () {
+		// check if all the answers were given
+		if (this.successCondition(0)) {
+			// Proceed to next exercise
+			this.checkAnswer(0);
+
+			// Prepare the document
+			this.prepareDocument();
+
+			// Reset buttons, answers, hints
+			this.resetBtns();
+			this.correctAnswers = 0;
+			this.hints = 0;
+		}
+	};
+
+	// Checks the selected buttons
+	this.checkCondition = function (btnID) {
+		if (this.answers.indexOf(btnID) == -1 || this.choices.indexOf(this.chosenButton) == -1) {
+			return this.choices.indexOf(btnID) == this.answers.indexOf(this.chosenButton);
+		} else {
+			return this.answers.indexOf(btnID) == this.choices.indexOf(this.chosenButton);
+		}
+	};
+
+	/** @Override */
+	this.successCondition = function (a) {
+		return this.correctAnswers >= 3;
+	};
+
+	// Resets all the disabled buttons
+	this.resetBtns = function () {
+		for (var idx = 1; idx <= 6; idx++) {
+			var elem = (0, _jquery2.default)('#btn' + idx);
+			elem.prop('disabled', false);
+			elem.removeClass("btn-success");
+		}
+	};
+
+	/** @Override */
+	this.next = function () {
+		this.populateButtons();
+	};
+
+	// Populates the buttons
+	this.populateButtons = function () {
+		//Random options
+		var idxs = this.randomNumsInRange(2, this.data.length - 1);
+		var _this = this;
+		// random numbers between 1 and 3
+		this.choices = this.arrayWithRandomNumsUpTo(3);
+
+		// random numbers between 4 and 6
+		this.answers = this.arrayWithRandomNumsUpTo(3);
+		for (var i = 0; i < this.answers.length; i++) {
+			this.answers[i] = this.answers[i] + 3;
+		}
+
+		//Populate buttons
+		function match2Buttons(choice, answer, valueFrom, valueTo) {
+			_this["$btn" + choice].text(valueFrom);
+			_this["$btn" + answer].text(valueTo);
+		}
+
+		match2Buttons(this.choices[0], this.answers[0], this.data[this.index].from, this.data[this.index].to);
+		match2Buttons(this.choices[1], this.answers[1], this.data[idxs[0]].from, this.data[idxs[0]].to);
+		match2Buttons(this.choices[2], this.answers[2], this.data[idxs[1]].from, this.data[idxs[1]].to);
+	};
+
+	// Gives a hint by disabling a correct match
+	this.giveHint = function () {
+		// Only one hint is possible
+		if (this.hints < 1) {
+			// Disable buttons
+			if (this.disableHintButtons(0)) return;
+			if (this.disableHintButtons(1)) return;
+			if (this.disableHintButtons(2)) return;
+		}
+	};
+
+	// Disables the buttons given in the hint
+	this.disableHintButtons = function (idx) {
+		if (!this.isDisabled(this.answers[idx])) {
+			this.successDisableBtn(this.choices[idx]);
+			this.successDisableBtn(this.answers[idx]);
+			this.correctAnswers++;
+			this.hints++;
+			this.endExercise();
+			return true;
+		}
+		return false;
+	};
+
+	/** Generates an array of random numbers of given size
+ * @param size: defines how many random numbers we want
+ *				the resulted random numbers will in the range of [1,size]
+ */
+	this.arrayWithRandomNumsUpTo = function (size) {
+		var arr = [];
+		while (arr.length < size) {
+			var randomnumber = Math.ceil(Math.random() * size);
+			if (arr.indexOf(randomnumber) > -1) continue;
+			arr[arr.length] = randomnumber;
+		}
+		return arr;
+	};
+
+	/** Generates an array of random numbers of given size
+ * @param size:  defines how many random numbers we want
+ * @param range: defines the upper limit of the numbers: [1,range]
+ */
+	this.randomNumsInRange = function (size, range) {
+		var arr = [];
+		while (arr.length < size) {
+			var randomnumber = Math.ceil(Math.random() * range);
+			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
+			arr[arr.length] = randomnumber;
+		}
+		return arr;
+	};
+};
+
+Ex3.prototype = Object.create(_exercise2.default.prototype, {
+	constructor: Ex3,
+	/************************** SETTINGS ********************************/
+	description: { value: "Match each word with its translation" },
+	customTemplateURL: { value: 'static/template/ex3.html' },
+	choices: { writable: true, value: [1, 2, 3] }, // arr of indexes of possible choices
+	answers: { writable: true, value: [1, 2, 3] }, // arr of indexes of possible answers
+	chosenButton: { writable: true, value: -1 }, // ID of currently selected button; -1 means no button is selected
+	correctAnswers: { writable: true, value: 0 }, // number of correct answers
+	hints: { writable: true, value: 0 }, // max number of possible hints is 1
+	minRequirement: { writable: true, value: 3 } });
+
+exports.default = Ex3;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _exercise = __webpack_require__(6);
+
+var _exercise2 = _interopRequireDefault(_exercise);
+
+var _util = __webpack_require__(2);
+
+var _util2 = _interopRequireDefault(_util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Ex4(data, index, size) {
+
+	this.init(data, index, size);
+
+	/** @Override */
+	this.cacheCustomDom = function () {
+		this.$to = this.$elem.find("#ex-to");
+		this.$context = this.$elem.find("#ex-context");
+		this.$input = this.$elem.find("#ex-main-input");
+		this.$showSolution = this.$elem.find("#show_solution");
+		this.$checkAnswer = this.$elem.find("#check_answer");
+		this.$clickableText = this.$elem.find(".clickable-text");
+	};
+
+	/** @Override */
+	this.bindUIActions = function () {
+		var _this = this;
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on("click", _this.handleHint.bind(this));
+
+		//Bind UI action of Check answer to the function
+		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+
+		//Bind UI Text click		
+		//this.$clickableText.on("click",updateInput.bind(this));
+
+		// Bind UI Enter Key
+		this.$input.keyup(_this.enterKeyup.bind(this));
+	};
+
+	/** @Override */
+	this.next = function () {
+		this.$to.html("\"" + this.data[this.index].from + "\"");
+		this.$context.html(this.generateContext());
+		this.$input.val("");
+	};
+
+	this.updateInput = function () {
+		var t = _util2.default.getSelectedText();
+		this.$input.val(t);
+	};
+
+	this.enterKeyup = function (event) {
+		if (event.keyCode == 13) {
+			this.$checkAnswer.click();
+		}
+	};
+
+	this.generateContext = function () {
+		var contextString = this.data[this.index].context;
+		var res = this.data[this.index].from.split(" ");
+
+		for (var i = 0; i < res.length; i++) {
+			contextString = contextString.replace(res[i], res[i].bold());
+		}
+
+		return contextString;
+	};
+
+	/** @Override */
+	this.giveHint = function () {
+		this.$input.val(this.data[this.index].to[0]);
+	};
+
+	/** @Override */
+	this.successCondition = function () {
+		// Check all the possible answers
+		for (var i = 0; i < this.data[this.index].to.length; i++) {
+			if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to[i].trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")) return true;
+		}return false;
+	};
+
+	/** @Override */
+	this.wrongAnswerAnimation = function () {
+		swal({
+			title: "Wrong answer...",
+			allowOutsideClick: true,
+			type: "error",
+			text: "Hint: the word starts with \"" + this.data[this.index].to[0].trim().charAt(0) + "\"",
+			confirmButtonText: "ok",
+			showConfirmButton: true,
+			allowEscapeKey: true,
+			showLoaderOnConfirm: true
+		});
+	};
+} /** Custom exercise for translating the word given in the context. Inherited from Exercise.js
+   *  @initialize it using: new Ex4();
+   *  @customize it by using prototypal inheritance 
+  **/
+
+;
+Ex4.prototype = Object.create(_exercise2.default.prototype, {
+	constructor: Ex4,
+	/************************** SETTINGS ********************************/
+	description: { value: "Translate the word given in the context." },
+	customTemplateURL: { value: 'static/template/ex4.html' }
+});
+
+exports.default = Ex4;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var animationInstance = null;
+
+var LoadingAnimation = function () {
+    function LoadingAnimation() {
+        _classCallCheck(this, LoadingAnimation);
+
+        if (animationInstance) {
+            return animationInstance;
+        }
+        /** Class parameters*/
+        this.$loader = null;
+        this.$content = null;
+        this.updateCache();
+    }
+    /**
+     * Update/save the cache of the dom
+     * */
+
+
+    _createClass(LoadingAnimation, [{
+        key: 'updateCache',
+        value: function updateCache() {
+            this.$loader = (0, _jquery2.default)('#loader');
+            this.$content = (0, _jquery2.default)('#main-content');
+        }
+    }, {
+        key: 'loadingAnimation',
+        value: function loadingAnimation(activate) {
+            //If cache is not available
+            if (this.$loader == null || this.$content == null) {
+                this.updateCache();
+            }
+            //Turn on the animation
+            if (activate === true) {
+                this.$content.addClass('hide');
+                this.$loader.removeClass('hide');
+            } else {
+                //Turn off the animation unhide the content
+                this.$content.removeClass('hide');
+                this.$loader.addClass('hide');
+            }
+        }
+    }]);
+
+    return LoadingAnimation;
+}();
+
+exports.default = LoadingAnimation;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/*!
+ * mustache.js - Logic-less {{mustache}} templates with JavaScript
+ * http://github.com/janl/mustache.js
+ */
+
+/*global define: false Mustache: true*/
+
+(function defineMustache(global, factory) {
+  if (( false ? 'undefined' : _typeof(exports)) === 'object' && exports && typeof exports.nodeName !== 'string') {
+    factory(exports); // CommonJS
+  } else if (true) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+  } else {
+    global.Mustache = {};
+    factory(global.Mustache); // script, wsh, asp
+  }
+})(undefined, function mustacheFactory(mustache) {
+
+  var objectToString = Object.prototype.toString;
+  var isArray = Array.isArray || function isArrayPolyfill(object) {
+    return objectToString.call(object) === '[object Array]';
+  };
+
+  function isFunction(object) {
+    return typeof object === 'function';
+  }
+
+  /**
+   * More correct typeof string handling array
+   * which normally returns typeof 'object'
+   */
+  function typeStr(obj) {
+    return isArray(obj) ? 'array' : typeof obj === 'undefined' ? 'undefined' : _typeof(obj);
+  }
+
+  function escapeRegExp(string) {
+    return string.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
+  }
+
+  /**
+   * Null safe way of checking whether or not an object,
+   * including its prototype, has a given property
+   */
+  function hasProperty(obj, propName) {
+    return obj != null && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && propName in obj;
+  }
+
+  // Workaround for https://issues.apache.org/jira/browse/COUCHDB-577
+  // See https://github.com/janl/mustache.js/issues/189
+  var regExpTest = RegExp.prototype.test;
+  function testRegExp(re, string) {
+    return regExpTest.call(re, string);
+  }
+
+  var nonSpaceRe = /\S/;
+  function isWhitespace(string) {
+    return !testRegExp(nonSpaceRe, string);
+  }
+
+  var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+  };
+
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function fromEntityMap(s) {
+      return entityMap[s];
+    });
+  }
+
+  var whiteRe = /\s*/;
+  var spaceRe = /\s+/;
+  var equalsRe = /\s*=/;
+  var curlyRe = /\s*\}/;
+  var tagRe = /#|\^|\/|>|\{|&|=|!/;
+
+  /**
+   * Breaks up the given `template` string into a tree of tokens. If the `tags`
+   * argument is given here it must be an array with two string values: the
+   * opening and closing tags used in the template (e.g. [ "<%", "%>" ]). Of
+   * course, the default is to use mustaches (i.e. mustache.tags).
+   *
+   * A token is an array with at least 4 elements. The first element is the
+   * mustache symbol that was used inside the tag, e.g. "#" or "&". If the tag
+   * did not contain a symbol (i.e. {{myValue}}) this element is "name". For
+   * all text that appears outside a symbol this element is "text".
+   *
+   * The second element of a token is its "value". For mustache tags this is
+   * whatever else was inside the tag besides the opening symbol. For text tokens
+   * this is the text itself.
+   *
+   * The third and fourth elements of the token are the start and end indices,
+   * respectively, of the token in the original template.
+   *
+   * Tokens that are the root node of a subtree contain two more elements: 1) an
+   * array of tokens in the subtree and 2) the index in the original template at
+   * which the closing tag for that section begins.
+   */
+  function parseTemplate(template, tags) {
+    if (!template) return [];
+
+    var sections = []; // Stack to hold section tokens
+    var tokens = []; // Buffer to hold the tokens
+    var spaces = []; // Indices of whitespace tokens on the current line
+    var hasTag = false; // Is there a {{tag}} on the current line?
+    var nonSpace = false; // Is there a non-space char on the current line?
+
+    // Strips all whitespace tokens array for the current line
+    // if there was a {{#tag}} on it and otherwise only space.
+    function stripSpace() {
+      if (hasTag && !nonSpace) {
+        while (spaces.length) {
+          delete tokens[spaces.pop()];
+        }
+      } else {
+        spaces = [];
+      }
+
+      hasTag = false;
+      nonSpace = false;
+    }
+
+    var openingTagRe, closingTagRe, closingCurlyRe;
+    function compileTags(tagsToCompile) {
+      if (typeof tagsToCompile === 'string') tagsToCompile = tagsToCompile.split(spaceRe, 2);
+
+      if (!isArray(tagsToCompile) || tagsToCompile.length !== 2) throw new Error('Invalid tags: ' + tagsToCompile);
+
+      openingTagRe = new RegExp(escapeRegExp(tagsToCompile[0]) + '\\s*');
+      closingTagRe = new RegExp('\\s*' + escapeRegExp(tagsToCompile[1]));
+      closingCurlyRe = new RegExp('\\s*' + escapeRegExp('}' + tagsToCompile[1]));
+    }
+
+    compileTags(tags || mustache.tags);
+
+    var scanner = new Scanner(template);
+
+    var start, type, value, chr, token, openSection;
+    while (!scanner.eos()) {
+      start = scanner.pos;
+
+      // Match any text between tags.
+      value = scanner.scanUntil(openingTagRe);
+
+      if (value) {
+        for (var i = 0, valueLength = value.length; i < valueLength; ++i) {
+          chr = value.charAt(i);
+
+          if (isWhitespace(chr)) {
+            spaces.push(tokens.length);
+          } else {
+            nonSpace = true;
+          }
+
+          tokens.push(['text', chr, start, start + 1]);
+          start += 1;
+
+          // Check for whitespace on the current line.
+          if (chr === '\n') stripSpace();
+        }
+      }
+
+      // Match the opening tag.
+      if (!scanner.scan(openingTagRe)) break;
+
+      hasTag = true;
+
+      // Get the tag type.
+      type = scanner.scan(tagRe) || 'name';
+      scanner.scan(whiteRe);
+
+      // Get the tag value.
+      if (type === '=') {
+        value = scanner.scanUntil(equalsRe);
+        scanner.scan(equalsRe);
+        scanner.scanUntil(closingTagRe);
+      } else if (type === '{') {
+        value = scanner.scanUntil(closingCurlyRe);
+        scanner.scan(curlyRe);
+        scanner.scanUntil(closingTagRe);
+        type = '&';
+      } else {
+        value = scanner.scanUntil(closingTagRe);
+      }
+
+      // Match the closing tag.
+      if (!scanner.scan(closingTagRe)) throw new Error('Unclosed tag at ' + scanner.pos);
+
+      token = [type, value, start, scanner.pos];
+      tokens.push(token);
+
+      if (type === '#' || type === '^') {
+        sections.push(token);
+      } else if (type === '/') {
+        // Check section nesting.
+        openSection = sections.pop();
+
+        if (!openSection) throw new Error('Unopened section "' + value + '" at ' + start);
+
+        if (openSection[1] !== value) throw new Error('Unclosed section "' + openSection[1] + '" at ' + start);
+      } else if (type === 'name' || type === '{' || type === '&') {
+        nonSpace = true;
+      } else if (type === '=') {
+        // Set the tags for the next time around.
+        compileTags(value);
+      }
+    }
+
+    // Make sure there are no open sections when we're done.
+    openSection = sections.pop();
+
+    if (openSection) throw new Error('Unclosed section "' + openSection[1] + '" at ' + scanner.pos);
+
+    return nestTokens(squashTokens(tokens));
+  }
+
+  /**
+   * Combines the values of consecutive text tokens in the given `tokens` array
+   * to a single token.
+   */
+  function squashTokens(tokens) {
+    var squashedTokens = [];
+
+    var token, lastToken;
+    for (var i = 0, numTokens = tokens.length; i < numTokens; ++i) {
+      token = tokens[i];
+
+      if (token) {
+        if (token[0] === 'text' && lastToken && lastToken[0] === 'text') {
+          lastToken[1] += token[1];
+          lastToken[3] = token[3];
+        } else {
+          squashedTokens.push(token);
+          lastToken = token;
+        }
+      }
+    }
+
+    return squashedTokens;
+  }
+
+  /**
+   * Forms the given array of `tokens` into a nested tree structure where
+   * tokens that represent a section have two additional items: 1) an array of
+   * all tokens that appear in that section and 2) the index in the original
+   * template that represents the end of that section.
+   */
+  function nestTokens(tokens) {
+    var nestedTokens = [];
+    var collector = nestedTokens;
+    var sections = [];
+
+    var token, section;
+    for (var i = 0, numTokens = tokens.length; i < numTokens; ++i) {
+      token = tokens[i];
+
+      switch (token[0]) {
+        case '#':
+        case '^':
+          collector.push(token);
+          sections.push(token);
+          collector = token[4] = [];
+          break;
+        case '/':
+          section = sections.pop();
+          section[5] = token[2];
+          collector = sections.length > 0 ? sections[sections.length - 1][4] : nestedTokens;
+          break;
+        default:
+          collector.push(token);
+      }
+    }
+
+    return nestedTokens;
+  }
+
+  /**
+   * A simple string scanner that is used by the template parser to find
+   * tokens in template strings.
+   */
+  function Scanner(string) {
+    this.string = string;
+    this.tail = string;
+    this.pos = 0;
+  }
+
+  /**
+   * Returns `true` if the tail is empty (end of string).
+   */
+  Scanner.prototype.eos = function eos() {
+    return this.tail === '';
+  };
+
+  /**
+   * Tries to match the given regular expression at the current position.
+   * Returns the matched text if it can match, the empty string otherwise.
+   */
+  Scanner.prototype.scan = function scan(re) {
+    var match = this.tail.match(re);
+
+    if (!match || match.index !== 0) return '';
+
+    var string = match[0];
+
+    this.tail = this.tail.substring(string.length);
+    this.pos += string.length;
+
+    return string;
+  };
+
+  /**
+   * Skips all text until the given regular expression can be matched. Returns
+   * the skipped string, which is the entire tail if no match can be made.
+   */
+  Scanner.prototype.scanUntil = function scanUntil(re) {
+    var index = this.tail.search(re),
+        match;
+
+    switch (index) {
+      case -1:
+        match = this.tail;
+        this.tail = '';
+        break;
+      case 0:
+        match = '';
+        break;
+      default:
+        match = this.tail.substring(0, index);
+        this.tail = this.tail.substring(index);
+    }
+
+    this.pos += match.length;
+
+    return match;
+  };
+
+  /**
+   * Represents a rendering context by wrapping a view object and
+   * maintaining a reference to the parent context.
+   */
+  function Context(view, parentContext) {
+    this.view = view;
+    this.cache = { '.': this.view };
+    this.parent = parentContext;
+  }
+
+  /**
+   * Creates a new context using the given view with this context
+   * as the parent.
+   */
+  Context.prototype.push = function push(view) {
+    return new Context(view, this);
+  };
+
+  /**
+   * Returns the value of the given name in this context, traversing
+   * up the context hierarchy if the value is absent in this context's view.
+   */
+  Context.prototype.lookup = function lookup(name) {
+    var cache = this.cache;
+
+    var value;
+    if (cache.hasOwnProperty(name)) {
+      value = cache[name];
+    } else {
+      var context = this,
+          names,
+          index,
+          lookupHit = false;
+
+      while (context) {
+        if (name.indexOf('.') > 0) {
+          value = context.view;
+          names = name.split('.');
+          index = 0;
+
+          /**
+           * Using the dot notion path in `name`, we descend through the
+           * nested objects.
+           *
+           * To be certain that the lookup has been successful, we have to
+           * check if the last object in the path actually has the property
+           * we are looking for. We store the result in `lookupHit`.
+           *
+           * This is specially necessary for when the value has been set to
+           * `undefined` and we want to avoid looking up parent contexts.
+           **/
+          while (value != null && index < names.length) {
+            if (index === names.length - 1) lookupHit = hasProperty(value, names[index]);
+
+            value = value[names[index++]];
+          }
+        } else {
+          value = context.view[name];
+          lookupHit = hasProperty(context.view, name);
+        }
+
+        if (lookupHit) break;
+
+        context = context.parent;
+      }
+
+      cache[name] = value;
+    }
+
+    if (isFunction(value)) value = value.call(this.view);
+
+    return value;
+  };
+
+  /**
+   * A Writer knows how to take a stream of tokens and render them to a
+   * string, given a context. It also maintains a cache of templates to
+   * avoid the need to parse the same template twice.
+   */
+  function Writer() {
+    this.cache = {};
+  }
+
+  /**
+   * Clears all cached templates in this writer.
+   */
+  Writer.prototype.clearCache = function clearCache() {
+    this.cache = {};
+  };
+
+  /**
+   * Parses and caches the given `template` and returns the array of tokens
+   * that is generated from the parse.
+   */
+  Writer.prototype.parse = function parse(template, tags) {
+    var cache = this.cache;
+    var tokens = cache[template];
+
+    if (tokens == null) tokens = cache[template] = parseTemplate(template, tags);
+
+    return tokens;
+  };
+
+  /**
+   * High-level method that is used to render the given `template` with
+   * the given `view`.
+   *
+   * The optional `partials` argument may be an object that contains the
+   * names and templates of partials that are used in the template. It may
+   * also be a function that is used to load partial templates on the fly
+   * that takes a single argument: the name of the partial.
+   */
+  Writer.prototype.render = function render(template, view, partials) {
+    var tokens = this.parse(template);
+    var context = view instanceof Context ? view : new Context(view);
+    return this.renderTokens(tokens, context, partials, template);
+  };
+
+  /**
+   * Low-level method that renders the given array of `tokens` using
+   * the given `context` and `partials`.
+   *
+   * Note: The `originalTemplate` is only ever used to extract the portion
+   * of the original template that was contained in a higher-order section.
+   * If the template doesn't use higher-order sections, this argument may
+   * be omitted.
+   */
+  Writer.prototype.renderTokens = function renderTokens(tokens, context, partials, originalTemplate) {
+    var buffer = '';
+
+    var token, symbol, value;
+    for (var i = 0, numTokens = tokens.length; i < numTokens; ++i) {
+      value = undefined;
+      token = tokens[i];
+      symbol = token[0];
+
+      if (symbol === '#') value = this.renderSection(token, context, partials, originalTemplate);else if (symbol === '^') value = this.renderInverted(token, context, partials, originalTemplate);else if (symbol === '>') value = this.renderPartial(token, context, partials, originalTemplate);else if (symbol === '&') value = this.unescapedValue(token, context);else if (symbol === 'name') value = this.escapedValue(token, context);else if (symbol === 'text') value = this.rawValue(token);
+
+      if (value !== undefined) buffer += value;
+    }
+
+    return buffer;
+  };
+
+  Writer.prototype.renderSection = function renderSection(token, context, partials, originalTemplate) {
+    var self = this;
+    var buffer = '';
+    var value = context.lookup(token[1]);
+
+    // This function is used to render an arbitrary template
+    // in the current context by higher-order sections.
+    function subRender(template) {
+      return self.render(template, context, partials);
+    }
+
+    if (!value) return;
+
+    if (isArray(value)) {
+      for (var j = 0, valueLength = value.length; j < valueLength; ++j) {
+        buffer += this.renderTokens(token[4], context.push(value[j]), partials, originalTemplate);
+      }
+    } else if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' || typeof value === 'string' || typeof value === 'number') {
+      buffer += this.renderTokens(token[4], context.push(value), partials, originalTemplate);
+    } else if (isFunction(value)) {
+      if (typeof originalTemplate !== 'string') throw new Error('Cannot use higher-order sections without the original template');
+
+      // Extract the portion of the original template that the section contains.
+      value = value.call(context.view, originalTemplate.slice(token[3], token[5]), subRender);
+
+      if (value != null) buffer += value;
+    } else {
+      buffer += this.renderTokens(token[4], context, partials, originalTemplate);
+    }
+    return buffer;
+  };
+
+  Writer.prototype.renderInverted = function renderInverted(token, context, partials, originalTemplate) {
+    var value = context.lookup(token[1]);
+
+    // Use JavaScript's definition of falsy. Include empty arrays.
+    // See https://github.com/janl/mustache.js/issues/186
+    if (!value || isArray(value) && value.length === 0) return this.renderTokens(token[4], context, partials, originalTemplate);
+  };
+
+  Writer.prototype.renderPartial = function renderPartial(token, context, partials) {
+    if (!partials) return;
+
+    var value = isFunction(partials) ? partials(token[1]) : partials[token[1]];
+    if (value != null) return this.renderTokens(this.parse(value), context, partials, value);
+  };
+
+  Writer.prototype.unescapedValue = function unescapedValue(token, context) {
+    var value = context.lookup(token[1]);
+    if (value != null) return value;
+  };
+
+  Writer.prototype.escapedValue = function escapedValue(token, context) {
+    var value = context.lookup(token[1]);
+    if (value != null) return mustache.escape(value);
+  };
+
+  Writer.prototype.rawValue = function rawValue(token) {
+    return token[1];
+  };
+
+  mustache.name = 'mustache.js';
+  mustache.version = '2.3.0';
+  mustache.tags = ['{{', '}}'];
+
+  // All high-level mustache.* functions use this writer.
+  var defaultWriter = new Writer();
+
+  /**
+   * Clears all cached templates in the default writer.
+   */
+  mustache.clearCache = function clearCache() {
+    return defaultWriter.clearCache();
+  };
+
+  /**
+   * Parses and caches the given template in the default writer and returns the
+   * array of tokens it contains. Doing this ahead of time avoids the need to
+   * parse templates on the fly as they are rendered.
+   */
+  mustache.parse = function parse(template, tags) {
+    return defaultWriter.parse(template, tags);
+  };
+
+  /**
+   * Renders the `template` with the given `view` and `partials` using the
+   * default writer.
+   */
+  mustache.render = function render(template, view, partials) {
+    if (typeof template !== 'string') {
+      throw new TypeError('Invalid template! Template should be a "string" ' + 'but "' + typeStr(template) + '" was given as the first ' + 'argument for mustache#render(template, view, partials)');
+    }
+
+    return defaultWriter.render(template, view, partials);
+  };
+
+  // This is here for backwards compatibility with 0.4.x.,
+  /*eslint-disable */ // eslint wants camel cased function name
+  mustache.to_html = function to_html(template, view, partials, send) {
+    /*eslint-enable*/
+
+    var result = mustache.render(template, view, partials);
+
+    if (isFunction(send)) {
+      send(result);
+    } else {
+      return result;
+    }
+  };
+
+  // Export the escaping function so that the user may override it.
+  // See https://github.com/janl/mustache.js/issues/244
+  mustache.escape = escapeHtml;
+
+  // Export these mainly for testing, but also for advanced usage.
+  mustache.Scanner = Scanner;
+  mustache.Context = Context;
+  mustache.Writer = Writer;
+
+  return mustache;
+});
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11280,68 +12706,83 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ex = __webpack_require__(18);
+var _ex = __webpack_require__(13);
 
 var _ex2 = _interopRequireDefault(_ex);
 
-var _ex3 = __webpack_require__(19);
+var _ex3 = __webpack_require__(14);
 
 var _ex4 = _interopRequireDefault(_ex3);
 
-var _ex5 = __webpack_require__(20);
+var _ex5 = __webpack_require__(15);
 
 var _ex6 = _interopRequireDefault(_ex5);
 
-var _ex7 = __webpack_require__(21);
+var _ex7 = __webpack_require__(16);
 
 var _ex8 = _interopRequireDefault(_ex7);
 
-var _progress_bar = __webpack_require__(22);
+var _progress_bar = __webpack_require__(26);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
-var _pubsub = __webpack_require__(5);
+var _pubsub = __webpack_require__(9);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _sweetalert = __webpack_require__(10);
+var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _session = __webpack_require__(6);
+var _session = __webpack_require__(3);
 
 var _session2 = _interopRequireDefault(_session);
 
+var _loader = __webpack_require__(8);
+
+var _util = __webpack_require__(2);
+
+var _util2 = _interopRequireDefault(_util);
+
+var _validator = __webpack_require__(27);
+
+var _validator2 = _interopRequireDefault(_validator);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
+ *  @initialize it using: new Generator(args);
+ *  @param args is matrix of exercise name and number of bookmarks,
+ *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+ *  @customize it by using prototypal inheritance
+ **/
 
 var Generator = function Generator(set) {
     this.init(set);
-}; /** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
-    *  @initialize it using: new Generator(args);
-    *  @param args is matrix of exercise name and number of bookmarks,
-    *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
-    *  @customize it by using prototypal inheritance
-    **/
+};
 
 Generator.prototype = {
     /************************** SETTINGS ********************************/
     data: 0, //bookmakrs from zeeguu api
     set: 0, //matrix for initialaizer
-    size: 0, //total count of bookmakrs
     index: 0, //current index from set
-    startTime: 0,
+    startTime: new Date(),
     session: _session2.default.getSession(), //Example of session id 34563456 or 11010001
-    bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
     templateURL: 'static/template/exercise.html',
-    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",
 
     /**
      *	Saves the common dom in chache
      **/
-    cacheDom: function cacheDom() {
-        this.$elem = (0, _jquery2.default)("#ex-module");
-        this.$container = this.$elem.find("#ex-container");
-        this.$loader = this.$elem.find('#loader');
+    cacheDom: function cacheDom() {},
+
+    /**
+     * The function caches imports in local scope for later to be referenced as a string
+     * */
+    cacheExerciseImports: function cacheExerciseImports() {
+        this.Ex1 = _ex2.default;
+        this.Ex2 = _ex4.default;
+        this.Ex3 = _ex6.default;
+        this.Ex4 = _ex8.default;
     },
 
     /**
@@ -11351,17 +12792,15 @@ Generator.prototype = {
         this.set = set;
         var _this = this;
 
+        this.validator = new _validator2.default(set);
+
         // "bind" event
         this.$eventFunc = function () {
             _this.nextEx();
         };
         _pubsub2.default.on('exerciseCompleted', this.$eventFunc);
 
-        // Create the DOM and initialize
-        _jquery2.default.when(this.createDom()).done(function () {
-            _this.cacheDom();
-            _this.start();
-        });
+        this.start();
     },
 
     restart: function restart() {
@@ -11373,11 +12812,23 @@ Generator.prototype = {
      **/
     start: function start() {
         var _this = this;
-        this.size = this.calcSize(this.set, this.set.length);
-        _progress_bar2.default.init(0, this.size);
-        _jquery2.default.when(this.getBookmarks()).done(function (ldata) {
+        //Callback wait until the bookmarks are loaded
+        this.validator.getValidBookMarks(function (ldata) {
             _this.data = ldata;
-            _this._constructor();
+            _this.set = _this.validator.validSet;
+            //Terminate generator if not enough bookmarks
+            if (_this.set == null || _this.set <= 0) {
+                _this.terminateGenerator();
+                return;
+            }
+            //Loads the HTML general exercise template from static
+            _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.templateURL, (0, _jquery2.default)("#main-content"))).done(function () {
+                // Create the DOM and start the generator
+                _progress_bar2.default.init(0, _this.validator.validSize);
+                _this.cacheDom();
+                _this.cacheExerciseImports();
+                _this._constructor();
+            });
         });
     },
 
@@ -11389,10 +12840,8 @@ Generator.prototype = {
             }
             bookmarksData.splice(i, 1);
         }
-        console.log(bookmarksData);
         return bookmarksData;
     },
-
     /**
      *	The main constructor
      **/
@@ -11406,49 +12855,25 @@ Generator.prototype = {
      *	Add Ex here
      **/
     nextEx: function nextEx() {
-        if (this.index === this.set.length) {
+        if (this.index >= this.set.length) {
             this.onExSetComplete();
             return;
         }
         var ex = this.set[this.index][0];
         var size = this.set[this.index][1];
-        var startingIndex = this.calcSize(this.set, this.index);
+        var startingIndex = _util2.default.calcSize(this.set, this.index);
 
         this.$currentEx = null;
         delete this.$currentEx;
-        switch (ex) {
-            case 1:
-                this.$currentEx = new _ex2.default(this.data, startingIndex, size);
-                break;
-            case 2:
-                this.$currentEx = new _ex4.default(this.data, startingIndex, size);
-                break;
-            case 3:
-                this.$currentEx = new _ex6.default(this.data, startingIndex, size);
-                break;
-            case 4:
-                this.$currentEx = new _ex8.default(this.data, startingIndex, size);
-                break;
-        }
-
+        //Local scope reference
+        this.$currentEx = new this['Ex' + ex](this.data, startingIndex, size);
         this.index++;
     },
-
-    calcSize: function calcSize(set, length) {
-        var sum = 0;
-        for (var i = 0; i < length; i++) {
-            sum += set[i][1];
-        }
-        return sum;
-    },
-
     /**
      *	Request the submit API
      **/
     submitResults: function submitResults() {
-        for (var i = 0; i < this.data.length; i++) {
-            _jquery2.default.post(this.submitResutsUrl + this.data[i].id + "?session=" + this.session);
-        }
+        //TODO submit user feedback if any
     },
 
     /**
@@ -11460,7 +12885,7 @@ Generator.prototype = {
         _this.submitResults();
         (0, _sweetalert2.default)({
             title: "You rock!",
-            text: "That took less than " + Util.calcTimeInMinutes(_this.startTime) + ". practice more?",
+            text: "That took less than " + _util2.default.calcTimeInMinutes(_this.startTime) + ". practice more?",
             type: "success",
             showCancelButton: true,
             confirmButtonColor: "#7eb530",
@@ -11473,6 +12898,7 @@ Generator.prototype = {
                 return;
             }
             _this.terminateGenerator();
+            _this.restartHome();
             if (redirect != null) {
                 window.location = redirect;
             }
@@ -11483,53 +12909,8 @@ Generator.prototype = {
         _pubsub2.default.off('exerciseCompleted', this.$eventFunc);
         _pubsub2.default.emit('generatorCompleted');
     },
-    /**
-     *	Loads the HTML general exercise template from static
-     **/
-    createDom: function createDom() {
-        var _this = this;
-        return _jquery2.default.ajax({
-            type: 'GET',
-            dataType: 'html',
-            url: _this.templateURL,
-            data: this.data,
-            success: function success(data) {
-                (0, _jquery2.default)("#main-content").html(data);
-            },
-            async: true
-        });
-    },
-
-    /**
-     *	Ajax get request to the Zeeguu API to get new bookmarks
-     **/
-    getBookmarks: function getBookmarks() {
-        var _this = this;
-        this.loadingAnimation(true);
-        var address = this.bookmarksURL + this.size + "?session=" + this.session;
-        return _jquery2.default.ajax({
-            type: 'GET',
-            dataType: 'json',
-            url: address,
-            data: this.data,
-            success: function success(data) {
-                _this.loadingAnimation(false);
-            },
-            async: true
-        });
-    },
-
-    /**
-     *	Animation used for loading
-     **/
-    loadingAnimation: function loadingAnimation(activate) {
-        if (activate === true) {
-            this.$container.addClass('hide');
-            this.$loader.removeClass('hide');
-        } else {
-            this.$container.removeClass('hide');
-            this.$loader.addClass('hide');
-        }
+    restartHome: function restartHome() {
+        _pubsub2.default.emit('homeRestart');
     },
 
     /**
@@ -11553,7 +12934,7 @@ Generator.prototype = {
 exports.default = Generator;
 
 /***/ }),
-/* 13 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11563,9 +12944,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _colorLuminance = __webpack_require__(3);
+var _colorLuminance = __webpack_require__(5);
 
-var _getModal = __webpack_require__(2);
+var _getModal = __webpack_require__(4);
 
 var _hasClass$isDescendant = __webpack_require__(1);
 
@@ -11694,7 +13075,7 @@ exports['default'] = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 14 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11706,7 +13087,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _stopEventPropagation$fireClick = __webpack_require__(1);
 
-var _setFocusStyle = __webpack_require__(2);
+var _setFocusStyle = __webpack_require__(4);
 
 var handleKeyDown = function handleKeyDown(event, params, modal) {
   var e = event || window.event;
@@ -11779,7 +13160,7 @@ exports['default'] = handleKeyDown;
 module.exports = exports['default'];
 
 /***/ }),
-/* 15 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11827,7 +13208,7 @@ exports["default"] = injectedHTML;
 module.exports = exports["default"];
 
 /***/ }),
-/* 16 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11839,9 +13220,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _isIE8 = __webpack_require__(3);
+var _isIE8 = __webpack_require__(5);
 
-var _getModal$getInput$setFocusStyle = __webpack_require__(2);
+var _getModal$getInput$setFocusStyle = __webpack_require__(4);
 
 var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
 
@@ -12060,7 +13441,7 @@ exports['default'] = setParameters;
 module.exports = exports['default'];
 
 /***/ }),
-/* 17 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12090,262 +13471,91 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 18 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(4);
+var _loader = __webpack_require__(8);
 
-var _exercise2 = _interopRequireDefault(_exercise);
+var _mustache = __webpack_require__(18);
 
-var _util = __webpack_require__(8);
-
-var _util2 = _interopRequireDefault(_util);
+var _mustache2 = _interopRequireDefault(_mustache);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Ex1(data, index, size) {
-
-	this.init(data, index, size);
-
-	/** @Override */
-	this.cacheCustomDom = function () {
-		this.$to = this.$elem.find("#ex-to");
-		this.$context = this.$elem.find("#ex-context");
-		this.$input = this.$elem.find("#ex-main-input");
-		this.$showSolution = this.$elem.find("#show_solution");
-		this.$checkAnswer = this.$elem.find("#check_answer");
-		this.$clickableText = this.$elem.find(".clickable-text");
-	};
-
-	/** @Override */
-	this.bindUIActions = function () {
-		var _this = this;
-		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
-
-		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
-
-		//Bind UI Text click		
-		this.$clickableText.on("click", _this.updateInput.bind(this));
-
-		// Bind UI Enter Key
-		this.$input.keyup(_this.enterKeyup.bind(this));
-	};
-
-	/** @Override */
-	this.next = function () {
-		this.$to.html("\"" + this.data[this.index].to + "\"");
-		this.$context.html(this.data[this.index].context);
-		this.$input.val("");
-	};
-
-	this.updateInput = function () {
-		var t = _util2.default.getSelectedText();
-		this.$input.val(t);
-	};
-
-	this.enterKeyup = function (event) {
-		if (event.keyCode == 13) {
-			this.$checkAnswer.click();
-		}
-	};
-
-	/** @Override */
-	this.giveHint = function () {
-		this.$input.val(this.data[this.index].from);
-	};
-
-	/** @Override */
-	this.successCondition = function () {
-		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
-	};
-} /** Custom exercise form finding word in a context. Inherited from Exercise.js
-   *  @initialize it using: new Ex1();
-   *  @customize it by using prototypal inheritance 
-  **/
-
-;
-Ex1.prototype = Object.create(_exercise2.default.prototype, {
-	constructor: Ex1,
-	/************************** SETTINGS ********************************/
-	description: { value: "Find the word in the context:" },
-	customTemplateURL: { value: 'static/template/ex1.html' }
-});
-
-exports.default = Ex1;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
+var EmptyPage = function EmptyPage() {
+    this.init();
+}; /**
+    * Created by Martin on 5/14/2017.
+    */
 
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+EmptyPage.prototype = {
 
-var _jquery = __webpack_require__(0);
+    /************************** SETTINGS ********************************/
+    emptyTemplateURL: 'static/template/empty_page.html',
+    templateFields: {
+        icon: 'static/img/illustrations/ntd_cloud.png',
+        title: "Not Enough Bookmarks",
+        info: 'You can get bookmarks when you read articles.',
+        btnText: 'Let\'s Read',
+        btnLink: 'https://www.zeeguu.unibe.ch/reading'
+    },
+    emptyTemplate: 0,
 
-var _jquery2 = _interopRequireDefault(_jquery);
+    /*********************** General Functions ***************************/
+    /**
+     *	Saves the dom
+     **/
+    cacheDom: function cacheDom() {},
 
-var _exercise = __webpack_require__(4);
+    /**
+     *	Exercise initialaizer
+     **/
+    init: function init() {
+        this.start();
+    },
 
-var _exercise2 = _interopRequireDefault(_exercise);
+    /**
+     *	The main constructor
+     **/
+    start: function start() {
+        var _this = this;
+        _jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.emptyTemplateURL, (0, _jquery2.default)("#main-content"))).done(function (data) {
+            // Create the DOM and start the generator
+            _this.emptyTemplate = data;
+            _this.cacheDom();
+            _this.genPage();
+            _this.bindUIActions();
+        });
+    },
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+    genPage: function genPage() {
+        var html = _mustache2.default.to_html(this.emptyTemplate, this.templateFields);
+        (0, _jquery2.default)("#main-content").html(html);
+    },
 
-function Ex2(data, index, size) {
-	this.init(data, index, size);
+    bindUIActions: function bindUIActions() {},
 
-	/** @Override */
-	this.cacheCustomDom = function () {
-		this.$context = this.$elem.find("#ex-context");
-		this.$showSolution = this.$elem.find("#show_solution");
-		this.$checkAnswer = this.$elem.find("#check_answer");
-		this.$btn1 = this.$elem.find("#btn1");
-		this.$btn2 = this.$elem.find("#btn2");
-		this.$btn3 = this.$elem.find("#btn3");
-	};
-
-	/** @Override */
-	this.bindUIActions = function () {
-		var _this = this;
-		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
-
-		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
-
-		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", _this.btnSelect.bind(this, 1));
-
-		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", _this.btnSelect.bind(this, 2));
-
-		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", _this.btnSelect.bind(this, 3));
-	};
-
-	/** @Override */
-	this.next = function () {
-
-		// Prepare the document
-		this.prepareDocument();
-
-		//Populate context
-		this.generateContext();
-		this.resetBtns();
-		var _this = this;
-
-		//Random options	
-		var idxs = this.randomNumsInRange(2, this.data.length - 1);
-		this.btns = this.arrayWithRandomNumsUpTo(this.optionNum);
-
-		//Populate buttons
-		function populateButton(buttonID, value) {
-			_this["$btn" + buttonID].text(value);
-		}
-
-		populateButton(this.btns[0], this.data[this.index].from);
-		populateButton(this.btns[1], this.data[idxs[0]].from);
-		populateButton(this.btns[2], this.data[idxs[1]].from);
-	};
-
-	/** @Override */
-	this.giveHint = function () {
-		var elem = (0, _jquery2.default)('#btn' + this.btns[1]);
-		elem.prop('disabled', true);
-		elem.addClass("btn-danger");
-	};
-
-	/** @Override */
-	this.successCondition = function (chosenWord) {
-		return chosenWord.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
-	};
-
-	this.btnSelect = function (arg) {
-		var chosenWord = this["$btn" + arg].text();
-		if (this.successCondition(chosenWord)) this.reGenerateContext(chosenWord);
-		this.checkAnswer(chosenWord);
-	};
-
-	this.resetBtns = function () {
-		var elem = (0, _jquery2.default)('#btn' + this.btns[1]);
-		elem.prop('disabled', false);
-		elem.removeClass("btn-danger");
-	};
-
-	this.arrayWithRandomNumsUpTo = function (size) {
-		var arr = [];
-		while (arr.length < size) {
-			var randomnumber = Math.ceil(Math.random() * size);
-			if (arr.indexOf(randomnumber) > -1) continue;
-			arr[arr.length] = randomnumber;
-		}
-		return arr;
-	};
-
-	/** Generates an array of random numbers of given size
- * @param size:  defines how many random numbers we want
- * @param range: defines the upper limit of the numbers: [1,range]
- */
-	this.randomNumsInRange = function (size, range) {
-		var arr = [];
-		while (arr.length < size) {
-			var randomnumber = Math.ceil(Math.random() * range);
-			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
-			arr[arr.length] = randomnumber;
-		}
-		return arr;
-	};
-
-	this.generateContext = function () {
-		var contextString = this.data[this.index].context;
-		var res = this.data[this.index].from.split(" ");
-
-		for (var i = 0; i < res.length; i++) {
-			contextString = contextString.replace(res[i], " ______ ");
-		}
-		this.$context.html(contextString);
-	};
-
-	this.reGenerateContext = function (chosenWord) {
-		var contextString = this.$context.html();
-		var res = chosenWord.split(" ");
-
-		for (var i = 0; i < res.length; i++) {
-			contextString = contextString.replace(" ______ ", res[i].bold());
-		}
-		this.$context.html(contextString);
-	};
+    terminate: function terminate() {
+        //If any events terminate here
+    }
 };
 
-Ex2.prototype = Object.create(_exercise2.default.prototype, {
-	constructor: Ex2,
-	/************************** SETTINGS ********************************/
-	description: { value: "Choose the word that fits the context" },
-	customTemplateURL: { value: 'static/template/ex2.html' },
-	btns: { writable: true, value: [1, 2, 3] },
-	optionNum: { value: 3 }
-});
-
-exports.default = Ex2;
+exports.default = EmptyPage;
 
 /***/ }),
-/* 20 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12355,381 +13565,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _exercise = __webpack_require__(4);
-
-var _exercise2 = _interopRequireDefault(_exercise);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/** Custom exercise formatching 3 words. Inherited from Exercise.js
- *  @initialize it using: new Ex3();
- *  @customize it by using prototypal inheritance 
-**/
-
-function Ex3(data, index, size) {
-	this.init(data, index, size);
-
-	/** @Override */
-	this.cacheCustomDom = function (data, index, size) {
-		this.$to = this.$elem.find("#ex-to");
-		this.$context = this.$elem.find("#ex-content");
-		this.$showSolution = this.$elem.find("#show_solution");
-		this.$btn1 = this.$elem.find("#btn1");
-		this.$btn2 = this.$elem.find("#btn2");
-		this.$btn3 = this.$elem.find("#btn3");
-		this.$btn4 = this.$elem.find("#btn4");
-		this.$btn5 = this.$elem.find("#btn5");
-		this.$btn6 = this.$elem.find("#btn6");
-	};
-
-	//this.get = () => { return this["$btn1"]; };
-
-	/** @Override */
-	this.bindUIActions = function () {
-		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", this.handleHint.bind(this));
-
-		//Bind UI action of Check answer to the function
-		//this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
-
-		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", this.selectChoice.bind(this, 1));
-
-		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", this.selectChoice.bind(this, 2));
-
-		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", this.selectChoice.bind(this, 3));
-
-		//Bind UI action of button 4 click to the function
-		this.$btn4.on("click", this.selectChoice.bind(this, 4));
-
-		//Bind UI action of button 5 click to the function
-		this.$btn5.on("click", this.selectChoice.bind(this, 5));
-
-		//Bind UI action of button 6 click to the function
-		this.$btn6.on("click", this.selectChoice.bind(this, 6));
-	};
-
-	this.selectChoice = function (btnID) {
-		// if no button was previously selected, select it now
-		if (this.chosenButton == -1) {
-			this.chosenButton = btnID;
-		} else {
-			// otherwise check the selection
-			this.check(btnID);
-		}
-	};
-
-	// Disables correctly selected buttons
-	this.successDisableBtn = function (btnID) {
-		var elem = (0, _jquery2.default)("#btn" + btnID);
-		elem.prop('disabled', true);
-		elem.addClass("btn-success");
-	};
-
-	//Checks if a button is disabled
-	this.isDisabled = function (btnID) {
-		var elem = (0, _jquery2.default)("#btn" + btnID);
-		return elem.is(':disabled');
-	};
-
-	// Checks answers
-	this.check = function (btnID) {
-
-		if (this.checkCondition(btnID)) {
-
-			// Disable buttons		
-			this.successDisableBtn(btnID);
-			this.successDisableBtn(this.chosenButton);
-
-			this.correctAnswers++;
-			this.endExercise();
-		} else {
-			this.wrongAnswerAnimation();
-		}
-		this.chosenButton = -1;
-	};
-
-	this.endExercise = function () {
-		// check if all the answers were given
-		if (this.successCondition(0)) {
-			// Proceed to next exercise
-			this.checkAnswer(0);
-
-			// Prepare the document
-			this.prepareDocument();
-
-			// Reset buttons, answers, hints
-			this.resetBtns();
-			this.correctAnswers = 0;
-			this.hints = 0;
-		}
-	};
-
-	// Checks the selected buttons
-	this.checkCondition = function (btnID) {
-		if (this.answers.indexOf(btnID) == -1 || this.choices.indexOf(this.chosenButton) == -1) {
-			return this.choices.indexOf(btnID) == this.answers.indexOf(this.chosenButton);
-		} else {
-			return this.answers.indexOf(btnID) == this.choices.indexOf(this.chosenButton);
-		}
-	};
-
-	/** @Override */
-	this.successCondition = function (a) {
-		return this.correctAnswers >= 3;
-	};
-
-	// Resets all the disabled buttons
-	this.resetBtns = function () {
-		for (var idx = 1; idx <= 6; idx++) {
-			var elem = (0, _jquery2.default)('#btn' + idx);
-			elem.prop('disabled', false);
-			elem.removeClass("btn-success");
-		}
-	};
-
-	/** @Override */
-	this.next = function () {
-		this.populateButtons();
-	};
-
-	// Populates the buttons
-	this.populateButtons = function () {
-		//Random options
-		var idxs = this.randomNumsInRange(2, this.data.length - 1);
-		var _this = this;
-		// random numbers between 1 and 3
-		this.choices = this.arrayWithRandomNumsUpTo(3);
-
-		// random numbers between 4 and 6
-		this.answers = this.arrayWithRandomNumsUpTo(3);
-		for (var i = 0; i < this.answers.length; i++) {
-			this.answers[i] = this.answers[i] + 3;
-		}
-
-		//Populate buttons
-		function match2Buttons(choice, answer, valueFrom, valueTo) {
-			_this["$btn" + choice].text(valueFrom);
-			_this["$btn" + answer].text(valueTo);
-		}
-
-		match2Buttons(this.choices[0], this.answers[0], this.data[this.index].from, this.data[this.index].to);
-		match2Buttons(this.choices[1], this.answers[1], this.data[idxs[0]].from, this.data[idxs[0]].to);
-		match2Buttons(this.choices[2], this.answers[2], this.data[idxs[1]].from, this.data[idxs[1]].to);
-	};
-
-	// Gives a hint by disabling a correct match
-	this.giveHint = function () {
-		// Only one hint is possible
-		if (this.hints < 1) {
-			// Disable buttons
-			if (this.disableHintButtons(0)) return;
-			if (this.disableHintButtons(1)) return;
-			if (this.disableHintButtons(2)) return;
-		}
-	};
-
-	// Disables the buttons given in the hint
-	this.disableHintButtons = function (idx) {
-		if (!this.isDisabled(this.answers[idx])) {
-			this.successDisableBtn(this.choices[idx]);
-			this.successDisableBtn(this.answers[idx]);
-			this.correctAnswers++;
-			this.hints++;
-			this.endExercise();
-			return true;
-		}
-		return false;
-	};
-
-	/** Generates an array of random numbers of given size
- * @param size: defines how many random numbers we want
- *				the resulted random numbers will in the range of [1,size]
- */
-	this.arrayWithRandomNumsUpTo = function (size) {
-		var arr = [];
-		while (arr.length < size) {
-			var randomnumber = Math.ceil(Math.random() * size);
-			if (arr.indexOf(randomnumber) > -1) continue;
-			arr[arr.length] = randomnumber;
-		}
-		return arr;
-	};
-
-	/** Generates an array of random numbers of given size
- * @param size:  defines how many random numbers we want
- * @param range: defines the upper limit of the numbers: [1,range]
- */
-	this.randomNumsInRange = function (size, range) {
-		var arr = [];
-		while (arr.length < size) {
-			var randomnumber = Math.ceil(Math.random() * range);
-			//console.log(this.index + " : " + randomnumber);
-			if (arr.indexOf(randomnumber) > -1 || randomnumber == this.index) continue;
-			arr[arr.length] = randomnumber;
-		}
-		return arr;
-	};
-};
-
-Ex3.prototype = Object.create(_exercise2.default.prototype, {
-	constructor: Ex3,
-	/************************** SETTINGS ********************************/
-	description: { value: "Match each word with its translation" },
-	customTemplateURL: { value: 'static/template/ex3.html' },
-	choices: { writable: true, value: [1, 2, 3] }, // arr of indexes of possible choices
-	answers: { writable: true, value: [1, 2, 3] }, // arr of indexes of possible answers
-	chosenButton: { writable: true, value: -1 }, // ID of currently selected button; -1 means no button is selected
-	correctAnswers: { writable: true, value: 0 }, // number of correct answers
-	hints: { writable: true, value: 0 } // max number of possible hints is 1
-	/*******************************************************************/
-});
-
-exports.default = Ex3;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _exercise = __webpack_require__(4);
-
-var _exercise2 = _interopRequireDefault(_exercise);
-
-var _util = __webpack_require__(8);
-
-var _util2 = _interopRequireDefault(_util);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Ex4(data, index, size) {
-
-	this.init(data, index, size);
-
-	/** @Override */
-	this.cacheCustomDom = function () {
-		this.$to = this.$elem.find("#ex-to");
-		this.$context = this.$elem.find("#ex-context");
-		this.$input = this.$elem.find("#ex-main-input");
-		this.$showSolution = this.$elem.find("#show_solution");
-		this.$checkAnswer = this.$elem.find("#check_answer");
-		this.$clickableText = this.$elem.find(".clickable-text");
-	};
-
-	/** @Override */
-	this.bindUIActions = function () {
-		var _this = this;
-		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
-
-		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
-
-		//Bind UI Text click		
-		//this.$clickableText.on("click",updateInput.bind(this));
-
-		// Bind UI Enter Key
-		this.$input.keyup(_this.enterKeyup.bind(this));
-	};
-
-	/** @Override */
-	this.next = function () {
-		this.$to.html("\"" + this.data[this.index].from + "\"");
-		this.$context.html(this.generateContext());
-		this.$input.val("");
-	};
-
-	this.updateInput = function () {
-		var t = _util2.default.getSelectedText();
-		this.$input.val(t);
-	};
-
-	this.enterKeyup = function (event) {
-		if (event.keyCode == 13) {
-			this.$checkAnswer.click();
-		}
-	};
-
-	this.generateContext = function () {
-		var contextString = this.data[this.index].context;
-		var res = this.data[this.index].from.split(" ");
-
-		for (var i = 0; i < res.length; i++) {
-			contextString = contextString.replace(res[i], res[i].bold());
-		}
-
-		return contextString;
-	};
-
-	/** @Override */
-	this.giveHint = function () {
-		this.$input.val(this.data[this.index].to[0]);
-	};
-
-	/** @Override */
-	this.successCondition = function () {
-		// Check all the possible answers
-		for (var i = 0; i < this.data[this.index].to.length; i++) {
-			if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to[i].trim().toUpperCase().replace(/[^a-zA-Z ]/g, "")) return true;
-		}return false;
-	};
-
-	/** @Override */
-	this.wrongAnswerAnimation = function () {
-		swal({
-			title: "Wrong answer...",
-			allowOutsideClick: true,
-			type: "error",
-			text: "Hint: the word starts with \"" + this.data[this.index].to[0].trim().charAt(0) + "\"",
-			confirmButtonText: "ok",
-			showConfirmButton: true,
-			allowEscapeKey: true,
-			showLoaderOnConfirm: true
-		});
-	};
-} /** Custom exercise for translating the word given in the context. Inherited from Exercise.js
-   *  @initialize it using: new Ex4();
-   *  @customize it by using prototypal inheritance 
-  **/
-
-;
-Ex4.prototype = Object.create(_exercise2.default.prototype, {
-	constructor: Ex4,
-	/************************** SETTINGS ********************************/
-	description: { value: "Translate the word given in the context." },
-	customTemplateURL: { value: 'static/template/ex4.html' }
-});
-
-exports.default = Ex4;
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _pubsub = __webpack_require__(5);
+var _pubsub = __webpack_require__(9);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
@@ -12778,16 +13614,262 @@ var bar,
 exports.default = ProgressBar;
 
 /***/ }),
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _generator = __webpack_require__(12);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /** Validator class takes care of the input for generator
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Based on the result, it decided on how to generate exercises
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks == 0 then no bookmarks page
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks < requested number then generate exercises that fit
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  If number of bookmarks >= requested number simply generate exercises
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Init with @param {array} set: [[2,3],[1,3],[3,3],[4,3],[1,3]]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  IMPORTANT: the function @getValidBookMarks assumes the set is created
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  considering the minimum requirements for each exercise
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      **/
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _settings = __webpack_require__(7);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+var _session = __webpack_require__(3);
+
+var _session2 = _interopRequireDefault(_session);
+
+var _util = __webpack_require__(2);
+
+var _util2 = _interopRequireDefault(_util);
+
+var _empty_page = __webpack_require__(25);
+
+var _empty_page2 = _interopRequireDefault(_empty_page);
+
+var _loading_animation = __webpack_require__(17);
+
+var _loading_animation2 = _interopRequireDefault(_loading_animation);
+
+var _ex = __webpack_require__(13);
+
+var _ex2 = _interopRequireDefault(_ex);
+
+var _ex3 = __webpack_require__(14);
+
+var _ex4 = _interopRequireDefault(_ex3);
+
+var _ex5 = __webpack_require__(15);
+
+var _ex6 = _interopRequireDefault(_ex5);
+
+var _ex7 = __webpack_require__(16);
+
+var _ex8 = _interopRequireDefault(_ex7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Validator = function () {
+    function Validator(set) {
+        _classCallCheck(this, Validator);
+
+        /** Class parameters*/
+        this.set = set;
+        this.validFinalSet = [];
+        this.loadingAnimation = new _loading_animation2.default();
+        this.data = 0;
+        this.session = _session2.default.getSession();
+        this.totalValidSize = 0;
+        //Cache the imports for later reference
+        this.cacheExerciseImports();
+    }
+
+    /**
+     * The function caches imports in local scope for later to be referenced as a string
+     * */
+
+
+    _createClass(Validator, [{
+        key: "cacheExerciseImports",
+        value: function cacheExerciseImports() {
+            this.Ex1 = _ex2.default;
+            this.Ex2 = _ex4.default;
+            this.Ex3 = _ex6.default;
+            this.Ex4 = _ex8.default;
+        }
+
+        /**
+        *	Ajax get request to the Zeeguu API to get new bookmarks
+        **/
+
+    }, {
+        key: "getBookmarks",
+        value: function getBookmarks(totalSize) {
+            var _this = this;
+            var address = _settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_STUDY_BOOKMARKS + totalSize + "?session=" + _this.session;
+            return _jquery2.default.ajax({
+                beforeSend: function beforeSend() {
+                    _this.loadingAnimation.loadingAnimation(true);
+                },
+                type: 'GET',
+                dataType: 'json',
+                url: address,
+                data: this.data,
+                async: true
+            });
+        }
+        /**
+         *  @param args is matrix of exercise name and number of bookmarks,
+         *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+         *  @return matrix of exercises similar to its input
+         * */
+
+    }, {
+        key: "getValidBookMarks",
+        value: function getValidBookMarks(callback) {
+            var _this = this;
+            //Calculate the size
+            var totalSize = _util2.default.calcSize(this.set, this.set.length);
+            //TODO change the follwoing line to proper return value
+            this.totalValidSize = totalSize;
+            _jquery2.default.when(this.getBookmarks(totalSize)).done(function (data) {
+                _this.validFinalSet = _this.validateSet(totalSize, data);
+                callback(data);
+            });
+        }
+
+        /**
+         *  Given the set and the bookmarks create a new set for generator
+         *  Three possibilities:
+         *  number of bookmarks == 0 then show no bookmarks page
+         *  number of bookmarks < requested number then generate exercises that fit
+         *  number of bookmarks >= requested number simply generate exercises
+         *  @return {Array} set, the validated ex set
+         * */
+
+    }, {
+        key: "validateSet",
+        value: function validateSet(totalSetLength, data) {
+            this.data = data;
+            var bookmarkLength = this.data.length;
+
+            if (bookmarkLength <= 0) return this.noBookmarkPage();
+            if (bookmarkLength < totalSetLength) return this.notEnoughBookmarks(bookmarkLength, this.set);
+            return this.enoughBookmarks(this.set);
+        }
+
+        /**
+         * number of bookmarks >= requested number simply generate exercises
+         * Assumes the given set has valid minimal sizes for exercises
+         */
+
+    }, {
+        key: "enoughBookmarks",
+        value: function enoughBookmarks(set) {
+            return set;
+        }
+
+        /**
+         * Number of bookmarks < requested number, generate exercises that fit
+         * @return {Array} set
+         * TODO add testing
+        */
+
+    }, {
+        key: "notEnoughBookmarks",
+        value: function notEnoughBookmarks(bookmarkLength, set) {
+            var newSet = [];
+            var setIndex = 0;
+            while (bookmarkLength > 0 && setIndex < set.length) {
+                var delta = bookmarkLength - set[setIndex][1];
+                if (delta >= 0) {
+                    newSet.push(set[setIndex]);
+                    bookmarkLength = delta;
+                } else if (this.isProperEx(set[setIndex][0], bookmarkLength)) {
+                    //delta < 0 && the ex requirement is met
+                    newSet.push([set[setIndex][0], bookmarkLength]);
+                    bookmarkLength = delta;
+                }
+                setIndex++;
+            }
+            return newSet.length > 0 ? newSet : this.noBookmarkPage(); //Bookmarks is still 0, throw noBookmarks page
+        }
+
+        /**
+         * Number of bookmarks == 0 then show no bookmarks page
+         * Signals the generator to terminate, load no bookmark page
+         * @return {Array} empty array
+         * */
+
+    }, {
+        key: "noBookmarkPage",
+        value: function noBookmarkPage() {
+            var emptPg = new _empty_page2.default();
+            return [];
+        }
+
+        /**
+         * Compares the minimum requirement for the given ex and the assigned amount
+         * @param {int} exNum, the id of the ex
+         * @param {int} exSize, the amount the ex is generated
+         * @return {boolean}, true if the minReq >= givenAmount, else false
+         * @example this.isProperEx(1,2), Ex1 2 times
+         * */
+
+    }, {
+        key: "isProperEx",
+        value: function isProperEx(exNum, exSize) {
+            var minReqForEx = this['Ex' + exNum].prototype.minRequirement;
+            return minReqForEx <= exSize;
+        }
+
+        /**
+         * Getter for final valid size of the generated bookmarks
+         * */
+
+    }, {
+        key: "validSize",
+        get: function get() {
+            return _util2.default.calcSize(this.validFinalSet, this.validFinalSet.length);
+        }
+
+        /**
+         * Getter for final valid set for exercise generator
+         * */
+
+    }, {
+        key: "validSet",
+        get: function get() {
+            return this.validFinalSet;
+        }
+    }]);
+
+    return Validator;
+}();
+
+exports.default = Validator;
+
+/***/ }),
+/* 28 */,
+/* 29 */,
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _generator = __webpack_require__(19);
 
 var _generator2 = _interopRequireDefault(_generator);
 

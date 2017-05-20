@@ -25,7 +25,7 @@ export default class Session {
      * @param days, expiration time
      * @default form Zeeguu Settings
      * */
-    static setSession (name = Settings.ZEEGUU_SESSION_ID, value = Settings.ZEEGUU_DEFUALT_SESSION, days = Settings.ZEEGUU_DEFUALT_COOKIE_EXPIRATION ) {
+    static setSession (name = Settings.ZEEGUU_SESSION_ID, value = Settings.ZEEGUU_DEFAULT_SESSION, days = Settings.ZEEGUU_DEFAULT_COOKIE_EXPIRATION ) {
         CookieHander.setCookie(name,value,days);
     }
 }

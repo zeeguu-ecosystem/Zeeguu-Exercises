@@ -94,8 +94,8 @@ function Ex2(data,index,size){
 	};
 	
 	/** Generates an array of random numbers of given size
-	* @param size:  defines how many random numbers we want
-	* @param range: defines the upper limit of the numbers: [1,range]
+	* @param {int} size:  defines how many random numbers we want
+	* @param {int} range: defines the upper limit of the numbers: [1,range]
 	*/
 	this.randomNumsInRange = function(size,range){
 		var arr = [];	
@@ -127,18 +127,17 @@ function Ex2(data,index,size){
 		}	
 		this.$context.html (contextString);
 	};
-	
-	
 };
 
 Ex2.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex2,
-	/************************** SETTINGS ********************************/	
+	/** ************************** SETTINGS **************************** **/
 	description: {value: "Choose the word that fits the context"},
 	customTemplateURL: {value: 'static/template/ex2.html'},
 	btns: 		 {writable: true, value:[1,2,3]}, 
 	optionNum:	 {value: 3},
-	/*******************************************************************/
+    minRequirement: { writable: true, value:3},	// minimum number required for the ex
+	/** *************************************************************** **/
 });
 
 export default Ex2;

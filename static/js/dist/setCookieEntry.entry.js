@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 27);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 11:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96,7 +96,7 @@ var cookieHandler = function () {
 
         /**
          * Retrive cookie given the
-         * @param name
+         * @param {String} name, cookie name
          * */
         value: function getCookie(name) {
             var nameEQ = name + "=";
@@ -112,9 +112,9 @@ var cookieHandler = function () {
 
         /**
          * Set cookie given the
-         * @param name, cookie identifier
-         * @param value, value of the cookie
-         * @param days, expiration time
+         * @param {String} name, cookie identifier
+         * @param {Object} value, value of the cookie
+         * @param {int} days, expiration time
          * */
 
     }, {
@@ -139,23 +139,7 @@ exports.default = cookieHandler;
 
 /***/ }),
 
-/***/ 27:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _session = __webpack_require__(6);
-
-var _session2 = _interopRequireDefault(_session);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_session2.default.setSession();
-
-/***/ }),
-
-/***/ 6:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -170,7 +154,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _cookie_handler = __webpack_require__(11);
+var _cookie_handler = __webpack_require__(12);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
@@ -217,8 +201,8 @@ var Session = function () {
         key: 'setSession',
         value: function setSession() {
             var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings2.default.ZEEGUU_SESSION_ID;
-            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFUALT_SESSION;
-            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFUALT_COOKIE_EXPIRATION;
+            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings2.default.ZEEGUU_DEFAULT_SESSION;
+            var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings2.default.ZEEGUU_DEFAULT_COOKIE_EXPIRATION;
 
             _cookie_handler2.default.setCookie(name, value, days);
         }
@@ -231,6 +215,22 @@ exports.default = Session;
 
 /***/ }),
 
+/***/ 31:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _session = __webpack_require__(3);
+
+var _session2 = _interopRequireDefault(_session);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_session2.default.setSession();
+
+/***/ }),
+
 /***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -240,6 +240,7 @@ exports.default = Session;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+//noinspection JSAnnotator
 /**
  * File containing global settings for exercises
  * */
@@ -247,10 +248,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     /*********************** Exercise API Parameters **************************/
 
-    ZEEGUU_API: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFUALT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFUALT_SESSION: 34563456,
+    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
+
+    /******************** Exercise Bookmark Parameters ************************/
+    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
 
     /*********************** Exercise Outcome Parameters **************************/
 
@@ -258,12 +262,12 @@ exports.default = {
     ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
 
     /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: "/Recognize",
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
 
     /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: "/Correct",
-    ZEEGUU_EX_OUTCOME_WRONG: "/Wrong",
-    ZEEGUU_EX_OUTCOME_HINT: "/asked_for_hint"
+    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
+    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
+    ZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint'
 
 };
 

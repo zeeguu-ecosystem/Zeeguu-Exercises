@@ -5,7 +5,7 @@
 export default class cookieHandler {
     /**
      * Retrive cookie given the
-     * @param name
+     * @param {String} name, cookie name
      * */
     static getCookie(name) {
         var nameEQ = name + "=";
@@ -20,9 +20,9 @@ export default class cookieHandler {
 
     /**
      * Set cookie given the
-     * @param name, cookie identifier
-     * @param value, value of the cookie
-     * @param days, expiration time
+     * @param {String} name, cookie identifier
+     * @param {Object} value, value of the cookie
+     * @param {int} days, expiration time
      * */
     static setCookie (name, value, days) {
         var expires;

@@ -45,12 +45,25 @@ var ut,Util = {
 	
 	/**
      *	Calculate exercise time in milliseconds
-	 *	@return milliseconds
+	 *	@return {int} milliseconds
      **/
     calcTimeInMilliseconds: function (startTime){
-        var endTime = new Date();
-        var total = endTime.getTime() - startTime.getTime();
+        var endTime = Date.now();
+        var total = endTime - startTime;
         return total;
+    },
+
+    /**
+     * Calculate size of elements in 2D array
+     * @param {int} length, do until that index
+     * @param {[int][int]} set, int array
+     * */
+    calcSize: function(set,length){
+        var sum = 0;
+        for(var i = 0; i<length; i++){
+            sum += set[i][1];
+        }
+        return sum;
     },
 }
 

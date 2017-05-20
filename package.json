@@ -1,8 +1,8 @@
 {
-  "name": "untitled",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "language_practice_platform",
+  "version": "0.3.0",
+  "description": "An open adaptive online language practice platform",
+  "main": "main.js",
   "scripts": {
     "dev": "./node_modules/.bin/webpack",
     "production": "NODE_ENV=production webpack",

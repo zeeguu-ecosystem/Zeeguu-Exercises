@@ -1,5 +1,5 @@
 import Home from './home';
 
 (function() {
-	window.onload = new Home();	
+	window.onload = ()=>{new Home()};
 })();

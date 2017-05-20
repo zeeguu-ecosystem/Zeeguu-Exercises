@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Generator from './generator';
 import events from './pubsub';
 import Mustache from 'mustache';
+import {Loader} from './loader';
 
 var Home = function(){
 	this.init();
@@ -24,27 +25,11 @@ Home.prototype = {
 			  
 			  ],
 	currentGenerator: 0,
-	eventFunc: 0,
+	eventGeneratorCompletedFunc: 0,
+    eventHomeRestartFunc: 0,
 	creditsOn: false,
+    cardTemplate: 0,
 	/*********************** General Functions ***************************/	
-	/**
-	*	Loads the HTML exercise template from static
-	**/
-	createDom: function(){
-		$("#main-content").html(this.loadTemplate(this.homeTemplateURL));	
-	},
-	
-	loadTemplate: function(tempUrl){
-		return $.ajax({	  
-		  type: 'GET',
-		  dataType: 'html',
-		  url: tempUrl,
-		  async: false
-		}).responseText;		
-	},
-	
-	
-	
 	/**
 	*	Saves the dom 
 	**/
@@ -63,31 +48,37 @@ Home.prototype = {
 		var _this = this;
 		
 		// "bind" event
-		this.eventFunc = function(){_this.reset();};
-		events.on('generatorCompleted',this.eventFunc);
+		this.eventGeneratorCompletedFunc = function(){_this.reset();};
+        this.eventHomeRestartFunc = function(){_this.start();};
+		events.on('generatorCompleted',this.eventGeneratorCompletedFunc);
+        events.on('homeRestart',this.eventHomeRestartFunc);
 	
 		this.start();		
-	},	
-	
-	/**
+	},
+
+
+
+    /**
 	*	The main constructor
 	**/
 	start: function (){	
 		var _this = this;
-		$.when(this.createDom()).done(function(){		
-			_this.cacheDom();		
-			_this.generateEx();			
-			_this.bindUIActions();
-		});	
+        $.when(Loader.loadTemplateIntoElem(_this.homeTemplateURL,$("#main-content")),
+			   Loader.loadTemplate(this.cardTemplateURL)).done(function(homeData,cardData){
+
+			_this.cardTemplate = cardData[0];//cardData[0] string html
+            // Create the DOM and start the generator
+            _this.cacheDom();
+            _this.generateEx();
+            _this.bindUIActions();
+        });
 	},
 
-	bindUIActions: function(){	
-	
-		//Bind UI action of button clicks to the function
+	bindUIActions: function(){
+        var _this = this;
+        //Bind UI action of button clicks to the function
 		var exs = this.$exCards.children();
-		
-		//Bind UI action of credits to the function		
-		var _this = this;		
+		//Bind UI action of credits to the function
 		this.$credits.on("click", _this.giveCredits.bind(this));
 		
 		for(var i = 0; i<exs.length; i++){
@@ -106,15 +97,14 @@ Home.prototype = {
 		this.$attribution.removeClass("hide");
 	},
 	
-	generateEx: function(){		
-		var cardTemplate = this.loadTemplate(this.cardTemplateURL);		
-		var cardNames = {Exercises: this.exNames};	
-		
-		this.$exCards.append(Mustache.render(cardTemplate,cardNames));
+	generateEx: function(){
+        var cardNames = {Exercises: this.exNames};
+		this.$exCards.append(Mustache.render(this.cardTemplate,cardNames));
 	},
 	
 	/**
 	* Parse string into 2D array for generator arguments
+	 * TODO can be overriten by eval
 	*/
 	exArrayParser: function(stringArray){		
 		var arr = stringArray.split(",").map(function(x){return parseInt(x)});
@@ -125,12 +115,13 @@ Home.prototype = {
 	
 	reset: function(){
 		this.currentGenerator = null;
-		delete this.currentGenerator;	
-		this.start();
+        delete this.currentGenerator;
 	},
 	
 	terminate: function(){
-		events.off('generatorCompleted',this.eventFunc);
+		events.off('generatorCompleted',this.eventGeneratorCompletedFunc);
+        events.off('homeRestart',this.eventHomeRestartFunc);
+		//emit listeners that the home is terminated
 	},
 	
 	newEx: function(exID){

@@ -5,10 +5,11 @@
 
 import $ from 'jquery';
 import swal from 'sweetalert';
-import events from './pubsub';
-import Util from './util';
-import Settings from './settings';
-import  Session from './session';
+import events from '../pubsub';
+import Util from '../util';
+import Settings from '../settings';
+import Session from '../session';
+import {Loader} from '../loader';
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
@@ -27,6 +28,8 @@ Exercise.prototype = {
 	session: Session.getSession(), //Example of session id 34563456 or 11010001
 	startTime: 0,
 	isHintUsed: false,
+    minRequirement: 1,
+	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,
 	
 	/*********************** General Functions ***************************/	
 	/**
@@ -34,17 +37,7 @@ Exercise.prototype = {
 	**/
 	
 	createCustomDom: function(){
-		var _this = this;
-		return $.ajax({	  
-		  type: 'GET',
-		  dataType: 'html',
-		  url: _this.customTemplateURL,
-		  data: this.data,
-		  success: function(data) {
-			$("#custom-content").html(data);	
-		  },
-		  async: true
-		});
+        Loader.loadTemplateIntoElem(this.customTemplateURL,$("#custom-content"));
 	},
 	
 	/**
@@ -65,7 +58,7 @@ Exercise.prototype = {
 	**/
 	init: function(data,index,size){	
 		var _this = this;
-		$.when(_this.createCustomDom()).done(function(){
+		$.when(Loader.loadTemplateIntoElem(_this.customTemplateURL,$("#custom-content"))).done(function(){
 			_this.cacheDom();	
 			_this.bindUIActions();
 			_this._constructor(data,index,size);	
@@ -82,8 +75,8 @@ Exercise.prototype = {
 		this.startIndex = index;
 		this.size  = size;			
 		this.setDescription(); 	
-		this.next();		
-        this.startTime = new Date();
+		this.next();
+        this.startTime = Date.now();
 	},
 		
 	/**
@@ -128,7 +121,7 @@ Exercise.prototype = {
 			this.onExComplete();
 			return;
 		}			
-		setTimeout(function() { _this.next(); }, 2000);
+		setTimeout(function() { _this.next(); _this.startTime = Date.now();}, 2000);
 	},
 	
 	/**
@@ -136,6 +129,7 @@ Exercise.prototype = {
 	 *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 
      **/
     submitResult: function(id,exOutcome){
+    	let _this = this;
 		//If the user used the hint, do not register correct solution, resent the hint, move on
 		if(this.isHintUsed && exOutcome == Settings.ZEEGUU_EX_OUTCOME_CORRECT) {
 			this.isHintUsed = false;
@@ -146,7 +140,8 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = Util.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-        $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  Settings.ZEEGUU_EX_SOURCE_RECOGNIZE + "/" + exTime + "/" + id + "?session="+this.session);
+		console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
+        $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
     },
 
 	

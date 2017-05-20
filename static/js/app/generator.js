@@ -4,16 +4,20 @@
  *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
  *  @customize it by using prototypal inheritance
  **/
- 
+
 import $ from 'jquery';
-import Ex1 from './ex1';
-import Ex2 from './ex2';
-import Ex3 from './ex3';
-import Ex4 from './ex4';
+import Ex1 from './exercises/ex1';
+import Ex2 from './exercises/ex2';
+import Ex3 from './exercises/ex3';
+import Ex4 from './exercises/ex4';
 import ProgressBar from './progress_bar';
 import events from './pubsub';
 import swal from 'sweetalert';
 import Session from './session';
+import {Loader} from './loader';
+import Util from './util';
+import Validator from './validator';
+
 
  
 var Generator = function(set){
@@ -24,22 +28,25 @@ Generator.prototype = {
     /************************** SETTINGS ********************************/
     data: 0,		//bookmakrs from zeeguu api
     set: 0,			//matrix for initialaizer
-    size: 0,		//total count of bookmakrs
     index: 0,		//current index from set
-    startTime: 0,
+    startTime: new Date(),
     session: Session.getSession()  , //Example of session id 34563456 or 11010001
-    bookmarksURL: "https://zeeguu.unibe.ch/api/bookmarks_to_study/",
     templateURL: 'static/template/exercise.html',
-    submitResutsUrl: "https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Too easy/Recognize/1000/",
-
 
     /**
      *	Saves the common dom in chache
      **/
     cacheDom: function(){
-        this.$elem 				= $("#ex-module");
-        this.$container  		= this.$elem.find("#ex-container");
-        this.$loader 			= this.$elem.find('#loader');
+    },
+
+    /**
+     * The function caches imports in local scope for later to be referenced as a string
+     * */
+    cacheExerciseImports: function(){
+        this.Ex1 = Ex1;
+        this.Ex2 = Ex2;
+        this.Ex3 = Ex3;
+        this.Ex4 = Ex4;
     },
 
     /**
@@ -49,17 +56,14 @@ Generator.prototype = {
         this.set = set;
         var _this = this;
 
+        this.validator = new Validator(set);
+
         // "bind" event
         this.$eventFunc = function(){_this.nextEx()};
         events.on('exerciseCompleted',this.$eventFunc);
 
-        // Create the DOM and initialize
-        $.when(this.createDom()).done(function(){
-            _this.cacheDom();
-            _this.start();
-        });
+        this.start();
     },
-
 
     restart: function(){
         this.start();
@@ -70,12 +74,24 @@ Generator.prototype = {
      **/
     start: function ()
     {
-        var _this = this;
-        this.size = this.calcSize(this.set,this.set.length);
-        ProgressBar.init(0,this.size);
-        $.when(this.getBookmarks()).done(function (ldata) {
+        let _this= this;
+        //Callback wait until the bookmarks are loaded
+        this.validator.getValidBookMarks(function(ldata) {
             _this.data = (ldata);
-            _this._constructor();
+            _this.set = _this.validator.validSet;
+            //Terminate generator if not enough bookmarks
+            if(_this.set ==null || _this.set <=0) {
+                _this.terminateGenerator();
+                return;
+            }
+            //Loads the HTML general exercise template from static
+            $.when(Loader.loadTemplateIntoElem(_this.templateURL,$("#main-content"))).done(function(){
+                // Create the DOM and start the generator
+                ProgressBar.init(0, _this.validator.validSize);
+                _this.cacheDom();
+                _this.cacheExerciseImports();
+                _this._constructor();
+            });
         });
     },
 
@@ -88,11 +104,8 @@ Generator.prototype = {
             }
             bookmarksData.splice(i, 1);
         }
-        console.log(bookmarksData);
         return bookmarksData;
     },
-
-
     /**
      *	The main constructor
      **/
@@ -106,53 +119,26 @@ Generator.prototype = {
      *	Add Ex here
      **/
     nextEx: function(){
-        if(this.index === this.set.length){
+        if(this.index >= this.set.length){
             this.onExSetComplete();
             return;
         }
         var ex = this.set[this.index][0];
         var size = this.set[this.index][1];
-        var startingIndex = this.calcSize(this.set,this.index);
+        var startingIndex = Util.calcSize(this.set,this.index);
 
         this.$currentEx = null;
         delete this.$currentEx;
-        switch(ex) {
-            case 1:
-                this.$currentEx = new Ex1(this.data,startingIndex,size);
-                break;
-            case 2:
-                this.$currentEx = new Ex2(this.data,startingIndex,size);
-                break;
-            case 3:
-                this.$currentEx = new Ex3(this.data,startingIndex,size);
-                break;
-            case 4:
-                this.$currentEx = new Ex4(this.data,startingIndex,size);
-                break;
-        }
-
+        //Local scope reference
+        this.$currentEx = new (this['Ex'+ex])(this.data,startingIndex,size);
         this.index++;
     },
-
-    calcSize: function(set,length){
-        var sum = 0;
-        for(var i = 0; i<length; i++){
-            sum += set[i][1];
-        }
-        return sum;
-
-    },
-
     /**
      *	Request the submit API
      **/
     submitResults: function(){
-        for(var i = 0; i< this.data.length;i++){
-            $.post(this.submitResutsUrl+this.data[i].id+"?session="+this.session);
-        }
+        //TODO submit user feedback if any
     },
-
-    
 
     /**
      *	When the ex are done perform an action
@@ -177,6 +163,7 @@ Generator.prototype = {
                     return;
                 }
                 _this.terminateGenerator();
+                _this.restartHome();
                 if (redirect!=null) {
                     window.location = redirect;
                 }
@@ -187,54 +174,8 @@ Generator.prototype = {
         events.off('exerciseCompleted',this.$eventFunc);
         events.emit('generatorCompleted');
     },
-    /**
-     *	Loads the HTML general exercise template from static
-     **/
-    createDom: function(){
-        var _this = this;
-        return $.ajax({
-            type: 'GET',
-            dataType: 'html',
-            url: _this.templateURL,
-            data: this.data,
-            success: function(data) {
-                $("#main-content").html(data);
-            },
-            async: true
-        });
-    },
-
-
-    /**
-     *	Ajax get request to the Zeeguu API to get new bookmarks
-     **/
-    getBookmarks: function(){
-        var _this = this;
-        this.loadingAnimation(true);
-        var address = this.bookmarksURL+this.size+"?session="+this.session;
-        return $.ajax({
-            type: 'GET',
-            dataType: 'json',
-            url: address,
-            data: this.data,
-            success: function(data) {
-                _this.loadingAnimation(false);
-            },
-            async: true
-        });
-    },
-
-    /**
-     *	Animation used for loading
-     **/
-    loadingAnimation: function(activate){
-        if(activate === true){
-            this.$container.addClass('hide');
-            this.$loader.removeClass('hide');
-        }else{
-            this.$container.removeClass('hide');
-            this.$loader.addClass('hide');
-        }
+    restartHome: function(){
+        events.emit('homeRestart');
     },
 
     /**

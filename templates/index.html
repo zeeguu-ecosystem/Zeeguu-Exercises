@@ -29,11 +29,20 @@
 		<!-- Add External scripts -->
 		
 	</head>	
-	<body class = "home-body">	
+	<body class = "home-body">
 	
 	<div id = "main-content">		
 	</div>
-	<!-- Add Local scripts -->	
+
+	<!-- HTML that enables the loading page to show loader-->
+	<div id="loader" class = "hide">
+		<div class="spinner">
+			<div class="double-bounce1"></div>
+			<div class="double-bounce2"></div>
+		</div>
+	</div>
+
+	<!-- Add Local main script -->
 	<script src="{{ url_for('static',filename='js/dist/mainEntry.entry.js') }}"></script>
 
 	</body>

@@ -5,7 +5,7 @@
 
 import $ from 'jquery';
 import Exercise from './exercise';
-import Util from './util';
+import Util from '../util';
 
 function Ex4(data,index,size){
 	
@@ -100,7 +100,7 @@ Ex4.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex4,
 	/************************** SETTINGS ********************************/	
 	description: {value: "Translate the word given in the context."},
-	customTemplateURL: {value: 'static/template/ex4.html'},	
+	customTemplateURL: {value: 'static/template/ex4.html'},
 });
 
 export default Ex4;
