@@ -13,7 +13,7 @@ class Loader {
     /**
      * Return html template
      * @param {String} name of the template
-     * @param {bool} asyncQUery, allows to choose the loading method
+     * @param {boolean} asyncQUery, allows to choose the loading method
      *        @default asyncQuery is set to false
      * */
     static loadTemplate(tempUrl, asyncQuery = true) {
