@@ -10156,11 +10156,11 @@ var ut,
 
 	/**
      *	Calculate exercise time in milliseconds
-  *	@return milliseconds
+  *	@return {int} milliseconds
      **/
 	calcTimeInMilliseconds: function calcTimeInMilliseconds(startTime) {
-		var endTime = new Date();
-		var total = endTime.getTime() - startTime.getTime();
+		var endTime = Date.now();
+		var total = endTime - startTime;
 		return total;
 	},
 
@@ -10622,7 +10622,7 @@ Exercise.prototype = {
 		this.size = size;
 		this.setDescription();
 		this.next();
-		this.startTime = new Date();
+		this.startTime = Date.now();
 	},
 
 	/**
@@ -10670,7 +10670,7 @@ Exercise.prototype = {
 			return;
 		}
 		setTimeout(function () {
-			_this.next();
+			_this.next();_this.startTime = Date.now();
 		}, 2000);
 	},
 
@@ -10690,6 +10690,7 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = _util2.default.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
+		console.log(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
 		_jquery2.default.post(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
 	},
 
@@ -10807,7 +10808,7 @@ exports.default = {
     /** Outcome types for exercise */
     ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
     ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
-    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint'
+    ZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint'
 
 };
 
@@ -10853,7 +10854,7 @@ var Loader = function () {
         /**
          * Return html template
          * @param {String} name of the template
-         * @param {bool} asyncQUery, allows to choose the loading method
+         * @param {boolean} asyncQUery, allows to choose the loading method
          *        @default asyncQuery is set to false
          * */
         value: function loadTemplate(tempUrl) {
@@ -11332,7 +11333,7 @@ var cookieHandler = function () {
 
         /**
          * Retrive cookie given the
-         * @param name
+         * @param {String} name, cookie name
          * */
         value: function getCookie(name) {
             var nameEQ = name + "=";
@@ -11348,9 +11349,9 @@ var cookieHandler = function () {
 
         /**
          * Set cookie given the
-         * @param name, cookie identifier
-         * @param value, value of the cookie
-         * @param days, expiration time
+         * @param {String} name, cookie identifier
+         * @param {Object} value, value of the cookie
+         * @param {int} days, expiration time
          * */
 
     }, {

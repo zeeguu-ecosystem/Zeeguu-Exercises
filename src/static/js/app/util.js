@@ -45,11 +45,11 @@ var ut,Util = {
 	
 	/**
      *	Calculate exercise time in milliseconds
-	 *	@return milliseconds
+	 *	@return {int} milliseconds
      **/
     calcTimeInMilliseconds: function (startTime){
-        var endTime = new Date();
-        var total = endTime.getTime() - startTime.getTime();
+        var endTime = Date.now();
+        var total = endTime - startTime;
         return total;
     },
 

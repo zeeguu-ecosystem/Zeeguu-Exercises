@@ -25,6 +25,6 @@ export default {
     /** Outcome types for exercise */
     ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
 	ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
-	ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint',
+	ZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint',
 
 };

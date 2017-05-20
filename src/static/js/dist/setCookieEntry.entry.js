@@ -96,7 +96,7 @@ var cookieHandler = function () {
 
         /**
          * Retrive cookie given the
-         * @param name
+         * @param {String} name, cookie name
          * */
         value: function getCookie(name) {
             var nameEQ = name + "=";
@@ -112,9 +112,9 @@ var cookieHandler = function () {
 
         /**
          * Set cookie given the
-         * @param name, cookie identifier
-         * @param value, value of the cookie
-         * @param days, expiration time
+         * @param {String} name, cookie identifier
+         * @param {Object} value, value of the cookie
+         * @param {int} days, expiration time
          * */
 
     }, {
@@ -267,7 +267,7 @@ exports.default = {
     /** Outcome types for exercise */
     ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
     ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
-    ZEEGUU_EX_OUTCOME_HINT: '/asked_for_hint'
+    ZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint'
 
 };
 
