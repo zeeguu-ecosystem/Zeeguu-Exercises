@@ -9,7 +9,7 @@
     "validate": "babel-tape-runner test/*.js",
     "ci": "npm run validate",
     "test": "nyc babel-tape-runner test/*.js | tap-spec",
-	"coveralls": "npm test && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "npm test && cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [],
   "author": "",
