@@ -68,6 +68,51 @@
 /************************************************************************/
 /******/ ({
 
+/***/ 1:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//noinspection JSAnnotator
+/**
+ * File containing global settings for exercises
+ * */
+
+exports.default = {
+    /*********************** Exercise API Parameters **************************/
+
+    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION_ID: 'sessionID',
+    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
+
+    /******************** Exercise Bookmark Parameters ************************/
+    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
+
+    /*********************** Exercise Outcome Parameters **************************/
+
+    /** Current endpoint for submitting the result*/
+    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+
+    /** Source types for exercise outcome */
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize_L1W_in_L2T',
+    ZEEGUU_EX_SOURCE_SELECT: '/Select_L2W_fitting_L2T',
+    ZEEGUU_EX_SOURCE_MATCH: '/Match_three_L1W_to_three_L2W',
+    ZEEGUU_EX_SOURCE_TRANSLATE: '/L1W_to_L1W_with_L2T_Example',
+
+    /** Outcome types for exercise */
+    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
+    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
+    ZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint'
+
+};
+
+/***/ }),
+
 /***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -139,7 +184,23 @@ exports.default = cookieHandler;
 
 /***/ }),
 
-/***/ 3:
+/***/ 30:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _session = __webpack_require__(4);
+
+var _session2 = _interopRequireDefault(_session);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_session2.default.setSession();
+
+/***/ }),
+
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -158,7 +219,7 @@ var _cookie_handler = __webpack_require__(12);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(1);
 
 var _settings2 = _interopRequireDefault(_settings);
 
@@ -212,64 +273,6 @@ var Session = function () {
 }();
 
 exports.default = Session;
-
-/***/ }),
-
-/***/ 30:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _session = __webpack_require__(3);
-
-var _session2 = _interopRequireDefault(_session);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_session2.default.setSession();
-
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//noinspection JSAnnotator
-/**
- * File containing global settings for exercises
- * */
-
-exports.default = {
-    /*********************** Exercise API Parameters **************************/
-
-    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
-
-    /******************** Exercise Bookmark Parameters ************************/
-    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
-
-    /*********************** Exercise Outcome Parameters **************************/
-
-    /** Current endpoint for submitting the result*/
-    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
-
-    /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
-
-    /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
-    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
-    ZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint'
-
-};
 
 /***/ })
 

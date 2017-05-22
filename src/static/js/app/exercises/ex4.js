@@ -6,6 +6,7 @@
 import $ from 'jquery';
 import Exercise from './exercise';
 import Util from '../util';
+import Settings from "../settings";
 
 function Ex4(data,index,size){
 	
@@ -101,6 +102,7 @@ Ex4.prototype = Object.create(Exercise.prototype, {
 	/************************** SETTINGS ********************************/	
 	description: {value: "Translate the word given in the context."},
 	customTemplateURL: {value: 'static/template/ex4.html'},
+	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_TRANSLATE},
 });
 
 export default Ex4;

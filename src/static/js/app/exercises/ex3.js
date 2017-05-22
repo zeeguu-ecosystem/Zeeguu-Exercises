@@ -5,6 +5,7 @@
 
 import $ from 'jquery';
 import Exercise from "./exercise";
+import Settings from "../settings";
 
 function Ex3(data,index,size){
 	this.init(data,index,size);
@@ -226,6 +227,7 @@ Ex3.prototype = Object.create(Exercise.prototype, {
 	correctAnswers: { writable: true, value:0},	// number of correct answers
 	hints: {writable:true, value:0},			// max number of possible hints is 1
     minRequirement: { writable: true, value:3},	// minimum number required for the ex
+	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_MATCH},
 	/*******************************************************************/
 });
 
