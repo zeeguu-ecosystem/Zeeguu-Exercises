@@ -1,19 +1,22 @@
 language: node_js
 sudo: false
 node_js:
-  - 'iojs'
+  - "node"
+  - "6"
   
 before_install:
   - npm install -g npm
+  - npm --version
  
-script: npm run ci
+script:
+  - npm run ci
   
 branches:
   only:
     - master
     - d
 	- sprint-3
-	
+
 notifications:
   email:
     on_success: never
