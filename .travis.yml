@@ -15,7 +15,7 @@ branches:
   only:
     - master
     - d
-	- sprint-3
+    - sprint-3
 
 notifications:
   email:
