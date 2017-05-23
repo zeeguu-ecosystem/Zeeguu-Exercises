@@ -9,8 +9,10 @@
     "validate": "babel-tape-runner test/*.js",
     "ci": "npm run validate",
     "test": "nyc babel-tape-runner test/*.js | tap-spec",
-    "report": "nyc --reporter=json npm test",
-    "coveralls": "npm run report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+    "nsp": "nsp check --output checkstyle",
+    "report": "nyc report --reporter=lcov",
+    "posttest": "npm run nsp && npm run report",
+    "coveralls": "npm run posttest && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +29,7 @@
     "file-loader": "^0.10.1",
     "jquery": "^3.2.1",
     "node-sass": "^4.5.1",
+    "nsp": "^2.6.3",
     "nyc": "^10.3.2",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.0",
