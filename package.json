@@ -11,7 +11,7 @@
     "test": "nyc babel-tape-runner test/*.js | tap-spec",
     "nsp": "nsp check --output checkstyle",
     "report": "nyc report --reporter=lcov",
-    "posttest": "npm run nsp && npm run report",
+    "posttest": "npm test && npm run nsp && npm run report",
     "coveralls": "npm run posttest && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "keywords": [],
