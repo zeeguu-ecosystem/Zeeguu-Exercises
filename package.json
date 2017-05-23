@@ -7,7 +7,7 @@
     "dev": "./node_modules/.bin/webpack",
     "production": "NODE_ENV=production webpack",
     "validate": "babel-tape-runner test/*.js",
-    "ci": "npm run validate",
+    "ci": "npm run test",
     "test": "nyc babel-tape-runner test/*.js | tap-spec",
     "nsp": "nsp check --output checkstyle",
     "report": "nyc report --reporter=lcov",
