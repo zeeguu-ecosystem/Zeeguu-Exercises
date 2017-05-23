@@ -9,8 +9,7 @@ node_js:
 before_install:
   - npm install -g npm
   
-after_success: 
-  - npm run coveralls
+after_success: 'npm run coveralls'
 
 script:
   - npm run ci
