@@ -2,7 +2,7 @@ from functools import wraps
 
 import flask
 from flask import request, render_template
-from . import exercisesblue
+from . import ex_blueprint
 
 """
 The default_session is only used for testing purposes
@@ -37,7 +37,7 @@ def with_session(f):
     return decorated_function
 
 
-@exercisesblue.route('/', methods=['GET'])
+@ex_blueprint.route('/', methods=['GET'])
 @with_session
 def index():
     """
@@ -46,7 +46,7 @@ def index():
     return render_template('index.html')
 
 
-@exercisesblue.route('/get-ex', methods=['GET'])
+@ex_blueprint.route('/get-ex', methods=['GET'])
 @with_session
 def get_ex():
     """
@@ -55,7 +55,7 @@ def get_ex():
     return render_template('test.html')
 
 
-@exercisesblue.route('/test-set-cookie', methods=['GET'])
+@ex_blueprint.route('/test-set-cookie', methods=['GET'])
 def set_cookie():
     """
     Test route for setting the cookie only for local resting

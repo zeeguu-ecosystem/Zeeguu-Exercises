@@ -1,2 +1,2 @@
-include umr/templates/*
-recursive-include umr/static *
+include zeeguu_exercises/templates/*
+recursive-include zeeguu_exercises/static *

@@ -1,9 +1,9 @@
 from flask import Flask
-from zeeguu_exercises import exercisesblue
+from ex_blueprint import ex_blueprint
 
 
 app = Flask(__name__)
-app.register_blueprint(exercisesblue)
+app.register_blueprint(ex_blueprint)
 
 
 """
