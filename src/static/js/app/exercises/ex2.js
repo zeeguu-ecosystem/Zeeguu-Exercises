@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Exercise from './exercise';
+import Settings from "../settings";
 
 function Ex2(data,index,size){
 	this.init(data,index,size);
@@ -137,6 +138,7 @@ Ex2.prototype = Object.create(Exercise.prototype, {
 	btns: 		 {writable: true, value:[1,2,3]}, 
 	optionNum:	 {value: 3},
     minRequirement: { writable: true, value:3},	// minimum number required for the ex
+	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_SELECT},
 	/** *************************************************************** **/
 });
 

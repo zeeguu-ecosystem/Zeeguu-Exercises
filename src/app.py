@@ -8,7 +8,7 @@ The default_session is only used for testing purposes
 Alternative: 11010001 34563456
 """
 DEFAULT_SESSION = '11010001'
-ZEEGUU_LOGIN = 'https://www.zeeguu.unibe.ch/login'
+ZEEGUU_LOGIN = 'https://www.zeeguu.unibe.ch/login?next='
 ZEEGUU_SESSION = 'sessionID'
 
 app = Flask(__name__)
@@ -32,7 +32,7 @@ def with_session(f):
             request.sessionID = request.cookies.get(ZEEGUU_SESSION)
         else:
             print("Redirecting Zeeguu login")
-            return flask.redirect(ZEEGUU_LOGIN)
+            return flask.redirect(ZEEGUU_LOGIN + request.url)
         return f(*args, **kwargs)
 
     return decorated_function

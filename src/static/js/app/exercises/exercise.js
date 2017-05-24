@@ -29,7 +29,7 @@ Exercise.prototype = {
 	startTime: 0,
 	isHintUsed: false,
     minRequirement: 1,
-	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,
+	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,//Defualt submission
 	
 	/*********************** General Functions ***************************/	
 	/**

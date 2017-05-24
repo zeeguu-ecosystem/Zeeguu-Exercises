@@ -9909,6 +9909,50 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//noinspection JSAnnotator
+/**
+ * File containing global settings for exercises
+ * */
+
+exports.default = {
+    /*********************** Exercise API Parameters **************************/
+
+    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION_ID: 'sessionID',
+    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
+    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
+
+    /******************** Exercise Bookmark Parameters ************************/
+    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
+
+    /*********************** Exercise Outcome Parameters **************************/
+
+    /** Current endpoint for submitting the result*/
+    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
+
+    /** Source types for exercise outcome */
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize_L1W_in_L2T',
+    ZEEGUU_EX_SOURCE_SELECT: '/Select_L2W_fitting_L2T',
+    ZEEGUU_EX_SOURCE_MATCH: '/Match_three_L1W_to_three_L2W',
+    ZEEGUU_EX_SOURCE_TRANSLATE: '/L1W_to_L1W_with_L2T_Example',
+
+    /** Outcome types for exercise */
+    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
+    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
+    ZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint'
+
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
@@ -10100,7 +10144,7 @@ exports.fireClick = fireClick;
 exports.stopEventPropagation = stopEventPropagation;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10188,7 +10232,7 @@ var extendObject = function extendObject(child, parent) {
 exports.default = Util;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10207,7 +10251,7 @@ var _cookie_handler = __webpack_require__(12);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(1);
 
 var _settings2 = _interopRequireDefault(_settings);
 
@@ -10263,7 +10307,7 @@ var Session = function () {
 exports.default = Session;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10277,9 +10321,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _hexToRgb = __webpack_require__(5);
+var _hexToRgb = __webpack_require__(6);
 
-var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(1);
+var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(2);
 
 var _defaultParams = __webpack_require__(10);
 
@@ -10438,7 +10482,7 @@ exports.resetInputError = resetInputError;
 exports.fixVerticalPosition = fixVerticalPosition;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10517,7 +10561,7 @@ exports.logStr = logStr;
 exports.colorLuminance = colorLuminance;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10539,15 +10583,15 @@ var _pubsub = __webpack_require__(9);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _util = __webpack_require__(2);
+var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(1);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(3);
+var _session = __webpack_require__(4);
 
 var _session2 = _interopRequireDefault(_session);
 
@@ -10576,7 +10620,7 @@ Exercise.prototype = {
 	startTime: 0,
 	isHintUsed: false,
 	minRequirement: 1,
-	resultSubmitSource: _settings2.default.ZEEGUU_EX_SOURCE_RECOGNIZE,
+	resultSubmitSource: _settings2.default.ZEEGUU_EX_SOURCE_RECOGNIZE, //Defualt submission
 
 	/*********************** General Functions ***************************/
 	/**
@@ -10770,47 +10814,6 @@ Exercise.prototype = {
 };
 
 exports.default = Exercise;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//noinspection JSAnnotator
-/**
- * File containing global settings for exercises
- * */
-
-exports.default = {
-    /*********************** Exercise API Parameters **************************/
-
-    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION_ID: 'sessionID',
-    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
-
-    /******************** Exercise Bookmark Parameters ************************/
-    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
-
-    /*********************** Exercise Outcome Parameters **************************/
-
-    /** Current endpoint for submitting the result*/
-    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
-
-    /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
-
-    /** Outcome types for exercise */
-    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
-    ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',
-    ZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint'
-
-};
 
 /***/ }),
 /* 8 */
@@ -11015,19 +11018,19 @@ Object.defineProperty(exports, '__esModule', {
  * jQuery-like functions for manipulating the DOM
  */
 
-var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation = __webpack_require__(1);
+var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation = __webpack_require__(2);
 
 /*
  * Handy utilities
  */
 
-var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(5);
+var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(6);
 
 /*
  *  Handle sweetAlert's DOM elements
  */
 
-var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(4);
+var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(5);
 
 // Handle button events and keyboard events
 
@@ -11389,15 +11392,24 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(6);
+var _exercise = __webpack_require__(7);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(2);
+var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
+var _settings = __webpack_require__(1);
+
+var _settings2 = _interopRequireDefault(_settings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Custom exercise form finding word in a context. Inherited from Exercise.js
+ *  @initialize it using: new Ex1();
+ *  @customize it by using prototypal inheritance 
+**/
 
 function Ex1(data, index, size) {
 
@@ -11456,17 +11468,13 @@ function Ex1(data, index, size) {
 	this.successCondition = function () {
 		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
 	};
-} /** Custom exercise form finding word in a context. Inherited from Exercise.js
-   *  @initialize it using: new Ex1();
-   *  @customize it by using prototypal inheritance 
-  **/
-
-;
+};
 Ex1.prototype = Object.create(_exercise2.default.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/
 	description: { value: "Find the word in the context:" },
-	customTemplateURL: { value: 'static/template/ex1.html' }
+	customTemplateURL: { value: 'static/template/ex1.html' },
+	resultSubmitSource: { value: _settings2.default.ZEEGUU_EX_SOURCE_RECOGNIZE }
 });
 
 exports.default = Ex1;
@@ -11486,9 +11494,13 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(6);
+var _exercise = __webpack_require__(7);
 
 var _exercise2 = _interopRequireDefault(_exercise);
+
+var _settings = __webpack_require__(1);
+
+var _settings2 = _interopRequireDefault(_settings);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11625,7 +11637,9 @@ Ex2.prototype = Object.create(_exercise2.default.prototype, {
 	customTemplateURL: { value: 'static/template/ex2.html' },
 	btns: { writable: true, value: [1, 2, 3] },
 	optionNum: { value: 3 },
-	minRequirement: { writable: true, value: 3 } });
+	minRequirement: { writable: true, value: 3 }, // minimum number required for the ex
+	resultSubmitSource: { value: _settings2.default.ZEEGUU_EX_SOURCE_SELECT }
+});
 
 exports.default = Ex2;
 
@@ -11644,16 +11658,15 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(6);
+var _exercise = __webpack_require__(7);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _settings = __webpack_require__(1);
 
-/** Custom exercise formatching 3 words. Inherited from Exercise.js
- *  @initialize it using: new Ex3();
- *  @customize it by using prototypal inheritance 
-**/
+var _settings2 = _interopRequireDefault(_settings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Ex3(data, index, size) {
 	this.init(data, index, size);
@@ -11855,7 +11868,12 @@ function Ex3(data, index, size) {
 		}
 		return arr;
 	};
-};
+} /** Custom exercise formatching 3 words. Inherited from Exercise.js
+   *  @initialize it using: new Ex3();
+   *  @customize it by using prototypal inheritance 
+  **/
+
+;
 
 Ex3.prototype = Object.create(_exercise2.default.prototype, {
 	constructor: Ex3,
@@ -11867,7 +11885,9 @@ Ex3.prototype = Object.create(_exercise2.default.prototype, {
 	chosenButton: { writable: true, value: -1 }, // ID of currently selected button; -1 means no button is selected
 	correctAnswers: { writable: true, value: 0 }, // number of correct answers
 	hints: { writable: true, value: 0 }, // max number of possible hints is 1
-	minRequirement: { writable: true, value: 3 } });
+	minRequirement: { writable: true, value: 3 }, // minimum number required for the ex
+	resultSubmitSource: { value: _settings2.default.ZEEGUU_EX_SOURCE_MATCH }
+});
 
 exports.default = Ex3;
 
@@ -11886,15 +11906,24 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _exercise = __webpack_require__(6);
+var _exercise = __webpack_require__(7);
 
 var _exercise2 = _interopRequireDefault(_exercise);
 
-var _util = __webpack_require__(2);
+var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
+var _settings = __webpack_require__(1);
+
+var _settings2 = _interopRequireDefault(_settings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Custom exercise for translating the word given in the context. Inherited from Exercise.js
+ *  @initialize it using: new Ex4();
+ *  @customize it by using prototypal inheritance 
+**/
 
 function Ex4(data, index, size) {
 
@@ -11981,17 +12010,13 @@ function Ex4(data, index, size) {
 			showLoaderOnConfirm: true
 		});
 	};
-} /** Custom exercise for translating the word given in the context. Inherited from Exercise.js
-   *  @initialize it using: new Ex4();
-   *  @customize it by using prototypal inheritance 
-  **/
-
-;
+};
 Ex4.prototype = Object.create(_exercise2.default.prototype, {
 	constructor: Ex4,
 	/************************** SETTINGS ********************************/
 	description: { value: "Translate the word given in the context." },
-	customTemplateURL: { value: 'static/template/ex4.html' }
+	customTemplateURL: { value: 'static/template/ex4.html' },
+	resultSubmitSource: { value: _settings2.default.ZEEGUU_EX_SOURCE_TRANSLATE }
 });
 
 exports.default = Ex4;
@@ -12734,13 +12759,13 @@ var _sweetalert = __webpack_require__(11);
 
 var _sweetalert2 = _interopRequireDefault(_sweetalert);
 
-var _session = __webpack_require__(3);
+var _session = __webpack_require__(4);
 
 var _session2 = _interopRequireDefault(_session);
 
 var _loader = __webpack_require__(8);
 
-var _util = __webpack_require__(2);
+var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -12944,11 +12969,11 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _colorLuminance = __webpack_require__(5);
+var _colorLuminance = __webpack_require__(6);
 
-var _getModal = __webpack_require__(4);
+var _getModal = __webpack_require__(5);
 
-var _hasClass$isDescendant = __webpack_require__(1);
+var _hasClass$isDescendant = __webpack_require__(2);
 
 /*
  * User clicked on "Confirm"/"OK" or "Cancel"
@@ -13085,9 +13110,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _stopEventPropagation$fireClick = __webpack_require__(1);
+var _stopEventPropagation$fireClick = __webpack_require__(2);
 
-var _setFocusStyle = __webpack_require__(4);
+var _setFocusStyle = __webpack_require__(5);
 
 var handleKeyDown = function handleKeyDown(event, params, modal) {
   var e = event || window.event;
@@ -13220,11 +13245,11 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _isIE8 = __webpack_require__(5);
+var _isIE8 = __webpack_require__(6);
 
-var _getModal$getInput$setFocusStyle = __webpack_require__(4);
+var _getModal$getInput$setFocusStyle = __webpack_require__(5);
 
-var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(1);
+var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(2);
 
 var alertTypes = ['error', 'warning', 'info', 'success', 'input', 'prompt'];
 
@@ -13640,15 +13665,15 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _settings = __webpack_require__(7);
+var _settings = __webpack_require__(1);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _session = __webpack_require__(3);
+var _session = __webpack_require__(4);
 
 var _session2 = _interopRequireDefault(_session);
 
-var _util = __webpack_require__(2);
+var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
@@ -13861,176 +13886,23 @@ var Validator = function () {
 exports.default = Validator;
 
 /***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _generator = __webpack_require__(19);
-
-var _generator2 = _interopRequireDefault(_generator);
-
-var _pubsub = __webpack_require__(9);
-
-var _pubsub2 = _interopRequireDefault(_pubsub);
-
-var _mustache = __webpack_require__(18);
-
-var _mustache2 = _interopRequireDefault(_mustache);
-
-var _loader = __webpack_require__(8);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Home = function Home() {
-	this.init();
-};
-
-Home.prototype = {
-
-	/************************** SETTINGS ********************************/
-	homeTemplateURL: 'static/template/home.html',
-	cardTemplateURL: 'static/template/card.html',
-	defaultIcon: 'img/icons/placeholder.svg',
-	exNames: [{ name: "Find", exID: [[1, 6]], info: 'Find the word in the context', icon: 'static/img/icons/search-engine.svg', time: 2 }, { name: "Choose", exID: [[2, 6]], info: 'Choose the word that fits the context', icon: 'static/img/icons/test.svg', time: 2 }, { name: "Match", exID: [[3, 6]], info: 'Match each word with its translation', icon: 'static/img/icons/question.svg', time: 3 }, { name: "Translate", exID: [[4, 6]], info: 'Translate the word given in the context', icon: 'static/img/icons/translator.svg', time: 2 }, { name: "Short Practice", exID: [[1, 3], [2, 3]], info: 'General exercise for short practice', icon: 'static/img/icons/placeholder.svg', time: 3 }, { name: "Long Practice", exID: [[1, 3], [2, 3], [3, 3], [4, 3]], info: 'General exerciese for short practice', icon: 'static/img/icons/placeholder.svg', time: 4 }, { name: "Random", exID: [[2, 3], [1, 3], [3, 3], [4, 3], [1, 3]], info: 'Repeat via random exercises', icon: 'static/img/icons/shuffle.svg', time: 6 }],
-	currentGenerator: 0,
-	eventGeneratorCompletedFunc: 0,
-	eventHomeRestartFunc: 0,
-	creditsOn: false,
-	cardTemplate: 0,
-	/*********************** General Functions ***************************/
-	/**
- *	Saves the dom 
- **/
-	cacheDom: function cacheDom() {
-		this.$elem = (0, _jquery2.default)("#home-body");
-		this.$exCards = this.$elem.find("#exercieses-cards");
-		this.$attribution = this.$elem.find("#attribution");
-		this.$credits = this.$elem.find("#credits");
-	},
-
-	/**
- *	Exercise initialaizer
- **/
-	init: function init() {
-		var _this = this;
-
-		// "bind" event
-		this.eventGeneratorCompletedFunc = function () {
-			_this.reset();
-		};
-		this.eventHomeRestartFunc = function () {
-			_this.start();
-		};
-		_pubsub2.default.on('generatorCompleted', this.eventGeneratorCompletedFunc);
-		_pubsub2.default.on('homeRestart', this.eventHomeRestartFunc);
-
-		this.start();
-	},
-
-	/**
- *	The main constructor
- **/
-	start: function start() {
-		var _this = this;
-		_jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.homeTemplateURL, (0, _jquery2.default)("#main-content")), _loader.Loader.loadTemplate(this.cardTemplateURL)).done(function (homeData, cardData) {
-
-			_this.cardTemplate = cardData[0]; //cardData[0] string html
-			// Create the DOM and start the generator
-			_this.cacheDom();
-			_this.generateEx();
-			_this.bindUIActions();
-		});
-	},
-
-	bindUIActions: function bindUIActions() {
-		var _this = this;
-		//Bind UI action of button clicks to the function
-		var exs = this.$exCards.children();
-		//Bind UI action of credits to the function
-		this.$credits.on("click", _this.giveCredits.bind(this));
-
-		for (var i = 0; i < exs.length; i++) {
-			var id = exs[i].getAttribute("ex-id");
-			(0, _jquery2.default)(exs[i]).on("click", this.newEx.bind(this, id));
-		}
-	},
-
-	giveCredits: function giveCredits() {
-		if (this.creditsOn) {
-			this.creditsOn = false;
-			this.$attribution.addClass("hide");
-			return;
-		}
-		this.creditsOn = true;
-		this.$attribution.removeClass("hide");
-	},
-
-	generateEx: function generateEx() {
-		var cardNames = { Exercises: this.exNames };
-		this.$exCards.append(_mustache2.default.render(this.cardTemplate, cardNames));
-	},
-
-	/**
- * Parse string into 2D array for generator arguments
-  * TODO can be overriten by eval
- */
-	exArrayParser: function exArrayParser(stringArray) {
-		var arr = stringArray.split(",").map(function (x) {
-			return parseInt(x);
-		});
-		var newArr = [];
-		while (arr.length) {
-			newArr.push(arr.splice(0, 2));
-		}return newArr;
-	},
-
-	reset: function reset() {
-		this.currentGenerator = null;
-		delete this.currentGenerator;
-	},
-
-	terminate: function terminate() {
-		_pubsub2.default.off('generatorCompleted', this.eventGeneratorCompletedFunc);
-		_pubsub2.default.off('homeRestart', this.eventHomeRestartFunc);
-		//emit listeners that the home is terminated
-	},
-
-	newEx: function newEx(exID) {
-		this.currentGenerator = new _generator2.default(this.exArrayParser(exID));
-	}
-};
-
-exports.default = Home;
-
-/***/ }),
+/* 28 */,
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _home = __webpack_require__(28);
+var _generator = __webpack_require__(19);
 
-var _home2 = _interopRequireDefault(_home);
+var _generator2 = _interopRequireDefault(_generator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
-	window.onload = function () {
-		new _home2.default();
-	};
+	window.onload = new _generator2.default([[1, 3], [2, 3]]);
 })();
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=mainEntry.entry.js.map
+//# sourceMappingURL=testEntry.entry.js.map

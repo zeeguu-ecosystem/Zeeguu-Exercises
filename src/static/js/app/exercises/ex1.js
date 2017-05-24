@@ -6,6 +6,7 @@
 import $ from 'jquery';
 import Exercise from './exercise';
 import Util from '../util';
+import Settings from "../settings";
 
 
 function Ex1(data,index,size){
@@ -71,6 +72,7 @@ Ex1.prototype = Object.create(Exercise.prototype, {
 	/************************** SETTINGS ********************************/	
 	description: {value: "Find the word in the context:"},
 	customTemplateURL: {value: 'static/template/ex1.html'},
+	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE},
 });
 
 export default Ex1;

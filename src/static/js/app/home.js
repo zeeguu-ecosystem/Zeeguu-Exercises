@@ -46,14 +46,12 @@ Home.prototype = {
 	**/
 	init: function(){	
 		var _this = this;
-		
 		// "bind" event
 		this.eventGeneratorCompletedFunc = function(){_this.reset();};
-        this.eventHomeRestartFunc = function(){_this.start();};
+		this.eventHomeRestartFunc = function(){_this.start();};
 		events.on('generatorCompleted',this.eventGeneratorCompletedFunc);
-        events.on('homeRestart',this.eventHomeRestartFunc);
-	
-		this.start();		
+		events.on('homeRestart',this.eventHomeRestartFunc);
+		this.start();
 	},
 
 
@@ -63,28 +61,27 @@ Home.prototype = {
 	**/
 	start: function (){	
 		var _this = this;
-        $.when(Loader.loadTemplateIntoElem(_this.homeTemplateURL,$("#main-content")),
-			   Loader.loadTemplate(this.cardTemplateURL)).done(function(homeData,cardData){
-
+		$.when(Loader.loadTemplateIntoElem(_this.homeTemplateURL,$("#main-content")),
+		Loader.loadTemplate(this.cardTemplateURL)).done(function(homeData,cardData){
 			_this.cardTemplate = cardData[0];//cardData[0] string html
-            // Create the DOM and start the generator
-            _this.cacheDom();
-            _this.generateEx();
-            _this.bindUIActions();
-        });
+			// Create the DOM and start the generator
+			_this.cacheDom();
+			_this.generateEx();
+			_this.bindUIActions();
+		});
 	},
 
 	bindUIActions: function(){
-        var _this = this;
-        //Bind UI action of button clicks to the function
+		var _this = this;
+		//Bind UI action of button clicks to the function
 		var exs = this.$exCards.children();
 		//Bind UI action of credits to the function
 		this.$credits.on("click", _this.giveCredits.bind(this));
-		
+
 		for(var i = 0; i<exs.length; i++){
-			var id = exs[i].getAttribute("ex-id");
+		var id = exs[i].getAttribute("ex-id");
 			$(exs[i]).on("click", this.newEx.bind(this,id));
-		}	
+		}
 	},
 	
 	giveCredits: function(){

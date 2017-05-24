@@ -20,7 +20,11 @@ export default {
     ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',
 
     /** Source types for exercise outcome */
-    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize',
+    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize_L1W_in_L2T',
+    ZEEGUU_EX_SOURCE_SELECT: '/Select_L2W_fitting_L2T',
+    ZEEGUU_EX_SOURCE_MATCH: '/Match_three_L1W_to_three_L2W',
+    ZEEGUU_EX_SOURCE_TRANSLATE: '/L1W_to_L1W_with_L2T_Example',
+
 
     /** Outcome types for exercise */
     ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
