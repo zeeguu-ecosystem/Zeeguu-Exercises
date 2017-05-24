@@ -1,7 +1,8 @@
 from functools import wraps
+
 import flask
-from flask import Flask, request
-from flask import render_template
+from flask import request, render_template
+from . import exercisesblue
 
 """
 The default_session is only used for testing purposes
@@ -10,8 +11,6 @@ Alternative: 11010001 34563456
 DEFAULT_SESSION = '11010001'
 ZEEGUU_LOGIN = 'https://www.zeeguu.unibe.ch/login'
 ZEEGUU_SESSION = 'sessionID'
-
-app = Flask(__name__)
 
 
 def with_session(f):
@@ -38,7 +37,7 @@ def with_session(f):
     return decorated_function
 
 
-@app.route('/', methods=['GET'])
+@exercisesblue.route('/', methods=['GET'])
 @with_session
 def index():
     """
@@ -47,7 +46,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/get-ex', methods=['GET'])
+@exercisesblue.route('/get-ex', methods=['GET'])
 @with_session
 def get_ex():
     """
@@ -56,20 +55,10 @@ def get_ex():
     return render_template('test.html')
 
 
-@app.route('/test-set-cookie', methods=['GET'])
+@exercisesblue.route('/test-set-cookie', methods=['GET'])
 def set_cookie():
     """
     Test route for setting the cookie only for local resting
     """
     return render_template('set_cookie.html')
 
-
-"""
-TODO consider this option
-def home_page(session):
-    response = make_response(render_template('index.html'))
-    response.set_cookie('sessionID', session)
-    return response
-"""
-if __name__ == "__main__":
-    app.run(debug=True)
