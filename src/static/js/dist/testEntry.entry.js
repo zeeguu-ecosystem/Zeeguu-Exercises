@@ -13539,10 +13539,12 @@ EmptyPage.prototype = {
     emptyTemplateURL: 'static/template/empty_page.html',
     templateFields: {
         icon: 'static/img/illustrations/ntd_cloud.png',
-        title: "Not Enough Bookmarks",
-        info: 'You can get bookmarks when you read articles.',
+        title: "Not Enough Words To Learn",
+        info: 'You can get words when you read articles.',
         btnText: 'Let\'s Read',
-        btnLink: 'https://www.zeeguu.unibe.ch/reading'
+        btnLink: 'https://www.zeeguu.unibe.ch/reading',
+        btnContinueText: 'Skip',
+        btnContinue: 'https://www.zeeguu.unibe.ch/reading'
     },
     emptyTemplate: 0,
 
