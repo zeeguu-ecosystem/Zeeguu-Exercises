@@ -43,7 +43,7 @@ def index():
     """
     Main entry point
     """
-    return render_template('index.html')
+    return render_template('exercises/index.html')
 
 
 @ex_blueprint.route('/get-ex', methods=['GET'])
@@ -52,7 +52,7 @@ def get_ex():
     """
     Temporary route for distraction shield testing
     """
-    return render_template('test.html')
+    return render_template('exercises/test.html')
 
 
 @ex_blueprint.route('/test-set-cookie', methods=['GET'])
@@ -60,5 +60,5 @@ def set_cookie():
     """
     Test route for setting the cookie only for local resting
     """
-    return render_template('set_cookie.html')
+    return render_template('exercises/set_cookie.html')
 
