@@ -56,4 +56,6 @@ fabric.properties
 # *.ipr
 venv
 .idea
+.nyc_output
+npm-debug.log
 npm-debug.log.3409570137
