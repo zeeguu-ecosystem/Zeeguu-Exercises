@@ -57,5 +57,6 @@ fabric.properties
 venv
 .idea
 .nyc_output
+src/zeeguu_exercises/__pycache__
 npm-debug.log
 npm-debug.log.3409570137
