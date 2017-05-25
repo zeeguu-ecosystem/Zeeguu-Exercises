@@ -1,1 +1,1 @@
-web: cd src; gunicorn app:app
+web: cd src; gunicorn dev_lunch:app
