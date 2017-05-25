@@ -10742,7 +10742,7 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = _util2.default.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-		//console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
+		console.log(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
 		_jquery2.default.post(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
 	},
 
@@ -13682,7 +13682,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /** Validator class takes care of the input for generator
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Based on the result, it decided on how to generate exercises
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Based on the result, it decides how to generate exercises
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks == 0 then no bookmarks page
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks < requested number then generate exercises that fit
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks >= requested number simply generate exercises
@@ -13979,7 +13979,6 @@ Home.prototype = {
  **/
 	init: function init() {
 		var _this = this;
-
 		// "bind" event
 		this.eventGeneratorCompletedFunc = function () {
 			_this.reset();
@@ -13989,7 +13988,6 @@ Home.prototype = {
 		};
 		_pubsub2.default.on('generatorCompleted', this.eventGeneratorCompletedFunc);
 		_pubsub2.default.on('homeRestart', this.eventHomeRestartFunc);
-
 		this.start();
 	},
 
@@ -13999,7 +13997,6 @@ Home.prototype = {
 	start: function start() {
 		var _this = this;
 		_jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.homeTemplateURL, (0, _jquery2.default)("#main-content")), _loader.Loader.loadTemplate(this.cardTemplateURL)).done(function (homeData, cardData) {
-
 			_this.cardTemplate = cardData[0]; //cardData[0] string html
 			// Create the DOM and start the generator
 			_this.cacheDom();

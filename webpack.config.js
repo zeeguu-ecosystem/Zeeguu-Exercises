@@ -11,7 +11,7 @@ module.exports = {
 		setCookieEntry: './src/zeeguu_exercises/static/js/app/debug/set_cookie_test.js',
     },
 	output: {		
-		path: path.join(__dirname, './src/static/js/dist'),
+		path: path.join(__dirname, './src/zeeguu_exercises/static/js/dist'),
 		filename: '[name].entry.js',
 	},
 	module: {
