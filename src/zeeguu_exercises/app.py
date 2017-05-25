@@ -1,5 +1,5 @@
 from flask import Flask
-from ex_blueprint import ex_blueprint
+from zeeguu_exercises import ex_blueprint
 
 
 app = Flask(__name__)
