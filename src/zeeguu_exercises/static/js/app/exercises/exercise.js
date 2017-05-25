@@ -30,6 +30,7 @@ Exercise.prototype = {
 	isHintUsed: false,
     minRequirement: 1,
 	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,//Defualt submission
+	successAnimationTime: 2000,
 	
 	/*********************** General Functions ***************************/	
 	/**
@@ -104,25 +105,35 @@ Exercise.prototype = {
 		this.wrongAnswerAnimation();
 		this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_WRONG);
 	},
+
+
+
 	
 	/**
 	*	Actions taken when the succes condition is true
 	**/
 	onSuccess: function(){		
-		var _this = this;
-		this.animateSuccess();
-		//Submit the result of translation
-		this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_CORRECT);
-		// Notify the observer
-		events.emit('progress');
-		this.index++;
-		// The current exercise set is complete
-		if(this.index == this.size + this.startIndex){						
-			this.onExComplete();
-			return;
-		}			
-		setTimeout(function() { _this.next(); _this.startTime = Date.now();}, 2000);
+		this.onRenderNextEx();
 	},
+
+    /**
+     * On success condition true, generate new exercise
+     * */
+    onRenderNextEx: function () {
+        var _this = this;
+        this.animateSuccess();
+        //Submit the result of translation
+        this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_CORRECT);
+        // Notify the observer
+        events.emit('progress');
+        this.index++;
+        // The current exercise set is complete
+        if(this.index == this.size + this.startIndex){
+            this.onExComplete();
+            return;
+        }
+        setTimeout(function() { _this.next(); _this.startTime = Date.now();}, _this.successAnimationTime);
+    },
 	
 	/**
      *	Request the submit to the Zeeguu API
@@ -140,7 +151,7 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = Util.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-		console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
+		//console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
         $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
     },
 
@@ -214,13 +225,13 @@ Exercise.prototype = {
 	*	Animation for successful solution
 	**/
 	animateSuccess: function(){
-		this.$statusContainer.removeClass('hide');		
-		var _this = this;
+		let _this = this;
+		this.$statusContainer.removeClass('hide');
 		setTimeout(function(){
 			if (_this.$statusContainer.length > 0) {
 				_this.$statusContainer.addClass('hide');
 			}
-		}, 2000);	
+		}, _this.successAnimationTime);
 	},	
 };
 
