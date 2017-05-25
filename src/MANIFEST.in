@@ -1,0 +1,2 @@
+recursive-include zeeguu_exercises/templates *
+recursive-include zeeguu_exercises/static *

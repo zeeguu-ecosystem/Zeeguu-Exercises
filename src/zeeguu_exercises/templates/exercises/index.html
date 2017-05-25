@@ -20,12 +20,12 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">	
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300">	
 		<!-- Add Local styles -->		
-		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/custom.css') }}" 	type = "text/css">
-		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/success.css') }}" 	type = "text/css">
-		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/loader.css') }}" 	type = "text/css">
-		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/sweetalert.css') }}" 	type = "text/css">
+		<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/custom.css') }}" 	type = "text/css">
+		<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/success.css') }}" 	type = "text/css">
+		<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/loader.css') }}" 	type = "text/css">
+		<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/sweetalert.css') }}" 	type = "text/css">
 		<!-- Add favicon -->
-		<link rel="icon" 	   href= "{{ url_for('static',filename='img/favicon.png') }}"  		type="image/x-icon"/>		
+		<link rel="icon" 	   href= "{{ url_for('ex_blueprint.static',filename='img/favicon.png') }}"  		type="image/x-icon"/>
 		<!-- Add External scripts -->
 		
 	</head>	
@@ -43,7 +43,7 @@
 	</div>
 
 	<!-- Add Local main script -->
-	<script src="{{ url_for('static',filename='js/dist/mainEntry.entry.js') }}"></script>
+	<script src="{{ url_for('ex_blueprint.static',filename='js/dist/mainEntry.entry.js') }}"></script>
 
 	</body>
 </html>

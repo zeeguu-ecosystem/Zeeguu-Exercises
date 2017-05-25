@@ -1,6 +1,6 @@
 /** Validator class takes care of the input for generator
  *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
- *  Based on the result, it decided on how to generate exercises
+ *  Based on the result, it decides how to generate exercises
  *  If number of bookmarks == 0 then no bookmarks page
  *  If number of bookmarks < requested number then generate exercises that fit
  *  If number of bookmarks >= requested number simply generate exercises
