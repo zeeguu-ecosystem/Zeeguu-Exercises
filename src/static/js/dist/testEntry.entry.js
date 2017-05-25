@@ -13541,10 +13541,10 @@ EmptyPage.prototype = {
         icon: 'static/img/illustrations/ntd_cloud.png',
         title: "Not Enough Words To Learn",
         info: 'You can get words when you read articles.',
-        btnText: 'Let\'s Read',
-        btnLink: 'https://www.zeeguu.unibe.ch/reading',
-        btnContinueText: 'Skip',
-        btnContinue: 'https://www.zeeguu.unibe.ch/reading'
+        btnPrime: 'https://www.zeeguu.unibe.ch/reading',
+        btnPrimeText: 'Let\'s Read',
+        btnSecond: false,
+        btnSecondText: 'Skip'
     },
     emptyTemplate: 0,
 
@@ -13555,9 +13555,30 @@ EmptyPage.prototype = {
     cacheDom: function cacheDom() {},
 
     /**
+     * Merges two javascript objects together
+     * @param {Object} oldField, the field that will be overwritten
+     * @param {Object} newField, the field that provides which properties to override
+     * TODO test this
+     * */
+    mergeField: function mergeField(oldField, newField) {
+        for (var key in newField) {
+            if (newField.hasOwnProperty(key)) {
+                console.log(oldField[key]);
+                oldField[key] = newField[key];
+            }
+        }
+        return oldField;
+    },
+
+    /**
      *	Exercise initialaizer
      **/
     init: function init() {
+        var templeUrl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.emptyTemplateURL;
+        var tempFields = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.templateFields;
+
+        this.emptyTemplateURL = templeUrl;
+        this.templateFields = tempFields;
         this.start();
     },
 

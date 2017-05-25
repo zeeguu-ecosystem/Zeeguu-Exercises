@@ -3,11 +3,11 @@
 <div class = "empty-page-content">
     <div class="col-xs-12 col-sm-12 col-md-12" id = "emptyPage">
         <div class = "row empty-page-container">
-            <div class="empty-page-content-img" style = "background-image: url({{icon}});" ></div>
-            <span class = "empty-page-title h3">{{title}}</span>
-            <span class = "empty-page-info h5">{{info}}</span>
-            <a type="button" class="btn btn-primary" href = "{{btnLink}}">{{btnText}}</a>
-            <a type="button" class="btn btn-secondary" href = "{{btnContinue}}">{{btnContinueText}}</a>
+            {{#icon}}<div class="empty-page-content-img" style = "background-image: url({{icon}});" ></div>{{/icon}}
+            {{#title}}<span class = "empty-page-title h3">{{title}}</span>{{/title}}
+            {{#info}}<span class = "empty-page-info h5">{{info}}</span>{{/info}}
+            {{#btnPrime}}<a type="button" class="btn btn-primary" href = "{{btnPrime}}">{{btnPrimeText}}</a>{{/btnPrime}}
+            {{#btnSecond}}<a type="button" class="btn btn-secondary" href = "{{btnSecond}}">{{btnSecondText}}</a>{{/btnSecond}}
         </div>
     </div>
 </div>
