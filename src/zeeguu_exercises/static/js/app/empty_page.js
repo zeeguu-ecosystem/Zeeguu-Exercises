@@ -14,13 +14,15 @@ EmptyPage.prototype = {
     /************************** SETTINGS ********************************/
     emptyTemplateURL: 'static/template/empty_page.html',
     templateFields:
-                    {
-                         icon: 'static/img/illustrations/ntd_cloud.png',
-                         title: "Not Enough Bookmarks",
-                         info: 'You can get bookmarks when you read articles.',
-                         btnText: 'Let\'s Read',
-                         btnLink: 'https://www.zeeguu.unibe.ch/reading',
-                    },
+        {
+            icon: 'static/img/illustrations/ntd_cloud.png',
+            title: "Not Enough Words To Learn",
+            info: 'You can get words when you read articles.',
+            btnPrime: 'https://www.zeeguu.unibe.ch/reading',
+            btnPrimeText: 'Let\'s Read',
+            btnSecond: false,
+            btnSecondText: 'Skip',
+        },
     emptyTemplate: 0,
 
     /*********************** General Functions ***************************/
@@ -30,11 +32,28 @@ EmptyPage.prototype = {
     cacheDom: function(){
     },
 
+    /**
+     * Merges two javascript objects together
+     * @param {Object} oldField, the field that will be overwritten
+     * @param {Object} newField, the field that provides which properties to override
+     * TODO test this
+     * */
+    mergeField: function (oldField,newField) {
+        for (let key in newField) {
+            if (newField.hasOwnProperty(key)) {
+                console.log(oldField[key]);
+                oldField[key] = newField[key];
+            }
+        }
+        return oldField;
+    },
 
     /**
      *	Exercise initialaizer
      **/
-    init: function(){
+    init: function(templeUrl = this.emptyTemplateURL, tempFields = this.templateFields ){
+        this.emptyTemplateURL = templeUrl;
+        this.templateFields = tempFields;
         this.start();
     },
 

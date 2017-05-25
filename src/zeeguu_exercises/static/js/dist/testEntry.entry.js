@@ -10621,6 +10621,7 @@ Exercise.prototype = {
 	isHintUsed: false,
 	minRequirement: 1,
 	resultSubmitSource: _settings2.default.ZEEGUU_EX_SOURCE_RECOGNIZE, //Defualt submission
+	successAnimationTime: 2000,
 
 	/*********************** General Functions ***************************/
 	/**
@@ -10701,6 +10702,13 @@ Exercise.prototype = {
  *	Actions taken when the succes condition is true
  **/
 	onSuccess: function onSuccess() {
+		this.onRenderNextEx();
+	},
+
+	/**
+  * On success condition true, generate new exercise
+  * */
+	onRenderNextEx: function onRenderNextEx() {
 		var _this = this;
 		this.animateSuccess();
 		//Submit the result of translation
@@ -10715,7 +10723,7 @@ Exercise.prototype = {
 		}
 		setTimeout(function () {
 			_this.next();_this.startTime = Date.now();
-		}, 2000);
+		}, _this.successAnimationTime);
 	},
 
 	/**
@@ -10734,7 +10742,7 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = _util2.default.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-		console.log(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
+		//console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
 		_jquery2.default.post(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
 	},
 
@@ -10803,13 +10811,13 @@ Exercise.prototype = {
  *	Animation for successful solution
  **/
 	animateSuccess: function animateSuccess() {
-		this.$statusContainer.removeClass('hide');
 		var _this = this;
+		this.$statusContainer.removeClass('hide');
 		setTimeout(function () {
 			if (_this.$statusContainer.length > 0) {
 				_this.$statusContainer.addClass('hide');
 			}
-		}, 2000);
+		}, _this.successAnimationTime);
 	}
 };
 
@@ -13531,10 +13539,12 @@ EmptyPage.prototype = {
     emptyTemplateURL: 'static/template/empty_page.html',
     templateFields: {
         icon: 'static/img/illustrations/ntd_cloud.png',
-        title: "Not Enough Bookmarks",
-        info: 'You can get bookmarks when you read articles.',
-        btnText: 'Let\'s Read',
-        btnLink: 'https://www.zeeguu.unibe.ch/reading'
+        title: "Not Enough Words To Learn",
+        info: 'You can get words when you read articles.',
+        btnPrime: 'https://www.zeeguu.unibe.ch/reading',
+        btnPrimeText: 'Let\'s Read',
+        btnSecond: false,
+        btnSecondText: 'Skip'
     },
     emptyTemplate: 0,
 
@@ -13545,9 +13555,30 @@ EmptyPage.prototype = {
     cacheDom: function cacheDom() {},
 
     /**
+     * Merges two javascript objects together
+     * @param {Object} oldField, the field that will be overwritten
+     * @param {Object} newField, the field that provides which properties to override
+     * TODO test this
+     * */
+    mergeField: function mergeField(oldField, newField) {
+        for (var key in newField) {
+            if (newField.hasOwnProperty(key)) {
+                console.log(oldField[key]);
+                oldField[key] = newField[key];
+            }
+        }
+        return oldField;
+    },
+
+    /**
      *	Exercise initialaizer
      **/
     init: function init() {
+        var templeUrl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.emptyTemplateURL;
+        var tempFields = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.templateFields;
+
+        this.emptyTemplateURL = templeUrl;
+        this.templateFields = tempFields;
         this.start();
     },
 

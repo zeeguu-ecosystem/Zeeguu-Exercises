@@ -57,5 +57,8 @@ fabric.properties
 venv
 .idea
 .nyc_output
+src/zeeguu_exercises/__pycache__
 npm-debug.log
+coverage
 npm-debug.log.3409570137
+.\.coveralls.yml

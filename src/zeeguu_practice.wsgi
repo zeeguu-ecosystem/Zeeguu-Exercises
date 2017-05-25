@@ -8,6 +8,6 @@ sys.path.append(dir)
  # the trick with appending the current folder to the 
  # sys.path i read from: http://www.jakowicz.com/flask-apache-wsgi/
 
-from app import app as application
+from zeeguu_exercises.app import app as application
 application.config['DEBUG']=True
 print ("PRACTICE: started the service")

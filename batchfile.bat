@@ -1,3 +1,3 @@
 call venv\Scripts\activate
-call python src\app.py
+call python src\dev_launch.py
 PAUSE
