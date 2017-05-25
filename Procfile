@@ -1,1 +1,1 @@
-web: python src/dev_launch.py
+web: cd src; gunicorn app:dev_launch
