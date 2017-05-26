@@ -11,6 +11,7 @@ import $ from 'jquery';
 export default class ShakeAnimation{
 
     constructor(){
+        this.animationEvent = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
         this.bindUIActions();
     }
 
@@ -20,15 +21,15 @@ export default class ShakeAnimation{
      * */
     bindUIActions(){
         var _this = this;
-        $('.shakable').on("click", _this.shake.bind(this));
+        $('.shakable').click((event) => {this.shakeEvent($(event.target));});
     }
 
     /**
      * Use the clicked element to invoke shakeElement
      * @return {void}
      * */
-    shake(){
-        this.shakeElement($(this));
+    shakeEvent(elem){
+        this.shakeElement(elem);
     }
 
     /**
@@ -38,11 +39,18 @@ export default class ShakeAnimation{
      * @return {void}
      * */
     shakeElement(elem){
-        var animationEvent = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
         elem.addClass('shake wrongAlert');
-        elem.one(animationEvent, function(event) {
-            elem.removeClass('shake')
+        elem.one(this.animationEvent, function(event) {
+            elem.removeClass('shake wrongAlert')
         });
+    }
+
+    /**
+     * Shakes the element that has the focus
+     * @return {void}
+     * */
+    shakeFocusedElement(){
+        this.shakeElement($(document.activeElement));
     }
 
     /**
@@ -52,6 +60,16 @@ export default class ShakeAnimation{
     * */
     makeShakable(elem){
         elem.addClass('shakable');
+        this.bindUIActions();
+    }
+
+    /**
+     * Make the given element non shakable
+     * @param {Object}, element
+     * @return {void}
+     * */
+    makeNonShakable(elem){
+        elem.removeClass('shakable');
         this.bindUIActions();
     }
 }

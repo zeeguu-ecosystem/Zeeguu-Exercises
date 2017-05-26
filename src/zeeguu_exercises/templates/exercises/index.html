@@ -1,49 +1,54 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<!-- Hotjar Tracking Code for https://zeeguu.herokuapp.com/ -->
-		<script>
-			(function(h,o,t,j,a,r){
-				h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-				h._hjSettings={hjid:389904,hjsv:5};
-				a=o.getElementsByTagName('head')[0];
-				r=o.createElement('script');r.async=1;
-				r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-				a.appendChild(r);
-			})(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-		</script>
-		<!-- Add Page Title -->	
-		<title>Zeeguu Practice</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-    
-		<!-- Add External styles -->	
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">	
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300">	
-		<!-- Add Local styles -->		
-		<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/custom.css') }}" 	type = "text/css">
-		<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/success.css') }}" 	type = "text/css">
-		<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/loader.css') }}" 	type = "text/css">
-		<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/sweetalert.css') }}" 	type = "text/css">
-		<!-- Add favicon -->
-		<link rel="icon" 	   href= "{{ url_for('ex_blueprint.static',filename='img/favicon.png') }}"  		type="image/x-icon"/>
-		<!-- Add External scripts -->
-		
-	</head>	
-	<body class = "home-body">
-	
-	<div id = "main-content">		
+<head>
+	<!-- Hotjar Tracking Code for https://zeeguu.herokuapp.com/
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:389904,hjsv:5};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>-->
+
+	<!-- Add Page Title -->
+	<title>Zeeguu Practice</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Add External styles
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300">
+    -->
+	<!-- Add Local styles -->
+	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/bootstrap_mini.css') }}" 	type = "text/css">
+	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/google_fonts.css') }}" 	type = "text/css">
+
+	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/custom.css') }}" 	type = "text/css">
+	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/success.css') }}" 	type = "text/css">
+	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/loader.css') }}" 	type = "text/css">
+	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/sweetalert.css') }}" 	type = "text/css">
+	<!-- Add favicon -->
+	<link rel="icon" 	   href= "{{ url_for('ex_blueprint.static',filename='img/favicon.png') }}"  		type="image/x-icon"/>
+	<!-- Add External scripts -->
+
+</head>
+<body class = "home-body">
+
+<div id = "main-content">
+</div>
+
+<!-- HTML that enables the loading page to show loader-->
+<div id="loader" class = "hide">
+	<div class="spinner">
+		<div class="double-bounce1"></div>
+		<div class="double-bounce2"></div>
 	</div>
+</div>
 
-	<!-- HTML that enables the loading page to show loader-->
-	<div id="loader" class = "hide">
-		<div class="spinner">
-			<div class="double-bounce1"></div>
-			<div class="double-bounce2"></div>
-		</div>
-	</div>
+<!-- Add Local main script -->
+<script src="{{ url_for('ex_blueprint.static',filename='js/dist/mainEntry.entry.js') }}"></script>
 
-	<!-- Add Local main script -->
-	<script src="{{ url_for('ex_blueprint.static',filename='js/dist/mainEntry.entry.js') }}"></script>
-
-	</body>
+</body>
 </html>

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9923,7 +9923,7 @@ exports.default = {
     ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
+    ZEEGUU_DEFAULT_SESSION: '34563456', //00926044 34563456 11010001
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
@@ -10597,15 +10597,21 @@ var _session2 = _interopRequireDefault(_session);
 
 var _loader = __webpack_require__(8);
 
+var _shake_animation = __webpack_require__(27);
+
+var _shake_animation2 = _interopRequireDefault(_shake_animation);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Modular Zeeguu Powered Exercise @author Martin Avagyan
+ *  @initialize it using: new Exercise();
+ *  @customize it by using prototypal inheritance
+**/
 
 var Exercise = function Exercise(data, index, size) {
 	this.init(data, index, size);
 	//TODO unbind method
-}; /** Modular Zeeguu Powered Exercise @author Martin Avagyan
-    *  @initialize it using: new Exercise();
-    *  @customize it by using prototypal inheritance 
-   **/
+};
 
 Exercise.prototype = {
 
@@ -10665,6 +10671,7 @@ Exercise.prototype = {
 		this.index = index;
 		this.startIndex = index;
 		this.size = size;
+		this.shake = new _shake_animation2.default();
 		this.setDescription();
 		this.next();
 		this.startTime = Date.now();
@@ -10795,16 +10802,8 @@ Exercise.prototype = {
  *	Animation for wrong solution
  **/
 	wrongAnswerAnimation: function wrongAnswerAnimation() {
-		(0, _sweetalert2.default)({
-			title: "Wrong answer...",
-			allowOutsideClick: true,
-			type: "error",
-			text: "Hint: the translation of \"" + this.data[this.index].to + "\" starts with " + this.data[this.index].from.trim().charAt(0) + "\"",
-			confirmButtonText: "ok",
-			showConfirmButton: true,
-			allowEscapeKey: true,
-			showLoaderOnConfirm: true
-		});
+		//TODO implement shake here
+		this.shake.shakeFocusedElement();
 	},
 
 	/**
@@ -12777,7 +12776,7 @@ var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _validator = __webpack_require__(27);
+var _validator = __webpack_require__(28);
 
 var _validator2 = _interopRequireDefault(_validator);
 
@@ -13680,6 +13679,132 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * This class is responsible for animating elements that have a class attribute "shakable".
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * When an element is clicked with class "shakable", class "shake" is added to its attributes.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * After the animation is done the "shake" class is removed.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * In HTML use the class "shakable" for each element that shake property
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @Example <div class="shakable"></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ShakeAnimation = function () {
+    function ShakeAnimation() {
+        _classCallCheck(this, ShakeAnimation);
+
+        this.animationEvent = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
+        this.bindUIActions();
+    }
+
+    /**
+     * Make all the actions connected to this module
+     * return {void}
+     * */
+
+
+    _createClass(ShakeAnimation, [{
+        key: 'bindUIActions',
+        value: function bindUIActions() {
+            var _this2 = this;
+
+            var _this = this;
+            (0, _jquery2.default)('.shakable').click(function (event) {
+                _this2.shakeEvent((0, _jquery2.default)(event.target));
+            });
+        }
+
+        /**
+         * Use the clicked element to invoke shakeElement
+         * @return {void}
+         * */
+
+    }, {
+        key: 'shakeEvent',
+        value: function shakeEvent(elem) {
+            this.shakeElement(elem);
+        }
+
+        /**
+         * Function adds class shake, after the animation is done,
+         * the class shake is removed from the element
+         * @param {jQuery element}, elem
+         * @return {void}
+         * */
+
+    }, {
+        key: 'shakeElement',
+        value: function shakeElement(elem) {
+            elem.addClass('shake wrongAlert');
+            elem.one(this.animationEvent, function (event) {
+                elem.removeClass('shake wrongAlert');
+            });
+        }
+
+        /**
+         * Shakes the element that has the focus
+         * @return {void}
+         * */
+
+    }, {
+        key: 'shakeFocusedElement',
+        value: function shakeFocusedElement() {
+            var elem = (0, _jquery2.default)(document.activeElement);
+            elem.addClass('shake wrongAlert');
+            elem.one(this.animationEvent, function (event) {
+                elem.removeClass('shake wrongAlert');
+            });
+        }
+
+        /**
+         * Make the given element shakable
+         * @param {Object}, element
+         * @return {void}
+        * */
+
+    }, {
+        key: 'makeShakable',
+        value: function makeShakable(elem) {
+            elem.addClass('shakable');
+            this.bindUIActions();
+        }
+
+        /**
+         * Make the given element non shakable
+         * @param {Object}, element
+         * @return {void}
+         * */
+
+    }, {
+        key: 'makeNonShakable',
+        value: function makeNonShakable(elem) {
+            elem.removeClass('shakable');
+            this.bindUIActions();
+        }
+    }]);
+
+    return ShakeAnimation;
+}();
+
+exports.default = ShakeAnimation;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /** Validator class takes care of the input for generator
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  Based on the result, it decides how to generate exercises
@@ -13917,7 +14042,7 @@ var Validator = function () {
 exports.default = Validator;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14066,15 +14191,15 @@ Home.prototype = {
 exports.default = Home;
 
 /***/ }),
-/* 29 */,
 /* 30 */,
-/* 31 */
+/* 31 */,
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _home = __webpack_require__(28);
+var _home = __webpack_require__(29);
 
 var _home2 = _interopRequireDefault(_home);
 

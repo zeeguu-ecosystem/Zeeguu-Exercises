@@ -1,6 +1,6 @@
 /** Modular Zeeguu Powered Exercise @author Martin Avagyan
  *  @initialize it using: new Exercise();
- *  @customize it by using prototypal inheritance 
+ *  @customize it by using prototypal inheritance
 **/
 
 import $ from 'jquery';
@@ -10,6 +10,7 @@ import Util from '../util';
 import Settings from '../settings';
 import Session from '../session';
 import {Loader} from '../loader';
+import ShakeAnimation from "../shake_animation";
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
@@ -57,7 +58,7 @@ Exercise.prototype = {
 	/**
 	*	Exercise initialaizer
 	**/
-	init: function(data,index,size){	
+	init: function(data,index,size){
 		var _this = this;
 		$.when(Loader.loadTemplateIntoElem(_this.customTemplateURL,$("#custom-content"))).done(function(){
 			_this.cacheDom();	
@@ -74,7 +75,8 @@ Exercise.prototype = {
 		this.data  = data;
 		this.index = index;
 		this.startIndex = index;
-		this.size  = size;			
+		this.size  = size;
+		this.shake = new ShakeAnimation();
 		this.setDescription(); 	
 		this.next();
         this.startTime = Date.now();
@@ -209,16 +211,8 @@ Exercise.prototype = {
 	*	Animation for wrong solution
 	**/
 	wrongAnswerAnimation: function(){		
-		swal({
-			title: "Wrong answer...",
-			allowOutsideClick: true,
-			type: "error",
-			text: "Hint: the translation of \"" + this.data[this.index].to + "\" starts with " + this.data[this.index].from.trim().charAt(0)+ "\"",
-			confirmButtonText: "ok",
-			showConfirmButton: true,
-			allowEscapeKey:true,
-			showLoaderOnConfirm:true,
-		});
+		//TODO implement shake here
+		this.shake.shakeFocusedElement();
 	},
 
 	/**

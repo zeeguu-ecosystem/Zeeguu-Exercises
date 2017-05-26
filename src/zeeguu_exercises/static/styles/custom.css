@@ -406,12 +406,9 @@ body
   perspective: 1000px;
 }
 .shakable{
-  width: 50px;
-  height:50px;
-  background-color: black;
 }
 .wrongAlert{
-	border: solid #FF5252;
+	border: solid #FFCC00;
 }
 
 @keyframes shake {
