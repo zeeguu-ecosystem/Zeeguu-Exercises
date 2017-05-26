@@ -62,3 +62,4 @@ npm-debug.log
 coverage
 npm-debug.log.3409570137
 .\.coveralls.yml
+*.pyc
