@@ -47,6 +47,11 @@ function Ex3(data,index,size){
 		this.$btn6.on("click", this.selectChoice.bind(this,6));
 		
 	};
+
+	/** @Override */
+	this.wrongAnswerAnimation = function(){
+		this.shake.shakeFocusedElement();
+	}
 	
 	
 	

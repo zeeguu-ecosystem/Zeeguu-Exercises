@@ -10,7 +10,7 @@ import Util from '../util';
 import Settings from '../settings';
 import Session from '../session';
 import {Loader} from '../loader';
-import ShakeAnimation from "../shake_animation";
+import ShakeAnimation from "../animations/shake_animation";
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
@@ -202,18 +202,14 @@ Exercise.prototype = {
 	/**
 	*	Cahes custom dom of the exercise
 	**/
-	cacheCustomDom: function(){},	
-	
-	
-	
-	/************************** Animations ********************************/	
+	cacheCustomDom: function(){},
+
 	/**
 	*	Animation for wrong solution
 	**/
-	wrongAnswerAnimation: function(){		
-		//TODO implement shake here
-		this.shake.shakeFocusedElement();
-	},
+	wrongAnswerAnimation: function(){},
+
+	/************************** Animations ********************************/	
 
 	/**
 	*	Animation for successful solution

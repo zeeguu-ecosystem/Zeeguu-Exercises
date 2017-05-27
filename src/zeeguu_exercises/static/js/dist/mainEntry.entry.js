@@ -10247,7 +10247,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _cookie_handler = __webpack_require__(12);
+var _cookie_handler = __webpack_require__(13);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
@@ -10597,7 +10597,7 @@ var _session2 = _interopRequireDefault(_session);
 
 var _loader = __webpack_require__(8);
 
-var _shake_animation = __webpack_require__(27);
+var _shake_animation = __webpack_require__(25);
 
 var _shake_animation2 = _interopRequireDefault(_shake_animation);
 
@@ -10797,14 +10797,12 @@ Exercise.prototype = {
  **/
 	cacheCustomDom: function cacheCustomDom() {},
 
-	/************************** Animations ********************************/
 	/**
  *	Animation for wrong solution
  **/
-	wrongAnswerAnimation: function wrongAnswerAnimation() {
-		//TODO implement shake here
-		this.shake.shakeFocusedElement();
-	},
+	wrongAnswerAnimation: function wrongAnswerAnimation() {},
+
+	/************************** Animations ********************************/
 
 	/**
  *	Animation for successful solution
@@ -10842,7 +10840,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _loading_animation = __webpack_require__(17);
+var _loading_animation = __webpack_require__(12);
 
 var _loading_animation2 = _interopRequireDefault(_loading_animation);
 
@@ -11325,6 +11323,81 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var animationInstance = null;
+
+var LoadingAnimation = function () {
+    function LoadingAnimation() {
+        _classCallCheck(this, LoadingAnimation);
+
+        if (animationInstance) {
+            return animationInstance;
+        }
+        /** Class parameters*/
+        this.$loader = null;
+        this.$content = null;
+        this.updateCache();
+    }
+    /**
+     * Update/save the cache of the dom
+     * */
+
+
+    _createClass(LoadingAnimation, [{
+        key: 'updateCache',
+        value: function updateCache() {
+            this.$loader = (0, _jquery2.default)('#loader');
+            this.$content = (0, _jquery2.default)('#main-content');
+        }
+    }, {
+        key: 'loadingAnimation',
+        value: function loadingAnimation(activate) {
+            //If cache is not available
+            if (this.$loader == null || this.$content == null) {
+                this.updateCache();
+            }
+            //Turn on the animation
+            if (activate === true) {
+                this.$content.addClass('hide');
+                this.$loader.removeClass('hide');
+            } else {
+                //Turn off the animation unhide the content
+                this.$content.removeClass('hide');
+                this.$loader.addClass('hide');
+            }
+        }
+    }]);
+
+    return LoadingAnimation;
+}();
+
+exports.default = LoadingAnimation;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11385,7 +11458,7 @@ var cookieHandler = function () {
 exports.default = cookieHandler;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11475,6 +11548,11 @@ function Ex1(data, index, size) {
 	this.successCondition = function () {
 		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
 	};
+
+	/** @Override */
+	this.wrongAnswerAnimation = function () {
+		this.shake.shakeElement(this.$input);
+	};
 };
 Ex1.prototype = Object.create(_exercise2.default.prototype, {
 	constructor: Ex1,
@@ -11487,7 +11565,7 @@ Ex1.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex1;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11580,6 +11658,11 @@ function Ex2(data, index, size) {
 		return chosenWord.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
 	};
 
+	/** @Override */
+	this.wrongAnswerAnimation = function () {
+		this.shake.shakeFocusedElement();
+	};
+
 	this.btnSelect = function (arg) {
 		var chosenWord = this["$btn" + arg].text();
 		if (this.successCondition(chosenWord)) this.reGenerateContext(chosenWord);
@@ -11651,7 +11734,7 @@ Ex2.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex2;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11713,6 +11796,11 @@ function Ex3(data, index, size) {
 
 		//Bind UI action of button 6 click to the function
 		this.$btn6.on("click", this.selectChoice.bind(this, 6));
+	};
+
+	/** @Override */
+	this.wrongAnswerAnimation = function () {
+		this.shake.shakeFocusedElement();
 	};
 
 	this.selectChoice = function (btnID) {
@@ -11899,7 +11987,7 @@ Ex3.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex3;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12006,16 +12094,7 @@ function Ex4(data, index, size) {
 
 	/** @Override */
 	this.wrongAnswerAnimation = function () {
-		swal({
-			title: "Wrong answer...",
-			allowOutsideClick: true,
-			type: "error",
-			text: "Hint: the word starts with \"" + this.data[this.index].to[0].trim().charAt(0) + "\"",
-			confirmButtonText: "ok",
-			showConfirmButton: true,
-			allowEscapeKey: true,
-			showLoaderOnConfirm: true
-		});
+		this.shake.shakeElement(this.$input);
 	};
 };
 Ex4.prototype = Object.create(_exercise2.default.prototype, {
@@ -12027,81 +12106,6 @@ Ex4.prototype = Object.create(_exercise2.default.prototype, {
 });
 
 exports.default = Ex4;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
-
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var animationInstance = null;
-
-var LoadingAnimation = function () {
-    function LoadingAnimation() {
-        _classCallCheck(this, LoadingAnimation);
-
-        if (animationInstance) {
-            return animationInstance;
-        }
-        /** Class parameters*/
-        this.$loader = null;
-        this.$content = null;
-        this.updateCache();
-    }
-    /**
-     * Update/save the cache of the dom
-     * */
-
-
-    _createClass(LoadingAnimation, [{
-        key: 'updateCache',
-        value: function updateCache() {
-            this.$loader = (0, _jquery2.default)('#loader');
-            this.$content = (0, _jquery2.default)('#main-content');
-        }
-    }, {
-        key: 'loadingAnimation',
-        value: function loadingAnimation(activate) {
-            //If cache is not available
-            if (this.$loader == null || this.$content == null) {
-                this.updateCache();
-            }
-            //Turn on the animation
-            if (activate === true) {
-                this.$content.addClass('hide');
-                this.$loader.removeClass('hide');
-            } else {
-                //Turn off the animation unhide the content
-                this.$content.removeClass('hide');
-                this.$loader.addClass('hide');
-            }
-        }
-    }]);
-
-    return LoadingAnimation;
-}();
-
-exports.default = LoadingAnimation;
 
 /***/ }),
 /* 18 */
@@ -12738,23 +12742,23 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ex = __webpack_require__(13);
+var _ex = __webpack_require__(14);
 
 var _ex2 = _interopRequireDefault(_ex);
 
-var _ex3 = __webpack_require__(14);
+var _ex3 = __webpack_require__(15);
 
 var _ex4 = _interopRequireDefault(_ex3);
 
-var _ex5 = __webpack_require__(15);
+var _ex5 = __webpack_require__(16);
 
 var _ex6 = _interopRequireDefault(_ex5);
 
-var _ex7 = __webpack_require__(16);
+var _ex7 = __webpack_require__(17);
 
 var _ex8 = _interopRequireDefault(_ex7);
 
-var _progress_bar = __webpack_require__(26);
+var _progress_bar = __webpack_require__(27);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
@@ -13513,6 +13517,128 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * This class is responsible for animating elements that have a class attribute "shakable".
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * When an element is clicked with class "shakable", class "shake" is added to its attributes.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * After the animation is done the "shake" class is removed.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * In HTML use the class "shakable" for each element that shake property
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @Example <div class="shakable"></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ShakeAnimation = function () {
+    function ShakeAnimation() {
+        _classCallCheck(this, ShakeAnimation);
+
+        this.animationEvent = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
+        this.bindUIActions();
+    }
+
+    /**
+     * Make all the actions connected to this module
+     * return {void}
+     * */
+
+
+    _createClass(ShakeAnimation, [{
+        key: 'bindUIActions',
+        value: function bindUIActions() {
+            var _this2 = this;
+
+            var _this = this;
+            (0, _jquery2.default)('.shakable').click(function (event) {
+                _this2.shakeEvent((0, _jquery2.default)(event.target));
+            });
+        }
+
+        /**
+         * Use the clicked element to invoke shakeElement
+         * @return {void}
+         * */
+
+    }, {
+        key: 'shakeEvent',
+        value: function shakeEvent(elem) {
+            this.shakeElement(elem);
+        }
+
+        /**
+         * Function adds class shake, after the animation is done,
+         * the class shake is removed from the element
+         * @param {jQuery element}, elem
+         * @return {void}
+         * */
+
+    }, {
+        key: 'shakeElement',
+        value: function shakeElement(elem) {
+            elem.addClass('shake wrongAlert');
+            elem.one(this.animationEvent, function (event) {
+                elem.removeClass('shake wrongAlert');
+            });
+        }
+
+        /**
+         * Shakes the element that has the focus
+         * @return {void}
+         * */
+
+    }, {
+        key: 'shakeFocusedElement',
+        value: function shakeFocusedElement() {
+            this.shakeElement((0, _jquery2.default)(document.activeElement));
+        }
+
+        /**
+         * Make the given element shakable
+         * @param {Object}, element
+         * @return {void}
+        * */
+
+    }, {
+        key: 'makeShakable',
+        value: function makeShakable(elem) {
+            elem.addClass('shakable');
+            this.bindUIActions();
+        }
+
+        /**
+         * Make the given element non shakable
+         * @param {Object}, element
+         * @return {void}
+         * */
+
+    }, {
+        key: 'makeNonShakable',
+        value: function makeNonShakable(elem) {
+            elem.removeClass('shakable');
+            this.bindUIActions();
+        }
+    }]);
+
+    return ShakeAnimation;
+}();
+
+exports.default = ShakeAnimation;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -13610,7 +13736,7 @@ EmptyPage.prototype = {
 exports.default = EmptyPage;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13669,132 +13795,6 @@ var bar,
 exports.default = ProgressBar;
 
 /***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * This class is responsible for animating elements that have a class attribute "shakable".
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * When an element is clicked with class "shakable", class "shake" is added to its attributes.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * After the animation is done the "shake" class is removed.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * In HTML use the class "shakable" for each element that shake property
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @Example <div class="shakable"></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ShakeAnimation = function () {
-    function ShakeAnimation() {
-        _classCallCheck(this, ShakeAnimation);
-
-        this.animationEvent = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
-        this.bindUIActions();
-    }
-
-    /**
-     * Make all the actions connected to this module
-     * return {void}
-     * */
-
-
-    _createClass(ShakeAnimation, [{
-        key: 'bindUIActions',
-        value: function bindUIActions() {
-            var _this2 = this;
-
-            var _this = this;
-            (0, _jquery2.default)('.shakable').click(function (event) {
-                _this2.shakeEvent((0, _jquery2.default)(event.target));
-            });
-        }
-
-        /**
-         * Use the clicked element to invoke shakeElement
-         * @return {void}
-         * */
-
-    }, {
-        key: 'shakeEvent',
-        value: function shakeEvent(elem) {
-            this.shakeElement(elem);
-        }
-
-        /**
-         * Function adds class shake, after the animation is done,
-         * the class shake is removed from the element
-         * @param {jQuery element}, elem
-         * @return {void}
-         * */
-
-    }, {
-        key: 'shakeElement',
-        value: function shakeElement(elem) {
-            elem.addClass('shake wrongAlert');
-            elem.one(this.animationEvent, function (event) {
-                elem.removeClass('shake wrongAlert');
-            });
-        }
-
-        /**
-         * Shakes the element that has the focus
-         * @return {void}
-         * */
-
-    }, {
-        key: 'shakeFocusedElement',
-        value: function shakeFocusedElement() {
-            var elem = (0, _jquery2.default)(document.activeElement);
-            elem.addClass('shake wrongAlert');
-            elem.one(this.animationEvent, function (event) {
-                elem.removeClass('shake wrongAlert');
-            });
-        }
-
-        /**
-         * Make the given element shakable
-         * @param {Object}, element
-         * @return {void}
-        * */
-
-    }, {
-        key: 'makeShakable',
-        value: function makeShakable(elem) {
-            elem.addClass('shakable');
-            this.bindUIActions();
-        }
-
-        /**
-         * Make the given element non shakable
-         * @param {Object}, element
-         * @return {void}
-         * */
-
-    }, {
-        key: 'makeNonShakable',
-        value: function makeNonShakable(elem) {
-            elem.removeClass('shakable');
-            this.bindUIActions();
-        }
-    }]);
-
-    return ShakeAnimation;
-}();
-
-exports.default = ShakeAnimation;
-
-/***/ }),
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13833,27 +13833,27 @@ var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _empty_page = __webpack_require__(25);
+var _empty_page = __webpack_require__(26);
 
 var _empty_page2 = _interopRequireDefault(_empty_page);
 
-var _loading_animation = __webpack_require__(17);
+var _loading_animation = __webpack_require__(12);
 
 var _loading_animation2 = _interopRequireDefault(_loading_animation);
 
-var _ex = __webpack_require__(13);
+var _ex = __webpack_require__(14);
 
 var _ex2 = _interopRequireDefault(_ex);
 
-var _ex3 = __webpack_require__(14);
+var _ex3 = __webpack_require__(15);
 
 var _ex4 = _interopRequireDefault(_ex3);
 
-var _ex5 = __webpack_require__(15);
+var _ex5 = __webpack_require__(16);
 
 var _ex6 = _interopRequireDefault(_ex5);
 
-var _ex7 = __webpack_require__(16);
+var _ex7 = __webpack_require__(17);
 
 var _ex8 = _interopRequireDefault(_ex7);
 

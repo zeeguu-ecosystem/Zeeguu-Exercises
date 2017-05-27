@@ -82,20 +82,12 @@ function Ex4(data,index,size){
 			
 		return false;
 	}
-	
+
 	/** @Override */
 	this.wrongAnswerAnimation = function(){
-		swal({
-			title: "Wrong answer...",
-			allowOutsideClick: true,
-			type: "error",
-			text: "Hint: the word starts with \"" +this.data[this.index].to[0].trim().charAt(0)+ "\"",
-			confirmButtonText: "ok",
-			showConfirmButton: true,
-			allowEscapeKey:true,
-			showLoaderOnConfirm:true,
-		});
-	}	
+		this.shake.shakeElement(this.$input);
+	}
+
 };
 Ex4.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex4,

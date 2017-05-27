@@ -66,6 +66,11 @@ function Ex1(data,index,size){
 	this.successCondition = function(){
 		return (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""));
 	}
+
+	/** @Override */
+	this.wrongAnswerAnimation = function(){
+		this.shake.shakeElement(this.$input);
+	}
 };
 Ex1.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex1,

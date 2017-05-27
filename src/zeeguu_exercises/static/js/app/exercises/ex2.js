@@ -71,6 +71,11 @@ function Ex2(data,index,size){
 	this.successCondition = function(chosenWord){
 		return (chosenWord.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""));
 	}
+
+	/** @Override */
+	this.wrongAnswerAnimation = function(){
+		this.shake.shakeFocusedElement();
+	}
 	
 	this.btnSelect = function(arg){
 		var chosenWord = this["$btn"+arg].text();	

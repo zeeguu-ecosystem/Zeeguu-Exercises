@@ -3,7 +3,7 @@
  */
 
 import $ from 'jquery';
-import LoadingAnimation from './loading_animation';
+import LoadingAnimation from './animations/loading_animation';
 
 
 /**
