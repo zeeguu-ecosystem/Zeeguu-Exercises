@@ -219,14 +219,22 @@ body
 .ex-content
 {
 	overflow:auto;
-	min-height:220px;
-	max-height:220px;
+	min-height:250px;
+	max-height:250px;
 	text-align: justify;
     text-justify: inter-word;
 	font: 16px arial,sans-serif;
 	padding: 20px 50px;
 }
 
+.ex3-content
+{
+}
+
+.centering
+{
+    text-align: center;
+}
 
 .ex-context
 {
@@ -310,6 +318,7 @@ body
 	white-space: normal;
 	text-align: center;
 }
+
 
 .btn:focus {
     outline-style: none;

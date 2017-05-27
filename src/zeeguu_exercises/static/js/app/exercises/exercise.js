@@ -114,7 +114,8 @@ Exercise.prototype = {
 	/**
 	*	Actions taken when the succes condition is true
 	**/
-	onSuccess: function(){		
+	onSuccess: function(){
+        
 		this.onRenderNextEx();
 	},
 
