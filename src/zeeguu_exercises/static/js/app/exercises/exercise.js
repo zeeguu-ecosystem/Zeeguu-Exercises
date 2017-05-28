@@ -136,6 +136,7 @@ Exercise.prototype = {
      * On success condition true, generate new exercise
      * */
     onRenderNextEx: function () {
+		var _this = this;
         // The current exercise set is complete
         if(this.index == this.size + this.startIndex){
             this.onExComplete();
