@@ -177,14 +177,13 @@ body
 	display:block;
 	position: relative;
 	border-radius: 0px 0px 10px 10px;
+	display: flex;
 } 
 
 .ex-footer-elem
 {
 	display:inline-block;
 	margin:auto;
-	
-	opacity: 0.85;
 	transition: background-color 0.5s ease;
     height: 100%;
 	border-radius: 0px 0px 10px 10px;
@@ -192,8 +191,63 @@ body
 .ex-footer-elem:hover
 {
 	background-color: #EEEEEE;
-	opacity: 1;
 }
+
+.text-btn
+{
+	-webkit-border-radius: 24px;
+	-moz-border-radius: 24px;
+	border-radius: 24px;
+	font-family: Arial;
+	color: #7ca500;
+	font-size: 12px;
+	border:solid #cde786;;
+	background: #def0a5;
+	padding: 10px 20px 10px 20px;
+	font-weight: bold;
+	text-decoration: none;
+}
+.text-btn:hover {
+	color: #7ca500;
+}
+
+.check-text-btn {
+
+}
+.check-text-btn:hover {
+
+}
+
+.feedback-text-btn {
+	color: #7ca500;
+	font-size: 12px;
+	border:solid #cde786;;
+	background: #def0a5;
+}
+.feedback-text-btn:hover {
+	color: #7ca500;
+}
+.secondary-ex-footer-elem:hover
+{
+	background: #cde786;
+}
+
+#ex-footer-secondary
+{
+	align-items: stretch;
+	height: 100%;
+	width: 100%;
+	background: #def0a5;
+}
+
+#ex-footer-primary
+{
+	align-items: stretch;
+	height: 100%;
+	width: 100%;
+}
+
+
 .block-header
 {
 	display:block;
@@ -249,13 +303,18 @@ body
 }
 
 .clickable-symbol {
-	width: 45px;
-    height: 45px;
 	margin: 15px auto auto;
 	text-align: center;
     display:table-cell;
     vertical-align:middle;
 }
+
+.clickable-symbol-size
+{
+	width: 50px;
+    height: 50px;
+}
+
 .ex-input-box
 {
 	width: 100%;
@@ -317,6 +376,10 @@ body
 	display: inline-block;
 	white-space: normal;
 	text-align: center;
+}
+.ellipsis
+{
+    text-overflow: ellipsis;
 }
 
 
