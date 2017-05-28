@@ -10709,14 +10709,14 @@ Exercise.prototype = {
  *	Actions taken when the succes condition is true
  **/
 	onSuccess: function onSuccess() {
+		(0, _jquery2.default)("#ex-footer-primary").addClass('hide');
 
-		this.onRenderNextEx();
+		(0, _jquery2.default)("#ex-footer-secondary").removeClass('hide');
+		(0, _jquery2.default)("#ex-footer-secondary").toggleClass('mask-appear');
+		this.handleSuccessCondition();
 	},
 
-	/**
-  * On success condition true, generate new exercise
-  * */
-	onRenderNextEx: function onRenderNextEx() {
+	handleSuccessCondition: function handleSuccessCondition() {
 		var _this = this;
 		this.animateSuccess();
 		//Submit the result of translation
@@ -10724,6 +10724,12 @@ Exercise.prototype = {
 		// Notify the observer
 		_pubsub2.default.emit('progress');
 		this.index++;
+	},
+
+	/**
+  * On success condition true, generate new exercise
+  * */
+	onRenderNextEx: function onRenderNextEx() {
 		// The current exercise set is complete
 		if (this.index == this.size + this.startIndex) {
 			this.onExComplete();
@@ -11504,6 +11510,7 @@ function Ex1(data, index, size) {
 		this.$showSolution = this.$elem.find("#show_solution");
 		this.$checkAnswer = this.$elem.find("#check_answer");
 		this.$clickableText = this.$elem.find(".clickable-text");
+		this.$nextExercise = this.$elem.find('#next-exercise');
 	};
 
 	/** @Override */
@@ -11520,6 +11527,9 @@ function Ex1(data, index, size) {
 
 		// Bind UI Enter Key
 		this.$input.keyup(_this.enterKeyup.bind(this));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click", _this.onRenderNextEx.bind(this));
 	};
 
 	/** @Override */

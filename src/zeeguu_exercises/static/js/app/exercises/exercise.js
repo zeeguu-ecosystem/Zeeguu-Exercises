@@ -115,21 +115,27 @@ Exercise.prototype = {
 	*	Actions taken when the succes condition is true
 	**/
 	onSuccess: function(){
-        
-		this.onRenderNextEx();
+		$("#ex-footer-primary").addClass('hide');
+
+		$("#ex-footer-secondary").removeClass('hide');
+		$("#ex-footer-secondary").toggleClass('mask-appear');
+		this.handleSuccessCondition();
 	},
 
-    /**
-     * On success condition true, generate new exercise
-     * */
-    onRenderNextEx: function () {
-        var _this = this;
+	handleSuccessCondition: function () {
+		var _this = this;
         this.animateSuccess();
         //Submit the result of translation
         this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_CORRECT);
         // Notify the observer
         events.emit('progress');
         this.index++;
+	},
+
+    /**
+     * On success condition true, generate new exercise
+     * */
+    onRenderNextEx: function () {
         // The current exercise set is complete
         if(this.index == this.size + this.startIndex){
             this.onExComplete();
