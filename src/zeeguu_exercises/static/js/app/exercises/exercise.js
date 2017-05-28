@@ -206,7 +206,8 @@ Exercise.prototype = {
 				showCancelButton: true,
 				closeOnConfirm: false,
 				animation: "slide-from-top",
-				inputPlaceholder: "Write something"
+				inputPlaceholder: "Write something",
+				imageUrl: "static/img/illustrations/zeeguu_balloon.png",
 			},
 			function (inputValue) {
 				if (inputValue === false) return false;
