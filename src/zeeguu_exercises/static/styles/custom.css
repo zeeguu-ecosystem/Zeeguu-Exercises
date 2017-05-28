@@ -186,8 +186,20 @@ body
 	margin:auto;
 	transition: background-color 0.5s ease;
     height: 100%;
-	border-radius: 0px 0px 10px 10px;
 }
+
+
+.ex-footer-elem-left
+{
+	border-radius: 0px 0px 0px 10px;
+}
+
+.ex-footer-elem-right
+{
+	border-radius: 0px 0px 10px 0px;
+}
+
+
 .ex-footer-elem:hover
 {
 	background-color: #EEEEEE;
@@ -206,6 +218,7 @@ body
 	padding: 10px 20px 10px 20px;
 	font-weight: bold;
 	text-decoration: none;
+	outline: none;
 }
 .text-btn:hover {
 	color: #7ca500;
