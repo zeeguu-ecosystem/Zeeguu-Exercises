@@ -259,6 +259,8 @@ body
 
 #ex-footer-primary
 {
+
+	position: relative;
 	align-items: stretch;
 	height: 100%;
 	width: 100%;
@@ -393,6 +395,8 @@ body
 	display: inline-block;
 	white-space: normal;
 	text-align: center;
+	text-overflow: ellipsis;
+	overflow:hidden;
 }
 .ellipsis
 {
