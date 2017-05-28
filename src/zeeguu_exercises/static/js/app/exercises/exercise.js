@@ -97,7 +97,7 @@ Exercise.prototype = {
 	*	When the ex are done, notify the observers
 	**/
 	onExComplete: function (){		
-		setTimeout(function() { events.emit('exerciseCompleted');}, 2000);
+		events.emit('exerciseCompleted');
 	},
 	
 	/**
@@ -200,24 +200,27 @@ Exercise.prototype = {
 	 * */
 	giveFeedbackBox: function () {
 		swal({
-				title: "An input!",
-				text: "Write something interesting:",
+				title: "",
+				text: "Help Zeeguu become smarter.",
 				type: "input",
 				showCancelButton: true,
 				closeOnConfirm: false,
 				animation: "slide-from-top",
-				inputPlaceholder: "Write something",
+				inputPlaceholder: "What is your feedback?",
 				imageUrl: "static/img/illustrations/zeeguu_balloon.png",
+				imageSize: "160x160"
+
 			},
 			function (inputValue) {
 				if (inputValue === false) return false;
 
 				if (inputValue === "") {
-					swal.showInputError("You need to write something!");
+					swal.showInputError("The field can't be empty.");
 					return false
 				}
 
-				swal("Nice!", "You wrote: " + inputValue, "success");
+				swal("Awesome!", "Your feedback will be used to improve our service.", "success");
+
 			});
 	},
 	

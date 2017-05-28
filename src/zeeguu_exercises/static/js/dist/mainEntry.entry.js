@@ -10692,9 +10692,7 @@ Exercise.prototype = {
  *	When the ex are done, notify the observers
  **/
 	onExComplete: function onExComplete() {
-		setTimeout(function () {
-			_pubsub2.default.emit('exerciseCompleted');
-		}, 2000);
+		_pubsub2.default.emit('exerciseCompleted');
 	},
 
 	/**
@@ -10795,22 +10793,25 @@ Exercise.prototype = {
   * */
 	giveFeedbackBox: function giveFeedbackBox() {
 		(0, _sweetalert2.default)({
-			title: "An input!",
-			text: "Write something interesting:",
+			title: "",
+			text: "Help Zeeguu become smarter.",
 			type: "input",
 			showCancelButton: true,
 			closeOnConfirm: false,
 			animation: "slide-from-top",
-			inputPlaceholder: "Write something"
+			inputPlaceholder: "What is your feedback?",
+			imageUrl: "static/img/illustrations/zeeguu_balloon.png",
+			imageSize: "160x160"
+
 		}, function (inputValue) {
 			if (inputValue === false) return false;
 
 			if (inputValue === "") {
-				_sweetalert2.default.showInputError("You need to write something!");
+				_sweetalert2.default.showInputError("The field can't be empty.");
 				return false;
 			}
 
-			(0, _sweetalert2.default)("Nice!", "You wrote: " + inputValue, "success");
+			(0, _sweetalert2.default)("Awesome!", "Your feedback will be used to improve our service.", "success");
 		});
 	},
 
@@ -11555,22 +11556,22 @@ function Ex1(data, index, size) {
 	this.bindUIActions = function () {
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
+		this.$showSolution.on("click", this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 
 		//Bind UI Text click		
-		this.$clickableText.on("click", _this.updateInput.bind(this));
+		this.$clickableText.on("click", this.updateInput.bind(this));
 
 		// Bind UI Enter Key
-		this.$input.keyup(_this.enterKeyup.bind(this));
+		this.$input.keyup(this.enterKeyup.bind(this));
 
 		//Next exercise clicked
-		this.$nextExercise.on("click", _this.onRenderNextEx.bind(this));
+		this.$nextExercise.on("click", this.onRenderNextEx.bind(this));
 
 		//Next exercise clicked
-		this.$feedbackBtn.on("click", _this.giveFeedbackBox.bind(this));
+		this.$feedbackBtn.on("click", this.giveFeedbackBox.bind(this));
 	};
 
 	/** @Override */
@@ -11605,7 +11606,8 @@ function Ex1(data, index, size) {
 	this.wrongAnswerAnimation = function () {
 		this.shake.shakeElement(this.$input);
 	};
-};
+}
+
 Ex1.prototype = Object.create(_exercise2.default.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/
@@ -11652,25 +11654,33 @@ function Ex2(data, index, size) {
 		this.$btn1 = this.$elem.find("#btn1");
 		this.$btn2 = this.$elem.find("#btn2");
 		this.$btn3 = this.$elem.find("#btn3");
+		this.$nextExercise = this.$elem.find('#next-exercise');
+		this.$feedbackBtn = this.$elem.find('#feedback');
 	};
 
 	/** @Override */
 	this.bindUIActions = function () {
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
+		this.$showSolution.on("click", this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 
 		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", _this.btnSelect.bind(this, 1));
+		this.$btn1.on("click", this.btnSelect.bind(this, 1));
 
 		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", _this.btnSelect.bind(this, 2));
+		this.$btn2.on("click", this.btnSelect.bind(this, 2));
 
 		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", _this.btnSelect.bind(this, 3));
+		this.$btn3.on("click", this.btnSelect.bind(this, 3));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click", this.onRenderNextEx.bind(this));
+
+		//Next exercise clicked
+		this.$feedbackBtn.on("click", this.giveFeedbackBox.bind(this));
 	};
 
 	/** @Override */
@@ -11824,6 +11834,8 @@ function Ex3(data, index, size) {
 		this.$btn4 = this.$elem.find("#btn4");
 		this.$btn5 = this.$elem.find("#btn5");
 		this.$btn6 = this.$elem.find("#btn6");
+		this.$nextExercise = this.$elem.find('#next-exercise');
+		this.$feedbackBtn = this.$elem.find('#feedback');
 	};
 
 	/** @Override */
@@ -11848,6 +11860,12 @@ function Ex3(data, index, size) {
 
 		//Bind UI action of button 6 click to the function
 		this.$btn6.on("click", this.selectChoice.bind(this, 6));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click", this.onRenderNextEx.bind(this));
+
+		//Next exercise clicked
+		this.$feedbackBtn.on("click", this.giveFeedbackBox.bind(this));
 	};
 
 	/** @Override */
@@ -12084,22 +12102,30 @@ function Ex4(data, index, size) {
 		this.$showSolution = this.$elem.find("#show_solution");
 		this.$checkAnswer = this.$elem.find("#check_answer");
 		this.$clickableText = this.$elem.find(".clickable-text");
+		this.$nextExercise = this.$elem.find('#next-exercise');
+		this.$feedbackBtn = this.$elem.find('#feedback');
 	};
 
 	/** @Override */
 	this.bindUIActions = function () {
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
+		this.$showSolution.on("click", this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 
 		//Bind UI Text click		
 		//this.$clickableText.on("click",updateInput.bind(this));
 
 		// Bind UI Enter Key
-		this.$input.keyup(_this.enterKeyup.bind(this));
+		this.$input.keyup(this.enterKeyup.bind(this));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click", this.onRenderNextEx.bind(this));
+
+		//Next exercise clicked
+		this.$feedbackBtn.on("click", this.giveFeedbackBox.bind(this));
 	};
 
 	/** @Override */

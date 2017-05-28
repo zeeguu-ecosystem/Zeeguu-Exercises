@@ -12,26 +12,34 @@ function Ex2(data,index,size){
 		this.$checkAnswer 			= this.$elem.find("#check_answer");		
 		this.$btn1 					= this.$elem.find("#btn1");
 		this.$btn2 					= this.$elem.find("#btn2");
-		this.$btn3 					= this.$elem.find("#btn3");		
+		this.$btn3 					= this.$elem.find("#btn3");
+		this.$nextExercise			= this.$elem.find('#next-exercise');
+        this.$feedbackBtn			= this.$elem.find('#feedback');
 	}
 	
 	/** @Override */
 	this.bindUIActions = function(){
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
+		this.$showSolution.on("click", this.handleHint.bind(this));
 		
 		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 		
 		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", _this.btnSelect.bind(this,1));
+		this.$btn1.on("click", this.btnSelect.bind(this,1));
 		
 		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", _this.btnSelect.bind(this,2));
+		this.$btn2.on("click", this.btnSelect.bind(this,2));
 		
 		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", _this.btnSelect.bind(this,3));
+		this.$btn3.on("click", this.btnSelect.bind(this,3));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click",this.onRenderNextEx.bind(this));
+
+        //Next exercise clicked
+		this.$feedbackBtn.on("click",this.giveFeedbackBox.bind(this));
 	}
 	
 	/** @Override */

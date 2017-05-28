@@ -21,6 +21,8 @@ function Ex3(data,index,size){
 		this.$btn4 					= this.$elem.find("#btn4");
 		this.$btn5 					= this.$elem.find("#btn5");
 		this.$btn6 					= this.$elem.find("#btn6");
+		this.$nextExercise			= this.$elem.find('#next-exercise');
+        this.$feedbackBtn			= this.$elem.find('#feedback');
 	};
 	
 	/** @Override */
@@ -45,6 +47,12 @@ function Ex3(data,index,size){
 		
 		//Bind UI action of button 6 click to the function
 		this.$btn6.on("click", this.selectChoice.bind(this,6));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click",this.onRenderNextEx.bind(this));
+
+        //Next exercise clicked
+		this.$feedbackBtn.on("click",this.giveFeedbackBox.bind(this));
 		
 	};
 
