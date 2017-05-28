@@ -10718,11 +10718,17 @@ Exercise.prototype = {
 		this.handleSuccessCondition();
 	},
 
+	/**
+  * Revert the secondary and primary footers
+  * */
 	revertPrimary: function revertPrimary() {
 		this.$exFooterSecondary.removeClass('mask-appear');
 		this.$exFooterPrimary.toggleClass('mask-appear');
 	},
 
+	/**
+  * When the answer is successful show the animation and submit the result
+  * */
 	handleSuccessCondition: function handleSuccessCondition() {
 		var _this = this;
 		this.animateSuccess();
@@ -10782,6 +10788,30 @@ Exercise.prototype = {
 		this.isHintUsed = true;
 
 		this.giveHint();
+	},
+
+	/**
+  * Function for sending the user feedback for an individual exercise
+  * */
+	giveFeedbackBox: function giveFeedbackBox() {
+		(0, _sweetalert2.default)({
+			title: "An input!",
+			text: "Write something interesting:",
+			type: "input",
+			showCancelButton: true,
+			closeOnConfirm: false,
+			animation: "slide-from-top",
+			inputPlaceholder: "Write something"
+		}, function (inputValue) {
+			if (inputValue === false) return false;
+
+			if (inputValue === "") {
+				_sweetalert2.default.showInputError("You need to write something!");
+				return false;
+			}
+
+			(0, _sweetalert2.default)("Nice!", "You wrote: " + inputValue, "success");
+		});
 	},
 
 	/*********************** Interface functions *****************************/
@@ -11518,6 +11548,7 @@ function Ex1(data, index, size) {
 		this.$checkAnswer = this.$elem.find("#check_answer");
 		this.$clickableText = this.$elem.find(".clickable-text");
 		this.$nextExercise = this.$elem.find('#next-exercise');
+		this.$feedbackBtn = this.$elem.find('#feedback');
 	};
 
 	/** @Override */
@@ -11537,6 +11568,9 @@ function Ex1(data, index, size) {
 
 		//Next exercise clicked
 		this.$nextExercise.on("click", _this.onRenderNextEx.bind(this));
+
+		//Next exercise clicked
+		this.$feedbackBtn.on("click", _this.giveFeedbackBox.bind(this));
 	};
 
 	/** @Override */
