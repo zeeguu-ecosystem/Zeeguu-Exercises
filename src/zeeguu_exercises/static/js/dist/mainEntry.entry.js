@@ -10648,6 +10648,10 @@ Exercise.prototype = {
 		this.$loader = this.$elem.find('#loader');
 		this.$status = this.$elem.find("#ex-status");
 		this.$statusContainer = this.$elem.find('#ex-status-container');
+
+		this.$exFooterPrimary = this.$elem.find('#ex-footer-primary');
+		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
+
 		this.cacheCustomDom();
 	},
 
@@ -10709,14 +10713,14 @@ Exercise.prototype = {
  *	Actions taken when the succes condition is true
  **/
 	onSuccess: function onSuccess() {
-		(0, _jquery2.default)("#ex-footer-primary").removeClass('mask-appear');
-		(0, _jquery2.default)("#ex-footer-secondary").toggleClass('mask-appear');
+		this.$exFooterPrimary.removeClass('mask-appear');
+		this.$exFooterSecondary.toggleClass('mask-appear');
 		this.handleSuccessCondition();
 	},
 
 	revertPrimary: function revertPrimary() {
-		(0, _jquery2.default)("#ex-footer-secondary").removeClass('mask-appear');
-		(0, _jquery2.default)("#ex-footer-primary").toggleClass('mask-appear');
+		this.$exFooterSecondary.removeClass('mask-appear');
+		this.$exFooterPrimary.toggleClass('mask-appear');
 	},
 
 	handleSuccessCondition: function handleSuccessCondition() {

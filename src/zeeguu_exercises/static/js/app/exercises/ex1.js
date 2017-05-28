@@ -22,6 +22,7 @@ function Ex1(data,index,size){
 		this.$checkAnswer 			= this.$elem.find("#check_answer");
 		this.$clickableText 		= this.$elem.find(".clickable-text");
 		this.$nextExercise			= this.$elem.find('#next-exercise');
+        this.$feedbackBtn			= this.$elem.find('#feedback');
 	}
 	
 	/** @Override */
@@ -41,6 +42,9 @@ function Ex1(data,index,size){
 
 		//Next exercise clicked
 		this.$nextExercise.on("click",_this.onRenderNextEx.bind(this));
+
+        //Next exercise clicked
+		this.$feedbackBtn.on("click",_this.giveFeedbackBox.bind(this));
 	}
 	
 	/** @Override */

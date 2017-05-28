@@ -52,6 +52,10 @@ Exercise.prototype = {
 		this.$loader 			= this.$elem.find('#loader');
 		this.$status 			= this.$elem.find("#ex-status");		
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
+
+		this.$exFooterPrimary 	= this.$elem.find('#ex-footer-primary');
+		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
+
 		this.cacheCustomDom();
 	},
 	
@@ -108,23 +112,27 @@ Exercise.prototype = {
 		this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_WRONG);
 	},
 
-
-
-	
 	/**
 	*	Actions taken when the succes condition is true
 	**/
 	onSuccess: function(){
-		$("#ex-footer-primary").removeClass ('mask-appear');
-		$("#ex-footer-secondary").toggleClass('mask-appear');
+		this.$exFooterPrimary.removeClass ('mask-appear');
+		this.$exFooterSecondary.toggleClass('mask-appear');
 		this.handleSuccessCondition();
 	},
 
+	/**
+	 * Revert the secondary and primary footers
+	 * */
 	revertPrimary: function () {
-		$("#ex-footer-secondary").removeClass('mask-appear');
-		$("#ex-footer-primary").toggleClass ('mask-appear');
+		this.$exFooterSecondary.removeClass ('mask-appear');
+		this.$exFooterPrimary.toggleClass('mask-appear');
 	},
 
+
+	/**
+	 * When the answer is successful show the animation and submit the result
+	 * */
 	handleSuccessCondition: function () {
 		var _this = this;
         this.animateSuccess();
@@ -185,6 +193,31 @@ Exercise.prototype = {
 		this.isHintUsed = true;
 
 		this.giveHint();
+	},
+
+	/**
+	 * Function for sending the user feedback for an individual exercise
+	 * */
+	giveFeedbackBox: function () {
+		swal({
+				title: "An input!",
+				text: "Write something interesting:",
+				type: "input",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				animation: "slide-from-top",
+				inputPlaceholder: "Write something"
+			},
+			function (inputValue) {
+				if (inputValue === false) return false;
+
+				if (inputValue === "") {
+					swal.showInputError("You need to write something!");
+					return false
+				}
+
+				swal("Nice!", "You wrote: " + inputValue, "success");
+			});
 	},
 	
 	
