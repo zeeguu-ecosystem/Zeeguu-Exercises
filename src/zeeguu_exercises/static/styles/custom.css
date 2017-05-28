@@ -328,8 +328,8 @@ body
 
 .clickable-symbol-size
 {
-	width: 50px;
-    height: 50px;
+	width: 45px;
+    height: 45px;
 }
 
 .ex-input-box
@@ -522,23 +522,22 @@ body
  .post {} /* do not change this */
 
 .mask {
-   width: 100%;
-   height: 100%;
-   position: absolute;
-   overflow: hidden;
-   top: 100%;
-   left: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	overflow: hidden;
+	top: 100%;
+	left: 0;
 
-   -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
-   filter: alpha(opacity=0);
-   opacity: 0;
-   -webkit-transition: all 0.3s ease-in-out 0.5s;
-   -moz-transition: all 0.3s ease-in-out 0.5s;
-   -o-transition: all 0.3s ease-in-out 0.5s;
-   -ms-transition: all 0.3s ease-in-out 0.5s;
-   transition: all 0.3s ease-in-out 0.5s;
+	-ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	-webkit-transition: all 0.3s ease-in-out 0.5s;
+	-moz-transition: all 0.3s ease-in-out 0.5s;
+	-o-transition: all 0.3s ease-in-out 0.5s;
+	-ms-transition: all 0.3s ease-in-out 0.5s;
+	transition: all 0.3s ease-in-out 0.5s;
 }
-
 .mask-appear {
 	-ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: alpha(opacity=100);

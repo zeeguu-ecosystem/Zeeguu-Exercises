@@ -10709,11 +10709,14 @@ Exercise.prototype = {
  *	Actions taken when the succes condition is true
  **/
 	onSuccess: function onSuccess() {
-		(0, _jquery2.default)("#ex-footer-primary").addClass('hide');
-
-		(0, _jquery2.default)("#ex-footer-secondary").removeClass('hide');
+		(0, _jquery2.default)("#ex-footer-primary").removeClass('mask-appear');
 		(0, _jquery2.default)("#ex-footer-secondary").toggleClass('mask-appear');
 		this.handleSuccessCondition();
+	},
+
+	revertPrimary: function revertPrimary() {
+		(0, _jquery2.default)("#ex-footer-primary").toggleClass('mask-appear');
+		(0, _jquery2.default)("#ex-footer-secondary").removeClass('mask-appear');
 	},
 
 	handleSuccessCondition: function handleSuccessCondition() {
@@ -10730,14 +10733,14 @@ Exercise.prototype = {
   * On success condition true, generate new exercise
   * */
 	onRenderNextEx: function onRenderNextEx() {
+		this.revertPrimary();
 		// The current exercise set is complete
 		if (this.index == this.size + this.startIndex) {
 			this.onExComplete();
 			return;
 		}
-		setTimeout(function () {
-			_this.next();_this.startTime = Date.now();
-		}, _this.successAnimationTime);
+		this.next();
+		this.startTime = Date.now();
 	},
 
 	/**
