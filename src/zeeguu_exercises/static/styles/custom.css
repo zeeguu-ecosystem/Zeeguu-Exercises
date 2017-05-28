@@ -530,14 +530,15 @@ body
 	left: 0;
 
 	-ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
-	filter: alpha(opacity=0);
-	opacity: 0;
-	-webkit-transition: all 0.3s ease-in-out 0.5s;
-	-moz-transition: all 0.3s ease-in-out 0.5s;
-	-o-transition: all 0.3s ease-in-out 0.5s;
-	-ms-transition: all 0.3s ease-in-out 0.5s;
-	transition: all 0.3s ease-in-out 0.5s;
+	filter: alpha(opacity=2);
+	opacity: 2;
+	-webkit-transition: all 0.3s ease-out 0.3s;
+	-moz-transition: all 0.3s ease-out 0.3s;
+	-o-transition: all 0.3s ease-out 0.3s;
+	-ms-transition: all 0.3s ease-out 0.3s;
+	transition: all 0.4s ease-out 0.2s;
 }
+
 .mask-appear {
 	-ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: alpha(opacity=100);

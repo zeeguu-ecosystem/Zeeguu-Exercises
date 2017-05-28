@@ -121,8 +121,8 @@ Exercise.prototype = {
 	},
 
 	revertPrimary: function () {
-		$("#ex-footer-primary").toggleClass ('mask-appear');
 		$("#ex-footer-secondary").removeClass('mask-appear');
+		$("#ex-footer-primary").toggleClass ('mask-appear');
 	},
 
 	handleSuccessCondition: function () {

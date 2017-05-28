@@ -10715,8 +10715,8 @@ Exercise.prototype = {
 	},
 
 	revertPrimary: function revertPrimary() {
-		(0, _jquery2.default)("#ex-footer-primary").toggleClass('mask-appear');
 		(0, _jquery2.default)("#ex-footer-secondary").removeClass('mask-appear');
+		(0, _jquery2.default)("#ex-footer-primary").toggleClass('mask-appear');
 	},
 
 	handleSuccessCondition: function handleSuccessCondition() {
