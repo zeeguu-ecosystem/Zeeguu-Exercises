@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 32);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25)(module)))
 
 /***/ }),
 /* 1 */
@@ -10333,7 +10333,7 @@ var _defaultParams2 = _interopRequireWildcard(_defaultParams);
  * Add modal + overlay to DOM
  */
 
-var _injectedHTML = __webpack_require__(22);
+var _injectedHTML = __webpack_require__(23);
 
 var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
 
@@ -10597,7 +10597,7 @@ var _session2 = _interopRequireDefault(_session);
 
 var _loader = __webpack_require__(8);
 
-var _shake_animation = __webpack_require__(25);
+var _shake_animation = __webpack_require__(26);
 
 var _shake_animation2 = _interopRequireDefault(_shake_animation);
 
@@ -11084,9 +11084,9 @@ var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$r
 
 // Handle button events and keyboard events
 
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(20);
+var _handleButton$handleConfirm$handleCancel = __webpack_require__(21);
 
-var _handleKeyDown = __webpack_require__(21);
+var _handleKeyDown = __webpack_require__(22);
 
 var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
 
@@ -11096,7 +11096,7 @@ var _defaultParams = __webpack_require__(10);
 
 var _defaultParams2 = _interopRequireWildcard(_defaultParams);
 
-var _setParameters = __webpack_require__(23);
+var _setParameters = __webpack_require__(24);
 
 var _setParameters2 = _interopRequireWildcard(_setParameters);
 
@@ -12190,6 +12190,61 @@ exports.default = Ex4;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by Martin on 5/29/2017.
+ */
+/**
+ * The following class implements methods for The Distraction Shield browser extension
+ * @example of redirect url https://www.zeeguu.unibe.ch/practice/get-ex?redirect=https://www.facebook.com/
+ * */
+var TDS = function () {
+    function TDS() {
+        _classCallCheck(this, TDS);
+    }
+
+    _createClass(TDS, null, [{
+        key: "distractionShieldOriginalDestination",
+
+
+        /**
+         * Extraction of redirect url for Distraction Shield
+         * @return {String}, redirect url or Null if no url is found
+         **/
+        value: function distractionShieldOriginalDestination() {
+            var url = window.location.href;
+            var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)");
+            var results = regex.exec(url);
+            if (!results || !results[2]) return null;
+            var newUrl = decodeURIComponent(results[2].replace(/\+/g, " "));
+            if (newUrl.indexOf('?') > -1) {
+                newUrl += "&tds_exComplete=true";
+            } else {
+                newUrl += "?tds_exComplete=true";
+            }
+            return newUrl;
+        }
+    }]);
+
+    return TDS;
+}();
+
+exports.default = TDS;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -12806,7 +12861,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12836,7 +12891,7 @@ var _ex7 = __webpack_require__(17);
 
 var _ex8 = _interopRequireDefault(_ex7);
 
-var _progress_bar = __webpack_require__(27);
+var _progress_bar = __webpack_require__(28);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
@@ -12858,22 +12913,24 @@ var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _validator = __webpack_require__(28);
+var _validator = __webpack_require__(29);
 
 var _validator2 = _interopRequireDefault(_validator);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _the_distraction_shield_extension = __webpack_require__(18);
 
-/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
- *  @initialize it using: new Generator(args);
- *  @param args is matrix of exercise name and number of bookmarks,
- *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
- *  @customize it by using prototypal inheritance
- **/
+var _the_distraction_shield_extension2 = _interopRequireDefault(_the_distraction_shield_extension);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Generator = function Generator(set) {
     this.init(set);
-};
+}; /** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu
+    *  @initialize it using: new Generator(args);
+    *  @param args is matrix of exercise name and number of bookmarks,
+    *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+    *  @customize it by using prototypal inheritance
+    **/
 
 Generator.prototype = {
     /************************** SETTINGS ********************************/
@@ -12995,7 +13052,7 @@ Generator.prototype = {
      **/
     onExSetComplete: function onExSetComplete() {
         var _this = this;
-        var redirect = _this.distractionShieldOriginalDestination();
+        var redirect = _the_distraction_shield_extension2.default.distractionShieldOriginalDestination();
         _this.submitResults();
         (0, _sweetalert2.default)({
             title: "You rock!",
@@ -13025,30 +13082,13 @@ Generator.prototype = {
     },
     restartHome: function restartHome() {
         _pubsub2.default.emit('homeRestart');
-    },
-
-    /**
-     * Extraction of redirect url for Distraction Shield
-     **/
-    distractionShieldOriginalDestination: function distractionShieldOriginalDestination() {
-        var url = window.location.href;
-        var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)");
-        var results = regex.exec(url);
-        if (!results || !results[2]) return null;
-        var newUrl = decodeURIComponent(results[2].replace(/\+/g, " "));
-        if (newUrl.indexOf('?') > -1) {
-            newUrl += "&tds_exComplete=true";
-        } else {
-            newUrl += "?tds_exComplete=true";
-        }
-        return newUrl;
     }
 };
 
 exports.default = Generator;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13189,7 +13229,7 @@ exports['default'] = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13274,7 +13314,7 @@ exports['default'] = handleKeyDown;
 module.exports = exports['default'];
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13322,7 +13362,7 @@ exports["default"] = injectedHTML;
 module.exports = exports["default"];
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13555,7 +13595,7 @@ exports['default'] = setParameters;
 module.exports = exports['default'];
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13585,7 +13625,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13707,7 +13747,7 @@ var ShakeAnimation = function () {
 exports.default = ShakeAnimation;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13723,14 +13763,14 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 var _loader = __webpack_require__(8);
 
-var _mustache = __webpack_require__(18);
+var _mustache = __webpack_require__(19);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var EmptyPage = function EmptyPage() {
-    this.init();
+var EmptyPage = function EmptyPage(newFields) {
+    this.init(newFields);
 }; /**
     * Created by Martin on 5/14/2017.
     */
@@ -13761,6 +13801,7 @@ EmptyPage.prototype = {
      * Merges two javascript objects together
      * @param {Object} oldField, the field that will be overwritten
      * @param {Object} newField, the field that provides which properties to override
+     * @return {Object} merged field
      * TODO test this
      * */
     mergeField: function mergeField(oldField, newField) {
@@ -13776,12 +13817,9 @@ EmptyPage.prototype = {
     /**
      *	Exercise initialaizer
      **/
-    init: function init() {
-        var templeUrl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.emptyTemplateURL;
-        var tempFields = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.templateFields;
-
-        this.emptyTemplateURL = templeUrl;
-        this.templateFields = tempFields;
+    init: function init(newField) {
+        console.log(newField);
+        this.templateFields = !newField ? this.templateFields : this.mergeField(this.templateFields, newField);
         this.start();
     },
 
@@ -13814,7 +13852,7 @@ EmptyPage.prototype = {
 exports.default = EmptyPage;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13873,7 +13911,7 @@ var bar,
 exports.default = ProgressBar;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13911,7 +13949,7 @@ var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _empty_page = __webpack_require__(26);
+var _empty_page = __webpack_require__(27);
 
 var _empty_page2 = _interopRequireDefault(_empty_page);
 
@@ -13934,6 +13972,10 @@ var _ex6 = _interopRequireDefault(_ex5);
 var _ex7 = __webpack_require__(17);
 
 var _ex8 = _interopRequireDefault(_ex7);
+
+var _the_distraction_shield_extension = __webpack_require__(18);
+
+var _the_distraction_shield_extension2 = _interopRequireDefault(_the_distraction_shield_extension);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14074,7 +14116,15 @@ var Validator = function () {
     }, {
         key: "noBookmarkPage",
         value: function noBookmarkPage() {
-            var emptPg = new _empty_page2.default();
+            var redirect = _the_distraction_shield_extension2.default.distractionShieldOriginalDestination();
+            var newField = void 0;
+            //If within the extension
+            if (redirect != null) {
+                newField = { btnSecond: redirect, btnSecondText: 'Skip' };
+            } else {
+                newField = null;
+            }
+            var emptPg = new _empty_page2.default(newField);
             return [];
         }
 
@@ -14120,7 +14170,7 @@ var Validator = function () {
 exports.default = Validator;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14134,7 +14184,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _generator = __webpack_require__(19);
+var _generator = __webpack_require__(20);
 
 var _generator2 = _interopRequireDefault(_generator);
 
@@ -14142,7 +14192,7 @@ var _pubsub = __webpack_require__(9);
 
 var _pubsub2 = _interopRequireDefault(_pubsub);
 
-var _mustache = __webpack_require__(18);
+var _mustache = __webpack_require__(19);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
@@ -14269,15 +14319,15 @@ Home.prototype = {
 exports.default = Home;
 
 /***/ }),
-/* 30 */,
 /* 31 */,
-/* 32 */
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _home = __webpack_require__(29);
+var _home = __webpack_require__(30);
 
 var _home2 = _interopRequireDefault(_home);
 
