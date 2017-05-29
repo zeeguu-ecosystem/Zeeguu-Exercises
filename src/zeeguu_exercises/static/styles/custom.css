@@ -139,10 +139,18 @@ body
 	opacity: 1;
 }
 
+
 .btn-secondary-empty-page
 {
 	background-color: white !important;
 	color: #0091EA;
+	font-weight: bold;
+	border: 1px solid #0075b6;
+}
+.btn-secondary-empty-page:hover
+{
+	color: #0091EA;
+	border: 1px solid #009FFF;
 }
 
 .ex-box-shadow
