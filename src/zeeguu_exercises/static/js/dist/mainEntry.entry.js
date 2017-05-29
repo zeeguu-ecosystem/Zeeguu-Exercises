@@ -14334,9 +14334,43 @@ var _home2 = _interopRequireDefault(_home);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
-	window.onload = function () {
-		new _home2.default();
-	};
+
+    // Left to the reader: imagine some "app" object with methods whose
+    // implementations will be obvious from their use.
+
+    // Catch clicks on the root-level element.
+    document.body.addEventListener('click', function (event) {
+        var tag = event.target;
+        if (tag.tagName == 'A' && tag.href && event.button == 0) {
+            // It's a left click on an <a href=...>.
+            if (tag.origin == document.location.origin) {
+                // It's a same-origin navigation: a link within the site.
+
+                // Now check that the the app is capable of doing a
+                // within-page update.  (You might also take .query into
+                // account.)
+                var oldPath = document.location.pathname;
+                var newPath = tag.pathname;
+                if (app.capableOfRendering(newPath)) {
+                    // Prevent the browser from doing the navigation.
+                    e.preventDefault();
+                    // Let the app handle it.
+                    app.render(newPath);
+                    history.pushState(null, '', path);
+                }
+            }
+        }
+    });
+
+    // Also transition when the user navigates back.
+    window.onpopstate = function (event) {
+        app.render(document.location.pathname);
+        event.preventDefault();
+    };
+
+    window.onload = function () {
+        new _home2.default();
+    };
 })();
 
 /***/ })

@@ -7,7 +7,6 @@ body
 
 
 
-
 .home-body{
 	background-image: url("../img/star.svg");
 	-webkit-background-size: cover;
@@ -49,14 +48,15 @@ body
 {
 	padding-top:20px;
 	color: white;
-	height: 85px;
+	min-height: 85px;
 	background-color: #0b4176;
 	background-image:  url("../img/star.svg");
 	margin-bottom: 10px;	
-	
+	position:relative;
 	border-radius: 10px 10px 0px 0px;
 }
-.home-header span
+
+.home-header-text
 {
 	margin: auto;
 	width:100%;
