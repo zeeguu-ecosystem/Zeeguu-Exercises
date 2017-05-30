@@ -1,6 +1,6 @@
 /** Modular Zeeguu Powered Exercise @author Martin Avagyan
  *  @initialize it using: new Exercise();
- *  @customize it by using prototypal inheritance 
+ *  @customize it by using prototypal inheritance
 **/
 
 import $ from 'jquery';
@@ -10,6 +10,7 @@ import Util from '../util';
 import Settings from '../settings';
 import Session from '../session';
 import {Loader} from '../loader';
+import ShakeAnimation from "../animations/shake_animation";
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
@@ -51,13 +52,17 @@ Exercise.prototype = {
 		this.$loader 			= this.$elem.find('#loader');
 		this.$status 			= this.$elem.find("#ex-status");		
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
+
+		this.$exFooterPrimary 	= this.$elem.find('#ex-footer-primary');
+		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
+
 		this.cacheCustomDom();
 	},
 	
 	/**
 	*	Exercise initialaizer
 	**/
-	init: function(data,index,size){	
+	init: function(data,index,size){
 		var _this = this;
 		$.when(Loader.loadTemplateIntoElem(_this.customTemplateURL,$("#custom-content"))).done(function(){
 			_this.cacheDom();	
@@ -74,7 +79,8 @@ Exercise.prototype = {
 		this.data  = data;
 		this.index = index;
 		this.startIndex = index;
-		this.size  = size;			
+		this.size  = size;
+		this.shake = new ShakeAnimation();
 		this.setDescription(); 	
 		this.next();
         this.startTime = Date.now();
@@ -91,7 +97,7 @@ Exercise.prototype = {
 	*	When the ex are done, notify the observers
 	**/
 	onExComplete: function (){		
-		setTimeout(function() { events.emit('exerciseCompleted');}, 2000);
+		events.emit('exerciseCompleted');
 	},
 	
 	/**
@@ -106,33 +112,49 @@ Exercise.prototype = {
 		this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_WRONG);
 	},
 
-
-
-	
 	/**
 	*	Actions taken when the succes condition is true
 	**/
-	onSuccess: function(){		
-		this.onRenderNextEx();
+	onSuccess: function(){
+		this.$exFooterPrimary.removeClass ('mask-appear');
+		this.$exFooterSecondary.toggleClass('mask-appear');
+		this.handleSuccessCondition();
 	},
 
-    /**
-     * On success condition true, generate new exercise
-     * */
-    onRenderNextEx: function () {
-        var _this = this;
+	/**
+	 * Revert the secondary and primary footers
+	 * */
+	revertPrimary: function () {
+		this.$exFooterSecondary.removeClass ('mask-appear');
+		this.$exFooterPrimary.toggleClass('mask-appear');
+	},
+
+
+	/**
+	 * When the answer is successful show the animation and submit the result
+	 * */
+	handleSuccessCondition: function () {
+		var _this = this;
         this.animateSuccess();
         //Submit the result of translation
         this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_CORRECT);
         // Notify the observer
         events.emit('progress');
         this.index++;
+	},
+
+    /**
+     * On success condition true, generate new exercise
+     * */
+    onRenderNextEx: function () {
+		this.revertPrimary();
         // The current exercise set is complete
         if(this.index == this.size + this.startIndex){
             this.onExComplete();
             return;
         }
-        setTimeout(function() { _this.next(); _this.startTime = Date.now();}, _this.successAnimationTime);
+        this.next();
+		this.startTime = Date.now();
     },
 	
 	/**
@@ -151,7 +173,7 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = Util.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-		//console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
+		console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
         $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
     },
 
@@ -171,6 +193,35 @@ Exercise.prototype = {
 		this.isHintUsed = true;
 
 		this.giveHint();
+	},
+
+	/**
+	 * Function for sending the user feedback for an individual exercise
+	 * */
+	giveFeedbackBox: function () {
+		swal({
+				title: "",
+				text: "Help Zeeguu become smarter.",
+				type: "input",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				animation: "slide-from-top",
+				inputPlaceholder: "What is your feedback?",
+				imageUrl: "static/img/illustrations/zeeguu_balloon.png",
+				imageSize: "160x160"
+
+			},
+			function (inputValue) {
+				if (inputValue === false) return false;
+
+				if (inputValue === "") {
+					swal.showInputError("The field can't be empty.");
+					return false
+				}
+
+				swal("Awesome!", "Your feedback will be used to improve our service.", "success");
+
+			});
 	},
 	
 	
@@ -200,26 +251,14 @@ Exercise.prototype = {
 	/**
 	*	Cahes custom dom of the exercise
 	**/
-	cacheCustomDom: function(){},	
-	
-	
-	
-	/************************** Animations ********************************/	
+	cacheCustomDom: function(){},
+
 	/**
 	*	Animation for wrong solution
 	**/
-	wrongAnswerAnimation: function(){		
-		swal({
-			title: "Wrong answer...",
-			allowOutsideClick: true,
-			type: "error",
-			text: "Hint: the translation of \"" + this.data[this.index].to + "\" starts with " + this.data[this.index].from.trim().charAt(0)+ "\"",
-			confirmButtonText: "ok",
-			showConfirmButton: true,
-			allowEscapeKey:true,
-			showLoaderOnConfirm:true,
-		});
-	},
+	wrongAnswerAnimation: function(){},
+
+	/************************** Animations ********************************/	
 
 	/**
 	*	Animation for successful solution

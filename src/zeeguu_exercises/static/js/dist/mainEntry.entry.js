@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9923,7 +9923,7 @@ exports.default = {
     ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '00926044', //00926044 34563456 11010001
+    ZEEGUU_DEFAULT_SESSION: '34563456', //00926044 34563456 11010001
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
@@ -10247,7 +10247,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _cookie_handler = __webpack_require__(12);
+var _cookie_handler = __webpack_require__(13);
 
 var _cookie_handler2 = _interopRequireDefault(_cookie_handler);
 
@@ -10597,15 +10597,21 @@ var _session2 = _interopRequireDefault(_session);
 
 var _loader = __webpack_require__(8);
 
+var _shake_animation = __webpack_require__(25);
+
+var _shake_animation2 = _interopRequireDefault(_shake_animation);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Modular Zeeguu Powered Exercise @author Martin Avagyan
+ *  @initialize it using: new Exercise();
+ *  @customize it by using prototypal inheritance
+**/
 
 var Exercise = function Exercise(data, index, size) {
 	this.init(data, index, size);
 	//TODO unbind method
-}; /** Modular Zeeguu Powered Exercise @author Martin Avagyan
-    *  @initialize it using: new Exercise();
-    *  @customize it by using prototypal inheritance 
-   **/
+};
 
 Exercise.prototype = {
 
@@ -10642,6 +10648,10 @@ Exercise.prototype = {
 		this.$loader = this.$elem.find('#loader');
 		this.$status = this.$elem.find("#ex-status");
 		this.$statusContainer = this.$elem.find('#ex-status-container');
+
+		this.$exFooterPrimary = this.$elem.find('#ex-footer-primary');
+		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
+
 		this.cacheCustomDom();
 	},
 
@@ -10665,6 +10675,7 @@ Exercise.prototype = {
 		this.index = index;
 		this.startIndex = index;
 		this.size = size;
+		this.shake = new _shake_animation2.default();
 		this.setDescription();
 		this.next();
 		this.startTime = Date.now();
@@ -10681,9 +10692,7 @@ Exercise.prototype = {
  *	When the ex are done, notify the observers
  **/
 	onExComplete: function onExComplete() {
-		setTimeout(function () {
-			_pubsub2.default.emit('exerciseCompleted');
-		}, 2000);
+		_pubsub2.default.emit('exerciseCompleted');
 	},
 
 	/**
@@ -10702,13 +10711,23 @@ Exercise.prototype = {
  *	Actions taken when the succes condition is true
  **/
 	onSuccess: function onSuccess() {
-		this.onRenderNextEx();
+		this.$exFooterPrimary.removeClass('mask-appear');
+		this.$exFooterSecondary.toggleClass('mask-appear');
+		this.handleSuccessCondition();
 	},
 
 	/**
-  * On success condition true, generate new exercise
+  * Revert the secondary and primary footers
   * */
-	onRenderNextEx: function onRenderNextEx() {
+	revertPrimary: function revertPrimary() {
+		this.$exFooterSecondary.removeClass('mask-appear');
+		this.$exFooterPrimary.toggleClass('mask-appear');
+	},
+
+	/**
+  * When the answer is successful show the animation and submit the result
+  * */
+	handleSuccessCondition: function handleSuccessCondition() {
 		var _this = this;
 		this.animateSuccess();
 		//Submit the result of translation
@@ -10716,14 +10735,20 @@ Exercise.prototype = {
 		// Notify the observer
 		_pubsub2.default.emit('progress');
 		this.index++;
+	},
+
+	/**
+  * On success condition true, generate new exercise
+  * */
+	onRenderNextEx: function onRenderNextEx() {
+		this.revertPrimary();
 		// The current exercise set is complete
 		if (this.index == this.size + this.startIndex) {
 			this.onExComplete();
 			return;
 		}
-		setTimeout(function () {
-			_this.next();_this.startTime = Date.now();
-		}, _this.successAnimationTime);
+		this.next();
+		this.startTime = Date.now();
 	},
 
 	/**
@@ -10742,7 +10767,7 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = _util2.default.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-		//console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
+		console.log(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
 		_jquery2.default.post(_settings2.default.ZEEGUU_API + _settings2.default.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome + _this.resultSubmitSource + "/" + exTime + "/" + id + "?session=" + this.session);
 	},
 
@@ -10761,6 +10786,33 @@ Exercise.prototype = {
 		this.isHintUsed = true;
 
 		this.giveHint();
+	},
+
+	/**
+  * Function for sending the user feedback for an individual exercise
+  * */
+	giveFeedbackBox: function giveFeedbackBox() {
+		(0, _sweetalert2.default)({
+			title: "",
+			text: "Help Zeeguu become smarter.",
+			type: "input",
+			showCancelButton: true,
+			closeOnConfirm: false,
+			animation: "slide-from-top",
+			inputPlaceholder: "What is your feedback?",
+			imageUrl: "static/img/illustrations/zeeguu_balloon.png",
+			imageSize: "160x160"
+
+		}, function (inputValue) {
+			if (inputValue === false) return false;
+
+			if (inputValue === "") {
+				_sweetalert2.default.showInputError("The field can't be empty.");
+				return false;
+			}
+
+			(0, _sweetalert2.default)("Awesome!", "Your feedback will be used to improve our service.", "success");
+		});
 	},
 
 	/*********************** Interface functions *****************************/
@@ -10790,22 +10842,12 @@ Exercise.prototype = {
  **/
 	cacheCustomDom: function cacheCustomDom() {},
 
-	/************************** Animations ********************************/
 	/**
  *	Animation for wrong solution
  **/
-	wrongAnswerAnimation: function wrongAnswerAnimation() {
-		(0, _sweetalert2.default)({
-			title: "Wrong answer...",
-			allowOutsideClick: true,
-			type: "error",
-			text: "Hint: the translation of \"" + this.data[this.index].to + "\" starts with " + this.data[this.index].from.trim().charAt(0) + "\"",
-			confirmButtonText: "ok",
-			showConfirmButton: true,
-			allowEscapeKey: true,
-			showLoaderOnConfirm: true
-		});
-	},
+	wrongAnswerAnimation: function wrongAnswerAnimation() {},
+
+	/************************** Animations ********************************/
 
 	/**
  *	Animation for successful solution
@@ -10843,7 +10885,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _loading_animation = __webpack_require__(17);
+var _loading_animation = __webpack_require__(12);
 
 var _loading_animation2 = _interopRequireDefault(_loading_animation);
 
@@ -11326,6 +11368,81 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var animationInstance = null;
+
+var LoadingAnimation = function () {
+    function LoadingAnimation() {
+        _classCallCheck(this, LoadingAnimation);
+
+        if (animationInstance) {
+            return animationInstance;
+        }
+        /** Class parameters*/
+        this.$loader = null;
+        this.$content = null;
+        this.updateCache();
+    }
+    /**
+     * Update/save the cache of the dom
+     * */
+
+
+    _createClass(LoadingAnimation, [{
+        key: 'updateCache',
+        value: function updateCache() {
+            this.$loader = (0, _jquery2.default)('#loader');
+            this.$content = (0, _jquery2.default)('#main-content');
+        }
+    }, {
+        key: 'loadingAnimation',
+        value: function loadingAnimation(activate) {
+            //If cache is not available
+            if (this.$loader == null || this.$content == null) {
+                this.updateCache();
+            }
+            //Turn on the animation
+            if (activate === true) {
+                this.$content.addClass('hide');
+                this.$loader.removeClass('hide');
+            } else {
+                //Turn off the animation unhide the content
+                this.$content.removeClass('hide');
+                this.$loader.addClass('hide');
+            }
+        }
+    }]);
+
+    return LoadingAnimation;
+}();
+
+exports.default = LoadingAnimation;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11386,7 +11503,7 @@ var cookieHandler = function () {
 exports.default = cookieHandler;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11431,22 +11548,30 @@ function Ex1(data, index, size) {
 		this.$showSolution = this.$elem.find("#show_solution");
 		this.$checkAnswer = this.$elem.find("#check_answer");
 		this.$clickableText = this.$elem.find(".clickable-text");
+		this.$nextExercise = this.$elem.find('#next-exercise');
+		this.$feedbackBtn = this.$elem.find('#feedback');
 	};
 
 	/** @Override */
 	this.bindUIActions = function () {
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
+		this.$showSolution.on("click", this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 
 		//Bind UI Text click		
-		this.$clickableText.on("click", _this.updateInput.bind(this));
+		this.$clickableText.on("click", this.updateInput.bind(this));
 
 		// Bind UI Enter Key
-		this.$input.keyup(_this.enterKeyup.bind(this));
+		this.$input.keyup(this.enterKeyup.bind(this));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click", this.onRenderNextEx.bind(this));
+
+		//Next exercise clicked
+		this.$feedbackBtn.on("click", this.giveFeedbackBox.bind(this));
 	};
 
 	/** @Override */
@@ -11476,7 +11601,13 @@ function Ex1(data, index, size) {
 	this.successCondition = function () {
 		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
 	};
-};
+
+	/** @Override */
+	this.wrongAnswerAnimation = function () {
+		this.shake.shakeElement(this.$input);
+	};
+}
+
 Ex1.prototype = Object.create(_exercise2.default.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/
@@ -11488,7 +11619,7 @@ Ex1.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex1;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11523,25 +11654,33 @@ function Ex2(data, index, size) {
 		this.$btn1 = this.$elem.find("#btn1");
 		this.$btn2 = this.$elem.find("#btn2");
 		this.$btn3 = this.$elem.find("#btn3");
+		this.$nextExercise = this.$elem.find('#next-exercise');
+		this.$feedbackBtn = this.$elem.find('#feedback');
 	};
 
 	/** @Override */
 	this.bindUIActions = function () {
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
+		this.$showSolution.on("click", this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 
 		//Bind UI action of button 1 click to the function
-		this.$btn1.on("click", _this.btnSelect.bind(this, 1));
+		this.$btn1.on("click", this.btnSelect.bind(this, 1));
 
 		//Bind UI action of button 2 click to the function
-		this.$btn2.on("click", _this.btnSelect.bind(this, 2));
+		this.$btn2.on("click", this.btnSelect.bind(this, 2));
 
 		//Bind UI action of button 3 click to the function
-		this.$btn3.on("click", _this.btnSelect.bind(this, 3));
+		this.$btn3.on("click", this.btnSelect.bind(this, 3));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click", this.onRenderNextEx.bind(this));
+
+		//Next exercise clicked
+		this.$feedbackBtn.on("click", this.giveFeedbackBox.bind(this));
 	};
 
 	/** @Override */
@@ -11579,6 +11718,11 @@ function Ex2(data, index, size) {
 	/** @Override */
 	this.successCondition = function (chosenWord) {
 		return chosenWord.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
+	};
+
+	/** @Override */
+	this.wrongAnswerAnimation = function () {
+		this.shake.shakeFocusedElement();
 	};
 
 	this.btnSelect = function (arg) {
@@ -11652,7 +11796,7 @@ Ex2.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex2;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11690,6 +11834,8 @@ function Ex3(data, index, size) {
 		this.$btn4 = this.$elem.find("#btn4");
 		this.$btn5 = this.$elem.find("#btn5");
 		this.$btn6 = this.$elem.find("#btn6");
+		this.$nextExercise = this.$elem.find('#next-exercise');
+		this.$feedbackBtn = this.$elem.find('#feedback');
 	};
 
 	/** @Override */
@@ -11714,6 +11860,17 @@ function Ex3(data, index, size) {
 
 		//Bind UI action of button 6 click to the function
 		this.$btn6.on("click", this.selectChoice.bind(this, 6));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click", this.onRenderNextEx.bind(this));
+
+		//Next exercise clicked
+		this.$feedbackBtn.on("click", this.giveFeedbackBox.bind(this));
+	};
+
+	/** @Override */
+	this.wrongAnswerAnimation = function () {
+		this.shake.shakeFocusedElement();
 	};
 
 	this.selectChoice = function (btnID) {
@@ -11900,7 +12057,7 @@ Ex3.prototype = Object.create(_exercise2.default.prototype, {
 exports.default = Ex3;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11945,22 +12102,30 @@ function Ex4(data, index, size) {
 		this.$showSolution = this.$elem.find("#show_solution");
 		this.$checkAnswer = this.$elem.find("#check_answer");
 		this.$clickableText = this.$elem.find(".clickable-text");
+		this.$nextExercise = this.$elem.find('#next-exercise');
+		this.$feedbackBtn = this.$elem.find('#feedback');
 	};
 
 	/** @Override */
 	this.bindUIActions = function () {
 		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", _this.handleHint.bind(this));
+		this.$showSolution.on("click", this.handleHint.bind(this));
 
 		//Bind UI action of Check answer to the function
-		this.$checkAnswer.on("click", _this.checkAnswer.bind(this));
+		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 
 		//Bind UI Text click		
 		//this.$clickableText.on("click",updateInput.bind(this));
 
 		// Bind UI Enter Key
-		this.$input.keyup(_this.enterKeyup.bind(this));
+		this.$input.keyup(this.enterKeyup.bind(this));
+
+		//Next exercise clicked
+		this.$nextExercise.on("click", this.onRenderNextEx.bind(this));
+
+		//Next exercise clicked
+		this.$feedbackBtn.on("click", this.giveFeedbackBox.bind(this));
 	};
 
 	/** @Override */
@@ -12007,16 +12172,7 @@ function Ex4(data, index, size) {
 
 	/** @Override */
 	this.wrongAnswerAnimation = function () {
-		swal({
-			title: "Wrong answer...",
-			allowOutsideClick: true,
-			type: "error",
-			text: "Hint: the word starts with \"" + this.data[this.index].to[0].trim().charAt(0) + "\"",
-			confirmButtonText: "ok",
-			showConfirmButton: true,
-			allowEscapeKey: true,
-			showLoaderOnConfirm: true
-		});
+		this.shake.shakeElement(this.$input);
 	};
 };
 Ex4.prototype = Object.create(_exercise2.default.prototype, {
@@ -12028,81 +12184,6 @@ Ex4.prototype = Object.create(_exercise2.default.prototype, {
 });
 
 exports.default = Ex4;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Animation class is for general animations within the application
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * The GeneralAnimation class is a singleton class,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * meaning that there is at most 1 instance of the class available
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
-
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var animationInstance = null;
-
-var LoadingAnimation = function () {
-    function LoadingAnimation() {
-        _classCallCheck(this, LoadingAnimation);
-
-        if (animationInstance) {
-            return animationInstance;
-        }
-        /** Class parameters*/
-        this.$loader = null;
-        this.$content = null;
-        this.updateCache();
-    }
-    /**
-     * Update/save the cache of the dom
-     * */
-
-
-    _createClass(LoadingAnimation, [{
-        key: 'updateCache',
-        value: function updateCache() {
-            this.$loader = (0, _jquery2.default)('#loader');
-            this.$content = (0, _jquery2.default)('#main-content');
-        }
-    }, {
-        key: 'loadingAnimation',
-        value: function loadingAnimation(activate) {
-            //If cache is not available
-            if (this.$loader == null || this.$content == null) {
-                this.updateCache();
-            }
-            //Turn on the animation
-            if (activate === true) {
-                this.$content.addClass('hide');
-                this.$loader.removeClass('hide');
-            } else {
-                //Turn off the animation unhide the content
-                this.$content.removeClass('hide');
-                this.$loader.addClass('hide');
-            }
-        }
-    }]);
-
-    return LoadingAnimation;
-}();
-
-exports.default = LoadingAnimation;
 
 /***/ }),
 /* 18 */
@@ -12739,23 +12820,23 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ex = __webpack_require__(13);
+var _ex = __webpack_require__(14);
 
 var _ex2 = _interopRequireDefault(_ex);
 
-var _ex3 = __webpack_require__(14);
+var _ex3 = __webpack_require__(15);
 
 var _ex4 = _interopRequireDefault(_ex3);
 
-var _ex5 = __webpack_require__(15);
+var _ex5 = __webpack_require__(16);
 
 var _ex6 = _interopRequireDefault(_ex5);
 
-var _ex7 = __webpack_require__(16);
+var _ex7 = __webpack_require__(17);
 
 var _ex8 = _interopRequireDefault(_ex7);
 
-var _progress_bar = __webpack_require__(26);
+var _progress_bar = __webpack_require__(27);
 
 var _progress_bar2 = _interopRequireDefault(_progress_bar);
 
@@ -12777,7 +12858,7 @@ var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _validator = __webpack_require__(27);
+var _validator = __webpack_require__(28);
 
 var _validator2 = _interopRequireDefault(_validator);
 
@@ -13514,6 +13595,128 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * This class is responsible for animating elements that have a class attribute "shakable".
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * When an element is clicked with class "shakable", class "shake" is added to its attributes.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * After the animation is done the "shake" class is removed.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * In HTML use the class "shakable" for each element that shake property
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @Example <div class="shakable"></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * */
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ShakeAnimation = function () {
+    function ShakeAnimation() {
+        _classCallCheck(this, ShakeAnimation);
+
+        this.animationEvent = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
+        this.bindUIActions();
+    }
+
+    /**
+     * Make all the actions connected to this module
+     * return {void}
+     * */
+
+
+    _createClass(ShakeAnimation, [{
+        key: 'bindUIActions',
+        value: function bindUIActions() {
+            var _this2 = this;
+
+            var _this = this;
+            (0, _jquery2.default)('.shakable').click(function (event) {
+                _this2.shakeEvent((0, _jquery2.default)(event.target));
+            });
+        }
+
+        /**
+         * Use the clicked element to invoke shakeElement
+         * @return {void}
+         * */
+
+    }, {
+        key: 'shakeEvent',
+        value: function shakeEvent(elem) {
+            this.shakeElement(elem);
+        }
+
+        /**
+         * Function adds class shake, after the animation is done,
+         * the class shake is removed from the element
+         * @param {jQuery element}, elem
+         * @return {void}
+         * */
+
+    }, {
+        key: 'shakeElement',
+        value: function shakeElement(elem) {
+            elem.addClass('shake wrongAlert');
+            elem.one(this.animationEvent, function (event) {
+                elem.removeClass('shake wrongAlert');
+            });
+        }
+
+        /**
+         * Shakes the element that has the focus
+         * @return {void}
+         * */
+
+    }, {
+        key: 'shakeFocusedElement',
+        value: function shakeFocusedElement() {
+            this.shakeElement((0, _jquery2.default)(document.activeElement));
+        }
+
+        /**
+         * Make the given element shakable
+         * @param {Object}, element
+         * @return {void}
+        * */
+
+    }, {
+        key: 'makeShakable',
+        value: function makeShakable(elem) {
+            elem.addClass('shakable');
+            this.bindUIActions();
+        }
+
+        /**
+         * Make the given element non shakable
+         * @param {Object}, element
+         * @return {void}
+         * */
+
+    }, {
+        key: 'makeNonShakable',
+        value: function makeNonShakable(elem) {
+            elem.removeClass('shakable');
+            this.bindUIActions();
+        }
+    }]);
+
+    return ShakeAnimation;
+}();
+
+exports.default = ShakeAnimation;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -13611,7 +13814,7 @@ EmptyPage.prototype = {
 exports.default = EmptyPage;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13670,7 +13873,7 @@ var bar,
 exports.default = ProgressBar;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13682,7 +13885,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /** Validator class takes care of the input for generator
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Based on the result, it decided on how to generate exercises
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  Based on the result, it decides how to generate exercises
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks == 0 then no bookmarks page
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks < requested number then generate exercises that fit
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *  If number of bookmarks >= requested number simply generate exercises
@@ -13708,27 +13911,27 @@ var _util = __webpack_require__(3);
 
 var _util2 = _interopRequireDefault(_util);
 
-var _empty_page = __webpack_require__(25);
+var _empty_page = __webpack_require__(26);
 
 var _empty_page2 = _interopRequireDefault(_empty_page);
 
-var _loading_animation = __webpack_require__(17);
+var _loading_animation = __webpack_require__(12);
 
 var _loading_animation2 = _interopRequireDefault(_loading_animation);
 
-var _ex = __webpack_require__(13);
+var _ex = __webpack_require__(14);
 
 var _ex2 = _interopRequireDefault(_ex);
 
-var _ex3 = __webpack_require__(14);
+var _ex3 = __webpack_require__(15);
 
 var _ex4 = _interopRequireDefault(_ex3);
 
-var _ex5 = __webpack_require__(15);
+var _ex5 = __webpack_require__(16);
 
 var _ex6 = _interopRequireDefault(_ex5);
 
-var _ex7 = __webpack_require__(16);
+var _ex7 = __webpack_require__(17);
 
 var _ex8 = _interopRequireDefault(_ex7);
 
@@ -13917,7 +14120,7 @@ var Validator = function () {
 exports.default = Validator;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13979,7 +14182,6 @@ Home.prototype = {
  **/
 	init: function init() {
 		var _this = this;
-
 		// "bind" event
 		this.eventGeneratorCompletedFunc = function () {
 			_this.reset();
@@ -13989,7 +14191,6 @@ Home.prototype = {
 		};
 		_pubsub2.default.on('generatorCompleted', this.eventGeneratorCompletedFunc);
 		_pubsub2.default.on('homeRestart', this.eventHomeRestartFunc);
-
 		this.start();
 	},
 
@@ -13999,7 +14200,6 @@ Home.prototype = {
 	start: function start() {
 		var _this = this;
 		_jquery2.default.when(_loader.Loader.loadTemplateIntoElem(_this.homeTemplateURL, (0, _jquery2.default)("#main-content")), _loader.Loader.loadTemplate(this.cardTemplateURL)).done(function (homeData, cardData) {
-
 			_this.cardTemplate = cardData[0]; //cardData[0] string html
 			// Create the DOM and start the generator
 			_this.cacheDom();
@@ -14069,15 +14269,15 @@ Home.prototype = {
 exports.default = Home;
 
 /***/ }),
-/* 29 */,
 /* 30 */,
-/* 31 */
+/* 31 */,
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _home = __webpack_require__(28);
+var _home = __webpack_require__(29);
 
 var _home2 = _interopRequireDefault(_home);
 

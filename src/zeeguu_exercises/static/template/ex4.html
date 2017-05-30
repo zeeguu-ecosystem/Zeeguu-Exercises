@@ -17,17 +17,33 @@
 	</div>
 	
 	<div class="row ex-footer">
-		<div id = "show_solution" class="col-xs-3 ex-footer-elem ex-clickable" href="#">
-			<img  class="clickable-symbol" src="../static/img/grey-question.png">
-		</div>
-		
-		<div class="col-xs-6 ex-footer-elem ex-clickable">
-			<input id = "ex-main-input" class="ex-input-box " placeholder="" data-original-title="" title="">
-		</div>
-		
-		<div id = "check_answer"class="col-xs-3 ex-footer-elem ex-clickable" href="#">
-			<img class="clickable-symbol" src="../static/img/forward-green.png">
-		</div>
+        <div id = "ex-footer-primary" class = "mask mask-appear">
+            <div id = "show_solution" class="col-xs-3 ex-footer-elem ex-clickable" href="#">
+                <img  class="clickable-symbol clickable-symbol-size" src="../static/img/grey-question.png">
+            </div>
+
+            <div class="col-xs-6 ex-footer-elem ex-clickable">
+                <input id = "ex-main-input" class="ex-input-box " placeholder="" data-original-title="" title="">
+            </div>
+
+            <div id = "check_answer"class="col-xs-3 ex-footer-elem ex-clickable" href="#">
+                 <button class = " text-btn check-text-btn clickable-symbol">Check</button>
+            </div>
+        </div>
+        <div id="ex-footer-secondary" class="mask">
+            <div id="feedback" class="col-xs-3 ex-footer-elem ex-clickable secondary-ex-footer-elem ex-footer-elem-left"
+                 href="#">
+                <button class=" text-btn feedback-text-btn clickable-symbol">Feedback</button>
+            </div>
+
+            <div class="col-xs-6 ">
+            </div>
+
+            <div id="next-exercise"
+                 class="col-xs-3 ex-footer-elem ex-clickable secondary-ex-footer-elem ex-footer-elem-right" href="#">
+                <img class="clickable-symbol clickable-symbol-size" src="../static/img/next-ex.svg">
+            </div>
+        </div>
 	</div>
 	
 </div>
