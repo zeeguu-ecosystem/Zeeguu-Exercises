@@ -18,6 +18,9 @@ branches:
   only:
     - master
     - d
+cache:
+  directories:
+    - "node_modules"
 
 notifications:
   email:
