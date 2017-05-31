@@ -17,6 +17,7 @@ import Session from './session';
 import {Loader} from './loader';
 import Util from './util';
 import Validator from './validator';
+import TDS from './the_distraction_shield_extension';
 
 
  
@@ -145,7 +146,7 @@ Generator.prototype = {
      **/
     onExSetComplete: function (){
         var _this = this;
-        var redirect = _this.distractionShieldOriginalDestination();
+        var redirect = TDS.distractionShieldOriginalDestination();
 		_this.submitResults();
         swal({
                 title: "You rock!",
@@ -176,23 +177,6 @@ Generator.prototype = {
     },
     restartHome: function(){
         events.emit('homeRestart');
-    },
-
-    /**
-     * Extraction of redirect url for Distraction Shield
-     **/
-    distractionShieldOriginalDestination: function() {
-        var url = window.location.href;
-        var regex = new RegExp("[?&]redirect(=([^&#]*)|&|#|$)");
-        var results = regex.exec(url);
-        if (!results || !results[2]) return null;
-        var newUrl = decodeURIComponent(results[2].replace(/\+/g, " "));
-        if (newUrl.indexOf('?') > -1) {
-            newUrl += "&tds_exComplete=true";
-        } else {
-            newUrl += "?tds_exComplete=true";
-        }
-        return newUrl
     },
 }	
 

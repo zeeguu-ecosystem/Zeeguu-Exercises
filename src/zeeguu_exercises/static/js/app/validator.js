@@ -20,6 +20,7 @@ import Ex1 from './exercises/ex1';
 import Ex2 from './exercises/ex2';
 import Ex3 from './exercises/ex3';
 import Ex4 from './exercises/ex4';
+import TDS from './the_distraction_shield_extension';
 
 class Validator{
     constructor(set){
@@ -133,7 +134,15 @@ class Validator{
      * @return {Array} empty array
      * */
     noBookmarkPage(){
-        let emptPg = new EmptyPage();
+        let redirect = TDS.distractionShieldOriginalDestination();
+        let newField;
+        //If within the extension
+        if (redirect!=null) {
+            newField = {btnSecond:redirect,btnSecondText: 'Skip'};
+        }else{
+            newField = null;
+        }
+        let emptPg = new EmptyPage(newField);
         return [];
     }
 

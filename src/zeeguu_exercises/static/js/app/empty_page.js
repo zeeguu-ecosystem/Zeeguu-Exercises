@@ -5,8 +5,8 @@ import $ from 'jquery';
 import {Loader} from "./loader";
 import Mustache from 'mustache';
 
-var EmptyPage = function(){
-    this.init();
+var EmptyPage = function(newFields){
+    this.init(newFields);
 };
 
 EmptyPage.prototype = {
@@ -36,6 +36,7 @@ EmptyPage.prototype = {
      * Merges two javascript objects together
      * @param {Object} oldField, the field that will be overwritten
      * @param {Object} newField, the field that provides which properties to override
+     * @return {Object} merged field
      * TODO test this
      * */
     mergeField: function (oldField,newField) {
@@ -51,9 +52,9 @@ EmptyPage.prototype = {
     /**
      *	Exercise initialaizer
      **/
-    init: function(templeUrl = this.emptyTemplateURL, tempFields = this.templateFields ){
-        this.emptyTemplateURL = templeUrl;
-        this.templateFields = tempFields;
+    init: function(newField){
+        console.log(newField);
+        this.templateFields = (!newField)?  this.templateFields : this.mergeField(this.templateFields, newField );
         this.start();
     },
 
