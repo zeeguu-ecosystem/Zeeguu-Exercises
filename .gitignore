@@ -58,6 +58,7 @@ venv
 .idea
 .nyc_output
 src/zeeguu_exercises/__pycache__
+src/zeeguu_exercises/static/js/dist
 npm-debug.log
 coverage
 npm-debug.log.3409570137
