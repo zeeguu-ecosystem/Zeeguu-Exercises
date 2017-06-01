@@ -439,9 +439,16 @@ body
 	display: inline-block;
 	height: 25px;
 	width: 25px;
+	margin-right: 6px;
+	vertical-align:middle;
 }
 .btn-feedback-option
 {
+	margin-right: 6px;
+}
+.btn-feedback-option span
+{
+	vertical-align:middle;
 }
 
 .empty-page-content
