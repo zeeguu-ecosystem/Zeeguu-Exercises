@@ -2,16 +2,17 @@
  * Created by Martin on 6/1/2017.
  */
 import * as Mustache from "mustache";
+import $ from "jquery";
 
 export default class Feedback {
 
     static bindUIActions(){
         //Bind UI action of credits to the function
-        $('.btn-feedback-option').on("click", Feedback.feedbackAction.bind(this));
+        $(".btn-feedback-option").on("click", Feedback.feedbackAction.bind(this));
     }
 
     static feedbackAction(){
-        console.log();
+        console.log("hellow");
     }
 
 
@@ -26,7 +27,7 @@ export default class Feedback {
                 animation: "slide-from-top",
                 inputPlaceholder: "Something else ?",
                 imageUrl: "static/img/illustrations/zeeguu_balloon.png",
-                imageSize: "160x160",
+                imageSize: "140x140",
                 html: true
             },
             function (inputValue) {
@@ -38,6 +39,7 @@ export default class Feedback {
                 swal("Awesome!", "Your feedback will be used to improve our service.", "success");
 
             });
+        Feedback.bindUIActions();
     }
 
     /**
@@ -61,7 +63,6 @@ export default class Feedback {
 
         return (Mustache.render(preOptionTemplate,preDefinedOptions));
     }
-
 
 
 }
