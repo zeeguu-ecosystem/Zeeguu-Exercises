@@ -5,11 +5,21 @@ import * as Mustache from "mustache";
 
 export default class Feedback {
 
+    static bindUIActions(){
+        //Bind UI action of credits to the function
+        $('.btn-feedback-option').on("click", Feedback.feedbackAction.bind(this));
+    }
+
+    static feedbackAction(){
+        console.log();
+    }
+
+
     static exerciseFeedbackBox () {
-        let customHtml = this.generateCustomFields();
+        let feedbackOptions = Feedback.exerciseFeedbackOptions();
         swal({
                 title: "Make Zeeguu Smarter",
-                text: finalOptions,
+                text: feedbackOptions,
                 type: "input",
                 showCancelButton: true,
                 closeOnConfirm: false,
@@ -21,12 +31,10 @@ export default class Feedback {
             },
             function (inputValue) {
                 if (inputValue === false) return false;
-
                 if (inputValue === "") {
                     swal.showInputError("The field can't be empty.");
                     return false
                 }
-
                 swal("Awesome!", "Your feedback will be used to improve our service.", "success");
 
             });
@@ -36,18 +44,18 @@ export default class Feedback {
      * Feedback fields for the feedback box within the exercise
      * @return {String} rendered html
      * */
-    generateCustomFields(){
+    static exerciseFeedbackOptions(){
         let preDefinedOptions = {
             Options: [
-                {name: "Too easy.", icon: 'static/img/emoji/confused.svg'},
-                {name: "I know it.", icon: 'static/img/emoji/nerd.svg'},
-                {name: "Don't want to see it.", icon: 'static/img/emoji/bored.svg'},]
+                {name: "Too easy.", icon: 'static/img/emoji/bored.svg', val: 'too_easy'},
+                {name: "I know it.", icon: 'static/img/emoji/nerd.svg',val: 'i_already_know_this'},
+                {name: "Don't want to see it.", icon: 'static/img/emoji/confused.svg', val: 'dont_show_it_to_me_again'}]
         };
         let preOptionTemplate =
             '{{#Options}}' +
-            '<div type = "button" class = "btn btn-default">' +
-            '<div class = "emoji-icon" style = "background-image: url({{icon}});" ></div>' +
-            '<span>{{name}}</span>' +
+            '<div type = "button" class = "btn btn-default btn-feedback-option">' +
+                '<div class = "emoji-icon" style = "background-image: url({{icon}});" ></div>' +
+                '<span>{{name}}</span>' +
             '</div>' +
             '{{/Options}}';
 
