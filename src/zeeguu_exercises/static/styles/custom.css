@@ -434,6 +434,14 @@ body
 	color:grey;
 }
 
+.emoji-icon
+{
+	display: inline-block;
+	height: 15px;
+	width: 15px;
+	margin-right: 6px;
+}
+
 .empty-page-content
 {
 	margin: 50px auto auto;

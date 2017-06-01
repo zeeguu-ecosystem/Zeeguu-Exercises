@@ -11,6 +11,8 @@ import Settings from '../settings';
 import Session from '../session';
 import {Loader} from '../loader';
 import ShakeAnimation from "../animations/shake_animation";
+import * as Mustache from "mustache";
+import Feedback from "../feedback";
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
@@ -199,29 +201,7 @@ Exercise.prototype = {
 	 * Function for sending the user feedback for an individual exercise
 	 * */
 	giveFeedbackBox: function () {
-		swal({
-				title: "",
-				text: "Help Zeeguu become smarter.",
-				type: "input",
-				showCancelButton: true,
-				closeOnConfirm: false,
-				animation: "slide-from-top",
-				inputPlaceholder: "What is your feedback?",
-				imageUrl: "static/img/illustrations/zeeguu_balloon.png",
-				imageSize: "160x160"
-
-			},
-			function (inputValue) {
-				if (inputValue === false) return false;
-
-				if (inputValue === "") {
-					swal.showInputError("The field can't be empty.");
-					return false
-				}
-
-				swal("Awesome!", "Your feedback will be used to improve our service.", "success");
-
-			});
+        Feedback.exerciseFeedbackBox();
 	},
 	
 	
