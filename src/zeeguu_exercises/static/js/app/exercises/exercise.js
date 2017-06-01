@@ -173,7 +173,7 @@ Exercise.prototype = {
 		//Calculate time taken for single exercise
 		var exTime = Util.calcTimeInMilliseconds(this.startTime);
 		//Request back to the server with the outcome
-		console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
+		//console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
         $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
     },
 

@@ -1,5 +1,5 @@
 /**
- * Created by Martin on 6/1/2017.
+ * The class responsible for sending a feedback regarding exercise outcome
  */
 import * as Mustache from "mustache";
 import $ from "jquery";
@@ -105,7 +105,7 @@ export default class Feedback {
      *  @param {String}, resultSubmitSource, the source of submission @example: Recognize_L1W_in_L2T
      **/
     submitFeedback(wordID,feedbackOption,resultSubmitSource){
-        console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + "/" + feedbackOption + resultSubmitSource + "/" + -1 + "/" + wordID + "?session="+this.sessionId);
+        //console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + "/" + feedbackOption + resultSubmitSource + "/" + -1 + "/" + wordID + "?session="+this.sessionId);
 		$.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + "/" + feedbackOption + resultSubmitSource + "/" + -1 + "/" + wordID + "?session="+this.sessionId);
     }
 }
