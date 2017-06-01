@@ -3,22 +3,48 @@
  */
 import * as Mustache from "mustache";
 import $ from "jquery";
+import Settings from "./settings";
 
 export default class Feedback {
 
-    static bindUIActions(){
+    /**
+     * Construct the feedback class
+     * @param {number}, id of the current word
+     * @param {String}, resultSubmitSource,
+     * */
+    constructor(resultSubmitSource, sessionId){
+         /** Class parameters*/
+        this.wordId = -1;//will be set whenever the feedback box is called
+        this.resultSubmitSource = resultSubmitSource;
+        this.sessionId = sessionId;
+    }
+
+    /**
+     * Bind all the actions connected to this module
+     * return {void}
+     * */
+    bindUIActions(){
         //Bind UI action of credits to the function
-        $('.btn-feedback-option').click((event) => {Feedback.feedbackAction($(event.target));});
+        $('.btn-feedback-option').click((event) => {this.feedbackAction($(event.target));});
     }
 
-    static feedbackAction(elem){
-        console.log("J here ");
-        console.log(elem.attr('value'));
+    /**
+     * The action performed predefined option is clicked
+     * @param {Object}, elem, the element that is clicked
+     * */
+    feedbackAction(elem){
+        this.submitFeedback(this.wordId,elem.attr('value'),this.resultSubmitSource);
+        this.successfulFeedback();
     }
 
-
-    static exerciseFeedbackBox () {
-        let feedbackOptions = Feedback.exerciseFeedbackOptions();
+    /**
+     * @param {number}, session id
+     * @param {String}, resultSubmitSource,
+     * */
+    exerciseFeedbackBox (wordId) {
+        this.wordId = wordId;
+        let _this = this;
+        let feedbackOptions = this.exerciseFeedbackOptions();
         swal({
                 title: "Make Zeeguu Smarter",
                 text: feedbackOptions,
@@ -37,17 +63,25 @@ export default class Feedback {
                     swal.showInputError("The field can't be empty.");
                     return false
                 }
-                swal("Awesome!", "Your feedback will be used to improve our service.", "success");
-
+                _this.submitFeedback(wordId,inputValue,_this.resultSubmitSource);
+                _this.successfulFeedback();
             });
-        Feedback.bindUIActions();
+        this.bindUIActions();
+    }
+
+    /**
+     * Success message when the result is being submitted
+     * */
+    successfulFeedback(){
+        swal("Awesome!", "Your feedback will be used to improve our service.", "success");
     }
 
     /**
      * Feedback fields for the feedback box within the exercise
+     * Using html template and Mustache to render the content
      * @return {String} rendered html
      * */
-    static exerciseFeedbackOptions(){
+    exerciseFeedbackOptions(){
         let preDefinedOptions = {
             Options: [
                 {name: "Too easy.", icon: 'static/img/emoji/bored.svg', val: 'too_easy'},
@@ -61,9 +95,17 @@ export default class Feedback {
                 '<span value = {{val}}>{{name}}</span>' +
             '</div>' +
             '{{/Options}}';
-
         return (Mustache.render(preOptionTemplate,preDefinedOptions));
     }
 
-
+    /**
+     *	Request the submit for feedback to the Zeeguu API
+     *  @param {number}, id, id of the word
+     *  @param {String}, feedbackOption, the outcome of the feedback @example: too_easy
+     *  @param {String}, resultSubmitSource, the source of submission @example: Recognize_L1W_in_L2T
+     **/
+    submitFeedback(wordID,feedbackOption,resultSubmitSource){
+        console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + "/" + feedbackOption + resultSubmitSource + "/" + -1 + "/" + wordID + "?session="+this.sessionId);
+		$.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + "/" + feedbackOption + resultSubmitSource + "/" + -1 + "/" + wordID + "?session="+this.sessionId);
+    }
 }

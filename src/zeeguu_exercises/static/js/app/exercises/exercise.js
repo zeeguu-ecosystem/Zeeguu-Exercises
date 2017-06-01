@@ -4,14 +4,12 @@
 **/
 
 import $ from 'jquery';
-import swal from 'sweetalert';
 import events from '../pubsub';
 import Util from '../util';
 import Settings from '../settings';
 import Session from '../session';
 import {Loader} from '../loader';
 import ShakeAnimation from "../animations/shake_animation";
-import * as Mustache from "mustache";
 import Feedback from "../feedback";
 
 var Exercise = function(data,index,size){
@@ -34,6 +32,7 @@ Exercise.prototype = {
     minRequirement: 1,
 	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,//Defualt submission
 	successAnimationTime: 2000,
+	exFeedback: 0,
 	
 	/*********************** General Functions ***************************/	
 	/**
@@ -54,10 +53,8 @@ Exercise.prototype = {
 		this.$loader 			= this.$elem.find('#loader');
 		this.$status 			= this.$elem.find("#ex-status");		
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
-
 		this.$exFooterPrimary 	= this.$elem.find('#ex-footer-primary');
 		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
-
 		this.cacheCustomDom();
 	},
 	
@@ -83,6 +80,7 @@ Exercise.prototype = {
 		this.startIndex = index;
 		this.size  = size;
 		this.shake = new ShakeAnimation();
+		this.exFeedback = new Feedback(this.resultSubmitSource,this.session);
 		this.setDescription(); 	
 		this.next();
         this.startTime = Date.now();
@@ -201,7 +199,7 @@ Exercise.prototype = {
 	 * Function for sending the user feedback for an individual exercise
 	 * */
 	giveFeedbackBox: function () {
-        Feedback.exerciseFeedbackBox();
+        this.exFeedback.exerciseFeedbackBox(this.data[this.index].id);
 	},
 	
 	
