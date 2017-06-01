@@ -8,11 +8,12 @@ export default class Feedback {
 
     static bindUIActions(){
         //Bind UI action of credits to the function
-        $(".btn-feedback-option").on("click", Feedback.feedbackAction.bind(this));
+        $('.btn-feedback-option').click((event) => {Feedback.feedbackAction($(event.target));});
     }
 
-    static feedbackAction(){
-        console.log("hellow");
+    static feedbackAction(elem){
+        console.log("J here ");
+        console.log(elem.attr('value'));
     }
 
 
@@ -55,9 +56,9 @@ export default class Feedback {
         };
         let preOptionTemplate =
             '{{#Options}}' +
-            '<div type = "button" class = "btn btn-default btn-feedback-option">' +
-                '<div class = "emoji-icon" style = "background-image: url({{icon}});" ></div>' +
-                '<span>{{name}}</span>' +
+            '<div type = "button" value = {{val}} class = "btn btn-default btn-feedback-option">' +
+                '<div class = "emoji-icon"  value = {{val}} style = "background-image: url({{icon}});" ></div>' +
+                '<span value = {{val}}>{{name}}</span>' +
             '</div>' +
             '{{/Options}}';
 
