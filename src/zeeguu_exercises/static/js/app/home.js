@@ -11,7 +11,7 @@ var Home = function(){
 Home.prototype = {
 	
 	/************************** SETTINGS ********************************/	
-	homeTemplateURL: 'static/template/home/home.html',
+	screenTemplateURL: 'static/template/home/home.html',
 	cardTemplateURL: 'static/template/home/card.html',
 	cardTemplate: 0,
 
@@ -103,7 +103,7 @@ Home.prototype = {
 	**/
 	start: function (){	
 		var _this = this;
-		$.when(Loader.loadTemplateIntoElem(_this.homeTemplateURL,$("#main-content")),
+		$.when(Loader.loadTemplateIntoElem(_this.screenTemplateURL,$("#main-content")),
 		Loader.loadTemplate(this.cardTemplateURL)).done(function(homeData,cardData){
 			_this.cardTemplate = cardData[0];//cardData[0] string html
 			// Create the DOM and start the generator

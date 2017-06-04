@@ -431,13 +431,13 @@ body
 #footnotes
 {
 	text-align:center;
-	color: grey;
-	margin:auto;
+	color: #BDBDBD;
+	margin:10px auto;
 }
 #footnotes a
 {
 	cursor:pointer;	
-	color:grey;
+	color: #BDBDBD;
 }
 
 .emoji-icon
@@ -606,4 +606,119 @@ body
 	-o-transition-delay: 0s;
 	-ms-transition-delay: 0s;
 	transition-delay: 0s;
+}
+
+/** Starter screen styles  */
+.starter-body{
+	background-image: url("../img/star.svg");
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: 100%;
+}
+
+.starter-container
+{
+	margin: auto;
+	margin-top: 20px;
+	max-width:980px;
+	min-height:200px;
+	background-color: rgba(255,255,255,1);
+    display:flex;
+	box-shadow: 0 0 30px rgba(0,0,0,0.08);
+	overflow: hidden;
+	transition: all .5s;
+
+	border-radius: 10px 10px 10px 10px;
+}
+
+.starter-header
+{
+	padding-top:20px;
+	color: white;
+	min-height: 85px;
+	background-color: #0b4176;
+	background-image:  url("../img/star.svg");
+	margin-bottom: 10px;
+	position:relative;
+	border-radius: 10px 10px 0px 0px;
+}
+.starter-header-text
+{
+	margin: auto;
+	width:100%;
+	display:block;
+	text-align: center;
+}
+
+.starter-content
+{
+	background-color: white;
+	height:300px;
+	margin-top:100px;
+}
+
+.starter-footer
+{
+	margin-top: 10px;
+	bottom: 0;
+	min-height: 50px;
+	clear:both;
+	display:block;
+	position: relative;
+}
+
+.starter-btn
+{
+	width: 100%;
+	min-height: 200px;
+	display:block;
+	margin: auto;
+	background-color: rgba(255,255,255,1);
+	border-radius:3px;
+	box-shadow: 0 0 3px #9E9E9E;
+	overflow: hidden;
+	transition: all .5s;
+	cursor: pointer;
+	padding: 0;
+	border-style: none;
+}
+
+.starter-btn-header-casual
+{
+	background: linear-gradient(135deg,#243345 0%,#9b59b6 100%);
+}
+
+.starter-btn-header-regular
+{
+	background: linear-gradient(135deg,#f0c13a 0%,#f73347 100%);
+}
+
+.starter-btn-header-serious
+{
+	background: linear-gradient(135deg,#1fceb2 0%,#b3e449 100%);
+}
+
+.starter-btn-header
+{
+	height: 150px;
+	width:100%;
+	background-color: gray;
+}
+
+.starter-btn-content
+{
+	margin-top: 20px;
+}
+
+.starter-btn span
+{
+	color: #212121;
+	word-wrap: break-word;
+}
+
+.starter-btn:hover
+{
+	background-color: #EEEEEE;
+	opacity: 1;
 }
