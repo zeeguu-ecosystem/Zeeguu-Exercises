@@ -13,9 +13,15 @@ Home.prototype = {
 	/************************** SETTINGS ********************************/	
 	homeTemplateURL: 'static/template/home/home.html',
 	cardTemplateURL: 'static/template/home/card.html',
-	defaultIcon: 	 'img/icons/placeholder.svg',
-	currentInvocation: 'homeRestart',
-	nextInvocation: 'generatorCompleted',
+	cardTemplate: 0,
+
+	currentInvocation: 'homeRestart',			//Event name for invoking start on current module
+	generatorInvocation: 'generatorCompleted',	//Event name for invoking reset on the active generator (memory leaks prevention)
+	currentlyActiveGenerator: 0,				//Reference to the active generator
+
+	eventGeneratorCompletedFunc: 0,				//Function reference to resetGenerator()
+    eventCurrentRestartFunc: 0,					//Function reference to start()
+
 
 	exNames: [
 		{
@@ -56,7 +62,7 @@ Home.prototype = {
 		{
 			name: "Long Practice",
 			exID: [[1, 3], [2, 3], [3, 3], [4, 3]],
-			info: 'General exerciese for short practice',
+			info: 'General exercise for short practice',
 			icon: 'static/img/icons/placeholder.svg',
 			time: 4
 		},
@@ -68,11 +74,6 @@ Home.prototype = {
 			time: 6
 		},
 	],
-	currentGenerator: 0,
-	eventGeneratorCompletedFunc: 0,
-    eventHomeRestartFunc: 0,
-	creditsOn: false,
-    cardTemplate: 0,
 	/*********************** General Functions ***************************/	
 	/**
 	*	Saves the dom 
@@ -91,10 +92,10 @@ Home.prototype = {
 	init: function(){	
 		var _this = this;
 		// "bind" event
-		this.eventGeneratorCompletedFunc = function(){_this.reset();};
-		this.eventHomeRestartFunc = function(){_this.start();};
-		events.on(this.nextInvocation,this.eventGeneratorCompletedFunc);
-		events.on(this.currentInvocation,this.eventHomeRestartFunc);
+		this.eventGeneratorCompletedFunc = function(){_this.resetGenerator();};
+		this.eventCurrentRestartFunc = function(){_this.start();};
+		events.on(this.generatorInvocation,this.eventGeneratorCompletedFunc);
+		events.on(this.currentInvocation,this.eventCurrentRestartFunc);
 		this.start();
 	},
 
@@ -136,12 +137,11 @@ Home.prototype = {
 	 * @return {void}
 	 * */
 	handleAttribution: function(){
-		if(this.creditsOn){
-			this.creditsOn = false;
+		let isHidden = this.$attribution.hasClass("hide");
+		if(!isHidden){
 			this.$attribution.addClass("hide");
 			return;
 		}
-		this.creditsOn = true;
 		this.$attribution.removeClass("hide");
 	},
 
@@ -164,18 +164,22 @@ Home.prototype = {
 		while(arr.length) newArr.push(arr.splice(0,2));
 		return newArr;
 	},
-	
-	reset: function(){
-		this.currentGenerator = null;
-        delete this.currentGenerator;
+
+
+	/**
+	 * Resets generator, clears the memory
+	 * */
+	resetGenerator: function(){
+		this.currentlyActiveGenerator = null;
+        delete this.currentlyActiveGenerator;
 	},
 	
 	/**
 	 * Terminate the module, unbind events.
 	 * */
 	terminate: function(){
-		events.off(this.nextInvocation,this.eventGeneratorCompletedFunc);
-        events.off(this.currentInvocation,this.eventHomeRestartFunc);
+		events.off(this.generatorInvocation,this.eventGeneratorCompletedFunc);
+        events.off(this.currentInvocation,this.eventCurrentRestartFunc);
 		//emit listeners that the home is terminated
 	},
 	
@@ -183,7 +187,7 @@ Home.prototype = {
 	 * Generate an exercise set
 	 * */
 	newEx: function(exID){
-		this.currentGenerator = new Generator(this.exArrayParser(exID));
+		this.currentlyActiveGenerator = new Generator(this.exArrayParser(exID));
 	},
 };
 

@@ -183,7 +183,6 @@ function Ex3(data,index,size){
 			if(this.disableHintButtons(1)) return;
 			if(this.disableHintButtons(2)) return;
 		}
-		
 	};
 	
 	// Disables the buttons given in the hint
