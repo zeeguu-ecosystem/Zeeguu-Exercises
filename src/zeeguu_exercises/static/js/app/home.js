@@ -22,7 +22,6 @@ Home.prototype = {
 	eventGeneratorCompletedFunc: 0,				//Function reference to resetGenerator()
     eventCurrentRestartFunc: 0,					//Function reference to start()
 
-
 	exNames: [
 		{
 			name: "Find",
@@ -119,16 +118,16 @@ Home.prototype = {
 	 * */
 	bindUIActions: function(){
 		var _this = this;
+
 		//Bind UI action of button clicks to the function
 		var exs = this.$exCards.children();
-		//Bind UI action of attribution to the function
-		this.$credits.on("click", _this.handleAttribution.bind(this));
-
-		//Bind each card to action
-		for(var i = 0; i<exs.length; i++){
-		var id = exs[i].getAttribute("ex-id");
+		for(var i = 0; i < exs.length; i++){
+			var id = exs[i].getAttribute("ex-id");
 			$(exs[i]).on("click", this.newEx.bind(this,id));
 		}
+
+		//Bind UI action of attribution to the function
+		this.$credits.on("click", _this.handleAttribution.bind(this));
 	},
 
 	/**
@@ -154,7 +153,7 @@ Home.prototype = {
 	},
 	
 	/**
-	 * Parse string into 2D array for generator arguments
+	 * Parse string into 2D array as a generator argument
 	 * @return {Array}, the array containing exercise set used in generator
 	 * TODO can be overriten by eval
 	*/
@@ -187,7 +186,7 @@ Home.prototype = {
 	 * Generate an exercise set
 	 * */
 	newEx: function(exID){
-		this.currentlyActiveGenerator = new Generator(this.exArrayParser(exID));
+		this.currentlyActiveGenerator = new Generator(this.exArrayParser(exID),this.currentInvocation);
 	},
 };
 
