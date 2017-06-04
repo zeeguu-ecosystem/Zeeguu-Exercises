@@ -78,8 +78,9 @@ Starter.prototype = {
 		//Bind UI action of credits to the function
 		this.$credits.on("click", _this.giveCredits.bind(this));
 
+		//Bind each card to action
 		for(var i = 0; i<exs.length; i++){
-		var id = exs[i].getAttribute("ex-id");
+			var id = exs[i].getAttribute("ex-id");
 			$(exs[i]).on("click", this.newEx.bind(this,id));
 		}
 	},
@@ -100,7 +101,8 @@ Starter.prototype = {
 	},
 	
 	/**
-	* Parse string into 2D array for generator arguments
+	 * Parse string into 2D array for generator arguments
+	 * @return {Array}, the array containing exercise set used in generator
 	 * TODO can be overriten by eval
 	*/
 	exArrayParser: function(stringArray){		
@@ -114,13 +116,19 @@ Starter.prototype = {
 		this.currentGenerator = null;
         delete this.currentGenerator;
 	},
-	
+
+	/**
+	 * Terminate the module, unbind events.
+	 * */
 	terminate: function(){
 		events.off('generatorCompleted',this.eventGeneratorCompletedFunc);
         events.off('homeRestart',this.eventHomeRestartFunc);
 		//emit listeners that the home is terminated
 	},
-	
+
+	/**
+	 * Generate an exercise set
+	 * */
 	newEx: function(exID){
 		this.currentGenerator = new Generator(this.exArrayParser(exID));
 	},

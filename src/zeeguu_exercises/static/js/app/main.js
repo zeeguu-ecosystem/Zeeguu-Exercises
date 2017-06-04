@@ -1,4 +1,4 @@
-import Starter from './starter_screen';
+import Starter from './starter';
 import Home from './home';
 
 (function() {
