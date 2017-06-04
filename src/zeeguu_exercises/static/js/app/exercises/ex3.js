@@ -233,13 +233,13 @@ Ex3.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex3,
 	/************************** SETTINGS ********************************/	
 	description: {value: "Match each word with its translation"},
-	customTemplateURL: {value: 'static/template/ex3.html'},
+	customTemplateURL: {value: 'static/template/exercise/ex3.html'},
 	choices: 	 { writable: true, value:[1,2,3]},				// arr of indexes of possible choices
 	answers: 	{ writable: true, value:[1,2,3]},				// arr of indexes of possible answers
 	chosenButton: { writable: true, value:-1},  	// ID of currently selected button; -1 means no button is selected
 	correctAnswers: { writable: true, value:0},	// number of correct answers
 	hints: {writable:true, value:0},			// max number of possible hints is 1
-    minRequirement: { writable: true, value:3},	// minimum number required for the ex
+    minRequirement: { writable: true, value:4},	// minimum number required for the ex
 	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_MATCH},
 	/*******************************************************************/
 });

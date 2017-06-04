@@ -21,8 +21,8 @@ import TDS from './the_distraction_shield_extension';
 
 
  
-var Generator = function(set){
-    this.init(set);
+var Generator = function(set,parentInvocation = "homeRestart"){
+    this.init(set,parentInvocation);
 };
 
 Generator.prototype = {
@@ -32,7 +32,8 @@ Generator.prototype = {
     index: 0,		//current index from set
     startTime: new Date(),
     session: Session.getSession()  , //Example of session id 34563456 or 11010001
-    templateURL: 'static/template/exercise.html',
+    templateURL: 'static/template/exercise/exercise.html',
+    parentInvocation: '',
 
     /**
      *	Saves the common dom in chache
@@ -53,12 +54,13 @@ Generator.prototype = {
     /**
      *	Generator initialaizer
      **/
-    init: function(set){
+    init: function(set,parentInvocation){
         this.set = set;
         var _this = this;
 
         this.validator = new Validator(set);
 
+        this.parentInvocation = parentInvocation;
         // "bind" event
         this.$eventFunc = function(){_this.nextEx()};
         events.on('exerciseCompleted',this.$eventFunc);
@@ -164,7 +166,7 @@ Generator.prototype = {
                     return;
                 }
                 _this.terminateGenerator();
-                _this.restartHome();
+                _this.invokeParent();
                 if (redirect!=null) {
                     window.location = redirect;
                 }
@@ -175,8 +177,8 @@ Generator.prototype = {
         events.off('exerciseCompleted',this.$eventFunc);
         events.emit('generatorCompleted');
     },
-    restartHome: function(){
-        events.emit('homeRestart');
+    invokeParent: function(){
+        events.emit(this.parentInvocation);
     },
 }	
 

@@ -4,15 +4,15 @@ import events from './pubsub';
 import Mustache from 'mustache';
 import {Loader} from './loader';
 
-var Home = function(){
+var Starter = function(){
 	this.init();
 };
 
-Home.prototype = {
+Starter.prototype = {
 	
 	/************************** SETTINGS ********************************/	
-	homeTemplateURL: 'static/template/home.html',
-	cardTemplateURL: 'static/template/card.html',
+	homeTemplateURL: 'static/template/home/home.html',
+	cardTemplateURL: 'static/template/home/card.html',
 	defaultIcon: 	 'img/icons/placeholder.svg',
 	exNames: [
 			  {name: "Find",            exID: [[1,6]], 							info: 'Find the word in the context', 			icon: 'static/img/icons/search-engine.svg',  time: 2},
@@ -126,5 +126,5 @@ Home.prototype = {
 	},
 };
 
-export default Home;
+export default Starter;
 
