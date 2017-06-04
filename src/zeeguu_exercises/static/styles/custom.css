@@ -412,6 +412,12 @@ body
 	text-overflow: ellipsis;
 	overflow:hidden;
 }
+
+.feedback-input
+{
+	width:100%;
+}
+
 .ellipsis
 {
     text-overflow: ellipsis;
