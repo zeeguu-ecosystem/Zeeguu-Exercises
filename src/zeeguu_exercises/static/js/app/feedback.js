@@ -42,6 +42,7 @@ export default class Feedback {
      * @param {String}, resultSubmitSource,
      * */
     exerciseFeedbackBox (wordId) {
+        let _this = this;
         this.wordId = wordId;
         let feedbackOptions = this.exerciseFeedbackOptions();
         let inputBox = this.exerciseFeedbackInput();
@@ -55,6 +56,15 @@ export default class Feedback {
                 imageSize: "140x140",
                 allowOutsideClick: true,
                 html: true
+            },
+            function () {
+                let inputValue = $('#feedback-input-box').val().trim();
+                if (inputValue != "") {
+                    _this.submitFeedback(wordId,inputValue,_this.resultSubmitSource);
+                    _this.successfulFeedback();
+                    return;
+                }
+                swal.close();
             });
         this.bindUIActions();
     }
@@ -103,7 +113,7 @@ export default class Feedback {
      * */
     exerciseFeedbackInput(){
         return  '<div class="input-group feedback-input">'+
-                    '<input type="text" class="form-control" placeholder="Something else ?">'+
+                    '<input type="text" class="form-control" id = "feedback-input-box" placeholder="Something else ?">'+
                 '</div>';
     }
 
