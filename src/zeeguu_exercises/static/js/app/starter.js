@@ -26,27 +26,27 @@ Starter.prototype = Object.create(Home.prototype, {
 		value: [
 			{
 				name: "Basic",
-				exID: [[1, 3]],
-				info: 'You can practice about 15 words.',
+				exID: [[1, 2], [4, 2], [2, 2], [3, 1], [2, 1],[4, 2]],
+				info: 'You can practice about 10 words.',
 				icon: 'static/img/icons/starter/pinwheel.svg',
 				gradientColor: 'starter-btn-header-level1',
-				time: 3
+				time: 2
 			},
 			{
 				name: "Casual",
-				exID: [[2, 4]],
-				info: 'You can practice about 25 words.',
+				exID: [[4, 2], [2, 2], [3, 1], [1, 3], [2, 2],[1, 2],[3, 1],[2, 1],[3, 1]],
+				info: 'You can practice about 15 words.',
 				icon: 'static/img/icons/starter/apple.svg',
 				gradientColor: 'starter-btn-header-level2',
-				time: 5
+				time: 3
 			},
 			{
 				name: "Regular",
-				exID: [[3, 4]],
-				info: 'You can practice about 40 words.',
+				exID: [[1, 2], [2, 2], [3, 1], [4, 3], [2, 2],[1, 3],[3, 1],[1, 3],[3, 1],[4, 2],[2, 2],[1, 2],[3,1]],
+				info: 'You can practice about 25 words.',
 				icon: 'static/img/icons/starter/diamond.svg',
 				gradientColor: 'starter-btn-header-level3',
-				time: 8
+				time: 5
 			},
 		]
 	},
