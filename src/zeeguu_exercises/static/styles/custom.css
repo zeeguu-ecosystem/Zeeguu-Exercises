@@ -701,7 +701,9 @@ body
 
 .starter-btn-content
 {
-	margin-top: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height:70px;
 }
 
 .starter-btn span
