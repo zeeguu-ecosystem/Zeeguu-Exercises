@@ -30,7 +30,7 @@ Starter.prototype = Object.create(Home.prototype, {
 				info: 'You can practice about 10 words.',
 				icon: 'static/img/icons/starter/pinwheel.svg',
 				gradientColor: 'starter-btn-header-level1',
-				time: 2
+				time: 1
 			},
 			{
 				name: "Casual",
@@ -38,7 +38,7 @@ Starter.prototype = Object.create(Home.prototype, {
 				info: 'You can practice about 15 words.',
 				icon: 'static/img/icons/starter/apple.svg',
 				gradientColor: 'starter-btn-header-level2',
-				time: 3
+				time: 2
 			},
 			{
 				name: "Regular",
@@ -46,7 +46,7 @@ Starter.prototype = Object.create(Home.prototype, {
 				info: 'You can practice about 25 words.',
 				icon: 'static/img/icons/starter/diamond.svg',
 				gradientColor: 'starter-btn-header-level3',
-				time: 5
+				time: 3
 			},
 		]
 	},
