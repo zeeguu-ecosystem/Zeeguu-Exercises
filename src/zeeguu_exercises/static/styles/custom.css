@@ -312,6 +312,7 @@ body
     text-justify: inter-word;
 	font: 16px arial,sans-serif;
 	padding: 20px 50px;
+	clear:both;
 }
 
 .ex3-content
@@ -338,7 +339,6 @@ body
 .clickable-symbol {
 	margin: 15px auto auto;
 	text-align: center;
-    display:table-cell;
     vertical-align:middle;
 }
 
@@ -371,8 +371,6 @@ body
 	border-radius: 15px;
 	overflow:hidden;
 }
-
-
 
 #ex-bar {
   position: absolute;

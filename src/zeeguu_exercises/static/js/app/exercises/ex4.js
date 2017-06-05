@@ -84,10 +84,9 @@ function Ex4(data,index,size){
 	/** @Override */
 	this.successCondition = function(){	
 		// Check all the possible answers
-		for (var i = 0; i<  this.data[this.index].to.length; i++)
-		 if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to[i].trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""))
+		if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to.trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""))
 			return true;
-			
+
 		return false;
 	}
 
