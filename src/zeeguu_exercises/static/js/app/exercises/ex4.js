@@ -78,7 +78,7 @@ function Ex4(data,index,size){
 	
 	/** @Override */
 	this.giveHint = function (){
-		this.$input.val(this.data[this.index].to[0]);
+		this.$input.val(this.data[this.index].to);
 	}
 	
 	/** @Override */
