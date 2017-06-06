@@ -74,7 +74,7 @@ export default class Feedback {
      * */
     successfulFeedback(){
         swal({
-            title: "Awesome!",
+            title: "",
             text: "",
             timer: 1000,
             type:"success",
