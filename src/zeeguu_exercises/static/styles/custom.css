@@ -333,6 +333,7 @@ body
 	cursor:pointer;
 	min-height:75px;
 	text-align: center;
+	padding: 0;
 }
 
 .clickable-symbol {
