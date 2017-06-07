@@ -42,38 +42,47 @@ export default class Feedback {
      * @param {String}, resultSubmitSource,
      * */
     exerciseFeedbackBox (wordId) {
-        this.wordId = wordId;
         let _this = this;
+        this.wordId = wordId;
         let feedbackOptions = this.exerciseFeedbackOptions();
+        let inputBox = this.exerciseFeedbackInput();
         swal({
                 title: "Make Zeeguu Smarter",
-                text: feedbackOptions,
-                type: "input",
+                text: feedbackOptions + inputBox,
                 showCancelButton: true,
                 closeOnConfirm: false,
                 animation: "slide-from-top",
-                inputPlaceholder: "Something else ?",
                 imageUrl: "static/img/illustrations/zeeguu_balloon.png",
                 imageSize: "140x140",
+                allowOutsideClick: true,
                 html: true
             },
-            function (inputValue) {
-                if (inputValue === false) return false;
-                if (inputValue === "") {
-                    swal.showInputError("The field can't be empty.");
-                    return false
+            function () {
+                let inputValue = $('#feedback-input-box').val().trim();
+                if (inputValue != "") {
+                    _this.submitFeedback(wordId,inputValue,_this.resultSubmitSource);
+                    _this.successfulFeedback();
+                    return;
                 }
-                _this.submitFeedback(wordId,inputValue,_this.resultSubmitSource);
-                _this.successfulFeedback();
+                swal.close();
             });
         this.bindUIActions();
     }
 
     /**
-     * Success message when the result is being submitted
+     * Success message when the feedback is being submitted
      * */
     successfulFeedback(){
-        swal("Awesome!", "Your feedback will be used to improve our service.", "success");
+        swal({
+            title: "",
+            text: "",
+            timer: 1000,
+            type:"success",
+            showConfirmButton: true,
+            showCancelButton: false,
+            closeOnConfirm: true,
+            confirmButtonText: "ok",
+        });
     }
 
     /**
@@ -96,6 +105,16 @@ export default class Feedback {
             '</div>' +
             '{{/Options}}';
         return (Mustache.render(preOptionTemplate,preDefinedOptions));
+    }
+
+    /**
+     * Returns the input box for the feedback
+     * @return {String}, the input box for the feedback
+     * */
+    exerciseFeedbackInput(){
+        return  '<div class="input-group feedback-input">'+
+                    '<input type="text" class="form-control" id = "feedback-input-box" placeholder="Something else ?">'+
+                '</div>';
     }
 
     /**

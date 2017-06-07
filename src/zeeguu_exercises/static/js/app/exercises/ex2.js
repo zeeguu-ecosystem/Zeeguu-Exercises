@@ -147,10 +147,10 @@ Ex2.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex2,
 	/** ************************** SETTINGS **************************** **/
 	description: {value: "Choose the word that fits the context"},
-	customTemplateURL: {value: 'static/template/ex2.html'},
+	customTemplateURL: {value: 'static/template/exercise/ex2.html'},
 	btns: 		 {writable: true, value:[1,2,3]}, 
 	optionNum:	 {value: 3},
-    minRequirement: { writable: true, value:3},	// minimum number required for the ex
+    minRequirement: { writable: true, value:4},	// minimum number required for the ex
 	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_SELECT},
 	/** *************************************************************** **/
 });

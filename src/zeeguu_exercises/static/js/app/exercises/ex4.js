@@ -78,16 +78,15 @@ function Ex4(data,index,size){
 	
 	/** @Override */
 	this.giveHint = function (){
-		this.$input.val(this.data[this.index].to[0]);
+		this.$input.val(this.data[this.index].to);
 	}
 	
 	/** @Override */
 	this.successCondition = function(){	
 		// Check all the possible answers
-		for (var i = 0; i<  this.data[this.index].to.length; i++)
-		 if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to[i].trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""))
+		if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to.trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""))
 			return true;
-			
+
 		return false;
 	}
 
@@ -101,7 +100,7 @@ Ex4.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex4,
 	/************************** SETTINGS ********************************/	
 	description: {value: "Translate the word given in the context."},
-	customTemplateURL: {value: 'static/template/ex4.html'},
+	customTemplateURL: {value: 'static/template/exercise/ex4.html'},
 	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_TRANSLATE},
 });
 
