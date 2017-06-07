@@ -31,7 +31,18 @@ var ut,Util = {
 			t = textRange.text;
 		}
 		return t;
-	},	
+	},
+
+	/**
+	 * Check overflow
+	 * @param elem {Jquery Element}
+	 * @return {Boolean}, true if overflown false otherwise
+	 * */
+	isMultiline: function (elem) {
+		let divHeight = elem.height();
+		let lineHeight = parseInt(elem.css('font-size'));
+		return ((divHeight / lineHeight) >= 2);
+	},
 	
 	/**
      *	Calculate session time in minutes

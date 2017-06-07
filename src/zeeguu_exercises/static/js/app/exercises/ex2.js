@@ -66,6 +66,8 @@ function Ex2(data,index,size){
 		populateButton(this.btns[0], this.data[this.index].from);
 		populateButton(this.btns[1], this.data[idxs[0]].from);
 		populateButton(this.btns[2], this.data[idxs[1]].from);
+
+		this.reStyleDom();
 	}
 	
 	/** @Override */
