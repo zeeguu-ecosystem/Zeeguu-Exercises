@@ -1,5 +1,14 @@
 /* responsive queries */
 
+@media (max-width: 800px) {
+    .ex-container{
+        border-radius:0;
+        margin-top: 0;
+    }
+    .ex-footer{
+        border-radius:0;
+    }
+}
 
 @media (max-width: 400px) {
     .responsive-btn {
@@ -26,10 +35,8 @@
         margin-top: 9px;
         margin-bottom: 8px;
     }
-    .ex-content{
-        
-    }
 }
+
 
 
 
