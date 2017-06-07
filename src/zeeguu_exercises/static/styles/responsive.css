@@ -13,6 +13,18 @@
     .ex-clickable {
         min-height:50px;
     }
+    .ex-input-box{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .clickable-symbol{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .responsive-btn {
+        margin-top: 7px;
+        margin-bottom: 5px;
+    }
 }
 
 
