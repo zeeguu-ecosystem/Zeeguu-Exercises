@@ -1,5 +1,11 @@
 /* responsive queries */
 
+@media (max-width: 1000px) {
+    #footnotes{
+	    position: relative;
+    }
+}
+
 @media (max-width: 800px) {
     .ex-container{
         border-radius:0;

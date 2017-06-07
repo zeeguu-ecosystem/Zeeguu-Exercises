@@ -422,12 +422,19 @@ body
     outline-style: none;
 }
 
+
 #footnotes
 {
-	text-align:center;
 	color: #BDBDBD;
+	bottom: 0;
+	width:100%;
+	position: absolute;
+	right: 0;
+	left: 0;
 	margin:10px auto;
+	text-align: center;
 }
+
 #footnotes a
 {
 	cursor:pointer;	
