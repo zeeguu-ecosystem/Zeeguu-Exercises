@@ -1,0 +1,19 @@
+/* responsive queries */
+
+
+@media (max-width: 400px) {
+    .responsive-btn {
+        font-size:12px;
+        padding:10px 10px;
+        margin-top: 19px;
+    }
+}
+
+@media (max-width: 360px) {
+    .ex-clickable {
+        min-height:50px;
+    }
+}
+
+
+
