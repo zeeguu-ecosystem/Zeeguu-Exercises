@@ -117,17 +117,17 @@ Home.prototype = {
 	 * UI actions are binded here
 	 * */
 	bindUIActions: function(){
+		//Bind UI action of attribution to the function
 		var _this = this;
+		this.$credits.on("click", _this.handleAttribution.bind(this));
+	},
 
-		//Bind UI action of button clicks to the function
+	bindCards: function () {
 		var exs = this.$exCards.children();
 		for(var i = 0; i < exs.length; i++){
 			var id = exs[i].getAttribute("ex-id");
 			$(exs[i]).on("click", this.newEx.bind(this,id));
 		}
-
-		//Bind UI action of attribution to the function
-		this.$credits.on("click", _this.handleAttribution.bind(this));
 	},
 
 	/**
@@ -184,6 +184,7 @@ Home.prototype = {
 	
 	/**
 	 * Generate an exercise set
+	 * @param {String} exID the id in the form of a string
 	 * */
 	newEx: function(exID){
 		this.currentlyActiveGenerator = new Generator(this.exArrayParser(exID),this.currentInvocation);

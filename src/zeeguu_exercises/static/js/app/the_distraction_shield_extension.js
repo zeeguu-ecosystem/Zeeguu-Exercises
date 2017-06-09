@@ -1,7 +1,4 @@
 /**
- * Created by Martin on 5/29/2017.
- */
-/**
  * The following class implements methods for The Distraction Shield browser extension
  * @example of redirect url https://www.zeeguu.unibe.ch/practice/get-ex?redirect=https://www.facebook.com/
  * */

@@ -21,7 +21,7 @@ import TDS from './the_distraction_shield_extension';
 
 
  
-var Generator = function(set,parentInvocation = "homeRestart"){
+var Generator = function(set,parentInvocation = "NA"){
     this.init(set,parentInvocation);
 };
 
@@ -149,6 +149,7 @@ Generator.prototype = {
     onExSetComplete: function (){
         var _this = this;
         var redirect = TDS.distractionShieldOriginalDestination();
+        var finalAction = this.finalActions(redirect,this.parentInvocation);
 		_this.submitResults();
         swal({
                 title: "You rock!",
@@ -157,7 +158,7 @@ Generator.prototype = {
                 showCancelButton: true,
                 confirmButtonColor: "#7eb530",
                 confirmButtonText: "Let's do it!",
-                cancelButtonText: redirect!=null?"Take me away!":"Go home!",
+                cancelButtonText: finalAction.btnText,
                 closeOnConfirm: true
             },
             function(isConfirm){
@@ -166,11 +167,35 @@ Generator.prototype = {
                     return;
                 }
                 _this.terminateGenerator();
-                _this.invokeParent();
-                if (redirect!=null) {
-                    window.location = redirect;
-                }
+                finalAction.actionFunc();
             });
+    },
+
+    /**
+     * Text and the action that the secondary button should perform
+     * @param {String} redirect url
+     * @param {String} parentInvocation, who to emit when the action is done
+     * @return {Object}, text of the action and the action function
+     * */
+    finalActions: function (redirect,parentInvocation) {
+        let secondaryBtn = 'Go home!';
+        let actionFunction = ()=> {_this.invokeParent();};
+
+        //If the redirect url is present
+        if(redirect!=null){
+            console.log('If the redirect url is present');
+            secondaryBtn = "Take me away!";
+            actionFunction = ()=> { window.location = redirect;};
+        }
+        //If there is no home available create home
+        else if(parentInvocation === "NA"){
+            console.log('If there is no home available create home');
+            actionFunction = ()=> {
+                let redirect = window.location.protocol + "//" + window.location.hostname;
+                window.location.href = (redirect === "http://127.0.0.1") ? redirect + ":5000" : redirect;
+            };
+        }
+        return {btnText:secondaryBtn, actionFunc:actionFunction};
     },
 
     terminateGenerator: function(){
