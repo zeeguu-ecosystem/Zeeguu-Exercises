@@ -1,5 +1,5 @@
 /**
- * This module is only for testing purposes, the end point is /test-set-cookie
+ * This module is only for testing purposes, the end point is /debug
  * */
 import Session from '../session';
 Session.setSession();
