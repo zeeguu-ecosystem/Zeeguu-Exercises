@@ -3,6 +3,7 @@ import Generator from './generator';
 import events from './pubsub';
 import Mustache from 'mustache';
 import {Loader} from './loader';
+import * as page from "page";
 
 var Home = function(){
 	this.init();
@@ -120,6 +121,13 @@ Home.prototype = {
 		//Bind UI action of attribution to the function
 		var _this = this;
 		this.$credits.on("click", _this.handleAttribution.bind(this));
+
+		/*//Bind UI action of button clicks to the function
+		var exs = this.$exCards.children();
+		for(var i = 0; i < exs.length; i++){
+			var id = exs[i].getAttribute("ex-id");
+			$(exs[i]).on("click", this.newEx.bind(this,id));
+		}*/
 	},
 
 	bindCards: function () {
@@ -148,7 +156,12 @@ Home.prototype = {
 	 * Genrate screen cards
 	 * */
 	generateExerciseCards: function(){
-        var cardNames = {Exercises: this.exNames};
+		//The index function find the current index of the Array of Exercises
+		var cardNames = {
+			Exercises: this.exNames,
+			index: ()=> {return cardNames.Exercises.indexOf(this);}
+		};
+
 		this.$exCards.append(Mustache.render(this.cardTemplate,cardNames));
 	},
 	
@@ -188,6 +201,7 @@ Home.prototype = {
 	 * */
 	newEx: function(exID){
 		this.currentlyActiveGenerator = new Generator(this.exArrayParser(exID),this.currentInvocation);
+
 	},
 };
 

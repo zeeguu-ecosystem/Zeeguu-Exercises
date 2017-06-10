@@ -192,6 +192,7 @@ Generator.prototype = {
             console.log('If there is no home available create home');
             actionFunction = ()=> {
                 let redirect = window.location.protocol + "//" + window.location.hostname;
+                //Local debuging, wont be part of final code
                 window.location.href = (redirect === "http://127.0.0.1") ? redirect + ":5000" : redirect;
             };
         }

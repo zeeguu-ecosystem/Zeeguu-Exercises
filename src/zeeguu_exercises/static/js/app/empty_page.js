@@ -5,7 +5,7 @@ import $ from 'jquery';
 import {Loader} from "./loader";
 import Mustache from 'mustache';
 
-var EmptyPage = function(newFields){
+var EmptyPage = function(newFields = null){
     this.init(newFields);
 };
 
@@ -42,7 +42,6 @@ EmptyPage.prototype = {
     mergeField: function (oldField,newField) {
         for (let key in newField) {
             if (newField.hasOwnProperty(key)) {
-                console.log(oldField[key]);
                 oldField[key] = newField[key];
             }
         }
@@ -53,7 +52,6 @@ EmptyPage.prototype = {
      *	Exercise initialaizer
      **/
     init: function(newField){
-        console.log(newField);
         this.templateFields = (!newField)?  this.templateFields : this.mergeField(this.templateFields, newField );
         this.start();
     },

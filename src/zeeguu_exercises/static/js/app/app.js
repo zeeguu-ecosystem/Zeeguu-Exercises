@@ -4,39 +4,46 @@
 import page from "page";
 import Generator from './generator';
 import Starter from './starter';
+import NotFound from './not_found';
 
 
 
 page('/', index);
 page('/get-ex', getEx);
 page('/practice/:practicePlan', practice);
-page();
+page('*', notFound);
+page({hashbang:true});
+page.start();
 
 /**
  * Main starter screen route
  * */
 function index() {
-        window.onload = ()=> {new Starter()};
+    window.onload = new Starter();
 }
 
 /**
  * Main starter screen route
  * */
 function getEx() {
-    (function() {
-        window.onload = new Generator([[1,5],[2,3]]);
-    })();
+    window.onload = new Generator([[1,5],[2,3]]);
 }
 
 /**
  * Practice route
  * */
 function practice(ctx) {
-    //console.log(Starter.prototype.exNames[ctx.params.practicePlan].exID);
-   (function() {
-        window.onload = new Generator([[1,3],[2,3]]);
-    })();
+    console.log(ctx.params.practicePlan);
+    window.onload = new Generator(Starter.prototype.exNames[ctx.params.practicePlan].exID);
 }
+
+/**
+ * Not found page
+ * */
+function notFound(){
+    window.onload = new NotFound();
+}
+
 
 
 
