@@ -16,6 +16,7 @@ var events = (function() {
         }
     }
     function emit(eventName, data) {
+        console.log("event name: " + eventName + ", data: " + data);
         if (events[eventName]) {
             events[eventName].forEach(function(fn) {
                 fn(data);

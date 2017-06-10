@@ -3,10 +3,8 @@
  */
 import page from "page";
 import Generator from './generator';
-import Starter from './starter';
-import NotFound from './not_found';
-
-
+import Starter from './pages/starter';
+import NotFound from './pages/not_found';
 
 page('/', index);
 page('/get-ex', getEx);

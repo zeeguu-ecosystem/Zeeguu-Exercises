@@ -14,7 +14,7 @@ import $ from 'jquery';
 import Settings from "./settings";
 import Session from "./session";
 import Util from "./util";
-import EmptyPage from "./empty_page";
+import EmptyPage from "./pages/empty_page";
 import LoadingAnimation from './animations/loading_animation';
 import Ex1 from './exercises/ex1';
 import Ex2 from './exercises/ex2';

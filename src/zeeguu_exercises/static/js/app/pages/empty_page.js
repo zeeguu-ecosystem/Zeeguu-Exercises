@@ -2,7 +2,7 @@
  * Created by Martin on 5/14/2017.
  */
 import $ from 'jquery';
-import {Loader} from "./loader";
+import {Loader} from "../loader";
 import Mustache from 'mustache';
 
 var EmptyPage = function(newFields = null){
@@ -52,7 +52,9 @@ EmptyPage.prototype = {
      *	Exercise initialaizer
      **/
     init: function(newField){
-        this.templateFields = (!newField)?  this.templateFields : this.mergeField(this.templateFields, newField );
+        if(newField!=null){
+            this.templateFields =  this.mergeField(this.templateFields, newField );
+        }
         this.start();
     },
 
@@ -71,6 +73,7 @@ EmptyPage.prototype = {
     },
 
     genPage: function () {
+        console.log(this.templateFields);
         let html = Mustache.to_html(this.emptyTemplate,this.templateFields);
         $("#main-content").html(html);
     },

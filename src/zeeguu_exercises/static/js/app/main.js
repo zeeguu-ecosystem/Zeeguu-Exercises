@@ -1,4 +1,4 @@
-import Starter from './starter';
+import Starter from './pages/starter';
 
 (function() {
 	window.onload = ()=>{new Starter()};

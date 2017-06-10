@@ -1,8 +1,8 @@
 import $ from 'jquery';
-import Generator from './generator';
-import events from './pubsub';
+import Generator from '../generator';
+import events from '../pubsub';
 import Mustache from 'mustache';
-import {Loader} from './loader';
+import {Loader} from '../loader';
 import * as page from "page";
 
 var Home = function(){
@@ -159,7 +159,7 @@ Home.prototype = {
 		//The index function find the current index of the Array of Exercises
 		var cardNames = {
 			Exercises: this.exNames,
-			index: ()=> {return cardNames.Exercises.indexOf(this);}
+			index: function() {return cardNames.Exercises.indexOf(this);}
 		};
 
 		this.$exCards.append(Mustache.render(this.cardTemplate,cardNames));
