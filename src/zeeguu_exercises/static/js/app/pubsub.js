@@ -4,6 +4,7 @@ var events = (function() {
     function on(eventName, fn) {
         events[eventName] = events[eventName] || [];
         events[eventName].push(fn);
+        debug("ON: ");
     }
     function off(eventName, fn) {
         if (events[eventName]) {
@@ -14,14 +15,19 @@ var events = (function() {
                 }
             }
         }
+        debug("OFF: ");
     }
     function emit(eventName, data) {
-        console.log("event name: " + eventName + ", data: " + data);
         if (events[eventName]) {
             events[eventName].forEach(function(fn) {
                 fn(data);
             });
         }
+        debug("EMIT: ");
+    }
+    function debug(msg){
+        console.info(msg);
+        console.info(events);
     }
     return {
         on: on,

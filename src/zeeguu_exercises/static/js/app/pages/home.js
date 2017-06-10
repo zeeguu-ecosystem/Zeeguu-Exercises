@@ -194,7 +194,6 @@ Home.prototype = {
 	 * */
 	newEx: function(exID){
 		this.currentlyActiveGenerator = new Generator(this.exArrayParser(exID),this.currentInvocation);
-
 	},
 };
 

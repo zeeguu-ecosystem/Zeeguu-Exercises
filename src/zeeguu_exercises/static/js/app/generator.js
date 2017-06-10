@@ -34,6 +34,7 @@ Generator.prototype = {
     session: Session.getSession()  , //Example of session id 34563456 or 11010001
     templateURL: 'static/template/exercise/exercise.html',
     parentInvocation: '',
+    progressBar: 0,
 
     /**
      *	Saves the common dom in chache
@@ -90,7 +91,7 @@ Generator.prototype = {
             //Loads the HTML general exercise template from static
             $.when(Loader.loadTemplateIntoElem(_this.templateURL,$("#main-content"))).done(function(){
                 // Create the DOM and start the generator
-                ProgressBar.init(0, _this.validator.validSize);
+                _this.progressBar = ProgressBar.init(0, _this.validator.validSize);
                 _this.cacheDom();
                 _this.cacheExerciseImports();
                 _this._constructor();
@@ -163,6 +164,7 @@ Generator.prototype = {
             },
             function(isConfirm){
                 if(isConfirm){
+                    _this.progressBar.terminate();
                     _this.restart();
                     return;
                 }
@@ -201,6 +203,7 @@ Generator.prototype = {
 
     terminateGenerator: function(){
         events.off('exerciseCompleted',this.$eventFunc);
+        this.progressBar.terminate();
         events.emit('generatorCompleted');
     },
     invokeParent: function(){

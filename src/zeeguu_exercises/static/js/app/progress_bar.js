@@ -39,6 +39,9 @@ var bar,ProgressBar = {
 			bar.percent = max_move;
 		}
 	},
+	terminate: function () {
+		events.off('progress', this.move);
+	},
 };
 
 export default ProgressBar;

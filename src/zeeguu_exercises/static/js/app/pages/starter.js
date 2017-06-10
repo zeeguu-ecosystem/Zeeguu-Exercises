@@ -26,7 +26,7 @@ Starter.prototype = Object.create(Home.prototype, {
 		value: [
 			{
 				name: "Basic",
-				exID: [[1, 3],[2, 2], [4, 2],  [3, 1], [2, 1],[4, 2]],
+				exID: [[1, 3],[2, 2]],
 				info: 'Practice 10 words in 2 minutes.',
 				icon: 'static/img/icons/starter/eleph1.svg',
 				gradientColor: 'starter-btn-header-level1',
@@ -34,7 +34,7 @@ Starter.prototype = Object.create(Home.prototype, {
 			},
 			{
 				name: "Casual",
-				exID: [[2, 4], [2, 2], [3, 1], [1, 3], [2, 2],[1, 2],[3, 1],[2, 1],[3, 1]],
+				exID: [[4, 3],[2, 2]],
 				info: 'Practice 15 words in 3 minutes.',
 				icon: 'static/img/icons/starter/eleph2.svg',
 				gradientColor: 'starter-btn-header-level2',
@@ -42,7 +42,7 @@ Starter.prototype = Object.create(Home.prototype, {
 			},
 			{
 				name: "Regular",
-				exID: [[3, 4], [2, 2], [3, 1], [4, 3], [2, 2],[1, 3],[3, 1],[1, 3],[3, 1],[4, 2],[2, 2],[1, 2],[3,1]],
+				exID: [[2, 4],[3, 1]],
 				info: 'Practice 25 words in 5 minutes.',
 				icon: 'static/img/icons/starter/eleph3.svg',
 				gradientColor: 'starter-btn-header-level3',
