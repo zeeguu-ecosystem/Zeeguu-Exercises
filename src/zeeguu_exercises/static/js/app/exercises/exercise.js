@@ -201,6 +201,24 @@ Exercise.prototype = {
 	giveFeedbackBox: function () {
         this.exFeedback.exerciseFeedbackBox(this.data[this.index].id);
 	},
+
+	/**
+	 * Apply style dynamically when content changes
+	 * */
+	reStyleDom: function () {
+		this.reStyleContext();
+	},
+
+	/**
+	 * Apply style dynamically to context
+	 * */
+	reStyleContext: function () {
+		if(!Util.isMultiline(this.$context)){
+			this.$context.addClass('centering');//Text align center
+			return;
+		}
+		this.$context.removeClass('centering');//Text align justify
+	},
 	
 	
 	/*********************** Interface functions *****************************/

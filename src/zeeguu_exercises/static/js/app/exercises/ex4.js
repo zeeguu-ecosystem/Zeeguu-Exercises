@@ -51,6 +51,8 @@ function Ex4(data,index,size){
 		this.$to.html("\""+this.data[this.index].from +"\"");
 		this.$context.html(this.generateContext());
 		this.$input.val("");
+
+		this.reStyleDom();
 	}
 	
 	this.updateInput = function() {
