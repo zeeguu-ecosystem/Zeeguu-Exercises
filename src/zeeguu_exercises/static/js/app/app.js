@@ -31,7 +31,6 @@ function getEx() {
  * Practice route
  * */
 function practice(ctx) {
-    console.log(ctx.params.practicePlan);
     window.onload = new Generator(Starter.prototype.exNames[ctx.params.practicePlan].exID);
 }
 
