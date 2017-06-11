@@ -1,5 +1,6 @@
 /**
- * Created by Martin on 6/9/2017.
+ * Application Starting point
+ * Rounters and Handles defined here
  */
 import page from "page";
 import Generator from './generator';
@@ -18,10 +19,7 @@ page.exit('*', backFunction);
 page({hashbang:true});
 page.start();
 
-
-
 /********************** Handlers ***********************/
-
 /**
  * Main starter screen route
  * */
@@ -45,7 +43,6 @@ function getEx() {
 function practice(ctx) {
     window.onload = new Generator(Starter.prototype.exNames[ctx.params.practicePlan].exID);
 }
-
 
 /**
  * When leaving a page, perform the following action
