@@ -2,10 +2,9 @@
  * Event listener implemented using publish subscribe pattern
  * There is only one object of this class through application
  * */
-
 var events = (function() {
     var events = {};
-    var debugging = true;
+    var debugging = false;
 
     function on(eventName, fn) {
         events[eventName] = events[eventName] || [];

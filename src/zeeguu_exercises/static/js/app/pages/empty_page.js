@@ -73,7 +73,6 @@ EmptyPage.prototype = {
     },
 
     genPage: function () {
-        console.log(this.templateFields);
         let html = Mustache.to_html(this.emptyTemplate,this.templateFields);
         $("#main-content").html(html);
     },

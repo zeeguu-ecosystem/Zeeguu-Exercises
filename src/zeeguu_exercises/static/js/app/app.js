@@ -7,18 +7,20 @@ import Starter from './pages/starter';
 import NotFound from './pages/not_found';
 import Events from './pubsub';
 
+/********************** Routes **************************/
 page('/', index);
 page('/get-ex', getEx);
 page('/practice/:practicePlan', practice);
 page('*', notFound);
-page.exit('/practice/:practicePlan', exitFunc);
+
+/******************* Page Settings **********************/
+page.exit('*', backFunction);
 page({hashbang:true});
 page.start();
 
-function exitFunc(ctx,next) {
-    Events.resetAll();
-    next();
-}
+
+
+/********************** Handlers ***********************/
 
 /**
  * Main starter screen route
@@ -28,17 +30,30 @@ function index() {
 }
 
 /**
- * Main starter screen route
+ * Get-ex route
  * */
 function getEx() {
+    //For now hand codded exercise generator
     window.onload = new Generator([[1,5],[2,3]]);
 }
 
 /**
  * Practice route
+ * Each exercise card set has its own index
+ * @example http://127.0.0.1:5000/#!/practice/0 , practice plan with index 0
  * */
 function practice(ctx) {
     window.onload = new Generator(Starter.prototype.exNames[ctx.params.practicePlan].exID);
+}
+
+
+/**
+ * When leaving a page, perform the following action
+ * Reset all events from pubsub module to prevent interception from past subscribers
+ * */
+function backFunction(ctx,next) {
+    Events.resetAll();
+    next();
 }
 
 /**
