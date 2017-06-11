@@ -3,7 +3,9 @@
  */
 /**
  * The following class implements methods for The Distraction Shield browser extension
- * @example of redirect url https://www.zeeguu.unibe.ch/practice/get-ex?redirect=https://www.facebook.com/
+ * @example of redirect url https://www.zeeguu.unibe.ch/practice/get-ex?redirect=https://www.facebook.com/.
+ * @example of the working of the regex: in the above url it extracts : 'https://www.facebook.com/' starting
+ * directly after '?redirect='. In general it extracts everything, without exception, after '?redirect='
  * */
 export default class TDS {
 
