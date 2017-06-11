@@ -1,5 +1,11 @@
+/**
+ * Event listener implemented using publish subscribe pattern
+ * There is only one object of this class through application
+ * */
+
 var events = (function() {
     var events = {};
+    var debugging = true;
 
     function on(eventName, fn) {
         events[eventName] = events[eventName] || [];
@@ -26,13 +32,23 @@ var events = (function() {
         debug("EMIT: ");
     }
     function debug(msg){
+        if(!debugging) return;
+
         console.info(msg);
         console.info(events);
+    }
+    function resetAll() {
+        events = {};
+        debug("Reset All: ");
+    }
+    function removeEvent(eventName) {
+        delete events[eventName];
     }
     return {
         on: on,
         off: off,
         emit: emit,
+        resetAll: resetAll,
     };
 
 })();

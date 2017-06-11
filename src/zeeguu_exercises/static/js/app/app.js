@@ -5,13 +5,20 @@ import page from "page";
 import Generator from './generator';
 import Starter from './pages/starter';
 import NotFound from './pages/not_found';
+import Events from './pubsub';
 
 page('/', index);
 page('/get-ex', getEx);
 page('/practice/:practicePlan', practice);
 page('*', notFound);
+page.exit('/practice/:practicePlan', exitFunc);
 page({hashbang:true});
 page.start();
+
+function exitFunc(ctx,next) {
+    Events.resetAll();
+    next();
+}
 
 /**
  * Main starter screen route
