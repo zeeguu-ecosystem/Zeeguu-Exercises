@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">app/pages/home.js | Zeeguu Exercises API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/cookie_handler.js~cookieHandler.html">cookieHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/environment.js~Environment.html">Environment</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/feedback.js~Feedback.html">Feedback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/loader.js~Loader.html">Loader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/session.js~Session.html">Session</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/the_distraction_shield_extension.js~TDS.html">TDS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Generator">Generator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-events">events</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">animations</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/loading_animation.js~LoadingAnimation.html">LoadingAnimation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/shake_animation.js~ShakeAnimation.html">ShakeAnimation</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">exercises</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex1">Ex1</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex2">Ex2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex3">Ex3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex4">Ex4</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Exercise">Exercise</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">pages</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-EmptyPage">EmptyPage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Home">Home</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-NotFound">NotFound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Starter">Starter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test_example</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/test_example/example.js~Bear.html">Bear</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">app/pages/home.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
+import Generator from &apos;../generator&apos;;
+import events from &apos;../pubsub&apos;;
+import Mustache from &apos;mustache&apos;;
+import {Loader} from &apos;../loader&apos;;
+import * as page from &quot;page&quot;;
+
+var Home = function(){
+	this.init();
+};
+
+Home.prototype = {
+	
+	/************************** SETTINGS ********************************/	
+	screenTemplateURL: &apos;static/template/home/home.html&apos;,
+	cardTemplateURL: &apos;static/template/home/card.html&apos;,
+	cardTemplate: 0,
+
+	currentInvocation: &apos;homeRestart&apos;,			//Event name for invoking start on current module
+	generatorInvocation: &apos;generatorCompleted&apos;,	//Event name for invoking reset on the active generator (memory leaks prevention)
+	currentlyActiveGenerator: 0,				//Reference to the active generator
+
+	eventGeneratorCompletedFunc: 0,				//Function reference to resetGenerator()
+    eventCurrentRestartFunc: 0,					//Function reference to start()
+
+	exNames: [
+		{
+			name: &quot;Find&quot;,
+			exID: [[1, 3]],
+			info: &apos;Find the word in the context&apos;,
+			icon: &apos;static/img/icons/search-engine.svg&apos;,
+			time: 2
+		},
+		{
+			name: &quot;Choose&quot;,
+			exID: [[2, 4]],
+			info: &apos;Choose the word that fits the context&apos;,
+			icon: &apos;static/img/icons/test.svg&apos;,
+			time: 2
+		},
+		{
+			name: &quot;Match&quot;,
+			exID: [[3, 4]],
+			info: &apos;Match each word with its translation&apos;,
+			icon: &apos;static/img/icons/question.svg&apos;,
+			time: 3
+		},
+		{
+			name: &quot;Translate&quot;,
+			exID: [[4, 3]],
+			info: &apos;Translate the word given in the context&apos;,
+			icon: &apos;static/img/icons/translator.svg&apos;,
+			time: 2
+		},
+		{
+			name: &quot;Short Practice&quot;,
+			exID: [[1, 3], [2, 3]],
+			info: &apos;General exercise for short practice&apos;,
+			icon: &apos;static/img/icons/placeholder.svg&apos;,
+			time: 3
+		},
+		{
+			name: &quot;Long Practice&quot;,
+			exID: [[1, 3], [2, 3], [3, 3], [4, 3]],
+			info: &apos;General exercise for short practice&apos;,
+			icon: &apos;static/img/icons/placeholder.svg&apos;,
+			time: 4
+		},
+		{
+			name: &quot;Random&quot;,
+			exID: [[2, 3], [1, 3], [3, 3], [4, 3], [1, 3]],
+			info: &apos;Repeat via random exercises&apos;,
+			icon: &apos;static/img/icons/shuffle.svg&apos;,
+			time: 6
+		},
+	],
+	/*********************** General Functions ***************************/	
+	/**
+	*	Saves the dom 
+	**/
+	cacheDom: function(){
+		this.$elem 			= $(&quot;#home-body&quot;);		
+		this.$exCards 		= this.$elem.find(&quot;#exercieses-cards&quot;);	
+		this.$attribution 	= this.$elem.find(&quot;#attribution&quot;);	
+		this.$credits 		= this.$elem.find(&quot;#credits&quot;);	
+	},
+	
+	
+	/**
+	*	Exercise initialaizer
+	**/
+	init: function(){	
+		var _this = this;
+		// &quot;bind&quot; event
+		this.eventGeneratorCompletedFunc = function(){_this.resetGenerator();};
+		this.eventCurrentRestartFunc = function(){_this.start();};
+		events.on(this.generatorInvocation,this.eventGeneratorCompletedFunc);
+		events.on(this.currentInvocation,this.eventCurrentRestartFunc);
+		this.start();
+	},
+
+    /**
+	*	The main constructor
+	**/
+	start: function (){	
+		var _this = this;
+		$.when(Loader.loadTemplateIntoElem(_this.screenTemplateURL,$(&quot;#main-content&quot;)),
+		Loader.loadTemplate(this.cardTemplateURL)).done(function(homeData,cardData){
+			_this.cardTemplate = cardData[0];//cardData[0] string html
+			// Create the DOM and start the generator
+			_this.cacheDom();
+			_this.generateExerciseCards();
+			_this.bindUIActions();
+		});
+	},
+
+	/**
+	 * UI actions are binded here
+	 * */
+	bindUIActions: function(){
+		//Bind UI action of attribution to the function
+		var _this = this;
+		this.$credits.on(&quot;click&quot;, _this.handleAttribution.bind(this));
+	},
+
+	bindCards: function () {
+		var exs = this.$exCards.children();
+		for(var i = 0; i &lt; exs.length; i++){
+			var id = exs[i].getAttribute(&quot;ex-id&quot;);
+			$(exs[i]).on(&quot;click&quot;, this.newEx.bind(this,id));
+		}
+	},
+
+	/**
+	 * Attribution footer
+	 * On click show/hide attribution
+	 * @return {void}
+	 * */
+	handleAttribution: function(){
+		let isHidden = this.$attribution.hasClass(&quot;hide&quot;);
+		if(!isHidden){
+			this.$attribution.addClass(&quot;hide&quot;);
+			return;
+		}
+		this.$attribution.removeClass(&quot;hide&quot;);
+	},
+
+	/**
+	 * Genrate screen cards
+	 * */
+	generateExerciseCards: function(){
+		//The index function find the current index of the Array of Exercises
+		var cardNames = {
+			Exercises: this.exNames,
+			index: function() {return cardNames.Exercises.indexOf(this);}
+		};
+
+		this.$exCards.append(Mustache.render(this.cardTemplate,cardNames));
+	},
+	
+	/**
+	 * Parse string into 2D array as a generator argument
+	 * @return {Array}, the array containing exercise set used in generator
+	 * TODO can be overriten by eval
+	*/
+	exArrayParser: function(stringArray){		
+		var arr = stringArray.split(&quot;,&quot;).map(function(x){return parseInt(x)});
+		var newArr = [];
+		while(arr.length) newArr.push(arr.splice(0,2));
+		return newArr;
+	},
+
+
+	/**
+	 * Resets generator, clears the memory
+	 * */
+	resetGenerator: function(){
+		this.currentlyActiveGenerator = null;
+        delete this.currentlyActiveGenerator;
+	},
+	
+	/**
+	 * Terminate the module, unbind events.
+	 * */
+	terminate: function(){
+		events.off(this.generatorInvocation,this.eventGeneratorCompletedFunc);
+        events.off(this.currentInvocation,this.eventCurrentRestartFunc);
+		//emit listeners that the home is terminated
+	},
+	
+	/**
+	 * Generate an exercise set
+	 * @param {String} exID the id in the form of a string
+	 * */
+	newEx: function(exID){
+		this.currentlyActiveGenerator = new Generator(this.exArrayParser(exID),this.currentInvocation);
+	},
+};
+
+export default Home;
+
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

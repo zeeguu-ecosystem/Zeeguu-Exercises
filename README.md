@@ -5,7 +5,6 @@ An adaptive online language practice platform
 [![Dependency Status](https://gemnasium.com/badges/github.com/martinavagyan/zeeguu-exercises.svg)](https://gemnasium.com/github.com/martinavagyan/zeeguu-exercises)
 [![NSP Status](https://nodesecurity.io/orgs/martinavagyan/projects/69db0b36-c5a2-4f40-bafd-79775a774854/badge)](https://nodesecurity.io/orgs/martinavagyan/projects/69db0b36-c5a2-4f40-bafd-79775a774854)
 
-Usage
 =====
 
 How to run the code on local machine

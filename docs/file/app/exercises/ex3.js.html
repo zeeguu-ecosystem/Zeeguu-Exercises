@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">app/exercises/ex3.js | Zeeguu Exercises API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/cookie_handler.js~cookieHandler.html">cookieHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/environment.js~Environment.html">Environment</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/feedback.js~Feedback.html">Feedback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/loader.js~Loader.html">Loader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/session.js~Session.html">Session</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/the_distraction_shield_extension.js~TDS.html">TDS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Generator">Generator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-events">events</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">animations</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/loading_animation.js~LoadingAnimation.html">LoadingAnimation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/shake_animation.js~ShakeAnimation.html">ShakeAnimation</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">exercises</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex1">Ex1</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex2">Ex2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex3">Ex3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex4">Ex4</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Exercise">Exercise</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">pages</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-EmptyPage">EmptyPage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Home">Home</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-NotFound">NotFound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Starter">Starter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test_example</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/test_example/example.js~Bear.html">Bear</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">app/exercises/ex3.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/** Custom exercise formatching 3 words. Inherited from Exercise.js
+ *  @initialize it using: new Ex3();
+ *  @customize it by using prototypal inheritance 
+**/
+
+import $ from &apos;jquery&apos;;
+import Exercise from &quot;./exercise&quot;;
+import Settings from &quot;../settings&quot;;
+
+function Ex3(data,index,size){
+	this.init(data,index,size);
+	
+	/** @Override */
+	this.cacheCustomDom = function(data,index,size){
+		this.$to 					= this.$elem.find(&quot;#ex-to&quot;);
+		this.$context 				= this.$elem.find(&quot;#ex-content&quot;);
+		this.$showSolution 			= this.$elem.find(&quot;#show_solution&quot;);
+		this.$btn1 					= this.$elem.find(&quot;#btn1&quot;);
+		this.$btn2 					= this.$elem.find(&quot;#btn2&quot;);
+		this.$btn3 					= this.$elem.find(&quot;#btn3&quot;);	
+		this.$btn4 					= this.$elem.find(&quot;#btn4&quot;);
+		this.$btn5 					= this.$elem.find(&quot;#btn5&quot;);
+		this.$btn6 					= this.$elem.find(&quot;#btn6&quot;);
+		this.$nextExercise			= this.$elem.find(&apos;#next-exercise&apos;);
+        this.$feedbackBtn			= this.$elem.find(&apos;#feedback&apos;);
+	};
+	
+	/** @Override */
+	this.bindUIActions = function(){
+		//Bind UI action of Hint/Show solution to the function		
+		this.$showSolution.on(&quot;click&quot;, this.handleHint.bind(this));
+		
+		//Bind UI action of button 1 click to the function
+		this.$btn1.on(&quot;click&quot;, this.selectChoice.bind(this,1));
+		
+		//Bind UI action of button 2 click to the function
+		this.$btn2.on(&quot;click&quot;, this.selectChoice.bind(this,2));
+		
+		//Bind UI action of button 3 click to the function
+		this.$btn3.on(&quot;click&quot;, this.selectChoice.bind(this,3));
+		
+		//Bind UI action of button 4 click to the function
+		this.$btn4.on(&quot;click&quot;, this.selectChoice.bind(this,4));
+		
+		//Bind UI action of button 5 click to the function
+		this.$btn5.on(&quot;click&quot;, this.selectChoice.bind(this,5));
+		
+		//Bind UI action of button 6 click to the function
+		this.$btn6.on(&quot;click&quot;, this.selectChoice.bind(this,6));
+
+		//Next exercise clicked
+		this.$nextExercise.on(&quot;click&quot;,this.onRenderNextEx.bind(this));
+
+        //Next exercise clicked
+		this.$feedbackBtn.on(&quot;click&quot;,this.giveFeedbackBox.bind(this));
+		
+	};
+
+	/** @Override */
+	this.wrongAnswerAnimation = function(){
+		this.shake.shakeFocusedElement();
+	}
+	
+	
+	
+	this.selectChoice = function(btnID){
+		// if no button was previously selected, select it now
+		if(this.chosenButton == -1){
+			this.chosenButton = btnID;
+		}else{
+			// otherwise check the selection
+			this.check(btnID);
+		}
+	};
+	
+	// Disables correctly selected buttons
+	this.successDisableBtn = function(btnID){
+		var elem = $(&quot;#btn&quot;+btnID);
+		elem.prop(&apos;disabled&apos;, true);
+		elem.addClass(&quot;btn-success&quot;);
+	};
+	
+	//Checks if a button is disabled
+	this.isDisabled = function(btnID){
+		var elem = $(&quot;#btn&quot;+btnID);
+		return elem.is(&apos;:disabled&apos;);
+	};
+	
+	// Checks answers
+	this.check = function(btnID){
+	
+		if(this.checkCondition(btnID)){
+			
+			// Disable buttons		
+			this.successDisableBtn(btnID);
+			this.successDisableBtn(this.chosenButton);
+			
+			this.correctAnswers ++;
+			this.endExercise();
+			
+		}else{
+			this.wrongAnswerAnimation();
+		}
+		this.chosenButton = -1;	
+	};
+	
+	this.endExercise = function(){
+		// check if all the answers were given
+		if(this.successCondition(0)){
+			// Proceed to next exercise
+			this.checkAnswer(0);
+			
+			// Prepare the document
+			this.prepareDocument();
+			
+			// Reset buttons, answers, hints
+			this.resetBtns();
+			this.correctAnswers = 0;
+			this.hints = 0;
+		}
+	};
+	
+	// Checks the selected buttons
+	this.checkCondition = function(btnID){
+		if((this.answers.indexOf(btnID) == -1)|| (this.choices.indexOf(this.chosenButton) == -1)){
+			return (this.choices.indexOf(btnID) == this.answers.indexOf(this.chosenButton));
+		}else{
+			return (this.answers.indexOf(btnID) == this.choices.indexOf(this.chosenButton));
+		}
+	};
+	
+	/** @Override */
+	this.successCondition = function(a){
+		return (this.correctAnswers &gt;= 3); 
+	};
+	
+	// Resets all the disabled buttons
+	this.resetBtns = function(){
+		for(var idx = 1; idx&lt;=6; idx++){
+			var elem = $(&apos;#btn&apos;+idx);
+			elem.prop(&apos;disabled&apos;, false);
+			elem.removeClass(&quot;btn-success&quot;);
+		}
+	};
+	
+	/** @Override */
+	this.next = function (){	
+		this.populateButtons();
+	};
+	
+	// Populates the buttons
+	this.populateButtons = function(){	
+		//Random options
+		var idxs = this.randomNumsInRange(2,this.data.length-1);
+		var _this = this;
+		// random numbers between 1 and 3
+	    this.choices  = this.arrayWithRandomNumsUpTo(3);
+		 
+		// random numbers between 4 and 6
+		this.answers = this.arrayWithRandomNumsUpTo(3);
+		for (var i=0; i&lt;this.answers.length; i++){
+			this.answers[i] = this.answers[i] + 3;
+		}
+		
+		//Populate buttons
+		function match2Buttons(choice, answer, valueFrom, valueTo) {
+			_this[&quot;$btn&quot;+choice].text(valueFrom);
+			_this[&quot;$btn&quot;+answer].text(valueTo);
+		}
+		
+		match2Buttons(this.choices[0],this.answers[0],this.data[this.index].from,this.data[this.index].to);
+		match2Buttons(this.choices[1],this.answers[1],this.data[idxs[0]].from,this.data[idxs[0]].to);
+		match2Buttons(this.choices[2],this.answers[2],this.data[idxs[1]].from,this.data[idxs[1]].to);
+	};
+	
+	
+	// Gives a hint by disabling a correct match
+	this.giveHint = function (){
+		// Only one hint is possible
+		if(this.hints &lt; 1){
+			// Disable buttons
+			if(this.disableHintButtons(0)) return;
+			if(this.disableHintButtons(1)) return;
+			if(this.disableHintButtons(2)) return;
+		}
+	};
+	
+	// Disables the buttons given in the hint
+	this.disableHintButtons = function(idx){
+		if(!this.isDisabled(this.answers[idx])){
+			this.successDisableBtn(this.choices[idx]);
+			this.successDisableBtn(this.answers[idx]);
+			this.correctAnswers++;
+			this.hints++;
+			this.endExercise();
+			return true;
+		}
+		return false;
+	};
+	
+	/** Generates an array of random numbers of given size
+	* @param size: defines how many random numbers we want
+	*				the resulted random numbers will in the range of [1,size]
+	*/
+	this.arrayWithRandomNumsUpTo = function(size){
+		var arr = [];	
+		while(arr.length &lt; size){
+			var randomnumber = Math.ceil(Math.random()*size);	
+			if((arr.indexOf(randomnumber) &gt; -1)) continue;
+			arr[arr.length] = randomnumber;
+		}		
+		return arr;
+	};
+	
+	/** Generates an array of random numbers of given size
+	* @param size:  defines how many random numbers we want
+	* @param range: defines the upper limit of the numbers: [1,range]
+	*/
+	this.randomNumsInRange = function(size,range){
+		var arr = [];	
+		while(arr.length &lt; size){
+			var randomnumber = Math.ceil(Math.random()*range);
+			if((arr.indexOf(randomnumber) &gt; -1) || randomnumber==this.index) continue;
+			arr[arr.length] = randomnumber;
+		}		
+		return arr;
+	};
+	
+};
+
+Ex3.prototype = Object.create(Exercise.prototype, {
+	constructor: Ex3,
+	/************************** SETTINGS ********************************/	
+	description: {value: &quot;Match each word with its translation&quot;},
+	customTemplateURL: {value: &apos;static/template/exercise/ex3.html&apos;},
+	choices: 	 { writable: true, value:[1,2,3]},				// arr of indexes of possible choices
+	answers: 	{ writable: true, value:[1,2,3]},				// arr of indexes of possible answers
+	chosenButton: { writable: true, value:-1},  	// ID of currently selected button; -1 means no button is selected
+	correctAnswers: { writable: true, value:0},	// number of correct answers
+	hints: {writable:true, value:0},			// max number of possible hints is 1
+    minRequirement: { writable: true, value:4},	// minimum number required for the ex
+	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_MATCH},
+	/*******************************************************************/
+});
+
+export default Ex3;</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
