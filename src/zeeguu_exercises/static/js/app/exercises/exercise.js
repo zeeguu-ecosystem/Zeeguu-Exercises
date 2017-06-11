@@ -102,7 +102,6 @@ Exercise.prototype = {
 	*	Check selected answer with success condition
 	**/
 	checkAnswer: function (chosenWord){
-		console.log("checking the answer");
 		if (this.successCondition(chosenWord)){		
 			this.onSuccess();
 			return;
