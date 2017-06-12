@@ -13,17 +13,17 @@ How to run the code on local machine
 At first clone the repository from
 <https://github.com/martinavagyan/zeeguu-exercises.git>  
 Note: you need to have python 3.6.1 installed in your machine.
-In order to run the code on the local machine, we need to install the
-following dependencies: Python Virtual environment, *Flask*,
-*Gunicorn*, *Requests*.  
   
 The following tutorial shows how to install
 *virtualenv* and *Flask*:  
 <http://flask.pocoo.org/docs/0.12/installation/>  
 
-Note: to install virtual enviroment in windows simply type:  
+Note: to install virtual enviroment in windows type:  
 
-    virtualenv < name of the folder>
+    pip install virtualenv
+    
+To install the virtual enviroment for the project, navigate to the folder and type:
+virtualenv < name of the folder>
   
 After installing virtual environment in the project folder, activate it
 using:
@@ -32,26 +32,19 @@ using:
 
 ***Make sure the environment is activated before proceeding with the
 instructions***  
-  
-To install *gunicorn* use the following command:
-
-    pip install gunicorn
-
-More details here:  
-<http://docs.gunicorn.org/en/stable/install.html>  
  
-To install the *requests* package simply do:
+ Install all dependencies from requriments.txt
+ 
+ pip install -r requirements.txt
 
-    pip install requests
 
-   
 Afterwards, you need to (re)generate the requirements file:
 
     pip freeze > requirements.txt 
 
 And then save it:
 
-    pip install -r requirements.txt
+    
 
    
 A batch file (*batchfile*.*bat*) is provided to
@@ -61,8 +54,8 @@ that all the previous installations are successfully completed.
 Heroku Deployment
 -----------------
 
-The code is already deployed on the *Heroku* server[1]. The
-deployment is done through Github.  
+The project is deployed on the *Heroku* server[1]. The
+deployment is connectedto Github repository: https://github.com/martinavagyan/zeeguu-exercises
 The link to our app:  
 [zeeguu.herokuapp.com]  
 The repository connected to heroku is:  
