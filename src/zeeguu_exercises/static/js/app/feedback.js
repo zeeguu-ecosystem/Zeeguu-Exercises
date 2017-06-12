@@ -78,10 +78,10 @@ export default class Feedback {
             text: "",
             timer: 1000,
             type:"success",
-            showConfirmButton: true,
+            showConfirmButton: false,
             showCancelButton: false,
-            closeOnConfirm: true,
-            confirmButtonText: "ok",
+            closeOnConfirm: false,
+            confirmButtonText: "",
         });
     }
 

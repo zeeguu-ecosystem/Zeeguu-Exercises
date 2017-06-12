@@ -196,7 +196,7 @@ Exercise.prototype = {
 	 * Function for sending the user feedback for an individual exercise
 	 * */
 	giveFeedbackBox: function () {
-        this.exFeedback.exerciseFeedbackBox(this.data[this.index].id);
+        this.exFeedback.exerciseFeedbackBox(this.data[this.index-1].id);
 	},
 
 	/**
