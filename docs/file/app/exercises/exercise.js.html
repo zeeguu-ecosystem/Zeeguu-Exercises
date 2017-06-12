@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">app/exercises/exercise.js | Zeeguu Exercises API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/cookie_handler.js~cookieHandler.html">cookieHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/environment.js~Environment.html">Environment</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/feedback.js~Feedback.html">Feedback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/loader.js~Loader.html">Loader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/session.js~Session.html">Session</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/the_distraction_shield_extension.js~TDS.html">TDS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Generator">Generator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-events">events</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">animations</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/loading_animation.js~LoadingAnimation.html">LoadingAnimation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/shake_animation.js~ShakeAnimation.html">ShakeAnimation</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">exercises</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex1">Ex1</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex2">Ex2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex3">Ex3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex4">Ex4</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Exercise">Exercise</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">pages</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-EmptyPage">EmptyPage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Home">Home</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-NotFound">NotFound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Starter">Starter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test_example</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/test_example/example.js~Bear.html">Bear</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">app/exercises/exercise.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/** Modular Zeeguu Powered Exercise @author Martin Avagyan
+ *  @initialize it using: new Exercise();
+ *  @customize it by using prototypal inheritance
+**/
+
+import $ from &apos;jquery&apos;;
+import events from &apos;../pubsub&apos;;
+import Util from &apos;../util&apos;;
+import Settings from &apos;../settings&apos;;
+import Session from &apos;../session&apos;;
+import {Loader} from &apos;../loader&apos;;
+import ShakeAnimation from &quot;../animations/shake_animation&quot;;
+import Feedback from &quot;../feedback&quot;;
+
+var Exercise = function(data,index,size){
+	this.init(data,index,size);	
+	//TODO unbind method
+};
+
+Exercise.prototype = {
+	
+	/************************** SETTINGS ********************************/	
+	data: 0,	
+	customTemplateURL: 0,
+	index: 0,
+	startIndex: 0,
+	size: 0, //default number of bookmarks
+	description:  &quot;Solve the exercise&quot;,  //default description
+	session: Session.getSession(), //Example of session id 34563456 or 11010001
+	startTime: 0,
+	isHintUsed: false,
+    minRequirement: 1,
+	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,//Defualt submission
+	successAnimationTime: 2000,
+	exFeedback: 0,
+	
+	/*********************** General Functions ***************************/	
+	/**
+	*	Loads the HTML exercise template from static
+	**/
+	
+	createCustomDom: function(){
+        Loader.loadTemplateIntoElem(this.customTemplateURL,$(&quot;#custom-content&quot;));
+	},
+	
+	/**
+	*	Saves the common dom in chache
+	**/
+	cacheDom: function(){
+		this.$elem 				= $(&quot;#ex-module&quot;);
+		this.$description  		= this.$elem.find(&quot;#ex-descript&quot;);
+		this.$loader 			= this.$elem.find(&apos;#loader&apos;);
+		this.$statusContainer 	= this.$elem.find(&apos;#ex-status-container&apos;);
+		this.$exFooterPrimary 	= this.$elem.find(&apos;#ex-footer-primary&apos;);
+		this.$exFooterSecondary = this.$elem.find(&apos;#ex-footer-secondary&apos;);
+		this.cacheCustomDom();
+	},
+	
+	/**
+	*	Exercise initialaizer
+	**/
+	init: function(data,index,size){
+		var _this = this;
+		$.when(Loader.loadTemplateIntoElem(_this.customTemplateURL,$(&quot;#custom-content&quot;))).done(function(){
+			_this.cacheDom();	
+			_this.bindUIActions();
+			_this._constructor(data,index,size);	
+		});		
+	},	
+	
+	
+	/**
+	*	The main constructor
+	**/
+	_constructor: function (data,index,size){		
+		this.data  = data;
+		this.index = index;
+		this.startIndex = index;
+		this.size  = size;
+		this.shake = new ShakeAnimation();
+		this.exFeedback = new Feedback(this.resultSubmitSource,this.session);
+		this.setDescription(); 	
+		this.next();
+        this.startTime = Date.now();
+	},
+		
+	/**
+	*	Populates custom exercise description
+	**/
+	setDescription: function(){
+		this.$description.html(this.description);
+	},
+	
+	/**
+	*	When the ex are done, notify the observers
+	**/
+	onExComplete: function (){		
+		events.emit(&apos;exerciseCompleted&apos;);
+	},
+	
+	/**
+	*	Check selected answer with success condition
+	**/
+	checkAnswer: function (chosenWord){
+		if (this.successCondition(chosenWord)){		
+			this.onSuccess();
+			return;
+		}			
+		this.wrongAnswerAnimation();
+		this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_WRONG);
+	},
+
+	/**
+	*	Actions taken when the succes condition is true
+	**/
+	onSuccess: function(){
+		this.$exFooterPrimary.removeClass (&apos;mask-appear&apos;);
+		this.$exFooterSecondary.toggleClass(&apos;mask-appear&apos;);
+		this.handleSuccessCondition();
+	},
+
+	/**
+	 * Revert the secondary and primary footers
+	 * */
+	revertPrimary: function () {
+		this.$exFooterSecondary.removeClass (&apos;mask-appear&apos;);
+		this.$exFooterPrimary.toggleClass(&apos;mask-appear&apos;);
+	},
+
+
+	/**
+	 * When the answer is successful show the animation and submit the result
+	 * */
+	handleSuccessCondition: function () {
+        this.animateSuccess();
+        //Submit the result of translation
+        this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_CORRECT);
+        // Notify the observer
+        events.emit(&apos;progress&apos;);
+        this.index++;
+	},
+
+    /**
+     * On success condition true, generate new exercise
+     * */
+    onRenderNextEx: function () {
+		this.revertPrimary();
+        // The current exercise set is complete
+        if(this.index == this.size + this.startIndex){
+            this.onExComplete();
+            return;
+        }
+        this.next();
+		this.startTime = Date.now();
+    },
+	
+	/**
+     *	Request the submit to the Zeeguu API
+	 *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 
+     **/
+    submitResult: function(id,exOutcome){
+    	let _this = this;
+		//If the user used the hint, do not register correct solution, resent the hint, move on
+		if(this.isHintUsed &amp;&amp; exOutcome == Settings.ZEEGUU_EX_OUTCOME_CORRECT) {
+			this.isHintUsed = false;
+			return;
+		}
+		//If hint is used twice, ignore request
+		if(this.isHintUsed &amp;&amp; exOutcome == Settings.ZEEGUU_EX_OUTCOME_HINT) return;
+		//Calculate time taken for single exercise
+		var exTime = Util.calcTimeInMilliseconds(this.startTime);
+		//Request back to the server with the outcome
+		//console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + &quot;/&quot; + exTime + &quot;/&quot; + id + &quot;?session=&quot;+this.session);
+        $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + &quot;/&quot; + exTime + &quot;/&quot; + id + &quot;?session=&quot;+this.session);
+    },
+
+	
+	/**
+	*	Removes focus of page elements
+	**/
+	prepareDocument: function(){
+		if (document.activeElement != document.body) document.activeElement.blur();
+	},
+	
+	/**
+	*	User hint handler
+	**/
+	handleHint: function(){
+		this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_HINT);
+		this.isHintUsed = true;
+
+		this.giveHint();
+	},
+
+	/**
+	 * Function for sending the user feedback for an individual exercise
+	 * */
+	giveFeedbackBox: function () {
+        this.exFeedback.exerciseFeedbackBox(this.data[this.index-1].id);
+	},
+
+	/**
+	 * Apply style dynamically when content changes
+	 * */
+	reStyleDom: function () {
+		this.reStyleContext();
+	},
+
+	/**
+	 * Apply style dynamically to context
+	 * */
+	reStyleContext: function () {
+		if(!Util.isMultiline(this.$context)){
+			this.$context.addClass(&apos;centering&apos;);//Text align center
+			return;
+		}
+		this.$context.removeClass(&apos;centering&apos;);//Text align justify
+	},
+	
+	
+	/*********************** Interface functions *****************************/
+	/**
+	*	Binding UI with Controller functions
+	**/
+	bindUIActions: function(){},
+	
+	/**
+	*	Condition used by checkAnswer 
+	*	If true, then a correct answer was given
+	**/
+	successCondition: function(){},
+	
+	
+	/**
+	*	Gives a hint when the hint button is pressed
+	**/
+	giveHint: function (){},
+	
+	/**
+	*	Populates the next exercise
+	**/
+	next: function (){},
+	
+	/**
+	*	Cahes custom dom of the exercise
+	**/
+	cacheCustomDom: function(){},
+
+	/**
+	*	Animation for wrong solution
+	**/
+	wrongAnswerAnimation: function(){},
+
+	/************************** Animations ********************************/	
+
+	/**
+	*	Animation for successful solution
+	**/
+	animateSuccess: function(){
+		let _this = this;
+		this.$statusContainer.removeClass(&apos;hide&apos;);
+		setTimeout(function(){
+			if (_this.$statusContainer.length &gt; 0) {
+				_this.$statusContainer.addClass(&apos;hide&apos;);
+			}
+		}, _this.successAnimationTime);
+	},	
+};
+
+export default Exercise;</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

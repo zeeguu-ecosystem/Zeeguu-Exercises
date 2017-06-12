@@ -1,0 +1,166 @@
+{
+  "coverage": "51.94%",
+  "expectCount": 77,
+  "actualCount": 40,
+  "files": {
+    "app/animations/loading_animation.js": {
+      "expectCount": 6,
+      "actualCount": 2,
+      "undocumentLines": [
+        17,
+        10,
+        11,
+        28
+      ]
+    },
+    "app/test_example/example.js": {
+      "expectCount": 4,
+      "actualCount": 0,
+      "undocumentLines": [
+        1,
+        2,
+        6,
+        3
+      ]
+    },
+    "app/pages/empty_page.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        8
+      ]
+    },
+    "app/environment.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        5
+      ]
+    },
+    "app/exercises/ex1.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        12
+      ]
+    },
+    "app/validator.js": {
+      "expectCount": 22,
+      "actualCount": 11,
+      "undocumentLines": [
+        42,
+        43,
+        44,
+        45,
+        25,
+        26,
+        31,
+        30,
+        32,
+        33,
+        29
+      ]
+    },
+    "app/exercises/ex2.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        5
+      ]
+    },
+    "app/exercises/ex3.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        10
+      ]
+    },
+    "app/exercises/ex4.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        11
+      ]
+    },
+    "app/exercises/exercise.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        15
+      ]
+    },
+    "app/feedback.js": {
+      "expectCount": 12,
+      "actualCount": 9,
+      "undocumentLines": [
+        8,
+        18,
+        19
+      ]
+    },
+    "app/generator.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        24
+      ]
+    },
+    "app/pages/home.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        8
+      ]
+    },
+    "app/loader.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "app/pages/not_found.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        6
+      ]
+    },
+    "app/session.js": {
+      "expectCount": 3,
+      "actualCount": 2,
+      "undocumentLines": [
+        9
+      ]
+    },
+    "app/animations/shake_animation.js": {
+      "expectCount": 9,
+      "actualCount": 6,
+      "undocumentLines": [
+        11,
+        14,
+        13
+      ]
+    },
+    "app/pages/starter.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        7
+      ]
+    },
+    "app/the_distraction_shield_extension.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "app/cookie_handler.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "app/pubsub.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    }
+  }
+}

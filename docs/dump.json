@@ -1,0 +1,3371 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "app/animations/loading_animation.js",
+    "content": "/**\r\n * Animation class is for general animations within the application\r\n * The GeneralAnimation class is a singleton class,\r\n * meaning that there is at most 1 instance of the class available\r\n * */\r\nimport $ from 'jquery';\r\n\r\nlet animationInstance = null;\r\n\r\nclass LoadingAnimation {\r\n    constructor(){\r\n        if(animationInstance){\r\n            return animationInstance;\r\n        }\r\n        /** Class parameters*/\r\n        this.$loader = null;\r\n        this.$content = null;\r\n        this.updateCache();\r\n    }\r\n    /**\r\n     * Update/save the cache of the dom\r\n     * */\r\n    updateCache(){\r\n        this.$loader = $('#loader');\r\n        this.$content = $('#main-content');\r\n    }\r\n\r\n    loadingAnimation(activate) {\r\n        //If cache is not available\r\n        if(this.$loader == null || this.$content == null){\r\n            this.updateCache();\r\n        }\r\n        //Turn on the animation\r\n        if (activate === true) {\r\n            this.$content.addClass('hide');\r\n            this.$loader.removeClass('hide');\r\n        } else {//Turn off the animation unhide the content\r\n            this.$content.removeClass('hide');\r\n            this.$loader.addClass('hide');\r\n        }\r\n    }\r\n}\r\n\r\nexport default LoadingAnimation;",
+    "static": true,
+    "longname": "app/animations/loading_animation.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "variable",
+    "name": "animationInstance",
+    "memberof": "app/animations/loading_animation.js",
+    "static": true,
+    "longname": "app/animations/loading_animation.js~animationInstance",
+    "access": null,
+    "export": false,
+    "importPath": "language_practice_platform/app/animations/loading_animation.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 2,
+    "kind": "class",
+    "name": "LoadingAnimation",
+    "memberof": "app/animations/loading_animation.js",
+    "static": true,
+    "longname": "app/animations/loading_animation.js~LoadingAnimation",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/animations/loading_animation.js",
+    "importStyle": "LoadingAnimation",
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 3,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/animations/loading_animation.js~LoadingAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/loading_animation.js~LoadingAnimation#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 4,
+    "kind": "member",
+    "name": "$loader",
+    "memberof": "app/animations/loading_animation.js~LoadingAnimation",
+    "static": false,
+    "longname": "app/animations/loading_animation.js~LoadingAnimation#$loader",
+    "access": null,
+    "description": "Class parameters",
+    "lineNumber": 16,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "member",
+    "name": "$content",
+    "memberof": "app/animations/loading_animation.js~LoadingAnimation",
+    "static": false,
+    "longname": "app/animations/loading_animation.js~LoadingAnimation#$content",
+    "access": null,
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 6,
+    "kind": "method",
+    "name": "updateCache",
+    "memberof": "app/animations/loading_animation.js~LoadingAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/loading_animation.js~LoadingAnimation#updateCache",
+    "access": null,
+    "description": "Update/save the cache of the dom",
+    "lineNumber": 23,
+    "params": []
+  },
+  {
+    "__docId__": 7,
+    "kind": "member",
+    "name": "$loader",
+    "memberof": "app/animations/loading_animation.js~LoadingAnimation",
+    "static": false,
+    "longname": "app/animations/loading_animation.js~LoadingAnimation#$loader",
+    "access": null,
+    "description": null,
+    "lineNumber": 24,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 8,
+    "kind": "member",
+    "name": "$content",
+    "memberof": "app/animations/loading_animation.js~LoadingAnimation",
+    "static": false,
+    "longname": "app/animations/loading_animation.js~LoadingAnimation#$content",
+    "access": null,
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 9,
+    "kind": "method",
+    "name": "loadingAnimation",
+    "memberof": "app/animations/loading_animation.js~LoadingAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/loading_animation.js~LoadingAnimation#loadingAnimation",
+    "access": null,
+    "description": null,
+    "lineNumber": 28,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "activate",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 10,
+    "kind": "file",
+    "name": "app/animations/shake_animation.js",
+    "content": "/**\r\n * This class is responsible for animating elements that have a class attribute \"shakable\".\r\n * When an element is clicked with class \"shakable\", class \"shake\" is added to its attributes.\r\n * After the animation is done the \"shake\" class is removed.\r\n * In HTML use the class \"shakable\" for each element that shake property\r\n * @Example <div class=\"shakable\"></div>\r\n * */\r\n\r\nimport $ from 'jquery';\r\n\r\nexport default class ShakeAnimation{\r\n\r\n    constructor(){\r\n        this.animationEvent = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';\r\n        this.bindUIActions();\r\n    }\r\n\r\n    /**\r\n     * Make all the actions connected to this module\r\n     * return {void}\r\n     * */\r\n    bindUIActions(){\r\n        var _this = this;\r\n        $('.shakable').click((event) => {this.shakeEvent($(event.target));});\r\n    }\r\n\r\n    /**\r\n     * Use the clicked element to invoke shakeElement\r\n     * @return {void}\r\n     * */\r\n    shakeEvent(elem){\r\n        this.shakeElement(elem);\r\n    }\r\n\r\n    /**\r\n     * Function adds class shake, after the animation is done,\r\n     * the class shake is removed from the element\r\n     * @param {jQuery element}, elem\r\n     * @return {void}\r\n     * */\r\n    shakeElement(elem){\r\n        elem.addClass('shake wrongAlert');\r\n        elem.one(this.animationEvent, function(event) {\r\n            elem.removeClass('shake wrongAlert')\r\n        });\r\n    }\r\n\r\n    /**\r\n     * Shakes the element that has the focus\r\n     * @return {void}\r\n     * */\r\n    shakeFocusedElement(){\r\n        this.shakeElement($(document.activeElement));\r\n    }\r\n\r\n    /**\r\n     * Make the given element shakable\r\n     * @param {Object}, element\r\n     * @return {void}\r\n    * */\r\n    makeShakable(elem){\r\n        elem.addClass('shakable');\r\n        this.bindUIActions();\r\n    }\r\n\r\n    /**\r\n     * Make the given element non shakable\r\n     * @param {Object}, element\r\n     * @return {void}\r\n     * */\r\n    makeNonShakable(elem){\r\n        elem.removeClass('shakable');\r\n        this.bindUIActions();\r\n    }\r\n}\r\n",
+    "static": true,
+    "longname": "app/animations/shake_animation.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 11,
+    "kind": "class",
+    "name": "ShakeAnimation",
+    "memberof": "app/animations/shake_animation.js",
+    "static": true,
+    "longname": "app/animations/shake_animation.js~ShakeAnimation",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/animations/shake_animation.js",
+    "importStyle": "ShakeAnimation",
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 12,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/animations/shake_animation.js~ShakeAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/shake_animation.js~ShakeAnimation#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 13,
+    "kind": "member",
+    "name": "animationEvent",
+    "memberof": "app/animations/shake_animation.js~ShakeAnimation",
+    "static": false,
+    "longname": "app/animations/shake_animation.js~ShakeAnimation#animationEvent",
+    "access": null,
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 14,
+    "kind": "method",
+    "name": "bindUIActions",
+    "memberof": "app/animations/shake_animation.js~ShakeAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/shake_animation.js~ShakeAnimation#bindUIActions",
+    "access": null,
+    "description": "Make all the actions connected to this module\nreturn {void}",
+    "lineNumber": 22,
+    "params": []
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "name": "shakeEvent",
+    "memberof": "app/animations/shake_animation.js~ShakeAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/shake_animation.js~ShakeAnimation#shakeEvent",
+    "access": null,
+    "description": "Use the clicked element to invoke shakeElement",
+    "lineNumber": 31,
+    "params": [
+      {
+        "name": "elem",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "void"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 16,
+    "kind": "method",
+    "name": "shakeElement",
+    "memberof": "app/animations/shake_animation.js~ShakeAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/shake_animation.js~ShakeAnimation#shakeElement",
+    "access": null,
+    "description": "Function adds class shake, after the animation is done,\nthe class shake is removed from the element",
+    "lineNumber": 41,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{jQuery",
+        "description": "element}, elem"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "void"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 17,
+    "kind": "method",
+    "name": "shakeFocusedElement",
+    "memberof": "app/animations/shake_animation.js~ShakeAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/shake_animation.js~ShakeAnimation#shakeFocusedElement",
+    "access": null,
+    "description": "Shakes the element that has the focus",
+    "lineNumber": 52,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "void"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 18,
+    "kind": "method",
+    "name": "makeShakable",
+    "memberof": "app/animations/shake_animation.js~ShakeAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/shake_animation.js~ShakeAnimation#makeShakable",
+    "access": null,
+    "description": "Make the given element shakable",
+    "lineNumber": 61,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{Object},",
+        "description": "element"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "void"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "name": "makeNonShakable",
+    "memberof": "app/animations/shake_animation.js~ShakeAnimation",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/animations/shake_animation.js~ShakeAnimation#makeNonShakable",
+    "access": null,
+    "description": "Make the given element non shakable",
+    "lineNumber": 71,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{Object},",
+        "description": "element"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "void"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 20,
+    "kind": "file",
+    "name": "app/app.js",
+    "content": "/**\r\n * Application Starting point\r\n * Rounters and Handles defined here\r\n */\r\nimport page from \"page\";\r\nimport Generator from './generator';\r\nimport Starter from './pages/starter';\r\nimport NotFound from './pages/not_found';\r\nimport Events from './pubsub';\r\n\r\n/********************** Routes **************************/\r\npage('/', index);\r\npage('/get-ex', getEx);\r\npage('/practice/:practicePlan', practice);\r\npage('*', notFound);\r\n\r\n/******************* Page Settings **********************/\r\npage.exit('*', backFunction);\r\npage({hashbang:true});\r\npage.start();\r\n\r\n/********************** Handlers ***********************/\r\n/**\r\n * Main starter screen route\r\n * */\r\nfunction index() {\r\n    window.onload = new Starter();\r\n}\r\n\r\n/**\r\n * Get-ex route\r\n * */\r\nfunction getEx() {\r\n    //For now hand codded exercise generator\r\n    window.onload = new Generator([[1,5],[2,3]]);\r\n}\r\n\r\n/**\r\n * Practice route\r\n * Each exercise card set has its own index\r\n * @example http://127.0.0.1:5000/#!/practice/0 , practice plan with index 0\r\n * */\r\nfunction practice(ctx) {\r\n    window.onload = new Generator(Starter.prototype.exNames[ctx.params.practicePlan].exID);\r\n}\r\n\r\n/**\r\n * When leaving a page, perform the following action\r\n * Reset all events from pubsub module to prevent interception from past subscribers\r\n * */\r\nfunction backFunction(ctx,next) {\r\n    Events.resetAll();\r\n    next();\r\n}\r\n\r\n/**\r\n * Not found page\r\n * */\r\nfunction notFound(){\r\n    window.onload = new NotFound();\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+    "static": true,
+    "longname": "app/app.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 21,
+    "kind": "function",
+    "name": "index",
+    "memberof": "app/app.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/app.js~index",
+    "access": null,
+    "export": false,
+    "importPath": "language_practice_platform/app/app.js",
+    "importStyle": null,
+    "description": "Main starter screen route",
+    "lineNumber": 26,
+    "params": []
+  },
+  {
+    "__docId__": 22,
+    "kind": "function",
+    "name": "getEx",
+    "memberof": "app/app.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/app.js~getEx",
+    "access": null,
+    "export": false,
+    "importPath": "language_practice_platform/app/app.js",
+    "importStyle": null,
+    "description": "Get-ex route",
+    "lineNumber": 33,
+    "params": []
+  },
+  {
+    "__docId__": 23,
+    "kind": "function",
+    "name": "practice",
+    "memberof": "app/app.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/app.js~practice",
+    "access": null,
+    "export": false,
+    "importPath": "language_practice_platform/app/app.js",
+    "importStyle": null,
+    "description": "Practice route\nEach exercise card set has its own index",
+    "examples": [
+      "http://127.0.0.1:5000/#!/practice/0 , practice plan with index 0"
+    ],
+    "lineNumber": 43,
+    "params": [
+      {
+        "name": "ctx",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 24,
+    "kind": "function",
+    "name": "backFunction",
+    "memberof": "app/app.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/app.js~backFunction",
+    "access": null,
+    "export": false,
+    "importPath": "language_practice_platform/app/app.js",
+    "importStyle": null,
+    "description": "When leaving a page, perform the following action\nReset all events from pubsub module to prevent interception from past subscribers",
+    "lineNumber": 51,
+    "params": [
+      {
+        "name": "ctx",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "next",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 25,
+    "kind": "function",
+    "name": "notFound",
+    "memberof": "app/app.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/app.js~notFound",
+    "access": null,
+    "export": false,
+    "importPath": "language_practice_platform/app/app.js",
+    "importStyle": null,
+    "description": "Not found page",
+    "lineNumber": 59,
+    "params": []
+  },
+  {
+    "__docId__": 26,
+    "kind": "file",
+    "name": "app/cookie_handler.js",
+    "content": "/**\r\n * Created by Martin on 5/4/2017.\r\n */\r\n\r\nexport default class cookieHandler {\r\n    /**\r\n     * Retrive cookie given the\r\n     * @param {String} name, cookie name\r\n     * */\r\n    static getCookie(name) {\r\n        var nameEQ = name + \"=\";\r\n        var ca = document.cookie.split(';');\r\n        for (var i = 0; i < ca.length; i++) {\r\n            var c = ca[i];\r\n            while (c.charAt(0) == ' ') c = c.substring(1, c.length);\r\n            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);\r\n        }\r\n        return '';\r\n    }\r\n\r\n    /**\r\n     * Set cookie given the\r\n     * @param {String} name, cookie identifier\r\n     * @param {Object} value, value of the cookie\r\n     * @param {int} days, expiration time\r\n     * */\r\n    static setCookie (name, value, days) {\r\n        var expires;\r\n        if (days) {\r\n            var date = new Date();\r\n            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));\r\n            expires = \"; expires=\" + date.toGMTString();\r\n        }\r\n        else {\r\n            expires = '';\r\n        }\r\n        document.cookie = name + \"=\" + value + expires + \"; path=/\";\r\n    }\r\n}",
+    "static": true,
+    "longname": "app/cookie_handler.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 27,
+    "kind": "class",
+    "name": "cookieHandler",
+    "memberof": "app/cookie_handler.js",
+    "static": true,
+    "longname": "app/cookie_handler.js~cookieHandler",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/cookie_handler.js",
+    "importStyle": "cookieHandler",
+    "description": "Created by Martin on 5/4/2017.",
+    "lineNumber": 5,
+    "interface": false
+  },
+  {
+    "__docId__": 28,
+    "kind": "method",
+    "name": "getCookie",
+    "memberof": "app/cookie_handler.js~cookieHandler",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/cookie_handler.js~cookieHandler.getCookie",
+    "access": null,
+    "description": "Retrive cookie given the",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name,",
+        "description": "cookie name"
+      }
+    ],
+    "return": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "name": "setCookie",
+    "memberof": "app/cookie_handler.js~cookieHandler",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/cookie_handler.js~cookieHandler.setCookie",
+    "access": null,
+    "description": "Set cookie given the",
+    "lineNumber": 27,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name,",
+        "description": "cookie identifier"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value,",
+        "description": "value of the cookie"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "int"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "days,",
+        "description": "expiration time"
+      }
+    ]
+  },
+  {
+    "__docId__": 30,
+    "kind": "file",
+    "name": "app/debug/set_cookie_test.js",
+    "content": "/**\r\n * This module is only for testing purposes, the end point is /debug\r\n * */\r\nimport Session from '../session';\r\nSession.setSession();\r\n\r\n/**\r\n * TODO this wont be part of final release,\r\n * it is meant to make testing possible with Heroku and by locally running\r\n */\r\n\r\nlet redirect = window.location.protocol + \"//\" + window.location.hostname;\r\nwindow.location.href = (redirect === \"http://127.0.0.1\")? redirect+\":5000\":redirect;\r\n",
+    "static": true,
+    "longname": "app/debug/set_cookie_test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 31,
+    "kind": "variable",
+    "name": "redirect",
+    "memberof": "app/debug/set_cookie_test.js",
+    "static": true,
+    "longname": "app/debug/set_cookie_test.js~redirect",
+    "access": null,
+    "export": false,
+    "importPath": "language_practice_platform/app/debug/set_cookie_test.js",
+    "importStyle": null,
+    "description": "TODO this wont be part of final release,\nit is meant to make testing possible with Heroku and by locally running",
+    "lineNumber": 12,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 32,
+    "kind": "file",
+    "name": "app/environment.js",
+    "content": "/**\r\n * Created by Martin on 5/12/2017.\r\n */\r\nclass Environment{\r\n    static backButtonPreAction(){\r\n        window.onbeforeunload = function() {\r\n            return \"Your work will be lost.\";\r\n        };\r\n    }\r\n}\r\n\r\nexport default Environment;",
+    "static": true,
+    "longname": "app/environment.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 33,
+    "kind": "class",
+    "name": "Environment",
+    "memberof": "app/environment.js",
+    "static": true,
+    "longname": "app/environment.js~Environment",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/environment.js",
+    "importStyle": "Environment",
+    "description": "Created by Martin on 5/12/2017.",
+    "lineNumber": 4,
+    "interface": false
+  },
+  {
+    "__docId__": 34,
+    "kind": "method",
+    "name": "backButtonPreAction",
+    "memberof": "app/environment.js~Environment",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/environment.js~Environment.backButtonPreAction",
+    "access": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 35,
+    "kind": "file",
+    "name": "app/exercises/ex1.js",
+    "content": "/** Custom exercise form finding word in a context. Inherited from Exercise.js\r\n *  @initialize it using: new Ex1();\r\n *  @customize it by using prototypal inheritance \r\n**/\r\n\r\nimport $ from 'jquery';\r\nimport Exercise from './exercise';\r\nimport Util from '../util';\r\nimport Settings from \"../settings\";\r\n\r\n\r\nfunction Ex1(data,index,size){\r\n\t\r\n\tthis.init(data,index,size);\r\n\t\r\n\t/** @Override */\r\n\tthis.cacheCustomDom = function(){\t\r\n\t\tthis.$to \t\t\t\t\t= this.$elem.find(\"#ex-to\");\r\n\t\tthis.$context \t\t\t\t= this.$elem.find(\"#ex-context\");\r\n\t\tthis.$input \t\t\t\t= this.$elem.find(\"#ex-main-input\");\r\n\t\tthis.$showSolution \t\t\t= this.$elem.find(\"#show_solution\");\r\n\t\tthis.$checkAnswer \t\t\t= this.$elem.find(\"#check_answer\");\r\n\t\tthis.$clickableText \t\t= this.$elem.find(\".clickable-text\");\r\n\t\tthis.$nextExercise\t\t\t= this.$elem.find('#next-exercise');\r\n        this.$feedbackBtn\t\t\t= this.$elem.find('#feedback');\r\n\t};\r\n\t\r\n\t/** @Override */\r\n\tthis.bindUIActions = function(){\r\n\t\tvar _this = this;\r\n\t\t//Bind UI action of Hint/Show solution to the function\t\t\r\n\t\tthis.$showSolution.on(\"click\", this.handleHint.bind(this));\r\n\t\t\r\n\t\t//Bind UI action of Check answer to the function\r\n\t\tthis.$checkAnswer.on(\"click\", this.checkAnswer.bind(this));\r\n\t\t\r\n\t\t//Bind UI Text click\t\t\r\n\t\tthis.$clickableText.on(\"click\",this.updateInput.bind(this));\r\n\t\t\r\n\t\t// Bind UI Enter Key\r\n\t\tthis.$input.keyup(this.enterKeyup.bind(this));\r\n\r\n\t\t//Next exercise clicked\r\n\t\tthis.$nextExercise.on(\"click\",this.onRenderNextEx.bind(this));\r\n\r\n        //Next exercise clicked\r\n\t\tthis.$feedbackBtn.on(\"click\",this.giveFeedbackBox.bind(this));\r\n\t};\r\n\t\r\n\t/** @Override */\r\n\tthis.next = function (){\r\n\t\tthis.$to.html(\"\\\"\"+this.data[this.index].to+\"\\\"\");\r\n\t\tthis.$context.html(this.data[this.index].context);\r\n\t\tthis.$input.val(\"\");\r\n\t\tthis.reStyleDom();\r\n\t};\r\n\t\r\n\tthis.updateInput = function() {\r\n\t\tvar t = Util.getSelectedText();\r\n\t\tthis.$input.val(t);\r\n\t};\r\n\t\r\n\tthis.enterKeyup = function(event){\r\n\t\tif(event.keyCode == 13){\r\n\t\t\tthis.$checkAnswer.click();\r\n\t\t}\r\n\t};\r\n\t\r\n\t/** @Override */\r\n\tthis.giveHint = function (){\r\n\t\tthis.$input.val(this.data[this.index].from);\r\n\t};\r\n\t\r\n\t/** @Override */\r\n\tthis.successCondition = function(){\r\n\t\treturn (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, \"\") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, \"\"));\r\n\t};\r\n\r\n\t/** @Override */\r\n\tthis.wrongAnswerAnimation = function(){\r\n\t\tthis.shake.shakeElement(this.$input);\r\n\t};\r\n}\r\n\r\nEx1.prototype = Object.create(Exercise.prototype, {\r\n\tconstructor: Ex1,\r\n\t/************************** SETTINGS ********************************/\t\r\n\tdescription: {value: \"Find the word in the context:\"},\r\n\tcustomTemplateURL: {value: 'static/template/exercise/ex1.html'},\r\n\tresultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE},\r\n});\r\n\r\nexport default Ex1;",
+    "static": true,
+    "longname": "app/exercises/ex1.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 36,
+    "kind": "function",
+    "name": "Ex1",
+    "memberof": "app/exercises/ex1.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/exercises/ex1.js~Ex1",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/exercises/ex1.js",
+    "importStyle": "Ex1",
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "data",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "index",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "size",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 37,
+    "kind": "file",
+    "name": "app/exercises/ex2.js",
+    "content": "import $ from 'jquery';\r\nimport Exercise from './exercise';\r\nimport Settings from \"../settings\";\r\n\r\nfunction Ex2(data,index,size){\r\n\tthis.init(data,index,size);\r\n\t\r\n\t/** @Override */\r\n\tthis.cacheCustomDom = function(){\t\r\n\t\tthis.$context \t\t\t\t= this.$elem.find(\"#ex-context\");\r\n\t\tthis.$showSolution \t\t\t= this.$elem.find(\"#show_solution\");\r\n\t\tthis.$checkAnswer \t\t\t= this.$elem.find(\"#check_answer\");\t\t\r\n\t\tthis.$btn1 \t\t\t\t\t= this.$elem.find(\"#btn1\");\r\n\t\tthis.$btn2 \t\t\t\t\t= this.$elem.find(\"#btn2\");\r\n\t\tthis.$btn3 \t\t\t\t\t= this.$elem.find(\"#btn3\");\r\n\t\tthis.$nextExercise\t\t\t= this.$elem.find('#next-exercise');\r\n        this.$feedbackBtn\t\t\t= this.$elem.find('#feedback');\r\n\t}\r\n\t\r\n\t/** @Override */\r\n\tthis.bindUIActions = function(){\r\n\t\tvar _this = this;\r\n\t\t//Bind UI action of Hint/Show solution to the function\t\t\r\n\t\tthis.$showSolution.on(\"click\", this.handleHint.bind(this));\r\n\t\t\r\n\t\t//Bind UI action of Check answer to the function\r\n\t\tthis.$checkAnswer.on(\"click\", this.checkAnswer.bind(this));\r\n\t\t\r\n\t\t//Bind UI action of button 1 click to the function\r\n\t\tthis.$btn1.on(\"click\", this.btnSelect.bind(this,1));\r\n\t\t\r\n\t\t//Bind UI action of button 2 click to the function\r\n\t\tthis.$btn2.on(\"click\", this.btnSelect.bind(this,2));\r\n\t\t\r\n\t\t//Bind UI action of button 3 click to the function\r\n\t\tthis.$btn3.on(\"click\", this.btnSelect.bind(this,3));\r\n\r\n\t\t//Next exercise clicked\r\n\t\tthis.$nextExercise.on(\"click\",this.onRenderNextEx.bind(this));\r\n\r\n        //Next exercise clicked\r\n\t\tthis.$feedbackBtn.on(\"click\",this.giveFeedbackBox.bind(this));\r\n\t}\r\n\t\r\n\t/** @Override */\r\n\tthis.next = function(){\t\t\r\n\t\t\r\n\t\t// Prepare the document\r\n\t\tthis.prepareDocument();\r\n\t\t\r\n\t\t//Populate context\r\n\t\tthis.generateContext();\t\t\t\r\n\t\tthis.resetBtns();\r\n\t\tvar _this = this;\r\n\t\t\r\n\t\t//Random options\t\r\n\t\tvar idxs  = this.randomNumsInRange(2,this.data.length-1);\r\n\t\tthis.btns = this.arrayWithRandomNumsUpTo(this.optionNum);\r\n\t\t\r\n\t\t\r\n\t\t//Populate buttons\r\n\t\tfunction populateButton(buttonID, value) {\r\n\t\t\t_this[\"$btn\"+buttonID].text(value);\r\n\t\t}\r\n\r\n\t\tpopulateButton(this.btns[0], this.data[this.index].from);\r\n\t\tpopulateButton(this.btns[1], this.data[idxs[0]].from);\r\n\t\tpopulateButton(this.btns[2], this.data[idxs[1]].from);\r\n\r\n\t\tthis.reStyleDom();\r\n\t}\r\n\t\r\n\t/** @Override */\r\n\tthis.giveHint = function (){\r\n\t\tvar elem = $('#btn'+this.btns[1]);\r\n\t\telem.prop('disabled', true);\r\n\t\telem.addClass(\"btn-danger\");\r\n\t}\r\n\t\r\n\t/** @Override */\r\n\tthis.successCondition = function(chosenWord){\r\n\t\treturn (chosenWord.trim().toUpperCase().replace(/[^a-zA-Z ]/g, \"\") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, \"\"));\r\n\t}\r\n\r\n\t/** @Override */\r\n\tthis.wrongAnswerAnimation = function(){\r\n\t\tthis.shake.shakeFocusedElement();\r\n\t}\r\n\t\r\n\tthis.btnSelect = function(arg){\r\n\t\tvar chosenWord = this[\"$btn\"+arg].text();\t\r\n\t\tif (this.successCondition(chosenWord)) this.reGenerateContext(chosenWord);\r\n\t\tthis.checkAnswer(chosenWord);\t\r\n\t}\r\n\r\n\tthis.resetBtns = function(){\r\n\t\tvar elem = $('#btn'+this.btns[1]);\r\n\t\telem.prop('disabled', false);\r\n\t\telem.removeClass(\"btn-danger\");\r\n\t}\r\n\t\r\n\tthis.arrayWithRandomNumsUpTo = function(size){\r\n\t\tvar arr = [];\r\n\t\twhile(arr.length < size){\r\n\t\t\tvar randomnumber = Math.ceil(Math.random()*size);\r\n\t\t\tif(arr.indexOf(randomnumber) > -1) continue;\r\n\t\t\tarr[arr.length] = randomnumber;\r\n\t\t}\r\n\t\treturn arr;\r\n\t};\r\n\t\r\n\t/** Generates an array of random numbers of given size\r\n\t* @param {int} size:  defines how many random numbers we want\r\n\t* @param {int} range: defines the upper limit of the numbers: [1,range]\r\n\t*/\r\n\tthis.randomNumsInRange = function(size,range){\r\n\t\tvar arr = [];\t\r\n\t\twhile(arr.length < size){\r\n\t\t\tvar randomnumber = Math.ceil(Math.random()*range);\t\r\n\t\t\tif((arr.indexOf(randomnumber) > -1) || randomnumber==this.index) continue;\r\n\t\t\tarr[arr.length] = randomnumber;\r\n\t\t}\t\t\r\n\t\treturn arr;\r\n\t};\r\n\t\r\n\t\r\n\tthis.generateContext = function(){\r\n\t\tvar contextString = this.data[this.index].context;\r\n\t\tvar res = this.data[this.index].from.split(\" \");\t\r\n\t\t\r\n\t\tfor (var i = 0; i <res.length; i++){\r\n\t\t\tcontextString = contextString.replace(res[i],\" ______ \");\r\n\t\t}\r\n\t\tthis.$context.html(contextString);\r\n\t};\r\n\t\r\n\tthis.reGenerateContext = function(chosenWord){\r\n\t\tvar contextString = this.$context.html();\r\n\t\tvar res = chosenWord.split(\" \");\t\r\n\t\t\r\n\t\tfor (var i = 0; i <res.length; i++){\r\n\t\t\tcontextString = contextString.replace(\" ______ \",res[i].bold());\r\n\t\t}\t\r\n\t\tthis.$context.html (contextString);\r\n\t};\r\n};\r\n\r\nEx2.prototype = Object.create(Exercise.prototype, {\r\n\tconstructor: Ex2,\r\n\t/** ************************** SETTINGS **************************** **/\r\n\tdescription: {value: \"Choose the word that fits the context\"},\r\n\tcustomTemplateURL: {value: 'static/template/exercise/ex2.html'},\r\n\tbtns: \t\t {writable: true, value:[1,2,3]}, \r\n\toptionNum:\t {value: 3},\r\n    minRequirement: { writable: true, value:4},\t// minimum number required for the ex\r\n\tresultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_SELECT},\r\n\t/** *************************************************************** **/\r\n});\r\n\r\nexport default Ex2;\r\n",
+    "static": true,
+    "longname": "app/exercises/ex2.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 38,
+    "kind": "function",
+    "name": "Ex2",
+    "memberof": "app/exercises/ex2.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/exercises/ex2.js~Ex2",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/exercises/ex2.js",
+    "importStyle": "Ex2",
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "data",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "index",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "size",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 39,
+    "kind": "file",
+    "name": "app/exercises/ex3.js",
+    "content": "/** Custom exercise formatching 3 words. Inherited from Exercise.js\r\n *  @initialize it using: new Ex3();\r\n *  @customize it by using prototypal inheritance \r\n**/\r\n\r\nimport $ from 'jquery';\r\nimport Exercise from \"./exercise\";\r\nimport Settings from \"../settings\";\r\n\r\nfunction Ex3(data,index,size){\r\n\tthis.init(data,index,size);\r\n\t\r\n\t/** @Override */\r\n\tthis.cacheCustomDom = function(data,index,size){\r\n\t\tthis.$to \t\t\t\t\t= this.$elem.find(\"#ex-to\");\r\n\t\tthis.$context \t\t\t\t= this.$elem.find(\"#ex-content\");\r\n\t\tthis.$showSolution \t\t\t= this.$elem.find(\"#show_solution\");\r\n\t\tthis.$btn1 \t\t\t\t\t= this.$elem.find(\"#btn1\");\r\n\t\tthis.$btn2 \t\t\t\t\t= this.$elem.find(\"#btn2\");\r\n\t\tthis.$btn3 \t\t\t\t\t= this.$elem.find(\"#btn3\");\t\r\n\t\tthis.$btn4 \t\t\t\t\t= this.$elem.find(\"#btn4\");\r\n\t\tthis.$btn5 \t\t\t\t\t= this.$elem.find(\"#btn5\");\r\n\t\tthis.$btn6 \t\t\t\t\t= this.$elem.find(\"#btn6\");\r\n\t\tthis.$nextExercise\t\t\t= this.$elem.find('#next-exercise');\r\n        this.$feedbackBtn\t\t\t= this.$elem.find('#feedback');\r\n\t};\r\n\t\r\n\t/** @Override */\r\n\tthis.bindUIActions = function(){\r\n\t\t//Bind UI action of Hint/Show solution to the function\t\t\r\n\t\tthis.$showSolution.on(\"click\", this.handleHint.bind(this));\r\n\t\t\r\n\t\t//Bind UI action of button 1 click to the function\r\n\t\tthis.$btn1.on(\"click\", this.selectChoice.bind(this,1));\r\n\t\t\r\n\t\t//Bind UI action of button 2 click to the function\r\n\t\tthis.$btn2.on(\"click\", this.selectChoice.bind(this,2));\r\n\t\t\r\n\t\t//Bind UI action of button 3 click to the function\r\n\t\tthis.$btn3.on(\"click\", this.selectChoice.bind(this,3));\r\n\t\t\r\n\t\t//Bind UI action of button 4 click to the function\r\n\t\tthis.$btn4.on(\"click\", this.selectChoice.bind(this,4));\r\n\t\t\r\n\t\t//Bind UI action of button 5 click to the function\r\n\t\tthis.$btn5.on(\"click\", this.selectChoice.bind(this,5));\r\n\t\t\r\n\t\t//Bind UI action of button 6 click to the function\r\n\t\tthis.$btn6.on(\"click\", this.selectChoice.bind(this,6));\r\n\r\n\t\t//Next exercise clicked\r\n\t\tthis.$nextExercise.on(\"click\",this.onRenderNextEx.bind(this));\r\n\r\n        //Next exercise clicked\r\n\t\tthis.$feedbackBtn.on(\"click\",this.giveFeedbackBox.bind(this));\r\n\t\t\r\n\t};\r\n\r\n\t/** @Override */\r\n\tthis.wrongAnswerAnimation = function(){\r\n\t\tthis.shake.shakeFocusedElement();\r\n\t}\r\n\t\r\n\t\r\n\t\r\n\tthis.selectChoice = function(btnID){\r\n\t\t// if no button was previously selected, select it now\r\n\t\tif(this.chosenButton == -1){\r\n\t\t\tthis.chosenButton = btnID;\r\n\t\t}else{\r\n\t\t\t// otherwise check the selection\r\n\t\t\tthis.check(btnID);\r\n\t\t}\r\n\t};\r\n\t\r\n\t// Disables correctly selected buttons\r\n\tthis.successDisableBtn = function(btnID){\r\n\t\tvar elem = $(\"#btn\"+btnID);\r\n\t\telem.prop('disabled', true);\r\n\t\telem.addClass(\"btn-success\");\r\n\t};\r\n\t\r\n\t//Checks if a button is disabled\r\n\tthis.isDisabled = function(btnID){\r\n\t\tvar elem = $(\"#btn\"+btnID);\r\n\t\treturn elem.is(':disabled');\r\n\t};\r\n\t\r\n\t// Checks answers\r\n\tthis.check = function(btnID){\r\n\t\r\n\t\tif(this.checkCondition(btnID)){\r\n\t\t\t\r\n\t\t\t// Disable buttons\t\t\r\n\t\t\tthis.successDisableBtn(btnID);\r\n\t\t\tthis.successDisableBtn(this.chosenButton);\r\n\t\t\t\r\n\t\t\tthis.correctAnswers ++;\r\n\t\t\tthis.endExercise();\r\n\t\t\t\r\n\t\t}else{\r\n\t\t\tthis.wrongAnswerAnimation();\r\n\t\t}\r\n\t\tthis.chosenButton = -1;\t\r\n\t};\r\n\t\r\n\tthis.endExercise = function(){\r\n\t\t// check if all the answers were given\r\n\t\tif(this.successCondition(0)){\r\n\t\t\t// Proceed to next exercise\r\n\t\t\tthis.checkAnswer(0);\r\n\t\t\t\r\n\t\t\t// Prepare the document\r\n\t\t\tthis.prepareDocument();\r\n\t\t\t\r\n\t\t\t// Reset buttons, answers, hints\r\n\t\t\tthis.resetBtns();\r\n\t\t\tthis.correctAnswers = 0;\r\n\t\t\tthis.hints = 0;\r\n\t\t}\r\n\t};\r\n\t\r\n\t// Checks the selected buttons\r\n\tthis.checkCondition = function(btnID){\r\n\t\tif((this.answers.indexOf(btnID) == -1)|| (this.choices.indexOf(this.chosenButton) == -1)){\r\n\t\t\treturn (this.choices.indexOf(btnID) == this.answers.indexOf(this.chosenButton));\r\n\t\t}else{\r\n\t\t\treturn (this.answers.indexOf(btnID) == this.choices.indexOf(this.chosenButton));\r\n\t\t}\r\n\t};\r\n\t\r\n\t/** @Override */\r\n\tthis.successCondition = function(a){\r\n\t\treturn (this.correctAnswers >= 3); \r\n\t};\r\n\t\r\n\t// Resets all the disabled buttons\r\n\tthis.resetBtns = function(){\r\n\t\tfor(var idx = 1; idx<=6; idx++){\r\n\t\t\tvar elem = $('#btn'+idx);\r\n\t\t\telem.prop('disabled', false);\r\n\t\t\telem.removeClass(\"btn-success\");\r\n\t\t}\r\n\t};\r\n\t\r\n\t/** @Override */\r\n\tthis.next = function (){\t\r\n\t\tthis.populateButtons();\r\n\t};\r\n\t\r\n\t// Populates the buttons\r\n\tthis.populateButtons = function(){\t\r\n\t\t//Random options\r\n\t\tvar idxs = this.randomNumsInRange(2,this.data.length-1);\r\n\t\tvar _this = this;\r\n\t\t// random numbers between 1 and 3\r\n\t    this.choices  = this.arrayWithRandomNumsUpTo(3);\r\n\t\t \r\n\t\t// random numbers between 4 and 6\r\n\t\tthis.answers = this.arrayWithRandomNumsUpTo(3);\r\n\t\tfor (var i=0; i<this.answers.length; i++){\r\n\t\t\tthis.answers[i] = this.answers[i] + 3;\r\n\t\t}\r\n\t\t\r\n\t\t//Populate buttons\r\n\t\tfunction match2Buttons(choice, answer, valueFrom, valueTo) {\r\n\t\t\t_this[\"$btn\"+choice].text(valueFrom);\r\n\t\t\t_this[\"$btn\"+answer].text(valueTo);\r\n\t\t}\r\n\t\t\r\n\t\tmatch2Buttons(this.choices[0],this.answers[0],this.data[this.index].from,this.data[this.index].to);\r\n\t\tmatch2Buttons(this.choices[1],this.answers[1],this.data[idxs[0]].from,this.data[idxs[0]].to);\r\n\t\tmatch2Buttons(this.choices[2],this.answers[2],this.data[idxs[1]].from,this.data[idxs[1]].to);\r\n\t};\r\n\t\r\n\t\r\n\t// Gives a hint by disabling a correct match\r\n\tthis.giveHint = function (){\r\n\t\t// Only one hint is possible\r\n\t\tif(this.hints < 1){\r\n\t\t\t// Disable buttons\r\n\t\t\tif(this.disableHintButtons(0)) return;\r\n\t\t\tif(this.disableHintButtons(1)) return;\r\n\t\t\tif(this.disableHintButtons(2)) return;\r\n\t\t}\r\n\t};\r\n\t\r\n\t// Disables the buttons given in the hint\r\n\tthis.disableHintButtons = function(idx){\r\n\t\tif(!this.isDisabled(this.answers[idx])){\r\n\t\t\tthis.successDisableBtn(this.choices[idx]);\r\n\t\t\tthis.successDisableBtn(this.answers[idx]);\r\n\t\t\tthis.correctAnswers++;\r\n\t\t\tthis.hints++;\r\n\t\t\tthis.endExercise();\r\n\t\t\treturn true;\r\n\t\t}\r\n\t\treturn false;\r\n\t};\r\n\t\r\n\t/** Generates an array of random numbers of given size\r\n\t* @param size: defines how many random numbers we want\r\n\t*\t\t\t\tthe resulted random numbers will in the range of [1,size]\r\n\t*/\r\n\tthis.arrayWithRandomNumsUpTo = function(size){\r\n\t\tvar arr = [];\t\r\n\t\twhile(arr.length < size){\r\n\t\t\tvar randomnumber = Math.ceil(Math.random()*size);\t\r\n\t\t\tif((arr.indexOf(randomnumber) > -1)) continue;\r\n\t\t\tarr[arr.length] = randomnumber;\r\n\t\t}\t\t\r\n\t\treturn arr;\r\n\t};\r\n\t\r\n\t/** Generates an array of random numbers of given size\r\n\t* @param size:  defines how many random numbers we want\r\n\t* @param range: defines the upper limit of the numbers: [1,range]\r\n\t*/\r\n\tthis.randomNumsInRange = function(size,range){\r\n\t\tvar arr = [];\t\r\n\t\twhile(arr.length < size){\r\n\t\t\tvar randomnumber = Math.ceil(Math.random()*range);\r\n\t\t\tif((arr.indexOf(randomnumber) > -1) || randomnumber==this.index) continue;\r\n\t\t\tarr[arr.length] = randomnumber;\r\n\t\t}\t\t\r\n\t\treturn arr;\r\n\t};\r\n\t\r\n};\r\n\r\nEx3.prototype = Object.create(Exercise.prototype, {\r\n\tconstructor: Ex3,\r\n\t/************************** SETTINGS ********************************/\t\r\n\tdescription: {value: \"Match each word with its translation\"},\r\n\tcustomTemplateURL: {value: 'static/template/exercise/ex3.html'},\r\n\tchoices: \t { writable: true, value:[1,2,3]},\t\t\t\t// arr of indexes of possible choices\r\n\tanswers: \t{ writable: true, value:[1,2,3]},\t\t\t\t// arr of indexes of possible answers\r\n\tchosenButton: { writable: true, value:-1},  \t// ID of currently selected button; -1 means no button is selected\r\n\tcorrectAnswers: { writable: true, value:0},\t// number of correct answers\r\n\thints: {writable:true, value:0},\t\t\t// max number of possible hints is 1\r\n    minRequirement: { writable: true, value:4},\t// minimum number required for the ex\r\n\tresultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_MATCH},\r\n\t/*******************************************************************/\r\n});\r\n\r\nexport default Ex3;",
+    "static": true,
+    "longname": "app/exercises/ex3.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 40,
+    "kind": "function",
+    "name": "Ex3",
+    "memberof": "app/exercises/ex3.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/exercises/ex3.js~Ex3",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/exercises/ex3.js",
+    "importStyle": "Ex3",
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "data",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "index",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "size",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 41,
+    "kind": "file",
+    "name": "app/exercises/ex4.js",
+    "content": "/** Custom exercise for translating the word given in the context. Inherited from Exercise.js\r\n *  @initialize it using: new Ex4();\r\n *  @customize it by using prototypal inheritance \r\n**/\r\n\r\nimport $ from 'jquery';\r\nimport Exercise from './exercise';\r\nimport Util from '../util';\r\nimport Settings from \"../settings\";\r\n\r\nfunction Ex4(data,index,size){\r\n\t\r\n\tthis.init(data,index,size);\r\n\t\r\n\t/** @Override */\r\n\tthis.cacheCustomDom = function(){\t\r\n\t\tthis.$to \t\t\t\t\t= this.$elem.find(\"#ex-to\");\r\n\t\tthis.$context \t\t\t\t= this.$elem.find(\"#ex-context\");\r\n\t\tthis.$input \t\t\t\t= this.$elem.find(\"#ex-main-input\");\r\n\t\tthis.$showSolution \t\t\t= this.$elem.find(\"#show_solution\");\r\n\t\tthis.$checkAnswer \t\t\t= this.$elem.find(\"#check_answer\");\r\n\t\tthis.$clickableText \t\t= this.$elem.find(\".clickable-text\");\r\n\t\tthis.$nextExercise\t\t\t= this.$elem.find('#next-exercise');\r\n        this.$feedbackBtn\t\t\t= this.$elem.find('#feedback');\r\n\t}\r\n\t\r\n\t/** @Override */\r\n\tthis.bindUIActions = function(){\r\n\t\tvar _this = this;\r\n\t\t//Bind UI action of Hint/Show solution to the function\t\t\r\n\t\tthis.$showSolution.on(\"click\", this.handleHint.bind(this));\r\n\t\t\r\n\t\t//Bind UI action of Check answer to the function\r\n\t\tthis.$checkAnswer.on(\"click\", this.checkAnswer.bind(this));\r\n\t\t\r\n\t\t//Bind UI Text click\t\t\r\n\t\t//this.$clickableText.on(\"click\",updateInput.bind(this));\r\n\t\t\r\n\t\t// Bind UI Enter Key\r\n\t\tthis.$input.keyup(this.enterKeyup.bind(this));\r\n\r\n\t\t//Next exercise clicked\r\n\t\tthis.$nextExercise.on(\"click\",this.onRenderNextEx.bind(this));\r\n\r\n        //Next exercise clicked\r\n\t\tthis.$feedbackBtn.on(\"click\",this.giveFeedbackBox.bind(this));\r\n\t}\r\n\t\r\n\t/** @Override */\r\n\tthis.next = function (){\t\t\t\r\n\t\tthis.$to.html(\"\\\"\"+this.data[this.index].from +\"\\\"\");\r\n\t\tthis.$context.html(this.generateContext());\r\n\t\tthis.$input.val(\"\");\r\n\r\n\t\tthis.reStyleDom();\r\n\t}\r\n\t\r\n\tthis.updateInput = function() {\r\n\t\tvar t = Util.getSelectedText();\r\n\t\tthis.$input.val(t);\r\n\t}\r\n\t\r\n\tthis.enterKeyup = function(event){\r\n\t\tif(event.keyCode == 13){\r\n\t\t\tthis.$checkAnswer.click();\r\n\t\t}\r\n\t}\r\n\t\r\n\tthis.generateContext = function(){\r\n\t\tvar contextString = this.data[this.index].context;\r\n\t\tvar res = this.data[this.index].from.split(\" \");\t\r\n\t\t\r\n\t\tfor (var i = 0; i <res.length; i++){\r\n\t\t\tcontextString = contextString.replace(res[i], res[i].bold());\r\n\t\t}\r\n\t\t\t\r\n\t\treturn contextString;\t\t\r\n\t};\r\n\t\r\n\t\r\n\t/** @Override */\r\n\tthis.giveHint = function (){\r\n\t\tthis.$input.val(this.data[this.index].to);\r\n\t}\r\n\t\r\n\t/** @Override */\r\n\tthis.successCondition = function(){\t\r\n\t\t// Check all the possible answers\r\n\t\tif (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, \"\") === this.data[this.index].to.trim().toUpperCase().replace(/[^a-zA-Z ]/g, \"\"))\r\n\t\t\treturn true;\r\n\r\n\t\treturn false;\r\n\t}\r\n\r\n\t/** @Override */\r\n\tthis.wrongAnswerAnimation = function(){\r\n\t\tthis.shake.shakeElement(this.$input);\r\n\t}\r\n\r\n};\r\nEx4.prototype = Object.create(Exercise.prototype, {\r\n\tconstructor: Ex4,\r\n\t/************************** SETTINGS ********************************/\t\r\n\tdescription: {value: \"Translate the word given in the context.\"},\r\n\tcustomTemplateURL: {value: 'static/template/exercise/ex4.html'},\r\n\tresultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_TRANSLATE},\r\n});\r\n\r\nexport default Ex4;\r\n\r\n",
+    "static": true,
+    "longname": "app/exercises/ex4.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 42,
+    "kind": "function",
+    "name": "Ex4",
+    "memberof": "app/exercises/ex4.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/exercises/ex4.js~Ex4",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/exercises/ex4.js",
+    "importStyle": "Ex4",
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "data",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "index",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "size",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 43,
+    "kind": "file",
+    "name": "app/exercises/exercise.js",
+    "content": "/** Modular Zeeguu Powered Exercise @author Martin Avagyan\r\n *  @initialize it using: new Exercise();\r\n *  @customize it by using prototypal inheritance\r\n**/\r\n\r\nimport $ from 'jquery';\r\nimport events from '../pubsub';\r\nimport Util from '../util';\r\nimport Settings from '../settings';\r\nimport Session from '../session';\r\nimport {Loader} from '../loader';\r\nimport ShakeAnimation from \"../animations/shake_animation\";\r\nimport Feedback from \"../feedback\";\r\n\r\nvar Exercise = function(data,index,size){\r\n\tthis.init(data,index,size);\t\r\n\t//TODO unbind method\r\n};\r\n\r\nExercise.prototype = {\r\n\t\r\n\t/************************** SETTINGS ********************************/\t\r\n\tdata: 0,\t\r\n\tcustomTemplateURL: 0,\r\n\tindex: 0,\r\n\tstartIndex: 0,\r\n\tsize: 0, //default number of bookmarks\r\n\tdescription:  \"Solve the exercise\",  //default description\r\n\tsession: Session.getSession(), //Example of session id 34563456 or 11010001\r\n\tstartTime: 0,\r\n\tisHintUsed: false,\r\n    minRequirement: 1,\r\n\tresultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,//Defualt submission\r\n\tsuccessAnimationTime: 2000,\r\n\texFeedback: 0,\r\n\t\r\n\t/*********************** General Functions ***************************/\t\r\n\t/**\r\n\t*\tLoads the HTML exercise template from static\r\n\t**/\r\n\t\r\n\tcreateCustomDom: function(){\r\n        Loader.loadTemplateIntoElem(this.customTemplateURL,$(\"#custom-content\"));\r\n\t},\r\n\t\r\n\t/**\r\n\t*\tSaves the common dom in chache\r\n\t**/\r\n\tcacheDom: function(){\r\n\t\tthis.$elem \t\t\t\t= $(\"#ex-module\");\r\n\t\tthis.$description  \t\t= this.$elem.find(\"#ex-descript\");\r\n\t\tthis.$loader \t\t\t= this.$elem.find('#loader');\r\n\t\tthis.$statusContainer \t= this.$elem.find('#ex-status-container');\r\n\t\tthis.$exFooterPrimary \t= this.$elem.find('#ex-footer-primary');\r\n\t\tthis.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');\r\n\t\tthis.cacheCustomDom();\r\n\t},\r\n\t\r\n\t/**\r\n\t*\tExercise initialaizer\r\n\t**/\r\n\tinit: function(data,index,size){\r\n\t\tvar _this = this;\r\n\t\t$.when(Loader.loadTemplateIntoElem(_this.customTemplateURL,$(\"#custom-content\"))).done(function(){\r\n\t\t\t_this.cacheDom();\t\r\n\t\t\t_this.bindUIActions();\r\n\t\t\t_this._constructor(data,index,size);\t\r\n\t\t});\t\t\r\n\t},\t\r\n\t\r\n\t\r\n\t/**\r\n\t*\tThe main constructor\r\n\t**/\r\n\t_constructor: function (data,index,size){\t\t\r\n\t\tthis.data  = data;\r\n\t\tthis.index = index;\r\n\t\tthis.startIndex = index;\r\n\t\tthis.size  = size;\r\n\t\tthis.shake = new ShakeAnimation();\r\n\t\tthis.exFeedback = new Feedback(this.resultSubmitSource,this.session);\r\n\t\tthis.setDescription(); \t\r\n\t\tthis.next();\r\n        this.startTime = Date.now();\r\n\t},\r\n\t\t\r\n\t/**\r\n\t*\tPopulates custom exercise description\r\n\t**/\r\n\tsetDescription: function(){\r\n\t\tthis.$description.html(this.description);\r\n\t},\r\n\t\r\n\t/**\r\n\t*\tWhen the ex are done, notify the observers\r\n\t**/\r\n\tonExComplete: function (){\t\t\r\n\t\tevents.emit('exerciseCompleted');\r\n\t},\r\n\t\r\n\t/**\r\n\t*\tCheck selected answer with success condition\r\n\t**/\r\n\tcheckAnswer: function (chosenWord){\r\n\t\tif (this.successCondition(chosenWord)){\t\t\r\n\t\t\tthis.onSuccess();\r\n\t\t\treturn;\r\n\t\t}\t\t\t\r\n\t\tthis.wrongAnswerAnimation();\r\n\t\tthis.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_WRONG);\r\n\t},\r\n\r\n\t/**\r\n\t*\tActions taken when the succes condition is true\r\n\t**/\r\n\tonSuccess: function(){\r\n\t\tthis.$exFooterPrimary.removeClass ('mask-appear');\r\n\t\tthis.$exFooterSecondary.toggleClass('mask-appear');\r\n\t\tthis.handleSuccessCondition();\r\n\t},\r\n\r\n\t/**\r\n\t * Revert the secondary and primary footers\r\n\t * */\r\n\trevertPrimary: function () {\r\n\t\tthis.$exFooterSecondary.removeClass ('mask-appear');\r\n\t\tthis.$exFooterPrimary.toggleClass('mask-appear');\r\n\t},\r\n\r\n\r\n\t/**\r\n\t * When the answer is successful show the animation and submit the result\r\n\t * */\r\n\thandleSuccessCondition: function () {\r\n        this.animateSuccess();\r\n        //Submit the result of translation\r\n        this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_CORRECT);\r\n        // Notify the observer\r\n        events.emit('progress');\r\n        this.index++;\r\n\t},\r\n\r\n    /**\r\n     * On success condition true, generate new exercise\r\n     * */\r\n    onRenderNextEx: function () {\r\n\t\tthis.revertPrimary();\r\n        // The current exercise set is complete\r\n        if(this.index == this.size + this.startIndex){\r\n            this.onExComplete();\r\n            return;\r\n        }\r\n        this.next();\r\n\t\tthis.startTime = Date.now();\r\n    },\r\n\t\r\n\t/**\r\n     *\tRequest the submit to the Zeeguu API\r\n\t *  e.g. https://www.zeeguu.unibe.ch/api/report_exercise_outcome/Correct/Recognize/1000/4726?session=34563456 \r\n     **/\r\n    submitResult: function(id,exOutcome){\r\n    \tlet _this = this;\r\n\t\t//If the user used the hint, do not register correct solution, resent the hint, move on\r\n\t\tif(this.isHintUsed && exOutcome == Settings.ZEEGUU_EX_OUTCOME_CORRECT) {\r\n\t\t\tthis.isHintUsed = false;\r\n\t\t\treturn;\r\n\t\t}\r\n\t\t//If hint is used twice, ignore request\r\n\t\tif(this.isHintUsed && exOutcome == Settings.ZEEGUU_EX_OUTCOME_HINT) return;\r\n\t\t//Calculate time taken for single exercise\r\n\t\tvar exTime = Util.calcTimeInMilliseconds(this.startTime);\r\n\t\t//Request back to the server with the outcome\r\n\t\t//console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + \"/\" + exTime + \"/\" + id + \"?session=\"+this.session);\r\n        $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + \"/\" + exTime + \"/\" + id + \"?session=\"+this.session);\r\n    },\r\n\r\n\t\r\n\t/**\r\n\t*\tRemoves focus of page elements\r\n\t**/\r\n\tprepareDocument: function(){\r\n\t\tif (document.activeElement != document.body) document.activeElement.blur();\r\n\t},\r\n\t\r\n\t/**\r\n\t*\tUser hint handler\r\n\t**/\r\n\thandleHint: function(){\r\n\t\tthis.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_HINT);\r\n\t\tthis.isHintUsed = true;\r\n\r\n\t\tthis.giveHint();\r\n\t},\r\n\r\n\t/**\r\n\t * Function for sending the user feedback for an individual exercise\r\n\t * */\r\n\tgiveFeedbackBox: function () {\r\n        this.exFeedback.exerciseFeedbackBox(this.data[this.index-1].id);\r\n\t},\r\n\r\n\t/**\r\n\t * Apply style dynamically when content changes\r\n\t * */\r\n\treStyleDom: function () {\r\n\t\tthis.reStyleContext();\r\n\t},\r\n\r\n\t/**\r\n\t * Apply style dynamically to context\r\n\t * */\r\n\treStyleContext: function () {\r\n\t\tif(!Util.isMultiline(this.$context)){\r\n\t\t\tthis.$context.addClass('centering');//Text align center\r\n\t\t\treturn;\r\n\t\t}\r\n\t\tthis.$context.removeClass('centering');//Text align justify\r\n\t},\r\n\t\r\n\t\r\n\t/*********************** Interface functions *****************************/\r\n\t/**\r\n\t*\tBinding UI with Controller functions\r\n\t**/\r\n\tbindUIActions: function(){},\r\n\t\r\n\t/**\r\n\t*\tCondition used by checkAnswer \r\n\t*\tIf true, then a correct answer was given\r\n\t**/\r\n\tsuccessCondition: function(){},\r\n\t\r\n\t\r\n\t/**\r\n\t*\tGives a hint when the hint button is pressed\r\n\t**/\r\n\tgiveHint: function (){},\r\n\t\r\n\t/**\r\n\t*\tPopulates the next exercise\r\n\t**/\r\n\tnext: function (){},\r\n\t\r\n\t/**\r\n\t*\tCahes custom dom of the exercise\r\n\t**/\r\n\tcacheCustomDom: function(){},\r\n\r\n\t/**\r\n\t*\tAnimation for wrong solution\r\n\t**/\r\n\twrongAnswerAnimation: function(){},\r\n\r\n\t/************************** Animations ********************************/\t\r\n\r\n\t/**\r\n\t*\tAnimation for successful solution\r\n\t**/\r\n\tanimateSuccess: function(){\r\n\t\tlet _this = this;\r\n\t\tthis.$statusContainer.removeClass('hide');\r\n\t\tsetTimeout(function(){\r\n\t\t\tif (_this.$statusContainer.length > 0) {\r\n\t\t\t\t_this.$statusContainer.addClass('hide');\r\n\t\t\t}\r\n\t\t}, _this.successAnimationTime);\r\n\t},\t\r\n};\r\n\r\nexport default Exercise;",
+    "static": true,
+    "longname": "app/exercises/exercise.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 44,
+    "kind": "function",
+    "name": "Exercise",
+    "memberof": "app/exercises/exercise.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/exercises/exercise.js~Exercise",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/exercises/exercise.js",
+    "importStyle": "Exercise",
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "data",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "index",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "size",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 45,
+    "kind": "file",
+    "name": "app/feedback.js",
+    "content": "/**\r\n * The class responsible for sending a feedback regarding exercise outcome\r\n */\r\nimport * as Mustache from \"mustache\";\r\nimport $ from \"jquery\";\r\nimport Settings from \"./settings\";\r\n\r\nexport default class Feedback {\r\n\r\n    /**\r\n     * Construct the feedback class\r\n     * @param {number}, id of the current word\r\n     * @param {String}, resultSubmitSource,\r\n     * */\r\n    constructor(resultSubmitSource, sessionId){\r\n         /** Class parameters*/\r\n        this.wordId = -1;//will be set whenever the feedback box is called\r\n        this.resultSubmitSource = resultSubmitSource;\r\n        this.sessionId = sessionId;\r\n    }\r\n\r\n    /**\r\n     * Bind all the actions connected to this module\r\n     * return {void}\r\n     * */\r\n    bindUIActions(){\r\n        //Bind UI action of credits to the function\r\n        $('.btn-feedback-option').click((event) => {this.feedbackAction($(event.target));});\r\n    }\r\n\r\n    /**\r\n     * The action performed predefined option is clicked\r\n     * @param {Object}, elem, the element that is clicked\r\n     * */\r\n    feedbackAction(elem){\r\n        this.submitFeedback(this.wordId,elem.attr('value'),this.resultSubmitSource);\r\n        this.successfulFeedback();\r\n    }\r\n\r\n    /**\r\n     * @param {number}, session id\r\n     * @param {String}, resultSubmitSource,\r\n     * */\r\n    exerciseFeedbackBox (wordId) {\r\n        let _this = this;\r\n        this.wordId = wordId;\r\n        let feedbackOptions = this.exerciseFeedbackOptions();\r\n        let inputBox = this.exerciseFeedbackInput();\r\n        swal({\r\n                title: \"\",\r\n                text: feedbackOptions + inputBox,\r\n                showCancelButton: true,\r\n                closeOnConfirm: false,\r\n                animation: \"slide-from-top\",\r\n                imageUrl: \"static/img/illustrations/zeeguu_balloon.png\",\r\n                imageSize: \"110x110\",\r\n                allowOutsideClick: true,\r\n                html: true\r\n            },\r\n            function () {\r\n                let inputValue = $('#feedback-input-box').val().trim();\r\n                if (inputValue != \"\") {\r\n                    _this.submitFeedback(wordId,inputValue,_this.resultSubmitSource);\r\n                    _this.successfulFeedback();\r\n                    return;\r\n                }\r\n                swal.close();\r\n            });\r\n        this.bindUIActions();\r\n    }\r\n\r\n    /**\r\n     * Success message when the feedback is being submitted\r\n     * */\r\n    successfulFeedback(){\r\n        swal({\r\n            title: \"\",\r\n            text: \"\",\r\n            timer: 1000,\r\n            type:\"success\",\r\n            showConfirmButton: false,\r\n            showCancelButton: false,\r\n            closeOnConfirm: false,\r\n            confirmButtonText: \"\",\r\n        });\r\n    }\r\n\r\n    /**\r\n     * Feedback fields for the feedback box within the exercise\r\n     * Using html template and Mustache to render the content\r\n     * @return {String} rendered html\r\n     * */\r\n    exerciseFeedbackOptions(){\r\n        let preDefinedOptions = {\r\n            Options: [\r\n                {name: \"Too easy.\", icon: 'static/img/emoji/bored.svg', val: 'too_easy'},\r\n                {name: \"I know it.\", icon: 'static/img/emoji/nerd.svg',val: 'i_already_know_this'},\r\n                {name: \"Don't want to see it.\", icon: 'static/img/emoji/confused.svg', val: 'dont_show_it_to_me_again'}]\r\n        };\r\n        let preOptionTemplate =\r\n            '{{#Options}}' +\r\n            '<div type = \"button\" value = {{val}} class = \"btn btn-default btn-feedback-option\">' +\r\n                '<div class = \"emoji-icon\"  value = {{val}} style = \"background-image: url({{icon}});\" ></div>' +\r\n                '<span value = {{val}}>{{name}}</span>' +\r\n            '</div>' +\r\n            '{{/Options}}';\r\n        return (Mustache.render(preOptionTemplate,preDefinedOptions));\r\n    }\r\n\r\n    /**\r\n     * Returns the input box for the feedback\r\n     * @return {String}, the input box for the feedback\r\n     * */\r\n    exerciseFeedbackInput(){\r\n        return  '<div class=\"input-group feedback-input\">'+\r\n                    '<input type=\"text\" class=\"form-control\" id = \"feedback-input-box\" placeholder=\"Something else ?\">'+\r\n                '</div>';\r\n    }\r\n\r\n    /**\r\n     *\tRequest the submit for feedback to the Zeeguu API\r\n     *  @param {number}, id, id of the word\r\n     *  @param {String}, feedbackOption, the outcome of the feedback @example: too_easy\r\n     *  @param {String}, resultSubmitSource, the source of submission @example: Recognize_L1W_in_L2T\r\n     **/\r\n    submitFeedback(wordID,feedbackOption,resultSubmitSource){\r\n        //console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + \"/\" + feedbackOption + resultSubmitSource + \"/\" + -1 + \"/\" + wordID + \"?session=\"+this.sessionId);\r\n\t\t$.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + \"/\" + feedbackOption + resultSubmitSource + \"/\" + -1 + \"/\" + wordID + \"?session=\"+this.sessionId);\r\n    }\r\n}",
+    "static": true,
+    "longname": "app/feedback.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 46,
+    "kind": "class",
+    "name": "Feedback",
+    "memberof": "app/feedback.js",
+    "static": true,
+    "longname": "app/feedback.js~Feedback",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/feedback.js",
+    "importStyle": "Feedback",
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 47,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/feedback.js~Feedback",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/feedback.js~Feedback#constructor",
+    "access": null,
+    "description": "Construct the feedback class",
+    "lineNumber": 15,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{number},",
+        "description": "id of the current word"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{String},",
+        "description": "resultSubmitSource,"
+      }
+    ]
+  },
+  {
+    "__docId__": 48,
+    "kind": "member",
+    "name": "wordId",
+    "memberof": "app/feedback.js~Feedback",
+    "static": false,
+    "longname": "app/feedback.js~Feedback#wordId",
+    "access": null,
+    "description": "Class parameters",
+    "lineNumber": 17,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 49,
+    "kind": "member",
+    "name": "resultSubmitSource",
+    "memberof": "app/feedback.js~Feedback",
+    "static": false,
+    "longname": "app/feedback.js~Feedback#resultSubmitSource",
+    "access": null,
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 50,
+    "kind": "member",
+    "name": "sessionId",
+    "memberof": "app/feedback.js~Feedback",
+    "static": false,
+    "longname": "app/feedback.js~Feedback#sessionId",
+    "access": null,
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 51,
+    "kind": "method",
+    "name": "bindUIActions",
+    "memberof": "app/feedback.js~Feedback",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/feedback.js~Feedback#bindUIActions",
+    "access": null,
+    "description": "Bind all the actions connected to this module\nreturn {void}",
+    "lineNumber": 26,
+    "params": []
+  },
+  {
+    "__docId__": 52,
+    "kind": "method",
+    "name": "feedbackAction",
+    "memberof": "app/feedback.js~Feedback",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/feedback.js~Feedback#feedbackAction",
+    "access": null,
+    "description": "The action performed predefined option is clicked",
+    "lineNumber": 35,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{Object},",
+        "description": "elem, the element that is clicked"
+      }
+    ]
+  },
+  {
+    "__docId__": 53,
+    "kind": "method",
+    "name": "exerciseFeedbackBox",
+    "memberof": "app/feedback.js~Feedback",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/feedback.js~Feedback#exerciseFeedbackBox",
+    "access": null,
+    "description": "",
+    "lineNumber": 44,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{number},",
+        "description": "session id"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{String},",
+        "description": "resultSubmitSource,"
+      }
+    ]
+  },
+  {
+    "__docId__": 54,
+    "kind": "member",
+    "name": "wordId",
+    "memberof": "app/feedback.js~Feedback",
+    "static": false,
+    "longname": "app/feedback.js~Feedback#wordId",
+    "access": null,
+    "description": null,
+    "lineNumber": 46,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "method",
+    "name": "successfulFeedback",
+    "memberof": "app/feedback.js~Feedback",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/feedback.js~Feedback#successfulFeedback",
+    "access": null,
+    "description": "Success message when the feedback is being submitted",
+    "lineNumber": 75,
+    "params": []
+  },
+  {
+    "__docId__": 56,
+    "kind": "method",
+    "name": "exerciseFeedbackOptions",
+    "memberof": "app/feedback.js~Feedback",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/feedback.js~Feedback#exerciseFeedbackOptions",
+    "access": null,
+    "description": "Feedback fields for the feedback box within the exercise\nUsing html template and Mustache to render the content",
+    "lineNumber": 93,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "rendered html"
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "method",
+    "name": "exerciseFeedbackInput",
+    "memberof": "app/feedback.js~Feedback",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/feedback.js~Feedback#exerciseFeedbackInput",
+    "access": null,
+    "description": "Returns the input box for the feedback",
+    "lineNumber": 114,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "{String}, the input box for the feedback"
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "method",
+    "name": "submitFeedback",
+    "memberof": "app/feedback.js~Feedback",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/feedback.js~Feedback#submitFeedback",
+    "access": null,
+    "description": "Request the submit for feedback to the Zeeguu API",
+    "lineNumber": 126,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{number},",
+        "description": "id, id of the word"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{String},",
+        "description": "feedbackOption, the outcome of the feedback @example: too_easy"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "{String},",
+        "description": "resultSubmitSource, the source of submission @example: Recognize_L1W_in_L2T"
+      }
+    ]
+  },
+  {
+    "__docId__": 59,
+    "kind": "file",
+    "name": "app/generator.js",
+    "content": "/** Modular Zeeguu Exercise Generator @authors Martin Avagyan, Vlad Turbureanu\r\n *  @initialize it using: new Generator(args);\r\n *  @param args is matrix of exercise name and number of bookmarks,\r\n *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2\r\n *  @customize it by using prototypal inheritance\r\n **/\r\n\r\nimport $ from 'jquery';\r\nimport Ex1 from './exercises/ex1';\r\nimport Ex2 from './exercises/ex2';\r\nimport Ex3 from './exercises/ex3';\r\nimport Ex4 from './exercises/ex4';\r\nimport ProgressBar from './progress_bar';\r\nimport events from './pubsub';\r\nimport swal from 'sweetalert';\r\nimport Session from './session';\r\nimport {Loader} from './loader';\r\nimport Util from './util';\r\nimport Validator from './validator';\r\nimport TDS from './the_distraction_shield_extension';\r\n\r\n\r\n \r\nvar Generator = function(set,parentInvocation = \"NA\"){\r\n    this.init(set,parentInvocation);\r\n};\r\n\r\nGenerator.prototype = {\r\n    /************************** SETTINGS ********************************/\r\n    data: 0,\t\t//bookmakrs from zeeguu api\r\n    set: 0,\t\t\t//matrix for initialaizer\r\n    index: 0,\t\t//current index from set\r\n    startTime: new Date(),\r\n    session: Session.getSession()  , //Example of session id 34563456 or 11010001\r\n    templateURL: 'static/template/exercise/exercise.html',\r\n    parentInvocation: '',\r\n\r\n    /**\r\n     *\tSaves the common dom in chache\r\n     **/\r\n    cacheDom: function(){\r\n    },\r\n\r\n    /**\r\n     * The function caches imports in local scope for later to be referenced as a string\r\n     * */\r\n    cacheExerciseImports: function(){\r\n        this.Ex1 = Ex1;\r\n        this.Ex2 = Ex2;\r\n        this.Ex3 = Ex3;\r\n        this.Ex4 = Ex4;\r\n    },\r\n\r\n    /**\r\n     *\tGenerator initialaizer\r\n     **/\r\n    init: function(set,parentInvocation){\r\n        this.set = set;\r\n        var _this = this;\r\n\r\n        this.validator = new Validator(set);\r\n\r\n        this.parentInvocation = parentInvocation;\r\n        // \"bind\" event\r\n        this.$eventFunc = function(){_this.nextEx()};\r\n        events.on('exerciseCompleted',this.$eventFunc);\r\n\r\n        this.start();\r\n    },\r\n\r\n    restart: function(){\r\n        this.start();\r\n    },\r\n\r\n    /**\r\n     *\tCall to load the data from API\r\n     **/\r\n    start: function ()\r\n    {\r\n        let _this= this;\r\n        //Callback wait until the bookmarks are loaded\r\n        this.validator.getValidBookMarks(function(ldata) {\r\n            _this.data = (ldata);\r\n            _this.set = _this.validator.validSet;\r\n            //Terminate generator if not enough bookmarks\r\n            if(_this.set ==null || _this.set <=0) {\r\n                _this.terminateGenerator();\r\n                return;\r\n            }\r\n            //Loads the HTML general exercise template from static\r\n            $.when(Loader.loadTemplateIntoElem(_this.templateURL,$(\"#main-content\"))).done(function(){\r\n                // Create the DOM and start the generator\r\n                ProgressBar.init(0, _this.validator.validSize);\r\n                _this.cacheDom();\r\n                _this.cacheExerciseImports();\r\n                _this._constructor();\r\n            });\r\n        });\r\n    },\r\n\r\n    filterArray: function(bookmarksData)\r\n    {\r\n        for(var i = 0; i< bookmarksData.length;i++){\r\n            var tempIdx = indexOf(bookmarksData[i]);\r\n            if(tempIdx == -1 || tempIdx == i){\r\n                continue;\r\n            }\r\n            bookmarksData.splice(i, 1);\r\n        }\r\n        return bookmarksData;\r\n    },\r\n    /**\r\n     *\tThe main constructor\r\n     **/\r\n    _constructor: function (){\r\n        this.index = 0;\r\n        this.startTime = new Date();\r\n        this.nextEx();\r\n    },\r\n\r\n    /**\r\n     *\tAdd Ex here\r\n     **/\r\n    nextEx: function(){\r\n        if(this.index >= this.set.length){\r\n            this.onExSetComplete();\r\n            return;\r\n        }\r\n        var ex = this.set[this.index][0];\r\n        var size = this.set[this.index][1];\r\n        var startingIndex = Util.calcSize(this.set,this.index);\r\n\r\n        this.$currentEx = null;\r\n        delete this.$currentEx;\r\n        //Local scope reference\r\n        this.$currentEx = new (this['Ex'+ex])(this.data,startingIndex,size);\r\n        this.index++;\r\n    },\r\n    /**\r\n     *\tRequest the submit API\r\n     **/\r\n    submitResults: function(){\r\n        //TODO submit user feedback if any\r\n    },\r\n\r\n    /**\r\n     *\tWhen the ex are done perform an action\r\n     **/\r\n    onExSetComplete: function (){\r\n        var _this = this;\r\n        var redirect = TDS.distractionShieldOriginalDestination();\r\n        var finalAction = this.finalActions(redirect,this.parentInvocation);\r\n\t\t_this.submitResults();\r\n        swal({\r\n                title: \"You rock!\",\r\n                text: \"That took less than \"+ Util.calcTimeInMinutes(_this.startTime) + \". practice more?\",\r\n                type: \"success\",\r\n                showCancelButton: true,\r\n                confirmButtonColor: \"#7eb530\",\r\n                confirmButtonText: \"Let's do it!\",\r\n                cancelButtonText: finalAction.btnText,\r\n                closeOnConfirm: true\r\n            },\r\n            function(isConfirm){\r\n                if(isConfirm){\r\n                    ProgressBar.terminate();\r\n                    _this.restart();\r\n                    return;\r\n                }\r\n                _this.terminateGenerator();\r\n                finalAction.actionFunc();\r\n            });\r\n    },\r\n\r\n    /**\r\n     * Text and the action that the secondary button should perform\r\n     * @param {String} redirect url\r\n     * @param {String} parentInvocation, who to emit when the action is done\r\n     * @return {Object}, text of the action and the action function\r\n     * */\r\n    finalActions: function (redirect,parentInvocation) {\r\n        let secondaryBtn = 'Go home!';\r\n        let actionFunction = ()=> {_this.invokeParent();};\r\n\r\n        //If the redirect url is present\r\n        if(redirect!=null){\r\n            secondaryBtn = \"Take me away!\";\r\n            actionFunction = ()=> { window.location = redirect;};\r\n        }\r\n        //If there is no home available create home\r\n        else if(parentInvocation === \"NA\"){\r\n            actionFunction = ()=> {\r\n                let redirect = window.location.protocol + \"//\" + window.location.hostname;\r\n                //Local debuging, wont be part of final code\r\n                window.location.href = (redirect === \"http://127.0.0.1\") ? redirect + \":5000\" : redirect;\r\n            };\r\n        }\r\n        return {btnText:secondaryBtn, actionFunc:actionFunction};\r\n    },\r\n\r\n    terminateGenerator: function(){\r\n        events.off('exerciseCompleted',this.$eventFunc);\r\n        ProgressBar.terminate();\r\n        events.emit('generatorCompleted');\r\n    },\r\n    invokeParent: function(){\r\n        events.emit(this.parentInvocation);\r\n    },\r\n};\r\n\r\nexport default Generator;",
+    "static": true,
+    "longname": "app/generator.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 60,
+    "kind": "function",
+    "name": "Generator",
+    "memberof": "app/generator.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/generator.js~Generator",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/generator.js",
+    "importStyle": "Generator",
+    "description": null,
+    "lineNumber": 24,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "set",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "parentInvocation",
+        "optional": true,
+        "types": [
+          "string"
+        ],
+        "defaultRaw": "NA",
+        "defaultValue": "NA"
+      }
+    ]
+  },
+  {
+    "__docId__": 61,
+    "kind": "file",
+    "name": "app/loader.js",
+    "content": "/**\r\n * Created by Martin on 5/10/2017.\r\n */\r\n\r\nimport $ from 'jquery';\r\nimport LoadingAnimation from './animations/loading_animation';\r\n\r\n\r\n/**\r\n * A class responsible for loading templates and other resources\r\n * */\r\nclass Loader {\r\n    /**\r\n     * Return html template\r\n     * @param {String} name of the template\r\n     * @param {boolean} asyncQUery, allows to choose the loading method\r\n     *        @default asyncQuery is set to false\r\n     * */\r\n    static loadTemplate(tempUrl, asyncQuery = true) {\r\n        return $.ajax({\r\n            type: 'GET',\r\n            dataType: 'html',\r\n            url: tempUrl,\r\n            data: this.data,\r\n            async: asyncQuery\r\n        });\r\n    }\r\n\r\n    /**\r\n     * Return html template and loads it in the given element\r\n     * @param {String} tempUrl of the template\r\n     * @param {jquery object} elem, load the html in this element\r\n     * @param {boolean} append\r\n     * @param {boolean} asyncQUery, allows to choose the loading method\r\n     *        @default asyncQuery is set to true\r\n     * */\r\n    static loadTemplateIntoElem(tempUrl,elem,append = false, asyncQuery = true){\r\n        let loadingAnimation = new LoadingAnimation();\r\n        return $.ajax({\r\n            complete: function(){\r\n                loadingAnimation.loadingAnimation(false);\r\n            },\r\n            type: 'GET',\r\n            dataType: 'html',\r\n            url: tempUrl,\r\n            data: this.data,\r\n            success: function(data) {\r\n                if(!append) {elem.html(data);}\r\n                else {elem.append(data);}\r\n            },\r\n            async: asyncQuery\r\n        });\r\n    }\r\n}\r\nexport {\r\n    Loader,\r\n}",
+    "static": true,
+    "longname": "app/loader.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 62,
+    "kind": "class",
+    "name": "Loader",
+    "memberof": "app/loader.js",
+    "static": true,
+    "longname": "app/loader.js~Loader",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/loader.js",
+    "importStyle": "{Loader}",
+    "description": "A class responsible for loading templates and other resources",
+    "lineNumber": 12,
+    "interface": false
+  },
+  {
+    "__docId__": 63,
+    "kind": "method",
+    "name": "loadTemplate",
+    "memberof": "app/loader.js~Loader",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/loader.js~Loader.loadTemplate",
+    "access": null,
+    "description": "Return html template",
+    "lineNumber": 19,
+    "unknown": [
+      {
+        "tagName": "@default",
+        "tagValue": "asyncQuery is set to false"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "of the template"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "asyncQUery,",
+        "description": "allows to choose the loading method"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 64,
+    "kind": "method",
+    "name": "loadTemplateIntoElem",
+    "memberof": "app/loader.js~Loader",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/loader.js~Loader.loadTemplateIntoElem",
+    "access": null,
+    "description": "Return html template and loads it in the given element",
+    "lineNumber": 37,
+    "unknown": [
+      {
+        "tagName": "@default",
+        "tagValue": "asyncQuery is set to true"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "tempUrl",
+        "description": "of the template"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "jquery object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "elem,",
+        "description": "load the html in this element"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "append",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "asyncQUery,",
+        "description": "allows to choose the loading method"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 65,
+    "kind": "file",
+    "name": "app/pages/empty_page.js",
+    "content": "/**\r\n * Created by Martin on 5/14/2017.\r\n */\r\nimport $ from 'jquery';\r\nimport {Loader} from \"../loader\";\r\nimport Mustache from 'mustache';\r\n\r\nvar EmptyPage = function(newFields = null){\r\n    this.init(newFields);\r\n};\r\n\r\nEmptyPage.prototype = {\r\n\r\n    /************************** SETTINGS ********************************/\r\n    emptyTemplateURL: 'static/template/empty_page.html',\r\n    templateFields:\r\n        {\r\n            icon: 'static/img/illustrations/ntd_cloud.png',\r\n            title: \"Not Enough Words To Learn\",\r\n            info: 'You can get words when you read articles.',\r\n            btnPrime: 'https://www.zeeguu.unibe.ch/reading',\r\n            btnPrimeText: 'Let\\'s Read',\r\n            btnSecond: false,\r\n            btnSecondText: 'Skip',\r\n        },\r\n    emptyTemplate: 0,\r\n\r\n    /*********************** General Functions ***************************/\r\n    /**\r\n     *\tSaves the dom\r\n     **/\r\n    cacheDom: function(){\r\n    },\r\n\r\n    /**\r\n     * Merges two javascript objects together\r\n     * @param {Object} oldField, the field that will be overwritten\r\n     * @param {Object} newField, the field that provides which properties to override\r\n     * @return {Object} merged field\r\n     * TODO test this\r\n     * */\r\n    mergeField: function (oldField,newField) {\r\n        for (let key in newField) {\r\n            if (newField.hasOwnProperty(key)) {\r\n                oldField[key] = newField[key];\r\n            }\r\n        }\r\n        return oldField;\r\n    },\r\n\r\n    /**\r\n     *\tExercise initialaizer\r\n     **/\r\n    init: function(newField){\r\n        if(newField!=null){\r\n            this.templateFields =  this.mergeField(this.templateFields, newField );\r\n        }\r\n        this.start();\r\n    },\r\n\r\n    /**\r\n     *\tThe main constructor\r\n     **/\r\n    start: function (){\r\n        var _this = this;\r\n        $.when(Loader.loadTemplateIntoElem(_this.emptyTemplateURL,$(\"#main-content\"))).done(function(data){\r\n            // Create the DOM and start the generator\r\n            _this.emptyTemplate = data;\r\n            _this.cacheDom();\r\n            _this.genPage();\r\n            _this.bindUIActions();\r\n        });\r\n    },\r\n\r\n    genPage: function () {\r\n        let html = Mustache.to_html(this.emptyTemplate,this.templateFields);\r\n        $(\"#main-content\").html(html);\r\n    },\r\n\r\n    bindUIActions: function(){\r\n    },\r\n\r\n    terminate: function(){\r\n        //If any events terminate here\r\n    },\r\n};\r\n\r\nexport default EmptyPage;\r\n\r\n",
+    "static": true,
+    "longname": "app/pages/empty_page.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 66,
+    "kind": "function",
+    "name": "EmptyPage",
+    "memberof": "app/pages/empty_page.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/pages/empty_page.js~EmptyPage",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/pages/empty_page.js",
+    "importStyle": "EmptyPage",
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "newFields",
+        "optional": true,
+        "types": [
+          "undefined"
+        ],
+        "defaultValue": "undefined"
+      }
+    ]
+  },
+  {
+    "__docId__": 67,
+    "kind": "file",
+    "name": "app/pages/home.js",
+    "content": "import $ from 'jquery';\r\nimport Generator from '../generator';\r\nimport events from '../pubsub';\r\nimport Mustache from 'mustache';\r\nimport {Loader} from '../loader';\r\nimport * as page from \"page\";\r\n\r\nvar Home = function(){\r\n\tthis.init();\r\n};\r\n\r\nHome.prototype = {\r\n\t\r\n\t/************************** SETTINGS ********************************/\t\r\n\tscreenTemplateURL: 'static/template/home/home.html',\r\n\tcardTemplateURL: 'static/template/home/card.html',\r\n\tcardTemplate: 0,\r\n\r\n\tcurrentInvocation: 'homeRestart',\t\t\t//Event name for invoking start on current module\r\n\tgeneratorInvocation: 'generatorCompleted',\t//Event name for invoking reset on the active generator (memory leaks prevention)\r\n\tcurrentlyActiveGenerator: 0,\t\t\t\t//Reference to the active generator\r\n\r\n\teventGeneratorCompletedFunc: 0,\t\t\t\t//Function reference to resetGenerator()\r\n    eventCurrentRestartFunc: 0,\t\t\t\t\t//Function reference to start()\r\n\r\n\texNames: [\r\n\t\t{\r\n\t\t\tname: \"Find\",\r\n\t\t\texID: [[1, 3]],\r\n\t\t\tinfo: 'Find the word in the context',\r\n\t\t\ticon: 'static/img/icons/search-engine.svg',\r\n\t\t\ttime: 2\r\n\t\t},\r\n\t\t{\r\n\t\t\tname: \"Choose\",\r\n\t\t\texID: [[2, 4]],\r\n\t\t\tinfo: 'Choose the word that fits the context',\r\n\t\t\ticon: 'static/img/icons/test.svg',\r\n\t\t\ttime: 2\r\n\t\t},\r\n\t\t{\r\n\t\t\tname: \"Match\",\r\n\t\t\texID: [[3, 4]],\r\n\t\t\tinfo: 'Match each word with its translation',\r\n\t\t\ticon: 'static/img/icons/question.svg',\r\n\t\t\ttime: 3\r\n\t\t},\r\n\t\t{\r\n\t\t\tname: \"Translate\",\r\n\t\t\texID: [[4, 3]],\r\n\t\t\tinfo: 'Translate the word given in the context',\r\n\t\t\ticon: 'static/img/icons/translator.svg',\r\n\t\t\ttime: 2\r\n\t\t},\r\n\t\t{\r\n\t\t\tname: \"Short Practice\",\r\n\t\t\texID: [[1, 3], [2, 3]],\r\n\t\t\tinfo: 'General exercise for short practice',\r\n\t\t\ticon: 'static/img/icons/placeholder.svg',\r\n\t\t\ttime: 3\r\n\t\t},\r\n\t\t{\r\n\t\t\tname: \"Long Practice\",\r\n\t\t\texID: [[1, 3], [2, 3], [3, 3], [4, 3]],\r\n\t\t\tinfo: 'General exercise for short practice',\r\n\t\t\ticon: 'static/img/icons/placeholder.svg',\r\n\t\t\ttime: 4\r\n\t\t},\r\n\t\t{\r\n\t\t\tname: \"Random\",\r\n\t\t\texID: [[2, 3], [1, 3], [3, 3], [4, 3], [1, 3]],\r\n\t\t\tinfo: 'Repeat via random exercises',\r\n\t\t\ticon: 'static/img/icons/shuffle.svg',\r\n\t\t\ttime: 6\r\n\t\t},\r\n\t],\r\n\t/*********************** General Functions ***************************/\t\r\n\t/**\r\n\t*\tSaves the dom \r\n\t**/\r\n\tcacheDom: function(){\r\n\t\tthis.$elem \t\t\t= $(\"#home-body\");\t\t\r\n\t\tthis.$exCards \t\t= this.$elem.find(\"#exercieses-cards\");\t\r\n\t\tthis.$attribution \t= this.$elem.find(\"#attribution\");\t\r\n\t\tthis.$credits \t\t= this.$elem.find(\"#credits\");\t\r\n\t},\r\n\t\r\n\t\r\n\t/**\r\n\t*\tExercise initialaizer\r\n\t**/\r\n\tinit: function(){\t\r\n\t\tvar _this = this;\r\n\t\t// \"bind\" event\r\n\t\tthis.eventGeneratorCompletedFunc = function(){_this.resetGenerator();};\r\n\t\tthis.eventCurrentRestartFunc = function(){_this.start();};\r\n\t\tevents.on(this.generatorInvocation,this.eventGeneratorCompletedFunc);\r\n\t\tevents.on(this.currentInvocation,this.eventCurrentRestartFunc);\r\n\t\tthis.start();\r\n\t},\r\n\r\n    /**\r\n\t*\tThe main constructor\r\n\t**/\r\n\tstart: function (){\t\r\n\t\tvar _this = this;\r\n\t\t$.when(Loader.loadTemplateIntoElem(_this.screenTemplateURL,$(\"#main-content\")),\r\n\t\tLoader.loadTemplate(this.cardTemplateURL)).done(function(homeData,cardData){\r\n\t\t\t_this.cardTemplate = cardData[0];//cardData[0] string html\r\n\t\t\t// Create the DOM and start the generator\r\n\t\t\t_this.cacheDom();\r\n\t\t\t_this.generateExerciseCards();\r\n\t\t\t_this.bindUIActions();\r\n\t\t});\r\n\t},\r\n\r\n\t/**\r\n\t * UI actions are binded here\r\n\t * */\r\n\tbindUIActions: function(){\r\n\t\t//Bind UI action of attribution to the function\r\n\t\tvar _this = this;\r\n\t\tthis.$credits.on(\"click\", _this.handleAttribution.bind(this));\r\n\t},\r\n\r\n\tbindCards: function () {\r\n\t\tvar exs = this.$exCards.children();\r\n\t\tfor(var i = 0; i < exs.length; i++){\r\n\t\t\tvar id = exs[i].getAttribute(\"ex-id\");\r\n\t\t\t$(exs[i]).on(\"click\", this.newEx.bind(this,id));\r\n\t\t}\r\n\t},\r\n\r\n\t/**\r\n\t * Attribution footer\r\n\t * On click show/hide attribution\r\n\t * @return {void}\r\n\t * */\r\n\thandleAttribution: function(){\r\n\t\tlet isHidden = this.$attribution.hasClass(\"hide\");\r\n\t\tif(!isHidden){\r\n\t\t\tthis.$attribution.addClass(\"hide\");\r\n\t\t\treturn;\r\n\t\t}\r\n\t\tthis.$attribution.removeClass(\"hide\");\r\n\t},\r\n\r\n\t/**\r\n\t * Genrate screen cards\r\n\t * */\r\n\tgenerateExerciseCards: function(){\r\n\t\t//The index function find the current index of the Array of Exercises\r\n\t\tvar cardNames = {\r\n\t\t\tExercises: this.exNames,\r\n\t\t\tindex: function() {return cardNames.Exercises.indexOf(this);}\r\n\t\t};\r\n\r\n\t\tthis.$exCards.append(Mustache.render(this.cardTemplate,cardNames));\r\n\t},\r\n\t\r\n\t/**\r\n\t * Parse string into 2D array as a generator argument\r\n\t * @return {Array}, the array containing exercise set used in generator\r\n\t * TODO can be overriten by eval\r\n\t*/\r\n\texArrayParser: function(stringArray){\t\t\r\n\t\tvar arr = stringArray.split(\",\").map(function(x){return parseInt(x)});\r\n\t\tvar newArr = [];\r\n\t\twhile(arr.length) newArr.push(arr.splice(0,2));\r\n\t\treturn newArr;\r\n\t},\r\n\r\n\r\n\t/**\r\n\t * Resets generator, clears the memory\r\n\t * */\r\n\tresetGenerator: function(){\r\n\t\tthis.currentlyActiveGenerator = null;\r\n        delete this.currentlyActiveGenerator;\r\n\t},\r\n\t\r\n\t/**\r\n\t * Terminate the module, unbind events.\r\n\t * */\r\n\tterminate: function(){\r\n\t\tevents.off(this.generatorInvocation,this.eventGeneratorCompletedFunc);\r\n        events.off(this.currentInvocation,this.eventCurrentRestartFunc);\r\n\t\t//emit listeners that the home is terminated\r\n\t},\r\n\t\r\n\t/**\r\n\t * Generate an exercise set\r\n\t * @param {String} exID the id in the form of a string\r\n\t * */\r\n\tnewEx: function(exID){\r\n\t\tthis.currentlyActiveGenerator = new Generator(this.exArrayParser(exID),this.currentInvocation);\r\n\t},\r\n};\r\n\r\nexport default Home;\r\n\r\n",
+    "static": true,
+    "longname": "app/pages/home.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 68,
+    "kind": "function",
+    "name": "Home",
+    "memberof": "app/pages/home.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/pages/home.js~Home",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/pages/home.js",
+    "importStyle": "Home",
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 69,
+    "kind": "file",
+    "name": "app/pages/not_found.js",
+    "content": "/**\r\n * Not found page, inherits from Empty Page\r\n * */\r\nimport EmptyPage from './empty_page';\r\n\r\nfunction NotFound(){\r\n    //Override  the parameters for the empty page\r\n    let newFields = {\r\n        icon: 'static/img/illustrations/ntd_cloud.png',\r\n        title: \"I Found Nothing\",\r\n        info: \"Let's pretend this never happened.\",\r\n        btnPrime: false,\r\n        btnPrimeText: false,\r\n        btnSecond: false,\r\n        btnSecondText: false,\r\n    };\r\n    //Initialize the not found module\r\n\tthis.init(newFields);\r\n}\r\n\r\nNotFound.prototype = Object.create(EmptyPage.prototype, {\r\n\tconstructor: NotFound,\r\n});\r\nexport default NotFound;",
+    "static": true,
+    "longname": "app/pages/not_found.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 70,
+    "kind": "function",
+    "name": "NotFound",
+    "memberof": "app/pages/not_found.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/pages/not_found.js~NotFound",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/pages/not_found.js",
+    "importStyle": "NotFound",
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 71,
+    "kind": "file",
+    "name": "app/pages/starter.js",
+    "content": "/**\r\n * Starter module, inherits from Home\r\n * */\r\nimport $ from 'jquery';\r\nimport Home from './home';\r\n\r\nfunction Starter(){\r\n\tthis.init();\r\n\r\n\t/** @Override */\r\n\tthis.cacheDom =  function(){\r\n\t\tthis.$elem \t\t\t= $(\"#starter-body\");\r\n\t\tthis.$exCards \t\t= this.$elem.find(\"#exercieses-cards\");\r\n\t\tthis.$attribution \t= this.$elem.find(\"#attribution\");\r\n\t\tthis.$credits \t\t= this.$elem.find(\"#credits\");\r\n\t}\r\n}\r\n\r\nStarter.prototype = Object.create(Home.prototype, {\r\n\tconstructor: Starter,\r\n\t/************************** SETTINGS ********************************/\r\n\tscreenTemplateURL: {value:  'static/template/starter/starter.html'},\r\n\tcardTemplateURL: {value: 'static/template/starter/plan_card.html'},\r\n\tcurrentInvocation: {value: 'starterScreenRestart'},\r\n\texNames: {\r\n\t\tvalue: [\r\n\t\t\t{\r\n\t\t\t\tname: \"Basic\",\r\n\t\t\t\texID: [[1, 6],[2, 2], [4, 2],  [3, 1], [2, 1],[4, 2]],\r\n\t\t\t\tinfo: 'Practice 10 words in 2 minutes.',\r\n\t\t\t\ticon: 'static/img/icons/starter/eleph1.svg',\r\n\t\t\t\tgradientColor: 'starter-btn-header-level1',\r\n\t\t\t\ttime: 2\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\tname: \"Casual\",\r\n\t\t\t\texID: [[4, 2], [2, 2], [3, 1], [1, 3], [2, 2],[1, 2],[3, 1],[2, 1],[3, 1]],\r\n\t\t\t\tinfo: 'Practice 15 words in 3 minutes.',\r\n\t\t\t\ticon: 'static/img/icons/starter/eleph2.svg',\r\n\t\t\t\tgradientColor: 'starter-btn-header-level2',\r\n\t\t\t\ttime: 3\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\tname: \"Regular\",\r\n\t\t\t\texID: [[1, 2], [2, 2], [3, 1], [4, 3], [2, 2],[1, 3],[3, 1],[1, 3],[3, 1],[4, 2],[2, 2],[1, 2],[3,1]],\r\n\t\t\t\tinfo: 'Practice 25 words in 5 minutes.',\r\n\t\t\t\ticon: 'static/img/icons/starter/eleph3.svg',\r\n\t\t\t\tgradientColor: 'starter-btn-header-level3',\r\n\t\t\t\ttime: 5\r\n\t\t\t},\r\n\t\t]\r\n\t},\r\n});\r\n\r\nexport default Starter;",
+    "static": true,
+    "longname": "app/pages/starter.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 72,
+    "kind": "function",
+    "name": "Starter",
+    "memberof": "app/pages/starter.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/pages/starter.js~Starter",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/pages/starter.js",
+    "importStyle": "Starter",
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 73,
+    "kind": "file",
+    "name": "app/progress_bar.js",
+    "content": "/** Modular progress bar @author Martin Avagyan\r\n *  Initialize it using ProgressBar.init(percent,size);\r\n *  Add progress using  ProgressBar.move();\r\n**/\r\nimport events from './pubsub';\r\n\r\nvar bar,ProgressBar = {\r\n\tsettings:{\r\n\t\tpercent: 0, //default starting point\r\n\t\tamount: 25, //default value for progress amount\r\n\t\telem: 0,\r\n\t},\t\r\n\tinit: function(percent,size){\t\r\n\t\tthis.bindUIActions();\t\t\r\n\t\tbar = this.settings;\r\n\t\tbar.percent = percent;\r\n\t\tbar.amount = 100/size;\r\n\t\tbar.elem = document.getElementById(\"ex-bar\");\r\n\t\tbar.elem.style.width = bar.percent;\r\n\t\t// \"bind\" event\r\n\t\tevents.on('progress', this.move);\r\n\t},\t\r\n\trestart: function(){\r\n\t\tbar.percent = 0;\r\n\t\tbar.elem.style.width = bar.percent;\r\n\t},\t\r\n\tbindUIActions: function() {},\t\r\n\tmove: function() {  \r\n\t\t  var width = bar.percent;\r\n\t\t  var id = setInterval(frame, 10);\r\n\t\t  var max_move = bar.percent+bar.amount;\r\n\t\t  function frame() {\r\n\t\t\tif (width >= max_move || width >=100) {\r\n\t\t\t  clearInterval(id);\r\n\t\t\t} else {\r\n\t\t\t  width++; \t\t\t  \r\n\t\t\t  bar.elem.style.width = width + '%'; \r\n\t\t\t}\r\n\t\t\tbar.percent = max_move;\r\n\t\t}\r\n\t},\r\n\tterminate: function () {\r\n\t\tevents.off('progress', this.move);\r\n\t},\r\n};\r\n\r\nexport default ProgressBar;",
+    "static": true,
+    "longname": "app/progress_bar.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 74,
+    "kind": "file",
+    "name": "app/pubsub.js",
+    "content": "/**\r\n * Event listener implemented using publish subscribe pattern\r\n * There is only one object of this class through application\r\n * */\r\nvar events = (function() {\r\n    var events = {};\r\n    var debugging = false;\r\n\r\n    function on(eventName, fn) {\r\n        events[eventName] = events[eventName] || [];\r\n        events[eventName].push(fn);\r\n        debug(\"ON: \");\r\n    }\r\n    function off(eventName, fn) {\r\n        if (events[eventName]) {\r\n            for (var i = 0; i < events[eventName].length; i++) {\r\n                if( events[eventName][i] === fn ) {\r\n                    events[eventName].splice(i, 1);\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n        debug(\"OFF: \");\r\n    }\r\n    function emit(eventName, data) {\r\n        if (events[eventName]) {\r\n            events[eventName].forEach(function(fn) {\r\n                fn(data);\r\n            });\r\n        }\r\n        debug(\"EMIT: \");\r\n    }\r\n    function debug(msg){\r\n        if(!debugging) return;\r\n\r\n        console.info(msg);\r\n        console.info(events);\r\n    }\r\n    function resetAll() {\r\n        events = {};\r\n        debug(\"Reset All: \");\r\n    }\r\n    function removeEvent(eventName) {\r\n        delete events[eventName];\r\n    }\r\n    return {\r\n        on: on,\r\n        off: off,\r\n        emit: emit,\r\n        resetAll: resetAll,\r\n    };\r\n\r\n})();\r\n\r\nexport default events;",
+    "static": true,
+    "longname": "app/pubsub.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 75,
+    "kind": "variable",
+    "name": "events",
+    "memberof": "app/pubsub.js",
+    "static": true,
+    "longname": "app/pubsub.js~events",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/pubsub.js",
+    "importStyle": "events",
+    "description": "Event listener implemented using publish subscribe pattern\nThere is only one object of this class through application",
+    "lineNumber": 5,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 76,
+    "kind": "file",
+    "name": "app/session.js",
+    "content": "/**\r\n * Created by Martin on 5/4/2017.\r\n */\r\nimport CookieHander from './cookie_handler';\r\nimport Settings from './settings';\r\n\r\nlet sessionID = null;\r\n\r\nexport default class Session {\r\n\r\n    /**\r\n     * @param name, name of the session identifier\r\n     * @default from Zeeguu Settings\r\n     * */\r\n    static getSession (name = Settings.ZEEGUU_SESSION_ID) {\r\n        if(sessionID) return sessionID;\r\n        sessionID = CookieHander.getCookie(name);\r\n        return sessionID\r\n    }\r\n\r\n    /**\r\n     *  Set the zeeguu sessionID cookie to the default session\r\n     * @param name, cookie identifier\r\n     * @param value, value of the cookie\r\n     * @param days, expiration time\r\n     * @default form Zeeguu Settings\r\n     * */\r\n    static setSession (name = Settings.ZEEGUU_SESSION_ID, value = Settings.ZEEGUU_DEFAULT_SESSION, days = Settings.ZEEGUU_DEFAULT_COOKIE_EXPIRATION ) {\r\n        CookieHander.setCookie(name,value,days);\r\n    }\r\n}",
+    "static": true,
+    "longname": "app/session.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 77,
+    "kind": "variable",
+    "name": "sessionID",
+    "memberof": "app/session.js",
+    "static": true,
+    "longname": "app/session.js~sessionID",
+    "access": null,
+    "export": false,
+    "importPath": "language_practice_platform/app/session.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 78,
+    "kind": "class",
+    "name": "Session",
+    "memberof": "app/session.js",
+    "static": true,
+    "longname": "app/session.js~Session",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/session.js",
+    "importStyle": "Session",
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 79,
+    "kind": "method",
+    "name": "getSession",
+    "memberof": "app/session.js~Session",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/session.js~Session.getSession",
+    "access": null,
+    "description": "",
+    "lineNumber": 15,
+    "unknown": [
+      {
+        "tagName": "@default",
+        "tagValue": "from Zeeguu Settings"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name,",
+        "description": "name of the session identifier"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 80,
+    "kind": "method",
+    "name": "setSession",
+    "memberof": "app/session.js~Session",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/session.js~Session.setSession",
+    "access": null,
+    "description": " Set the zeeguu sessionID cookie to the default session",
+    "lineNumber": 28,
+    "unknown": [
+      {
+        "tagName": "@default",
+        "tagValue": "form Zeeguu Settings"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name,",
+        "description": "cookie identifier"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value,",
+        "description": "value of the cookie"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "days,",
+        "description": "expiration time"
+      }
+    ]
+  },
+  {
+    "__docId__": 81,
+    "kind": "file",
+    "name": "app/settings.js",
+    "content": "//noinspection JSAnnotator\r\n/**\r\n * File containing global settings for exercises\r\n * */\r\n\r\nexport default {\r\n    /*********************** Exercise API Parameters **************************/\r\n\r\n    ZEEGUU_API: 'https://zeeguu.unibe.ch/api',\r\n    ZEEGUU_SESSION_ID: 'sessionID',\r\n    ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days\r\n    ZEEGUU_DEFAULT_SESSION: '34563456',//00926044 34563456 11010001\r\n\r\n    /******************** Exercise Bookmark Parameters ************************/\r\n    ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',\r\n\r\n    /*********************** Exercise Outcome Parameters **************************/\r\n\r\n    /** Current endpoint for submitting the result*/\r\n    ZEEGUU_EX_OUTCOME_ENDPOINT: '/report_exercise_outcome',\r\n\r\n    /** Source types for exercise outcome */\r\n    ZEEGUU_EX_SOURCE_RECOGNIZE: '/Recognize_L1W_in_L2T',\r\n    ZEEGUU_EX_SOURCE_SELECT: '/Select_L2W_fitting_L2T',\r\n    ZEEGUU_EX_SOURCE_MATCH: '/Match_three_L1W_to_three_L2W',\r\n    ZEEGUU_EX_SOURCE_TRANSLATE: '/L1W_to_L1W_with_L2T_Example',\r\n\r\n\r\n    /** Outcome types for exercise */\r\n    ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',\r\n\tZEEGUU_EX_OUTCOME_WRONG: '/Wrong',\r\n\tZEEGUU_EX_OUTCOME_HINT: '/Asked_for_hint',\r\n\r\n};",
+    "static": true,
+    "longname": "app/settings.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 82,
+    "kind": "file",
+    "name": "app/test_example/example.js",
+    "content": "export default class Bear{\r\n\tconstructor(type = 'any'){\r\n\t\tthis.type = type;\r\n\t}\r\n\t\r\n\tgrowl(says = 'grrr'){\r\n\t\treturn 'The ' + this.type + ' bear says ' + says;\r\n\t}\r\n}",
+    "static": true,
+    "longname": "app/test_example/example.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 83,
+    "kind": "class",
+    "name": "Bear",
+    "memberof": "app/test_example/example.js",
+    "static": true,
+    "longname": "app/test_example/example.js~Bear",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/test_example/example.js",
+    "importStyle": "Bear",
+    "description": null,
+    "lineNumber": 1,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 84,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/test_example/example.js~Bear",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/test_example/example.js~Bear#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 2,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "type",
+        "optional": true,
+        "types": [
+          "string"
+        ],
+        "defaultRaw": "any",
+        "defaultValue": "any"
+      }
+    ]
+  },
+  {
+    "__docId__": 85,
+    "kind": "member",
+    "name": "type",
+    "memberof": "app/test_example/example.js~Bear",
+    "static": false,
+    "longname": "app/test_example/example.js~Bear#type",
+    "access": null,
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 86,
+    "kind": "method",
+    "name": "growl",
+    "memberof": "app/test_example/example.js~Bear",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/test_example/example.js~Bear#growl",
+    "access": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "says",
+        "optional": true,
+        "types": [
+          "string"
+        ],
+        "defaultRaw": "grrr",
+        "defaultValue": "grrr"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 87,
+    "kind": "file",
+    "name": "app/the_distraction_shield_extension.js",
+    "content": "/**\r\n * The following class implements methods for The Distraction Shield browser extension\r\n * @example of redirect url https://www.zeeguu.unibe.ch/practice/get-ex?redirect=https://www.facebook.com/.\r\n * @example of the working of the regex: in the above url it extracts : 'https://www.facebook.com/' starting\r\n * directly after '?redirect='. In general it extracts everything, without exception, after '?redirect='\r\n * */\r\nexport default class TDS {\r\n\r\n    /**\r\n     * Extraction of redirect url for Distraction Shield\r\n     * @return {String}, redirect url or Null if no url is found\r\n     **/\r\n    static distractionShieldOriginalDestination () {\r\n        let url = window.location.href;\r\n        let results = /[?]tds_redirect=(.*)/.exec(url);\r\n        if (!results || !results[1]) { return null; }\r\n        let newUrl = results[1];\r\n        newUrl += (/[?]/.test(newUrl) ? \"&\" : \"?\") + \"tds_exComplete=true\";\r\n        return newUrl;\r\n    }\r\n\r\n}",
+    "static": true,
+    "longname": "app/the_distraction_shield_extension.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 88,
+    "kind": "class",
+    "name": "TDS",
+    "memberof": "app/the_distraction_shield_extension.js",
+    "static": true,
+    "longname": "app/the_distraction_shield_extension.js~TDS",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/the_distraction_shield_extension.js",
+    "importStyle": "TDS",
+    "description": "The following class implements methods for The Distraction Shield browser extension",
+    "examples": [
+      "of redirect url https://www.zeeguu.unibe.ch/practice/get-ex?redirect=https://www.facebook.com/.",
+      "of the working of the regex: in the above url it extracts : 'https://www.facebook.com/' starting\ndirectly after '?redirect='. In general it extracts everything, without exception, after '?redirect='"
+    ],
+    "lineNumber": 7,
+    "interface": false
+  },
+  {
+    "__docId__": 89,
+    "kind": "method",
+    "name": "distractionShieldOriginalDestination",
+    "memberof": "app/the_distraction_shield_extension.js~TDS",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/the_distraction_shield_extension.js~TDS.distractionShieldOriginalDestination",
+    "access": null,
+    "description": "Extraction of redirect url for Distraction Shield",
+    "lineNumber": 13,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "{String}, redirect url or Null if no url is found"
+    }
+  },
+  {
+    "__docId__": 90,
+    "kind": "file",
+    "name": "app/util.js",
+    "content": "var ut,Util = {\r\n\t/**\r\n\t*Returns selected text\r\n\t**/\r\n\tgetSelectedText: function() {\r\n\t\t// Gets clicked on word (or selected text if text is selected)\r\n\t\tvar t = '';\r\n\t\tvar sel;\r\n\t\tif (window.getSelection && (sel = window.getSelection()).modify) {\r\n\t\t\tvar s = window.getSelection();\r\n\t\t\tif (s.isCollapsed) {\r\n\t\t\t\ts.modify('move', 'forward', 'character');\r\n\t\t\t\ts.modify('move', 'backward', 'word');\r\n\t\t\t\ts.modify('extend', 'forward', 'word');\r\n\t\t\t\tt = s.toString();\r\n\t\t\t\ts.modify('move', 'forward', 'character'); //clear selection\r\n\t\t\t}\r\n\t\t\telse {\r\n\t\t\t\tt = s.toString();\r\n\t\t\t}\r\n\t\t} else if ((sel = document.selection) && sel.type != \"Control\") {\r\n\t\t\t// IE 4+\r\n\t\t\tvar textRange = sel.createRange();\r\n\t\t\tif (!textRange.text) {\r\n\t\t\t\ttextRange.expand(\"word\");\r\n\t\t\t}\r\n\t\t\t// Remove trailing spaces\r\n\t\t\twhile (/\\s$/.test(textRange.text)) {\r\n\t\t\t\ttextRange.moveEnd(\"character\", -1);\r\n\t\t\t}\r\n\t\t\tt = textRange.text;\r\n\t\t}\r\n\t\treturn t;\r\n\t},\r\n\r\n\t/**\r\n\t * Check overflow\r\n\t * @param elem {Jquery Element}\r\n\t * @return {Boolean}, true if overflown false otherwise\r\n\t * */\r\n\tisMultiline: function (elem) {\r\n\t\tlet divHeight = elem.height();\r\n\t\tlet lineHeight = parseInt(elem.css('font-size'));\r\n\t\treturn ((divHeight / lineHeight) >= 2);\r\n\t},\r\n\t\r\n\t/**\r\n     *\tCalculate session time in minutes\r\n\t *\t@return string with appended minute\r\n     **/\r\n    calcTimeInMinutes: function (startTime){\r\n        var endTime = new Date();\r\n        var total = endTime.getMinutes()-startTime.getMinutes();\r\n        return (total <= 1)?\"1 minute\":total + \" minutes\";\r\n    },\r\n\t\r\n\t/**\r\n     *\tCalculate exercise time in milliseconds\r\n\t *\t@return {int} milliseconds\r\n     **/\r\n    calcTimeInMilliseconds: function (startTime){\r\n        var endTime = Date.now();\r\n        var total = endTime - startTime;\r\n        return total;\r\n    },\r\n\r\n    /**\r\n     * Calculate size of elements in 2D array\r\n     * @param {int} length, do until that index\r\n     * @param {[int][int]} set, int array\r\n     * */\r\n    calcSize: function(set,length){\r\n        var sum = 0;\r\n        for(var i = 0; i<length; i++){\r\n            sum += set[i][1];\r\n        }\r\n        return sum;\r\n    },\r\n}\r\n\r\nvar extendObject = function(child,parent){\r\n\tvar temp = function(){};\t\r\n\ttemp.prototype = parent.prototype;\r\n\tchild.prototype = new temp();\r\n\tchild.prototype.constructor = child;\r\n}\r\n\r\nexport default Util;\r\n",
+    "static": true,
+    "longname": "app/util.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 91,
+    "kind": "function",
+    "name": "extendObject",
+    "memberof": "app/util.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/util.js~extendObject",
+    "access": null,
+    "export": false,
+    "importPath": "language_practice_platform/app/util.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 81,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "child",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "parent",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 92,
+    "kind": "file",
+    "name": "app/validator.js",
+    "content": "/** Validator class takes care of the input for generator\r\n *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint\r\n *  Based on the result, it decides how to generate exercises\r\n *  If number of bookmarks == 0 then no bookmarks page\r\n *  If number of bookmarks < requested number then generate exercises that fit\r\n *  If number of bookmarks >= requested number simply generate exercises\r\n *  Init with @param {array} set: [[2,3],[1,3],[3,3],[4,3],[1,3]]\r\n *\r\n *  IMPORTANT: the function @getValidBookMarks assumes the set is created\r\n *  considering the minimum requirements for each exercise\r\n **/\r\n\r\nimport $ from 'jquery';\r\nimport Settings from \"./settings\";\r\nimport Session from \"./session\";\r\nimport Util from \"./util\";\r\nimport EmptyPage from \"./pages/empty_page\";\r\nimport LoadingAnimation from './animations/loading_animation';\r\nimport Ex1 from './exercises/ex1';\r\nimport Ex2 from './exercises/ex2';\r\nimport Ex3 from './exercises/ex3';\r\nimport Ex4 from './exercises/ex4';\r\nimport TDS from './the_distraction_shield_extension';\r\n\r\nclass Validator{\r\n    constructor(set){\r\n        /** Class parameters*/\r\n        this.set = set;\r\n        this.validFinalSet = [];\r\n        this.loadingAnimation = new LoadingAnimation();\r\n        this.data = 0;\r\n        this.session = Session.getSession();\r\n        this.totalValidSize = 0;\r\n        //Cache the imports for later reference\r\n        this.cacheExerciseImports();\r\n    }\r\n\r\n    /**\r\n     * The function caches imports in local scope for later to be referenced as a string\r\n     * */\r\n    cacheExerciseImports(){\r\n        this.Ex1 = Ex1;\r\n        this.Ex2 = Ex2;\r\n        this.Ex3 = Ex3;\r\n        this.Ex4 = Ex4;\r\n    }\r\n\r\n    /**\r\n    *\tAjax get request to the Zeeguu API to get new bookmarks\r\n    **/\r\n    getBookmarks(totalSize){\r\n        let _this = this;\r\n        var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS + totalSize + \"?session=\" + _this.session;\r\n        return $.ajax({\r\n            beforeSend: function(){\r\n                _this.loadingAnimation.loadingAnimation(true);\r\n            },\r\n            type: 'GET',\r\n            dataType: 'json',\r\n            url: address,\r\n            data: this.data,\r\n            async: true,\r\n        });\r\n    }\r\n    /**\r\n     *  @param args is matrix of exercise name and number of bookmarks,\r\n     *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2\r\n     *  @return matrix of exercises similar to its input\r\n     * */\r\n    getValidBookMarks(callback){\r\n        let _this = this;\r\n        //Calculate the size\r\n        let totalSize = Util.calcSize(this.set,this.set.length);\r\n        //TODO change the follwoing line to proper return value\r\n        this.totalValidSize = totalSize;\r\n        $.when(this.getBookmarks(totalSize)).done(function (data) {\r\n            _this.validFinalSet = _this.validateSet(totalSize,data);\r\n            callback(data);\r\n        });\r\n    }\r\n\r\n    /**\r\n     *  Given the set and the bookmarks create a new set for generator\r\n     *  Three possibilities:\r\n     *  number of bookmarks == 0 then show no bookmarks page\r\n     *  number of bookmarks < requested number then generate exercises that fit\r\n     *  number of bookmarks >= requested number simply generate exercises\r\n     *  @return {Array} set, the validated ex set\r\n     * */\r\n    validateSet(totalSetLength,data){\r\n        this.data = data;\r\n        let bookmarkLength = this.data.length;\r\n\r\n        if(bookmarkLength <= 0)\r\n            return this.noBookmarkPage();\r\n        if(bookmarkLength < totalSetLength)\r\n            return this.notEnoughBookmarks(bookmarkLength,this.set);\r\n        return this.enoughBookmarks(this.set);\r\n    }\r\n\r\n    /**\r\n     * number of bookmarks >= requested number simply generate exercises\r\n     * Assumes the given set has valid minimal sizes for exercises\r\n     */\r\n    enoughBookmarks(set){\r\n        return set;\r\n    }\r\n\r\n    /**\r\n     * Number of bookmarks < requested number, generate exercises that fit\r\n     * @return {Array} set\r\n     * TODO add testing\r\n    */\r\n    notEnoughBookmarks(bookmarkLength,set){\r\n        let newSet = [];\r\n        let setIndex = 0;\r\n        while(bookmarkLength>0 && setIndex < set.length){\r\n            let delta = bookmarkLength - set[setIndex][1];\r\n            if(delta >=0){\r\n                newSet.push(set[setIndex]);\r\n                bookmarkLength = delta;\r\n            }else if(this.isProperEx(set[setIndex][0],bookmarkLength)){//delta < 0 && the ex requirement is met\r\n                newSet.push([set[setIndex][0],bookmarkLength]);\r\n                bookmarkLength = delta;\r\n            }\r\n            setIndex++;\r\n        }\r\n        return (newSet.length>0)?newSet:this.noBookmarkPage();//Bookmarks is still 0, throw noBookmarks page\r\n    }\r\n\r\n    /**\r\n     * Number of bookmarks == 0 then show no bookmarks page\r\n     * Signals the generator to terminate, load no bookmark page\r\n     * @return {Array} empty array\r\n     * */\r\n    noBookmarkPage(){\r\n        let redirect = TDS.distractionShieldOriginalDestination();\r\n        let newField;\r\n        //If within the extension\r\n        if (redirect!=null) {\r\n            newField = {btnSecond:redirect,btnSecondText: 'Skip'};\r\n        }else{\r\n            newField = null;\r\n        }\r\n        let emptPg = new EmptyPage(newField);\r\n        return [];\r\n    }\r\n\r\n    /**\r\n     * Compares the minimum requirement for the given ex and the assigned amount\r\n     * @param {int} exNum, the id of the ex\r\n     * @param {int} exSize, the amount the ex is generated\r\n     * @return {boolean}, true if the minReq >= givenAmount, else false\r\n     * @example this.isProperEx(1,2), Ex1 2 times\r\n     * */\r\n    isProperEx(exNum,exSize){\r\n        let minReqForEx = (this['Ex'+exNum]).prototype.minRequirement;\r\n        return minReqForEx <= exSize;\r\n    }\r\n\r\n    /**\r\n     * Getter for final valid size of the generated bookmarks\r\n     * */\r\n    get validSize(){\r\n        return Util.calcSize(this.validFinalSet,this.validFinalSet.length);\r\n    }\r\n\r\n    /**\r\n     * Getter for final valid set for exercise generator\r\n     * */\r\n    get validSet(){\r\n        return this.validFinalSet;\r\n    }\r\n}\r\n\r\nexport default Validator;",
+    "static": true,
+    "longname": "app/validator.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 93,
+    "kind": "class",
+    "name": "Validator",
+    "memberof": "app/validator.js",
+    "static": true,
+    "longname": "app/validator.js~Validator",
+    "access": null,
+    "export": true,
+    "importPath": "language_practice_platform/app/validator.js",
+    "importStyle": "Validator",
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 94,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 26,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "set",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 95,
+    "kind": "member",
+    "name": "set",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#set",
+    "access": null,
+    "description": "Class parameters",
+    "lineNumber": 28,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 96,
+    "kind": "member",
+    "name": "validFinalSet",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#validFinalSet",
+    "access": null,
+    "description": null,
+    "lineNumber": 29,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*[]"
+      ]
+    }
+  },
+  {
+    "__docId__": 97,
+    "kind": "member",
+    "name": "loadingAnimation",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#loadingAnimation",
+    "access": null,
+    "description": null,
+    "lineNumber": 30,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 98,
+    "kind": "member",
+    "name": "data",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#data",
+    "access": null,
+    "description": null,
+    "lineNumber": 31,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 99,
+    "kind": "member",
+    "name": "session",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#session",
+    "access": null,
+    "description": null,
+    "lineNumber": 32,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 100,
+    "kind": "member",
+    "name": "totalValidSize",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#totalValidSize",
+    "access": null,
+    "description": null,
+    "lineNumber": 33,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 101,
+    "kind": "method",
+    "name": "cacheExerciseImports",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#cacheExerciseImports",
+    "access": null,
+    "description": "The function caches imports in local scope for later to be referenced as a string",
+    "lineNumber": 41,
+    "params": []
+  },
+  {
+    "__docId__": 102,
+    "kind": "member",
+    "name": "Ex1",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#Ex1",
+    "access": null,
+    "description": null,
+    "lineNumber": 42,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 103,
+    "kind": "member",
+    "name": "Ex2",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#Ex2",
+    "access": null,
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 104,
+    "kind": "member",
+    "name": "Ex3",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#Ex3",
+    "access": null,
+    "description": null,
+    "lineNumber": 44,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 105,
+    "kind": "member",
+    "name": "Ex4",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#Ex4",
+    "access": null,
+    "description": null,
+    "lineNumber": 45,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 106,
+    "kind": "method",
+    "name": "getBookmarks",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#getBookmarks",
+    "access": null,
+    "description": "Ajax get request to the Zeeguu API to get new bookmarks",
+    "lineNumber": 51,
+    "params": [
+      {
+        "name": "totalSize",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 107,
+    "kind": "method",
+    "name": "getValidBookMarks",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#getValidBookMarks",
+    "access": null,
+    "description": "",
+    "lineNumber": 70,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "args",
+        "description": "is matrix of exercise name and number of bookmarks,\n        example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "matrix of exercises similar to its input"
+    }
+  },
+  {
+    "__docId__": 108,
+    "kind": "member",
+    "name": "totalValidSize",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#totalValidSize",
+    "access": null,
+    "description": null,
+    "lineNumber": 75,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 109,
+    "kind": "method",
+    "name": "validateSet",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#validateSet",
+    "access": null,
+    "description": " Given the set and the bookmarks create a new set for generator\n Three possibilities:\n number of bookmarks == 0 then show no bookmarks page\n number of bookmarks < requested number then generate exercises that fit\n number of bookmarks >= requested number simply generate exercises",
+    "lineNumber": 90,
+    "params": [
+      {
+        "name": "totalSetLength",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "data",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": "set, the validated ex set"
+    }
+  },
+  {
+    "__docId__": 110,
+    "kind": "member",
+    "name": "data",
+    "memberof": "app/validator.js~Validator",
+    "static": false,
+    "longname": "app/validator.js~Validator#data",
+    "access": null,
+    "description": null,
+    "lineNumber": 91,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 111,
+    "kind": "method",
+    "name": "enoughBookmarks",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#enoughBookmarks",
+    "access": null,
+    "description": "number of bookmarks >= requested number simply generate exercises\nAssumes the given set has valid minimal sizes for exercises",
+    "lineNumber": 105,
+    "params": [
+      {
+        "name": "set",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 112,
+    "kind": "method",
+    "name": "notEnoughBookmarks",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#notEnoughBookmarks",
+    "access": null,
+    "description": "Number of bookmarks < requested number, generate exercises that fit",
+    "lineNumber": 114,
+    "params": [
+      {
+        "name": "bookmarkLength",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "set",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": "set\nTODO add testing"
+    }
+  },
+  {
+    "__docId__": 113,
+    "kind": "method",
+    "name": "noBookmarkPage",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#noBookmarkPage",
+    "access": null,
+    "description": "Number of bookmarks == 0 then show no bookmarks page\nSignals the generator to terminate, load no bookmark page",
+    "lineNumber": 136,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": "empty array"
+    }
+  },
+  {
+    "__docId__": 114,
+    "kind": "method",
+    "name": "isProperEx",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#isProperEx",
+    "access": null,
+    "description": "Compares the minimum requirement for the given ex and the assigned amount",
+    "examples": [
+      "this.isProperEx(1,2), Ex1 2 times"
+    ],
+    "lineNumber": 156,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "int"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "exNum,",
+        "description": "the id of the ex"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "int"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "exSize,",
+        "description": "the amount the ex is generated"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "{boolean}, true if the minReq >= givenAmount, else false"
+    }
+  },
+  {
+    "__docId__": 115,
+    "kind": "get",
+    "name": "validSize",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#validSize",
+    "access": null,
+    "description": "Getter for final valid size of the generated bookmarks",
+    "lineNumber": 164,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 116,
+    "kind": "get",
+    "name": "validSet",
+    "memberof": "app/validator.js~Validator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/validator.js~Validator#validSet",
+    "access": null,
+    "description": "Getter for final valid set for exercise generator",
+    "lineNumber": 171,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 118,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 119,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 120,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 121,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 122,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 123,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 124,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 125,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 126,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 127,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 128,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 129,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 130,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 131,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 132,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 133,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 134,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 135,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 136,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 137,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 138,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 139,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 140,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 141,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 142,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 143,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 144,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 145,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 146,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 147,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 148,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 149,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 150,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 151,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 152,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 153,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 154,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 155,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 156,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 157,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 158,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 159,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 160,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 161,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 162,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 163,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 164,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 166,
+    "kind": "external",
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 167,
+    "kind": "external",
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 168,
+    "kind": "external",
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 169,
+    "kind": "external",
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 170,
+    "kind": "external",
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 171,
+    "kind": "external",
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 172,
+    "kind": "external",
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 173,
+    "kind": "external",
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true
+  }
+]

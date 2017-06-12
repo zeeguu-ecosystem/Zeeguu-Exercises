@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">app/feedback.js | Zeeguu Exercises API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/cookie_handler.js~cookieHandler.html">cookieHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/environment.js~Environment.html">Environment</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/feedback.js~Feedback.html">Feedback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/loader.js~Loader.html">Loader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/session.js~Session.html">Session</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/the_distraction_shield_extension.js~TDS.html">TDS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Generator">Generator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-events">events</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">animations</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/loading_animation.js~LoadingAnimation.html">LoadingAnimation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/shake_animation.js~ShakeAnimation.html">ShakeAnimation</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">exercises</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex1">Ex1</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex2">Ex2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex3">Ex3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex4">Ex4</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Exercise">Exercise</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">pages</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-EmptyPage">EmptyPage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Home">Home</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-NotFound">NotFound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Starter">Starter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test_example</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/test_example/example.js~Bear.html">Bear</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">app/feedback.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * The class responsible for sending a feedback regarding exercise outcome
+ */
+import * as Mustache from &quot;mustache&quot;;
+import $ from &quot;jquery&quot;;
+import Settings from &quot;./settings&quot;;
+
+export default class Feedback {
+
+    /**
+     * Construct the feedback class
+     * @param {number}, id of the current word
+     * @param {String}, resultSubmitSource,
+     * */
+    constructor(resultSubmitSource, sessionId){
+         /** Class parameters*/
+        this.wordId = -1;//will be set whenever the feedback box is called
+        this.resultSubmitSource = resultSubmitSource;
+        this.sessionId = sessionId;
+    }
+
+    /**
+     * Bind all the actions connected to this module
+     * return {void}
+     * */
+    bindUIActions(){
+        //Bind UI action of credits to the function
+        $(&apos;.btn-feedback-option&apos;).click((event) =&gt; {this.feedbackAction($(event.target));});
+    }
+
+    /**
+     * The action performed predefined option is clicked
+     * @param {Object}, elem, the element that is clicked
+     * */
+    feedbackAction(elem){
+        this.submitFeedback(this.wordId,elem.attr(&apos;value&apos;),this.resultSubmitSource);
+        this.successfulFeedback();
+    }
+
+    /**
+     * @param {number}, session id
+     * @param {String}, resultSubmitSource,
+     * */
+    exerciseFeedbackBox (wordId) {
+        let _this = this;
+        this.wordId = wordId;
+        let feedbackOptions = this.exerciseFeedbackOptions();
+        let inputBox = this.exerciseFeedbackInput();
+        swal({
+                title: &quot;&quot;,
+                text: feedbackOptions + inputBox,
+                showCancelButton: true,
+                closeOnConfirm: false,
+                animation: &quot;slide-from-top&quot;,
+                imageUrl: &quot;static/img/illustrations/zeeguu_balloon.png&quot;,
+                imageSize: &quot;110x110&quot;,
+                allowOutsideClick: true,
+                html: true
+            },
+            function () {
+                let inputValue = $(&apos;#feedback-input-box&apos;).val().trim();
+                if (inputValue != &quot;&quot;) {
+                    _this.submitFeedback(wordId,inputValue,_this.resultSubmitSource);
+                    _this.successfulFeedback();
+                    return;
+                }
+                swal.close();
+            });
+        this.bindUIActions();
+    }
+
+    /**
+     * Success message when the feedback is being submitted
+     * */
+    successfulFeedback(){
+        swal({
+            title: &quot;&quot;,
+            text: &quot;&quot;,
+            timer: 1000,
+            type:&quot;success&quot;,
+            showConfirmButton: false,
+            showCancelButton: false,
+            closeOnConfirm: false,
+            confirmButtonText: &quot;&quot;,
+        });
+    }
+
+    /**
+     * Feedback fields for the feedback box within the exercise
+     * Using html template and Mustache to render the content
+     * @return {String} rendered html
+     * */
+    exerciseFeedbackOptions(){
+        let preDefinedOptions = {
+            Options: [
+                {name: &quot;Too easy.&quot;, icon: &apos;static/img/emoji/bored.svg&apos;, val: &apos;too_easy&apos;},
+                {name: &quot;I know it.&quot;, icon: &apos;static/img/emoji/nerd.svg&apos;,val: &apos;i_already_know_this&apos;},
+                {name: &quot;Don&apos;t want to see it.&quot;, icon: &apos;static/img/emoji/confused.svg&apos;, val: &apos;dont_show_it_to_me_again&apos;}]
+        };
+        let preOptionTemplate =
+            &apos;{{#Options}}&apos; +
+            &apos;&lt;div type = &quot;button&quot; value = {{val}} class = &quot;btn btn-default btn-feedback-option&quot;&gt;&apos; +
+                &apos;&lt;div class = &quot;emoji-icon&quot;  value = {{val}} style = &quot;background-image: url({{icon}});&quot; &gt;&lt;/div&gt;&apos; +
+                &apos;&lt;span value = {{val}}&gt;{{name}}&lt;/span&gt;&apos; +
+            &apos;&lt;/div&gt;&apos; +
+            &apos;{{/Options}}&apos;;
+        return (Mustache.render(preOptionTemplate,preDefinedOptions));
+    }
+
+    /**
+     * Returns the input box for the feedback
+     * @return {String}, the input box for the feedback
+     * */
+    exerciseFeedbackInput(){
+        return  &apos;&lt;div class=&quot;input-group feedback-input&quot;&gt;&apos;+
+                    &apos;&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id = &quot;feedback-input-box&quot; placeholder=&quot;Something else ?&quot;&gt;&apos;+
+                &apos;&lt;/div&gt;&apos;;
+    }
+
+    /**
+     *	Request the submit for feedback to the Zeeguu API
+     *  @param {number}, id, id of the word
+     *  @param {String}, feedbackOption, the outcome of the feedback @example: too_easy
+     *  @param {String}, resultSubmitSource, the source of submission @example: Recognize_L1W_in_L2T
+     **/
+    submitFeedback(wordID,feedbackOption,resultSubmitSource){
+        //console.log(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + &quot;/&quot; + feedbackOption + resultSubmitSource + &quot;/&quot; + -1 + &quot;/&quot; + wordID + &quot;?session=&quot;+this.sessionId);
+		$.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + &quot;/&quot; + feedbackOption + resultSubmitSource + &quot;/&quot; + -1 + &quot;/&quot; + wordID + &quot;?session=&quot;+this.sessionId);
+    }
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

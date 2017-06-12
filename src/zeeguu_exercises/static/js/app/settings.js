@@ -25,7 +25,6 @@ export default {
     ZEEGUU_EX_SOURCE_MATCH: '/Match_three_L1W_to_three_L2W',
     ZEEGUU_EX_SOURCE_TRANSLATE: '/L1W_to_L1W_with_L2T_Example',
 
-
     /** Outcome types for exercise */
     ZEEGUU_EX_OUTCOME_CORRECT: '/Correct',
 	ZEEGUU_EX_OUTCOME_WRONG: '/Wrong',

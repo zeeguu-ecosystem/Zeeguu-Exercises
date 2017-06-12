@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">app/validator.js | Zeeguu Exercises API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/cookie_handler.js~cookieHandler.html">cookieHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/environment.js~Environment.html">Environment</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/feedback.js~Feedback.html">Feedback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/loader.js~Loader.html">Loader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/session.js~Session.html">Session</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/the_distraction_shield_extension.js~TDS.html">TDS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Generator">Generator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-events">events</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">animations</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/loading_animation.js~LoadingAnimation.html">LoadingAnimation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/shake_animation.js~ShakeAnimation.html">ShakeAnimation</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">exercises</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex1">Ex1</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex2">Ex2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex3">Ex3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex4">Ex4</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Exercise">Exercise</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">pages</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-EmptyPage">EmptyPage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Home">Home</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-NotFound">NotFound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Starter">Starter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test_example</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/test_example/example.js~Bear.html">Bear</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">app/validator.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/** Validator class takes care of the input for generator
+ *  It requests for bookmarks from Zeeguu API bookmarks-to-study endpoint
+ *  Based on the result, it decides how to generate exercises
+ *  If number of bookmarks == 0 then no bookmarks page
+ *  If number of bookmarks &lt; requested number then generate exercises that fit
+ *  If number of bookmarks &gt;= requested number simply generate exercises
+ *  Init with @param {array} set: [[2,3],[1,3],[3,3],[4,3],[1,3]]
+ *
+ *  IMPORTANT: the function @getValidBookMarks assumes the set is created
+ *  considering the minimum requirements for each exercise
+ **/
+
+import $ from &apos;jquery&apos;;
+import Settings from &quot;./settings&quot;;
+import Session from &quot;./session&quot;;
+import Util from &quot;./util&quot;;
+import EmptyPage from &quot;./pages/empty_page&quot;;
+import LoadingAnimation from &apos;./animations/loading_animation&apos;;
+import Ex1 from &apos;./exercises/ex1&apos;;
+import Ex2 from &apos;./exercises/ex2&apos;;
+import Ex3 from &apos;./exercises/ex3&apos;;
+import Ex4 from &apos;./exercises/ex4&apos;;
+import TDS from &apos;./the_distraction_shield_extension&apos;;
+
+class Validator{
+    constructor(set){
+        /** Class parameters*/
+        this.set = set;
+        this.validFinalSet = [];
+        this.loadingAnimation = new LoadingAnimation();
+        this.data = 0;
+        this.session = Session.getSession();
+        this.totalValidSize = 0;
+        //Cache the imports for later reference
+        this.cacheExerciseImports();
+    }
+
+    /**
+     * The function caches imports in local scope for later to be referenced as a string
+     * */
+    cacheExerciseImports(){
+        this.Ex1 = Ex1;
+        this.Ex2 = Ex2;
+        this.Ex3 = Ex3;
+        this.Ex4 = Ex4;
+    }
+
+    /**
+    *	Ajax get request to the Zeeguu API to get new bookmarks
+    **/
+    getBookmarks(totalSize){
+        let _this = this;
+        var address = Settings.ZEEGUU_API + Settings.ZEEGUU_STUDY_BOOKMARKS + totalSize + &quot;?session=&quot; + _this.session;
+        return $.ajax({
+            beforeSend: function(){
+                _this.loadingAnimation.loadingAnimation(true);
+            },
+            type: &apos;GET&apos;,
+            dataType: &apos;json&apos;,
+            url: address,
+            data: this.data,
+            async: true,
+        });
+    }
+    /**
+     *  @param args is matrix of exercise name and number of bookmarks,
+     *         example: [[1,3],[2,4]] 3 bookmarks for ex1 and 4 bookmarks for ex2
+     *  @return matrix of exercises similar to its input
+     * */
+    getValidBookMarks(callback){
+        let _this = this;
+        //Calculate the size
+        let totalSize = Util.calcSize(this.set,this.set.length);
+        //TODO change the follwoing line to proper return value
+        this.totalValidSize = totalSize;
+        $.when(this.getBookmarks(totalSize)).done(function (data) {
+            _this.validFinalSet = _this.validateSet(totalSize,data);
+            callback(data);
+        });
+    }
+
+    /**
+     *  Given the set and the bookmarks create a new set for generator
+     *  Three possibilities:
+     *  number of bookmarks == 0 then show no bookmarks page
+     *  number of bookmarks &lt; requested number then generate exercises that fit
+     *  number of bookmarks &gt;= requested number simply generate exercises
+     *  @return {Array} set, the validated ex set
+     * */
+    validateSet(totalSetLength,data){
+        this.data = data;
+        let bookmarkLength = this.data.length;
+
+        if(bookmarkLength &lt;= 0)
+            return this.noBookmarkPage();
+        if(bookmarkLength &lt; totalSetLength)
+            return this.notEnoughBookmarks(bookmarkLength,this.set);
+        return this.enoughBookmarks(this.set);
+    }
+
+    /**
+     * number of bookmarks &gt;= requested number simply generate exercises
+     * Assumes the given set has valid minimal sizes for exercises
+     */
+    enoughBookmarks(set){
+        return set;
+    }
+
+    /**
+     * Number of bookmarks &lt; requested number, generate exercises that fit
+     * @return {Array} set
+     * TODO add testing
+    */
+    notEnoughBookmarks(bookmarkLength,set){
+        let newSet = [];
+        let setIndex = 0;
+        while(bookmarkLength&gt;0 &amp;&amp; setIndex &lt; set.length){
+            let delta = bookmarkLength - set[setIndex][1];
+            if(delta &gt;=0){
+                newSet.push(set[setIndex]);
+                bookmarkLength = delta;
+            }else if(this.isProperEx(set[setIndex][0],bookmarkLength)){//delta &lt; 0 &amp;&amp; the ex requirement is met
+                newSet.push([set[setIndex][0],bookmarkLength]);
+                bookmarkLength = delta;
+            }
+            setIndex++;
+        }
+        return (newSet.length&gt;0)?newSet:this.noBookmarkPage();//Bookmarks is still 0, throw noBookmarks page
+    }
+
+    /**
+     * Number of bookmarks == 0 then show no bookmarks page
+     * Signals the generator to terminate, load no bookmark page
+     * @return {Array} empty array
+     * */
+    noBookmarkPage(){
+        let redirect = TDS.distractionShieldOriginalDestination();
+        let newField;
+        //If within the extension
+        if (redirect!=null) {
+            newField = {btnSecond:redirect,btnSecondText: &apos;Skip&apos;};
+        }else{
+            newField = null;
+        }
+        let emptPg = new EmptyPage(newField);
+        return [];
+    }
+
+    /**
+     * Compares the minimum requirement for the given ex and the assigned amount
+     * @param {int} exNum, the id of the ex
+     * @param {int} exSize, the amount the ex is generated
+     * @return {boolean}, true if the minReq &gt;= givenAmount, else false
+     * @example this.isProperEx(1,2), Ex1 2 times
+     * */
+    isProperEx(exNum,exSize){
+        let minReqForEx = (this[&apos;Ex&apos;+exNum]).prototype.minRequirement;
+        return minReqForEx &lt;= exSize;
+    }
+
+    /**
+     * Getter for final valid size of the generated bookmarks
+     * */
+    get validSize(){
+        return Util.calcSize(this.validFinalSet,this.validFinalSet.length);
+    }
+
+    /**
+     * Getter for final valid set for exercise generator
+     * */
+    get validSet(){
+        return this.validFinalSet;
+    }
+}
+
+export default Validator;</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
