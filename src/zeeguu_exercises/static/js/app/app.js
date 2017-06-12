@@ -8,6 +8,7 @@ import Starter from './pages/starter';
 import NotFound from './pages/not_found';
 import Events from './pubsub';
 
+
 /********************** Routes **************************/
 page('/', index);
 page('/practice', index);
