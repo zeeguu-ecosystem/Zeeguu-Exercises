@@ -47,13 +47,13 @@ export default class Feedback {
         let feedbackOptions = this.exerciseFeedbackOptions();
         let inputBox = this.exerciseFeedbackInput();
         swal({
-                title: "Make Zeeguu Smarter",
+                title: "",
                 text: feedbackOptions + inputBox,
                 showCancelButton: true,
                 closeOnConfirm: false,
                 animation: "slide-from-top",
                 imageUrl: "static/img/illustrations/zeeguu_balloon.png",
-                imageSize: "140x140",
+                imageSize: "110x110",
                 allowOutsideClick: true,
                 html: true
             },

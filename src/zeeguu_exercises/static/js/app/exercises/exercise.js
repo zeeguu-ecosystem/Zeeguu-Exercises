@@ -47,11 +47,9 @@ Exercise.prototype = {
 	*	Saves the common dom in chache
 	**/
 	cacheDom: function(){
-		this.$elem 				= $("#ex-module");		
-		this.$container  		= this.$elem.find("#ex-container");
+		this.$elem 				= $("#ex-module");
 		this.$description  		= this.$elem.find("#ex-descript");
 		this.$loader 			= this.$elem.find('#loader');
-		this.$status 			= this.$elem.find("#ex-status");		
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
 		this.$exFooterPrimary 	= this.$elem.find('#ex-footer-primary');
 		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
@@ -134,7 +132,6 @@ Exercise.prototype = {
 	 * When the answer is successful show the animation and submit the result
 	 * */
 	handleSuccessCondition: function () {
-		var _this = this;
         this.animateSuccess();
         //Submit the result of translation
         this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_CORRECT);

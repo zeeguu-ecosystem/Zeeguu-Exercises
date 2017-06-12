@@ -37,28 +37,22 @@ def with_session(f):
     return decorated_function
 
 
-@ex_blueprint.route('/', methods=['GET'])
+@ex_blueprint.route('/debug', methods=['GET'])
+def set_cookie():
+    """
+    Test route for setting the cookie only for local resting
+    """
+    return render_template('exercises/set_cookie.html')
+
+
+@ex_blueprint.route('/', defaults={'path': ''})
+@ex_blueprint.route('/<path:path>')
 @with_session
-def index():
+def index(path):
     """
     Main entry point
     """
     return render_template('exercises/index.html')
 
 
-@ex_blueprint.route('/get-ex', methods=['GET'])
-@with_session
-def get_ex():
-    """
-    Temporary route for distraction shield testing
-    """
-    return render_template('exercises/test.html')
-
-
-@ex_blueprint.route('/test-set-cookie', methods=['GET'])
-def set_cookie():
-    """
-    Test route for setting the cookie only for local resting
-    """
-    return render_template('exercises/set_cookie.html')
 
