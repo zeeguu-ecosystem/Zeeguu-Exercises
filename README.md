@@ -7,71 +7,63 @@ An adaptive online language practice platform
 [![Documentation Coverage](https://martinavagyan.github.io/zeeguu-exercises/badge.svg)](https://martinavagyan.github.io/zeeguu-exercises/)
 =====
 
-How to run the code on local machine
+Running locally
 ------------------------------------
 
-At first clone the repository from
+First clone the repository from
 <https://github.com/martinavagyan/zeeguu-exercises.git>  
-Note: you need to have python 3.6.1 installed in your machine.
-In order to run the code on the local machine, we need to install the
-following dependencies: Python Virtual environment, *Flask*,
-*Gunicorn*, *Requests*.  
-  
-The following tutorial shows how to install
+### Front-end
+The front end uses Node.js. Referer here for further directions https://nodejs.org/en/download/.
+After the installation of Node.js was successful, navigate to the project folder and run: 
+```
+npm install
+npm run build
+```
+If the installation was successful all the necessary files should be created.
+### Back-end
+Note: you need to have python 3.6.1 installed, on your machine.
+The back end uses *Flask Framework*. The following tutorial shows, how to set up
 *virtualenv* and *Flask*:  
 <http://flask.pocoo.org/docs/0.12/installation/>  
 
-Note: to install virtual enviroment in windows simply type:  
+Note: to install virtual, enviroment on windows run:  
+
+    pip install virtualenv
+    
+To install the virtual environment for the project, navigate to the folder and run:
 
     virtualenv < name of the folder>
   
-After installing virtual environment in the project folder, activate it
+After installing virtual environment on the project folder, activate it
 using:
 
     venv/Scripts/activate
 
-***Make sure the environment is activated before proceeding with the
-instructions***  
-  
-To install *gunicorn* use the following command:
-
-    pip install gunicorn
-
-More details here:  
-<http://docs.gunicorn.org/en/stable/install.html>  
+**Make sure the environment is activated before proceeding with the
+instructions.**
  
-To install the *requests* package simply do:
+ Install all dependencies from requriments.txt
+ 
+     pip install -r requirements.txt
 
-    pip install requests
+In case you add new dependencies, do not forget to update the requirements.txt file
 
-   
-Afterwards, you need to (re)generate the requirements file:
-
-    pip freeze > requirements.txt 
-
-And then save it:
-
-    pip install -r requirements.txt
+    pip freeze > requirements.txt    
 
    
-A batch file (*batchfile*.*bat*) is provided to
-easily activate the virtual environment and start the local host, given
-that all the previous installations are successfully completed.
+A batch file (*batchfile*.*bat*) is provided to easily activate the virtual environment and start the localhost, given that all the previous installations are successfully completed. You can access the app via: 
+
+    http://127.0.0.1:5000/ 
+
+The application will redirect to Zeeguu login page if the cookie for the session is not set yet. To set a test session in the cookies, go to the browser and run :
+
+    http://127.0.0.1:5000/debug
+This will set a test cookie for local debugging.
 
 Heroku Deployment
 -----------------
 
-The code is already deployed on the *Heroku* server[1]. The
-deployment is done through Github.  
-The link to our app:  
-[zeeguu.herokuapp.com]  
-The repository connected to heroku is:  
-<https://github.com/martinavagyan/practice-as-a-service>  
-In order to contribute to the project you can fork the repository,
-connect it to heroku to have your own running version.  
-How to deploy a Phyton app on Heroku:  
-<https://devcenter.heroku.com/articles/getting-started-with-python#introduction>  
+The project is deployed on the *Heroku* server[1]. The
+deployment is connected to Github repository: https://github.com/martinavagyan/zeeguu-exercises
+The link to deployed app:  https://zeeguu.herokuapp.com/
 
-[1] https://www.heroku.com/
-
-  [zeeguu.herokuapp.com]: zeeguu.herokuapp.com
