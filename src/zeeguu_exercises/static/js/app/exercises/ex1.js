@@ -57,7 +57,7 @@ function Ex1(data,index,size){
 	
 	this.updateInput = function() {
 		var t = Util.getSelectedText();
-		this.$input.val(t);
+		this.$input.val(this.$input.val() + " " + t);
 	};
 	
 	this.enterKeyup = function(event){
