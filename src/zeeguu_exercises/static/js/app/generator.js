@@ -184,13 +184,11 @@ Generator.prototype = {
 
         //If the redirect url is present
         if(redirect!=null){
-            console.log('If the redirect url is present');
             secondaryBtn = "Take me away!";
             actionFunction = ()=> { window.location = redirect;};
         }
         //If there is no home available create home
         else if(parentInvocation === "NA"){
-            console.log('If there is no home available create home');
             actionFunction = ()=> {
                 let redirect = window.location.protocol + "//" + window.location.hostname;
                 //Local debuging, wont be part of final code

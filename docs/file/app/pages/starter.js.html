@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">app/pages/starter.js | Zeeguu Exercises API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/cookie_handler.js~cookieHandler.html">cookieHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/environment.js~Environment.html">Environment</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/feedback.js~Feedback.html">Feedback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/loader.js~Loader.html">Loader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/session.js~Session.html">Session</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/the_distraction_shield_extension.js~TDS.html">TDS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Generator">Generator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-events">events</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">animations</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/loading_animation.js~LoadingAnimation.html">LoadingAnimation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/animations/shake_animation.js~ShakeAnimation.html">ShakeAnimation</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">exercises</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex1">Ex1</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex2">Ex2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex3">Ex3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Ex4">Ex4</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Exercise">Exercise</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">pages</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-EmptyPage">EmptyPage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Home">Home</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-NotFound">NotFound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Starter">Starter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test_example</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/test_example/example.js~Bear.html">Bear</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">app/pages/starter.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * Starter module, inherits from Home
+ * */
+import $ from &apos;jquery&apos;;
+import Home from &apos;./home&apos;;
+
+function Starter(){
+	this.init();
+
+	/** @Override */
+	this.cacheDom =  function(){
+		this.$elem 			= $(&quot;#starter-body&quot;);
+		this.$exCards 		= this.$elem.find(&quot;#exercieses-cards&quot;);
+		this.$attribution 	= this.$elem.find(&quot;#attribution&quot;);
+		this.$credits 		= this.$elem.find(&quot;#credits&quot;);
+	}
+}
+
+Starter.prototype = Object.create(Home.prototype, {
+	constructor: Starter,
+	/************************** SETTINGS ********************************/
+	screenTemplateURL: {value:  &apos;static/template/starter/starter.html&apos;},
+	cardTemplateURL: {value: &apos;static/template/starter/plan_card.html&apos;},
+	currentInvocation: {value: &apos;starterScreenRestart&apos;},
+	exNames: {
+		value: [
+			{
+				name: &quot;Basic&quot;,
+				exID: [[1, 6],[2, 2], [4, 2],  [3, 1], [2, 1],[4, 2]],
+				info: &apos;Practice 10 words in 2 minutes.&apos;,
+				icon: &apos;static/img/icons/starter/eleph1.svg&apos;,
+				gradientColor: &apos;starter-btn-header-level1&apos;,
+				time: 2
+			},
+			{
+				name: &quot;Casual&quot;,
+				exID: [[4, 2], [2, 2], [3, 1], [1, 3], [2, 2],[1, 2],[3, 1],[2, 1],[3, 1]],
+				info: &apos;Practice 15 words in 3 minutes.&apos;,
+				icon: &apos;static/img/icons/starter/eleph2.svg&apos;,
+				gradientColor: &apos;starter-btn-header-level2&apos;,
+				time: 3
+			},
+			{
+				name: &quot;Regular&quot;,
+				exID: [[1, 2], [2, 2], [3, 1], [4, 3], [2, 2],[1, 3],[3, 1],[1, 3],[3, 1],[4, 2],[2, 2],[1, 2],[3,1]],
+				info: &apos;Practice 25 words in 5 minutes.&apos;,
+				icon: &apos;static/img/icons/starter/eleph3.svg&apos;,
+				gradientColor: &apos;starter-btn-header-level3&apos;,
+				time: 5
+			},
+		]
+	},
+});
+
+export default Starter;</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
