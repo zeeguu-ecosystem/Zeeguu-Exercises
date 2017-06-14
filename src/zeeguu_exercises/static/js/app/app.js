@@ -8,11 +8,13 @@ import Starter from './pages/starter';
 import NotFound from './pages/not_found';
 import Events from './pubsub';
 
+
 /********************** Routes **************************/
 page('/', index);
-page('/get-ex', getEx);
-page('/practice/:practicePlan', practice);
-page('*', notFound);
+page('/practice', index);
+page('/practice/get-ex', getEx);
+page('/practice/plan/:practicePlan', practice);
+page('/*', notFound);
 
 /******************* Page Settings **********************/
 page.exit('*', backFunction);
