@@ -4,12 +4,8 @@
     position:absolute;
     min-width:110px !important;
 }
-.nav>li>a:hover, .nav>li>a:focus, .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
-    background:#fff;
-}
-
 .dropdown-menu>li>a {
-    color:#428bca;
+    color:#616161;
     cursor: pointer;
 }
 .dropdown ul.dropdown-menu {
