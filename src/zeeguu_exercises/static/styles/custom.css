@@ -113,7 +113,7 @@ body
 	height: 80px;
 	background-image: url("../img/icons/placeholder.svg");
     background-repeat: no-repeat;
-    background-position: center; 
+    background-position: center;
 	margin-bottom: 20px;
 }
 .info-bar
@@ -165,11 +165,10 @@ body
 {
 	margin-top: 20px;
 	max-width:800px;
-	padding-top: 5px;
+	padding-top: 10px;
 }
 .ex-form
 {
-	display:block;
 	margin: auto;
 	background-color: rgba(255,255,255,1);
     display:flex;
@@ -179,20 +178,49 @@ body
 	transition: all .5s;
 }
 
+
+
+.round-icon-container
+{
+	height: 35px;
+	width: 35px;
+	background-color: #F5F5F5;
+	padding: 10px;
+	border-radius: 50px;
+	cursor: pointer;
+	-webkit-transition: background-color 0.15s ease-out;
+	-moz-transition: background-color 0.15s ease-out;
+	-o-transition: background-color 0.15s ease-out;
+	transition: background-color 0.15s ease-out;
+}
+.round-icon-container:hover
+{
+	background-color: #EEEEEE;
+}
+
 .sound-icon
 {
-	height: 50px;
-	width: 50px;
-	background: skyblue url("../img/icons/volume.svg");
-	float: left;
+	display:block;
+	width:15px;
+	height:15px;
+	background: url("../img/icons/volume.svg") no-repeat center;
+	background-size: contain;
 }
-.btn-more
+
+.right-float
 {
-	height: 50px;
-	width: 50px;
-	background: lightgray url("../img/icons/volume.svg");
 	float: right;
 }
+
+.btn-more
+{
+	display:block;
+	width:15px;
+	height:15px;
+	background: url("../img/icons/elipsis.svg") no-repeat center;
+	background-size: contain;
+}
+
 .ex-header
 {	
 	
@@ -759,4 +787,18 @@ body
 {
 	background-color: #EEEEEE;
 	opacity: 1;
+}
+
+/**  Placeholder color*/
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #c8cccf;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #c8cccf;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #c8cccf;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #c8cccf;
 }
