@@ -53,6 +53,8 @@ Exercise.prototype = {
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
 		this.$exFooterPrimary 	= this.$elem.find('#ex-footer-primary');
 		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
+		this.$delete			= this.$elem.find('#btn-delete');
+		this.$report			= this.$elem.find('#btn-report');
 		this.cacheCustomDom();
 	},
 	
