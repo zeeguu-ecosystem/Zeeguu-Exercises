@@ -1,8 +1,8 @@
-.nav {
-    left:50%;
+.dropdown-menu {
+    left:100%;
     margin-left:-150px;
-    top:50px;
     position:absolute;
+    width:75px !important;
 }
 .nav>li>a:hover, .nav>li>a:focus, .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
     background:#fff;
@@ -10,11 +10,12 @@
 
 .dropdown-menu>li>a {
     color:#428bca;
+    cursor: pointer;
 }
 .dropdown ul.dropdown-menu {
     border-radius:4px;
     box-shadow:none;
-    margin-top:20px;
+    margin-top:12px;
 }
 .dropdown ul.dropdown-menu:before {
     content: "";
