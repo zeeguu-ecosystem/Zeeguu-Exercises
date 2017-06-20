@@ -182,12 +182,16 @@ body
 .sound-icon
 {
 	height: 50px;
+	width: 50px;
 	background: skyblue url("../img/icons/volume.svg");
+	float: left;
 }
 .btn-more
 {
 	height: 50px;
-	background: lightgray;
+	width: 50px;
+	background: lightgray url("../img/icons/volume.svg");
+	float: right;
 }
 .ex-header
 {	
