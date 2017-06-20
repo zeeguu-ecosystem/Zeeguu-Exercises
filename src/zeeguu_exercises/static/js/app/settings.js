@@ -9,10 +9,11 @@ export default {
     ZEEGUU_API: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION_ID: 'sessionID',
     ZEEGUU_DEFAULT_COOKIE_EXPIRATION: 21, //days
-    ZEEGUU_DEFAULT_SESSION: '00926044',//00926044 34563456 11010001
+    ZEEGUU_DEFAULT_SESSION: '00026435',// 00026435 00926044 34563456 11010001
 
     /******************** Exercise Bookmark Parameters ************************/
     ZEEGUU_STUDY_BOOKMARKS: '/bookmarks_to_study/',
+    ZEEGUU_DELETE_BOOKMARKS: '/delete_bookmark',
 
     /*********************** Exercise Outcome Parameters **************************/
 

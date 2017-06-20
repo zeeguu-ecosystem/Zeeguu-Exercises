@@ -1,3 +1,5 @@
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+
 body
 {
 	background-color: #e9e9e9;  
@@ -111,7 +113,7 @@ body
 	height: 80px;
 	background-image: url("../img/icons/placeholder.svg");
     background-repeat: no-repeat;
-    background-position: center; 
+    background-position: center;
 	margin-bottom: 20px;
 }
 .info-bar
@@ -161,18 +163,63 @@ body
 
 .ex-container
 {
-	display:block;
-	margin: auto;
 	margin-top: 20px;
 	max-width:800px;
+	padding-top: 10px;
+}
+.ex-form
+{
+	margin: auto;
 	background-color: rgba(255,255,255,1);
     display:flex;
 	border-radius:10px;
 	box-shadow: 0 0 30px rgba(0,0,0,0.08);
 	overflow: hidden;
-	transition: all .5s; 
+	transition: all .5s;
 }
 
+
+
+.round-icon-container
+{
+	height: 35px;
+	width: 35px;
+	background-color: #F5F5F5;
+	padding: 10px;
+	border-radius: 50px;
+	cursor: pointer;
+	-webkit-transition: background-color 0.15s ease-out;
+	-moz-transition: background-color 0.15s ease-out;
+	-o-transition: background-color 0.15s ease-out;
+	transition: background-color 0.15s ease-out;
+}
+.round-icon-container:hover
+{
+	background-color: #EEEEEE;
+}
+
+.sound-icon
+{
+	display:block;
+	width:15px;
+	height:15px;
+	background: url("../img/icons/volume.svg") no-repeat center;
+	background-size: contain;
+}
+
+.right-float
+{
+	float: right;
+}
+
+.btn-more
+{
+	display:block;
+	width:15px;
+	height:15px;
+	background: url("../img/icons/elipsis.svg") no-repeat center;
+	background-size: contain;
+}
 
 .ex-header
 {	
@@ -359,14 +406,19 @@ body
 }
 
 .ex-progress {
-	margin-top:10px;
-	margin-bottom:30px;
 	position: relative;
 	width: 100%;
-	height: 30px;
+	height: 25px;
 	background-color: #c5c5c5;
 	border-radius: 15px;
 	overflow:hidden;
+}
+.progress-module
+{
+	margin: 20px auto;
+	max-width:800px;
+	box-shadow: 0 0 30px rgba(0,0,0,0.08);
+	border-radius: 15px;
 }
 
 #ex-bar {
@@ -376,7 +428,6 @@ body
   background-image: linear-gradient(to left, #3eb495, #7eb530);
   transition: all .5s;
   border-radius: 15px;
-  transition-delay: 2s;
 }
 
 #ex-status{
@@ -734,4 +785,18 @@ body
 {
 	background-color: #EEEEEE;
 	opacity: 1;
+}
+
+/**  Placeholder color*/
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #c8cccf;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #c8cccf;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #c8cccf;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #c8cccf;
 }

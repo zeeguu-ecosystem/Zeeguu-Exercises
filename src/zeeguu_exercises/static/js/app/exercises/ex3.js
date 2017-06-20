@@ -51,8 +51,9 @@ function Ex3(data,index,size){
 		//Next exercise clicked
 		this.$nextExercise.on("click",this.onRenderNextEx.bind(this));
 
-        //Next exercise clicked
-		this.$feedbackBtn.on("click",this.giveFeedbackBox.bind(this));
+
+         //Feedback for the previous bookmark: this.index
+		this.$feedbackBtn.click(() => {this.giveFeedbackBox(this.index);});
 		
 	};
 

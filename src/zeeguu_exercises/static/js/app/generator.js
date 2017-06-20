@@ -130,6 +130,7 @@ Generator.prototype = {
         var size = this.set[this.index][1];
         var startingIndex = Util.calcSize(this.set,this.index);
 
+        if(this.$currentEx) this.$currentEx.terminateExercise();
         this.$currentEx = null;
         delete this.$currentEx;
         //Local scope reference

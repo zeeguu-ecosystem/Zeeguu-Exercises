@@ -26,7 +26,6 @@ function Ex4(data,index,size){
 	
 	/** @Override */
 	this.bindUIActions = function(){
-		var _this = this;
 		//Bind UI action of Hint/Show solution to the function		
 		this.$showSolution.on("click", this.handleHint.bind(this));
 		
@@ -42,10 +41,10 @@ function Ex4(data,index,size){
 		//Next exercise clicked
 		this.$nextExercise.on("click",this.onRenderNextEx.bind(this));
 
-        //Next exercise clicked
-		this.$feedbackBtn.on("click",this.giveFeedbackBox.bind(this));
+        //Feedback for the previous bookmark: this.index
+		this.$feedbackBtn.click(() => {this.giveFeedbackBox(this.index);});
 	}
-	
+
 	/** @Override */
 	this.next = function (){			
 		this.$to.html("\""+this.data[this.index].from +"\"");
@@ -96,7 +95,7 @@ function Ex4(data,index,size){
 	this.wrongAnswerAnimation = function(){
 		this.shake.shakeElement(this.$input);
 	}
-
+	
 };
 Ex4.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex4,

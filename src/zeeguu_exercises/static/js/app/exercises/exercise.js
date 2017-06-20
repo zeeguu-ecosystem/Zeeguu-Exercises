@@ -11,6 +11,7 @@ import Session from '../session';
 import {Loader} from '../loader';
 import ShakeAnimation from "../animations/shake_animation";
 import Feedback from "../feedback";
+import Speaker from "../speaker";
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
@@ -53,6 +54,9 @@ Exercise.prototype = {
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
 		this.$exFooterPrimary 	= this.$elem.find('#ex-footer-primary');
 		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
+		this.$deleteBtn			= this.$elem.find('#btn-delete');
+		this.$reportBtn			= this.$elem.find('#btn-report');
+		this.$speakBtn			= this.$elem.find('#btn-speak');
 		this.cacheCustomDom();
 	},
 	
@@ -63,7 +67,7 @@ Exercise.prototype = {
 		var _this = this;
 		$.when(Loader.loadTemplateIntoElem(_this.customTemplateURL,$("#custom-content"))).done(function(){
 			_this.cacheDom();	
-			_this.bindUIActions();
+			_this.generalBindUIActions();
 			_this._constructor(data,index,size);	
 		});		
 	},	
@@ -127,7 +131,6 @@ Exercise.prototype = {
 		this.$exFooterPrimary.toggleClass('mask-appear');
 	},
 
-
 	/**
 	 * When the answer is successful show the animation and submit the result
 	 * */
@@ -135,15 +138,15 @@ Exercise.prototype = {
         this.animateSuccess();
         //Submit the result of translation
         this.submitResult(this.data[this.index].id,Settings.ZEEGUU_EX_OUTCOME_CORRECT);
-        // Notify the observer
-        events.emit('progress');
-        this.index++;
 	},
 
     /**
      * On success condition true, generate new exercise
      * */
     onRenderNextEx: function () {
+		this.index++;
+		// Notify the observer
+        events.emit('progress');
 		this.revertPrimary();
         // The current exercise set is complete
         if(this.index == this.size + this.startIndex){
@@ -174,6 +177,15 @@ Exercise.prototype = {
         $.post(Settings.ZEEGUU_API + Settings.ZEEGUU_EX_OUTCOME_ENDPOINT + exOutcome +  _this.resultSubmitSource + "/" + exTime + "/" + id + "?session="+this.session);
     },
 
+	/**
+	 * Function for deleting bookmark from Zeeguu
+	 * @example https://zeeguu.unibe.ch/api/delete_bookmark/19971?session=34563456
+	 * */
+	deleteBookmark: function (idx) {
+		$.post(Settings.ZEEGUU_API + Settings.ZEEGUU_DELETE_BOOKMARKS + "/" + this.data[idx].id + "?session="+this.session);
+		this.onRenderNextEx();
+	},
+
 	
 	/**
 	*	Removes focus of page elements
@@ -195,9 +207,10 @@ Exercise.prototype = {
 	/**
 	 * Function for sending the user feedback for an individual exercise
 	 * */
-	giveFeedbackBox: function () {
-        this.exFeedback.exerciseFeedbackBox(this.data[this.index-1].id);
+	giveFeedbackBox: function (idx) {
+        this.exFeedback.exerciseFeedbackBox(this.data[idx].id);
 	},
+
 
 	/**
 	 * Apply style dynamically when content changes
@@ -216,8 +229,54 @@ Exercise.prototype = {
 		}
 		this.$context.removeClass('centering');//Text align justify
 	},
-	
-	
+
+	/**
+	 * Function responsible for text to speech
+	 * */
+	handleSpeak: function () {
+		let text = this.textForSpeaker();
+		Speaker.speak(text);
+	},
+
+	/**
+	 * Binding of general actions for every exercise
+	 * */
+	generalBindUIActions: function () {
+		//Bind general actions
+		this.$deleteBtn.click(() => {this.deleteBookmark(this.index);});
+		this.$reportBtn.click(() => {this.giveFeedbackBox(this.index);});
+		this.$speakBtn.click(() => {this.handleSpeak();});
+
+		//Bind custom actions for each exercise
+		this.bindUIActions();
+	},
+
+	/**
+	 * Unbinding of general actions for every exercise
+	 * */
+	generalUnBindUIActions: function () {
+		this.$deleteBtn.off( "click");
+		this.$reportBtn.off( "click");
+		this.$speakBtn.off( "click");
+		//TODO terminate individual bindings for each exercise,
+		//TODO for that implement terminate method for each
+	},
+
+	/**
+	 * Exercise termination
+	 * */
+	terminateExercise: function () {
+		this.generalUnBindUIActions();
+	},
+
+	/**
+	 * Text for speaker
+	 * @return {String}, the text to be spoken
+	**/
+	textForSpeaker: function(){
+		return this.data[this.index].from;
+	},
+
 	/*********************** Interface functions *****************************/
 	/**
 	*	Binding UI with Controller functions
