@@ -11,6 +11,12 @@
         border-radius:0;
         margin-top: 0;
     }
+    .ex-progress{
+        border-radius: 0;
+    }
+    #ex-bar{
+        border-radius: 0px 15px 15px 0px;
+    }
     .progress-module
     {
         margin-bottom: 0;
