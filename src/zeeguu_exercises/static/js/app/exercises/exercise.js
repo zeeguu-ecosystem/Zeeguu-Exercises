@@ -11,6 +11,7 @@ import Session from '../session';
 import {Loader} from '../loader';
 import ShakeAnimation from "../animations/shake_animation";
 import Feedback from "../feedback";
+import Speaker from "../speaker";
 
 var Exercise = function(data,index,size){
 	this.init(data,index,size);	
@@ -55,6 +56,7 @@ Exercise.prototype = {
 		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
 		this.$deleteBtn			= this.$elem.find('#btn-delete');
 		this.$reportBtn			= this.$elem.find('#btn-report');
+		this.$speakBtn			= this.$elem.find('#btn-speak');
 		this.cacheCustomDom();
 	},
 	
@@ -229,12 +231,21 @@ Exercise.prototype = {
 	},
 
 	/**
+	 * Function responsible for text to speech
+	 * */
+	handleSpeak: function () {
+		let text = this.textForSpeaker();
+		Speaker.speak(text);
+	},
+
+	/**
 	 * Binding of general actions for every exercise
 	 * */
 	generalBindUIActions: function () {
 		//Bind general actions
 		this.$deleteBtn.click(() => {this.deleteBookmark(this.index);});
 		this.$reportBtn.click(() => {this.giveFeedbackBox(this.index);});
+		this.$speakBtn.click(() => {this.handleSpeak();});
 
 		//Bind custom actions for each exercise
 		this.bindUIActions();
@@ -246,6 +257,7 @@ Exercise.prototype = {
 	generalUnBindUIActions: function () {
 		this.$deleteBtn.off( "click");
 		this.$reportBtn.off( "click");
+		this.$speakBtn.off( "click");
 		//TODO terminate individual bindings for each exercise,
 		//TODO for that implement terminate method for each
 	},
@@ -257,7 +269,14 @@ Exercise.prototype = {
 		this.generalUnBindUIActions();
 	},
 
-	
+	/**
+	 * Text for speaker
+	 * @return {String}, the text to be spoken
+	**/
+	textForSpeaker: function(){
+		return this.data[this.index].from;
+	},
+
 	/*********************** Interface functions *****************************/
 	/**
 	*	Binding UI with Controller functions

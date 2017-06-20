@@ -79,6 +79,7 @@ function Ex1(data,index,size){
 	this.wrongAnswerAnimation = function(){
 		this.shake.shakeElement(this.$input);
 	};
+
 }
 
 Ex1.prototype = Object.create(Exercise.prototype, {

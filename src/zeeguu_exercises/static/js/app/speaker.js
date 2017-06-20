@@ -7,10 +7,10 @@ export default class Speaker {
      * @param {String} txt - the text to be read.
      * @param {String} lang - red the text in language. Defualt english.
      */
-    speak(txt, lang = 'en-US') {
+    static speak(txt, lang = 'nl-NL') {
         let spkr = new SpeechSynthesisUtterance();
-        spkr.text = text;
-        spkr.lang = language;
+        spkr.text = txt;
+        spkr.lang = lang;
         speechSynthesis.speak(spkr);
     }
 };

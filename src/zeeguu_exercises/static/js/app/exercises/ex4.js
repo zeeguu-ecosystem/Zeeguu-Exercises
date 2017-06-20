@@ -95,7 +95,7 @@ function Ex4(data,index,size){
 	this.wrongAnswerAnimation = function(){
 		this.shake.shakeElement(this.$input);
 	}
-
+	
 };
 Ex4.prototype = Object.create(Exercise.prototype, {
 	constructor: Ex4,
