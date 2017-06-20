@@ -428,7 +428,6 @@ body
   background-image: linear-gradient(to left, #3eb495, #7eb530);
   transition: all .5s;
   border-radius: 15px;
-  transition-delay: 2s;
 }
 
 #ex-status{
