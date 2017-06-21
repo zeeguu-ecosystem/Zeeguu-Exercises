@@ -5,7 +5,7 @@ export default class Speaker {
 
     /**
      * @param {String} txt - the text to be read.
-     * @param {String} lang - red the text in language. Defualt english.
+     * @param {String} lang - speak the text in language. Defualt english.
      */
     static speak(txt, lang = 'nl-NL') {
         let spkr = new SpeechSynthesisUtterance();
