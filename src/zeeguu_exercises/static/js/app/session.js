@@ -3,6 +3,7 @@
  */
 import CookieHander from './cookie_handler';
 import Settings from './settings';
+import * as $ from "jquery";
 
 let sessionID = null;
 
@@ -27,5 +28,15 @@ export default class Session {
      * */
     static setSession (name = Settings.ZEEGUU_SESSION_ID, value = Settings.ZEEGUU_DEFAULT_SESSION, days = Settings.ZEEGUU_DEFAULT_COOKIE_EXPIRATION ) {
         CookieHander.setCookie(name,value,days);
+    }
+
+    /**
+     * Get user language
+     * @example  https://zeeguu.unibe.ch/api/learned_language?session=00026435
+     * */
+    static getLanguage (hookFunc) {
+        $.get(Settings.ZEEGUU_API + Settings.ZEEGUU_LEARNING_LANGUAGE + "?session="+Session.getSession(), function(text) {
+            hookFunc(text);
+        });
     }
 }

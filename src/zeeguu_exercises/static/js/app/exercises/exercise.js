@@ -28,6 +28,7 @@ Exercise.prototype = {
 	size: 0, //default number of bookmarks
 	description:  "Solve the exercise",  //default description
 	session: Session.getSession(), //Example of session id 34563456 or 11010001
+	lang:    '',	//user language
 	startTime: 0,
 	isHintUsed: false,
     minRequirement: 1,
@@ -83,6 +84,7 @@ Exercise.prototype = {
 		this.size  = size;
 		this.shake = new ShakeAnimation();
 		this.exFeedback = new Feedback(this.resultSubmitSource,this.session);
+        Session.getLanguage((text)=>{this.lang = text});//Set the language with callback
 		this.setDescription(); 	
 		this.next();
         this.startTime = Date.now();
@@ -235,7 +237,7 @@ Exercise.prototype = {
 	 * */
 	handleSpeak: function () {
 		let text = this.textForSpeaker();
-		Speaker.speak(text);
+		Speaker.speak(text,this.lang);
 	},
 
 	/**
