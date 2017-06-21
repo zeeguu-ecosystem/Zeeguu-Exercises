@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Used to separate the concern of drop down menu-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<!-- Cookie notice-->
+	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+	<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+	<script>
+	window.addEventListener("load", function(){
+	window.cookieconsent.initialise({
+	  "palette": {
+		"popup": {
+		  "background": "#edeff5",
+		  "text": "#838391"
+		},
+		"button": {
+		  "background": "#4b81e8"
+		}
+	  },
+	  "theme": "edgeless"
+	})});
+	</script>
 	<!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/practice/ -->
     <script>
         (function(h,o,t,j,a,r){
@@ -28,6 +50,7 @@
 	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/custom.css') }}" 	type = "text/css">
 	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/success.css') }}" 	type = "text/css">
 	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/loader.css') }}" 	type = "text/css">
+    <link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/dropdown.css') }}" 	type = "text/css">
 	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/sweetalert.css') }}" 	type = "text/css">
     <link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/responsive.css') }}" 	type = "text/css">
 
