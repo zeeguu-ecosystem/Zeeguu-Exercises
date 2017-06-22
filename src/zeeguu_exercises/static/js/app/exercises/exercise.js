@@ -35,6 +35,7 @@ Exercise.prototype = {
 	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,//Defualt submission
 	successAnimationTime: 2000,
 	exFeedback: 0,
+	instanceCorrect: false,
 
 	/*********************** General Functions ***************************/
 	/**
@@ -140,13 +141,17 @@ Exercise.prototype = {
 		this.animateSuccess();
 		//Submit the result of translation
 		this.submitResult(this.data[this.index].id, Settings.ZEEGUU_EX_OUTCOME_CORRECT);
+		this.setInstanceState(true);//Turn on the instance, instance was correctly solved
 	},
+
+
 
 	/**
 	 * On success condition true, generate new exercise
 	 * */
 	onRenderNextEx: function () {
 		this.index++;
+		this.setInstanceState(false);//Turn off the instance, instance reset to false
 		// Notify the observer
 		events.emit('progress');
 		this.revertPrimary();
@@ -157,6 +162,22 @@ Exercise.prototype = {
 		}
 		this.next();
 		this.startTime = Date.now();
+	},
+
+	/**
+	 * Instance switch, changes the instance
+	 * @return {void}
+	 * */
+	setInstanceState: function (state) {
+		this.instanceCorrect = state;
+	},
+
+	/**
+	 * Instance switch, changes the instance
+	 * @return {boolean}
+	 * */
+	getInstanceState: function () {
+		return this.instanceCorrect;
 	},
 
 	/**

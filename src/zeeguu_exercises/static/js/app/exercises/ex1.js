@@ -61,7 +61,10 @@ function Ex1(data,index,size){
 	
 	this.enterKeyup = function(event){
 		if(event.keyCode == 13){
-			this.$checkAnswer.click();
+			if(!this.getInstanceState())//If in the primary state of footer
+				this.$checkAnswer.click();
+			else //If in the secondary state of footer
+				this.$nextExercise.click();
 		}
 	};
 	
