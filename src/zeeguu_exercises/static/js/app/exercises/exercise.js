@@ -28,6 +28,7 @@ Exercise.prototype = {
 	size: 0, //default number of bookmarks
 	description: "Solve the exercise",  //default description
 	session: Session.getSession(), //Example of session id 34563456 or 11010001
+	lang:    '',	//user language
 	startTime: 0,
 	isHintUsed: false,
 	minRequirement: 1,
@@ -82,7 +83,8 @@ Exercise.prototype = {
 		this.startIndex = index;
 		this.size = size;
 		this.shake = new ShakeAnimation();
-		this.exFeedback = new Feedback(this.resultSubmitSource, this.session);
+		this.exFeedback = new Feedback(this.resultSubmitSource,this.session);
+        Session.getLanguage((text)=>{this.lang = text});//Set the language with callback
 		this.setDescription();
 		this.next();
 		this.startTime = Date.now();
@@ -234,8 +236,8 @@ Exercise.prototype = {
 	 * Function responsible for text to speech
 	 * */
 	handleSpeak: function () {
-		let text = this.textForSpeaker();
-		Speaker.speak(text);
+		let speakerObj = this.objectForSpeaker();
+		Speaker.speak(speakerObj.text,speakerObj.language);
 	},
 
 	/**
@@ -271,10 +273,10 @@ Exercise.prototype = {
 
 	/**
 	 * Text for speaker
-	 * @return {String}, the text to be spoken
+	 * @return {Object}, the text to be spoken and the language, @example: {text: animatiefilm, language: "nl"}
 	**/
-	textForSpeaker: function(){
-		return this.data[this.index].from;
+	objectForSpeaker: function(){
+		return {text: this.data[this.index].from, language: this.data[this.index].from_lang};
 	},
 
 	/*********************** Interface functions *****************************/
