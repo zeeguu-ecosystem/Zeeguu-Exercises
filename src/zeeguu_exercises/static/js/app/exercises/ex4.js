@@ -32,9 +32,6 @@ function Ex4(data,index,size){
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 		
-		//Bind UI Text click		
-		//this.$clickableText.on("click",updateInput.bind(this));
-		
 		// Bind UI Enter Key
 		this.$input.keyup(this.enterKeyup.bind(this));
 
