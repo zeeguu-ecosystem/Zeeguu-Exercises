@@ -236,8 +236,8 @@ Exercise.prototype = {
 	 * Function responsible for text to speech
 	 * */
 	handleSpeak: function () {
-		let text = this.textForSpeaker();
-		Speaker.speak(text,this.lang);
+		let speakerObj = this.objectForSpeaker();
+		Speaker.speak(speakerObj.text,speakerObj.language);
 	},
 
 	/**
@@ -273,10 +273,10 @@ Exercise.prototype = {
 
 	/**
 	 * Text for speaker
-	 * @return {String}, the text to be spoken
+	 * @return {Object}, the text to be spoken and the language, @example: {text: animatiefilm, language: "nl"}
 	**/
-	textForSpeaker: function(){
-		return this.data[this.index].from;
+	objectForSpeaker: function(){
+		return {text: this.data[this.index].from, language: this.data[this.index].from_lang};
 	},
 
 	/*********************** Interface functions *****************************/
