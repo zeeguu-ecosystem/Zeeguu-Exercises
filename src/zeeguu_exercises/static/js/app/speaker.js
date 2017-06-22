@@ -6,6 +6,7 @@ export default class Speaker {
     /**
      * @param {String} txt - the text to be read.
      * @param {String} lang - red the text in language. @example 'nl-NL'
+
      */
     static speak(txt, lang) {
         lang  = Speaker.formatLanguage(lang);
