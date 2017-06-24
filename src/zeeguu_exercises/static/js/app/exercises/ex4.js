@@ -22,7 +22,7 @@ function Ex4(data,index,size){
 		this.$clickableText 		= this.$elem.find(".clickable-text");
 		this.$nextExercise			= this.$elem.find('#next-exercise');
         this.$feedbackBtn			= this.$elem.find('#feedback');
-	}
+	};
 	
 	/** @Override */
 	this.bindUIActions = function(){
@@ -32,9 +32,6 @@ function Ex4(data,index,size){
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 		
-		//Bind UI Text click		
-		//this.$clickableText.on("click",updateInput.bind(this));
-		
 		// Bind UI Enter Key
 		this.$input.keyup(this.enterKeyup.bind(this));
 
@@ -43,7 +40,7 @@ function Ex4(data,index,size){
 
         //Feedback for the previous bookmark: this.index
 		this.$feedbackBtn.click(() => {this.giveFeedbackBox(this.index);});
-	}
+	};
 
 	/** @Override */
 	this.next = function (){			
@@ -52,18 +49,21 @@ function Ex4(data,index,size){
 		this.$input.val("");
 
 		this.reStyleDom();
-	}
+	};
 	
 	this.updateInput = function() {
 		var t = Util.getSelectedText();
 		this.$input.val(t);
-	}
+	};
 	
 	this.enterKeyup = function(event){
 		if(event.keyCode == 13){
-			this.$checkAnswer.click();
+			if(!this.getInstanceState())//If in the primary state of footer
+				this.$checkAnswer.click();
+			else //If in the secondary state of footer
+				this.$nextExercise.click();
 		}
-	}
+	};
 	
 	this.generateContext = function(){
 		var contextString = this.data[this.index].context;
@@ -80,16 +80,13 @@ function Ex4(data,index,size){
 	/** @Override */
 	this.giveHint = function (){
 		this.$input.val(this.data[this.index].to);
-	}
+	};
 	
 	/** @Override */
 	this.successCondition = function(){	
 		// Check all the possible answers
-		if (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to.trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""))
-			return true;
-
-		return false;
-	}
+		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
+	};
 
 	/** @Override */
 	this.wrongAnswerAnimation = function(){

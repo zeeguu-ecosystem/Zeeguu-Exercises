@@ -56,13 +56,26 @@ function Ex1(data,index,size){
 	
 	this.updateInput = function() {
 		var t = Util.getSelectedText();
-		this.$input.val(this.$input.val() + " " + t);
+		this.$input.val(this.$input.val().trim() + " " + t);
 	};
 	
 	this.enterKeyup = function(event){
 		if(event.keyCode == 13){
-			this.$checkAnswer.click();
+			if(!this.getInstanceState())//If in the primary state of footer
+				this.$checkAnswer.click();
+			else //If in the secondary state of footer
+				this.$nextExercise.click();
 		}
+	};
+
+	/**
+	 * Formats the string for comparing
+	 * @param {String}, text, to be formatted
+	 * @return {String}, the formatted string
+	 * removes numbers and symbols, multiple space, tabs, new lines are replaced by single space
+	 * */
+	this.formatStringForCheck = function (text) {
+		return text.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "").replace(/\s\s+/g, ' ');
 	};
 	
 	/** @Override */
@@ -72,8 +85,9 @@ function Ex1(data,index,size){
 	
 	/** @Override */
 	this.successCondition = function(){
-		return (this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].from.trim().toUpperCase().replace(/[^a-zA-Z ]/g, ""));
+		return (this.formatStringForCheck(this.$input.val()) === this.formatStringForCheck(this.data[this.index].from));
 	};
+
 
 	/** @Override */
 	this.wrongAnswerAnimation = function(){
