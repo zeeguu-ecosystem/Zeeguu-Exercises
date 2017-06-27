@@ -3,6 +3,7 @@
     margin-left:-100px;
     position:absolute;
     min-width:110px !important;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
 }
 .dropdown-menu>li>a {
     color:#616161;

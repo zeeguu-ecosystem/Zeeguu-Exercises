@@ -34,7 +34,7 @@ Starter.prototype = Object.create(Home.prototype, {
 			},
 			{
 				name: "Casual",
-				exID: [[2, 2], [1, 1], [3, 1],[2, 1], [4, 1], [2, 3],[1, 2],[3, 1],[2, 2],[3, 1]],
+				exID: [[2, 4], [1, 1], [3, 1],[2, 1], [4, 1], [2, 3],[1, 2],[3, 1],[2, 2],[3, 1]],
 				info: 'Practice 15 words in 3 minutes.',
 				icon: 'static/img/icons/starter/eleph2.svg',
 				gradientColor: 'starter-btn-header-level2',
