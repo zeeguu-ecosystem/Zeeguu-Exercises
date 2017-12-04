@@ -31,6 +31,7 @@ Exercise.prototype = {
 	lang:    '',	//user language
 	startTime: 0,
 	isHintUsed: false,
+	hintsUsed: 0,
 	minRequirement: 1,
 	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,//Defualt submission
 	successAnimationTime: 2000,
@@ -223,6 +224,7 @@ Exercise.prototype = {
 	handleHint: function () {
 		this.submitResult(this.data[this.index].id, Settings.ZEEGUU_EX_OUTCOME_HINT);
 		this.isHintUsed = true;
+		this.hintsUsed++;
 
 		this.giveHint();
 	},
