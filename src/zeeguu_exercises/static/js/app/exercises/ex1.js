@@ -98,7 +98,7 @@ function Ex1(data,index,size){
 		
 		// Remove dots when user wants to type the answer.
 		var exerciseObject = this;
-		this.$input.val(hintWithDots).blur().on("focus", function(){ console.log(exerciseObject.isHintOnScreen);if(exerciseObject.isHintOnScreen){exerciseObject.$input.val(hint);console.log(hint);} });
+		this.$input.val(hintWithDots).blur().on("focus", function(){ if(exerciseObject.isHintOnScreen){exerciseObject.$input.val(hint);} });
 		this.isHintOnScreen = true;
 	};
 	
