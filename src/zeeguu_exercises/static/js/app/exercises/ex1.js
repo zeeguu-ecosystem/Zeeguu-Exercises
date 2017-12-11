@@ -50,12 +50,17 @@ function Ex1(data,index,size){
 	this.next = function (){
 		this.$to.html("\""+this.data[this.index].to+"\"");
 		this.$context.html(this.data[this.index].context);
-		this.$input.val("");
+		this.$input.val("").off("focus");
+		this.isHintOnScreen = false;
 		this.reStyleDom();
 	};
 	
 	this.updateInput = function() {
 		var t = Util.getSelectedText();
+		if (this.isHintOnScreen) {
+			this.$input.val("");
+			this.isHintOnScreen = false;
+		}
 		this.$input.val(this.$input.val().trim() + " " + t);
 	};
 	
@@ -80,7 +85,21 @@ function Ex1(data,index,size){
 	
 	/** @Override */
 	this.giveHint = function (){
-		this.$input.val(this.data[this.index].from);
+		// Reveal X letters of the answer, where X is the number of times the Hint button was clicked.
+		var answer = this.data[this.index].from;
+		var hint = answer.slice(0, this.hintsUsed);
+		var numberOfDots = answer.length - hint.length;
+		
+		// Add dots after the revealed letters, to show how long the answer is.
+		var hintWithDots = hint;
+		for (var i = 0; i < numberOfDots; i++) {
+			hintWithDots += ".";
+		}
+		
+		// Remove dots when user wants to type the answer.
+		var exerciseObject = this;
+		this.$input.val(hintWithDots).blur().on("focus", function(){ console.log(exerciseObject.isHintOnScreen);if(exerciseObject.isHintOnScreen){exerciseObject.$input.val(hint);console.log(hint);} });
+		this.isHintOnScreen = true;
 	};
 	
 	/** @Override */

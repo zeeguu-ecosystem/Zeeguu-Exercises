@@ -46,8 +46,8 @@ function Ex4(data,index,size){
 	this.next = function (){			
 		this.$to.html("\""+this.data[this.index].from +"\"");
 		this.$context.html(this.generateContext());
-		this.$input.val("");
-
+		this.$input.val("").off("focus");
+		this.isHintOnScreen = false;
 		this.reStyleDom();
 	};
 	
@@ -76,7 +76,6 @@ function Ex4(data,index,size){
 		return contextString;		
 	};
 	
-	
 	/** @Override */
 	this.giveHint = function (){
 		// Reveal X letters of the answer, where X is the number of times the Hint button was clicked.
@@ -85,11 +84,14 @@ function Ex4(data,index,size){
 		var numberOfDots = answer.length - hint.length;
 		
 		// Add dots after the revealed letters, to show how long the answer is.
+		var hintWithDots = hint;
 		for (var i = 0; i < numberOfDots; i++) {
-			hint += ".";
+			hintWithDots += ".";
 		}
 		
-		this.$input.val(hint);
+		// Remove dots when user wants to type the answer.
+		var exerciseObject = this;
+		this.$input.val(hintWithDots).blur().on("focus", function(){ exerciseObject.$input.val(hint); });
 	};
 	
 	/** @Override */

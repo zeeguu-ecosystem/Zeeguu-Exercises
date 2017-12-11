@@ -32,6 +32,7 @@ Exercise.prototype = {
 	startTime: 0,
 	isHintUsed: false,
 	hintsUsed: 0,
+	isHintOnScreen: false,
 	minRequirement: 1,
 	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,//Defualt submission
 	successAnimationTime: 2000,
@@ -190,6 +191,7 @@ Exercise.prototype = {
 		//If the user used the hint, do not register correct solution, resent the hint, move on
 		if (this.isHintUsed && exOutcome == Settings.ZEEGUU_EX_OUTCOME_CORRECT) {
 			this.isHintUsed = false;
+			this.hintsUsed = 0;
 			return;
 		}
 		//If hint is used twice, ignore request
