@@ -32,7 +32,6 @@ Exercise.prototype = {
 	startTime: 0,
 	isHintUsed: false,
 	hintsUsed: 0,
-	isHintOnScreen: false,
 	minRequirement: 1,
 	resultSubmitSource: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE,//Defualt submission
 	successAnimationTime: 2000,

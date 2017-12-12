@@ -46,8 +46,7 @@ function Ex4(data,index,size){
 	this.next = function (){			
 		this.$to.html("\""+this.data[this.index].from +"\"");
 		this.$context.html(this.generateContext());
-		this.$input.val("").off("focus");
-		this.isHintOnScreen = false;
+		this.$input.val("").attr("placeholder", "");
 		this.reStyleDom();
 	};
 	
@@ -89,9 +88,7 @@ function Ex4(data,index,size){
 			hintWithDots += ".";
 		}
 		
-		// Remove dots when user wants to type the answer.
-		var exerciseObject = this;
-		this.$input.val(hintWithDots).blur().on("focus", function(){ exerciseObject.$input.val(hint); });
+		this.$input.attr("placeholder", hintWithDots);
 	};
 	
 	/** @Override */
