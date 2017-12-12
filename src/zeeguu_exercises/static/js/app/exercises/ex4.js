@@ -80,12 +80,18 @@ function Ex4(data,index,size){
 		// Reveal X letters of the answer, where X is the number of times the Hint button was clicked.
 		var answer = this.data[this.index].to;
 		var hint = answer.slice(0, this.hintsUsed);
-		var numberOfDots = answer.length - hint.length;
 		
 		// Add dots after the revealed letters, to show how long the answer is.
 		var hintWithDots = hint;
-		for (var i = 0; i < numberOfDots; i++) {
-			hintWithDots += ".";
+		for (var i = hint.length; i < answer.length; i++) {
+			var character = answer.charAt(i);
+			
+			// Display spaces as spaces, not as dots
+			if (character === ' ') {
+				hintWithDots += character;
+			} else {
+				hintWithDots += '.';
+			}
 		}
 		
 		this.$input.attr("placeholder", hintWithDots);
