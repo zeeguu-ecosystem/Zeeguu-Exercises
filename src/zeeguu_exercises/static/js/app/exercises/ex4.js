@@ -46,7 +46,7 @@ function Ex4(data,index,size){
 	this.next = function (){			
 		this.$to.html("\""+this.data[this.index].from +"\"");
 		this.$context.html(this.generateContext());
-		this.$input.val("").attr("placeholder", "");
+		this.$input.val("").attr("placeholder", "Type or click a word").focus();
 		this.reStyleDom();
 	};
 	
@@ -94,7 +94,7 @@ function Ex4(data,index,size){
 			}
 		}
 		
-		this.$input.attr("placeholder", hintWithDots);
+		this.$input.val("").attr("placeholder", "Hint: " + hintWithDots).focus();
 	};
 	
 	/** @Override */
