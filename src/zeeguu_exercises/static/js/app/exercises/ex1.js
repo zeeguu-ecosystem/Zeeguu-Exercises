@@ -45,22 +45,6 @@ function Ex1(data,index,size){
 		var t = Util.getSelectedText();
 		this.$input.val(this.$input.val().trim() + " " + t);
 	};
-
-	/**
-	 * Formats the string for comparing
-	 * @param {String}, text, to be formatted
-	 * @return {String}, the formatted string
-	 * removes numbers and symbols, multiple space, tabs, new lines are replaced by single space
-	 * */
-	this.formatStringForCheck = function (text) {
-		return text.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "").replace(/\s\s+/g, ' ');
-	};
-	
-	/** @Override */
-	this.successCondition = function(){
-		return (this.formatStringForCheck(this.$input.val()) === this.formatStringForCheck(this.data[this.index].from));
-	};
-
 }
 
 Ex1.prototype = Object.create(TextInputExercise.prototype, {

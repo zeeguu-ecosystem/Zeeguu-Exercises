@@ -38,11 +38,6 @@ function Ex4(data,index,size){
 		this.answer = this.data[this.index].to;
 	};
 	
-	this.updateInput = function() {
-		var t = Util.getSelectedText();
-		this.$input.val(t);
-	};
-	
 	this.generateContext = function(){
 		var contextString = this.data[this.index].context;
 		var res = this.data[this.index].from.split(" ");	
@@ -53,13 +48,6 @@ function Ex4(data,index,size){
 			
 		return contextString;		
 	};
-	
-	/** @Override */
-	this.successCondition = function(){	
-		// Check all the possible answers
-		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
-	};
-	
 };
 
 Ex4.prototype = Object.create(TextInputExercise.prototype, {

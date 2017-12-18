@@ -1,4 +1,4 @@
-/** Modular Zeeguu Powered Text Input Exercise @author Martin Avagyan
+/** Modular Zeeguu Powered Text Input Exercise @author Martin Avagyan, Sibren van Vliet
  *  @initialize it using: new TextInputExercise();
  *  @customize it by using prototypal inheritance
  **/
@@ -61,6 +61,21 @@ TextInputExercise.prototype.giveHint = function() {
 
 TextInputExercise.prototype.wrongAnswerAnimation = function(){
 	this.shake.shakeElement(this.$input);
+};
+
+/**
+ * Formats the string for comparing
+ * @param {String}, text, to be formatted
+ * @return {String}, the formatted string
+ * removes numbers and symbols, multiple space, tabs, new lines are replaced by single space
+ * */
+TextInputExercise.prototype.formatStringForCheck = function (text) {
+	return text.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "").replace(/\s\s+/g, ' ');
+};
+
+TextInputExercise.prototype.successCondition = function(){	
+	// Check all the possible answers
+	return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.answer.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
 };
 
 export default TextInputExercise;
