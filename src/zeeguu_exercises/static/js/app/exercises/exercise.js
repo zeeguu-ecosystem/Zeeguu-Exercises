@@ -29,6 +29,7 @@ Exercise.prototype = {
 	description: "Solve the exercise",  //default description
 	session: Session.getSession(), //Example of session id 34563456 or 11010001
 	lang:    '',	//user language
+	answer: "",
 	startTime: 0,
 	isHintUsed: false,
 	hintsUsed: 0,
