@@ -4,25 +4,12 @@
 **/
 
 import $ from 'jquery';
-import Exercise from './exercise';
+import TextInputExercise from './textInputExercise';
 import Util from '../util';
 import Settings from "../settings";
 
 function Ex4(data,index,size){
-	
 	this.init(data,index,size);
-	
-	/** @Override */
-	this.cacheCustomDom = function(){	
-		this.$to 					= this.$elem.find("#ex-to");
-		this.$context 				= this.$elem.find("#ex-context");
-		this.$input 				= this.$elem.find("#ex-main-input");
-		this.$showSolution 			= this.$elem.find("#show_solution");
-		this.$checkAnswer 			= this.$elem.find("#check_answer");
-		this.$clickableText 		= this.$elem.find(".clickable-text");
-		this.$nextExercise			= this.$elem.find('#next-exercise');
-        this.$feedbackBtn			= this.$elem.find('#feedback');
-	};
 	
 	/** @Override */
 	this.bindUIActions = function(){
@@ -46,23 +33,9 @@ function Ex4(data,index,size){
 	this.next = function (){			
 		this.$to.html("\""+this.data[this.index].from +"\"");
 		this.$context.html(this.generateContext());
-		this.$input.val("");
-
+		this.$input.val("").attr("placeholder", "Type or click a word").focus();
 		this.reStyleDom();
-	};
-	
-	this.updateInput = function() {
-		var t = Util.getSelectedText();
-		this.$input.val(t);
-	};
-	
-	this.enterKeyup = function(event){
-		if(event.keyCode == 13){
-			if(!this.getInstanceState())//If in the primary state of footer
-				this.$checkAnswer.click();
-			else //If in the secondary state of footer
-				this.$nextExercise.click();
-		}
+		this.answer = this.data[this.index].to;
 	};
 	
 	this.generateContext = function(){
@@ -75,42 +48,14 @@ function Ex4(data,index,size){
 			
 		return contextString;		
 	};
-	
-	
-	/** @Override */
-	this.giveHint = function (){
-		// Reveal X letters of the answer, where X is the number of times the Hint button was clicked.
-		var answer = this.data[this.index].to;
-		var hint = answer.slice(0, this.hintsUsed);
-		var numberOfDots = answer.length - hint.length;
-		
-		// Add dots after the revealed letters, to show how long the answer is.
-		for (var i = 0; i < numberOfDots; i++) {
-			hint += ".";
-		}
-		
-		this.$input.val(hint);
-	};
-	
-	/** @Override */
-	this.successCondition = function(){	
-		// Check all the possible answers
-		return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.data[this.index].to.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
-	};
-
-	/** @Override */
-	this.wrongAnswerAnimation = function(){
-		this.shake.shakeElement(this.$input);
-	}
-	
 };
-Ex4.prototype = Object.create(Exercise.prototype, {
+
+Ex4.prototype = Object.create(TextInputExercise.prototype, {
 	constructor: Ex4,
-	/************************** SETTINGS ********************************/	
+	/************************** SETTINGS ********************************/
 	description: {value: "Translate the word given in the context."},
 	customTemplateURL: {value: 'static/template/exercise/ex4.html'},
 	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_TRANSLATE},
 });
 
 export default Ex4;
-

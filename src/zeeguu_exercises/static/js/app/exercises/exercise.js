@@ -29,6 +29,7 @@ Exercise.prototype = {
 	description: "Solve the exercise",  //default description
 	session: Session.getSession(), //Example of session id 34563456 or 11010001
 	lang:    '',	//user language
+	answer: "",
 	startTime: 0,
 	isHintUsed: false,
 	hintsUsed: 0,
@@ -190,6 +191,7 @@ Exercise.prototype = {
 		//If the user used the hint, do not register correct solution, resent the hint, move on
 		if (this.isHintUsed && exOutcome == Settings.ZEEGUU_EX_OUTCOME_CORRECT) {
 			this.isHintUsed = false;
+			this.hintsUsed = 0;
 			return;
 		}
 		//If hint is used twice, ignore request
