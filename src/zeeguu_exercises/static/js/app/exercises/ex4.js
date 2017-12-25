@@ -48,6 +48,10 @@ function Ex4(data,index,size){
 			
 		return contextString;		
 	};
+	
+	this.exerciseSpecificSuccessHandler = function() {
+		// Success handling specific to this exercise
+	};
 };
 
 Ex4.prototype = Object.create(TextInputExercise.prototype, {

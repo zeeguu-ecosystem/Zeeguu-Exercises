@@ -227,6 +227,9 @@ function Ex3(data,index,size){
 		return arr;
 	};
 	
+	this.exerciseSpecificSuccessHandler = function() {
+		// Success handling specific to this exercise
+	};
 };
 
 Ex3.prototype = Object.create(Exercise.prototype, {

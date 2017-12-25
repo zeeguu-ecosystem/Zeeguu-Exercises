@@ -144,6 +144,7 @@ Exercise.prototype = {
 		//Submit the result of translation
 		this.submitResult(this.data[this.index].id, Settings.ZEEGUU_EX_OUTCOME_CORRECT);
 		this.setInstanceState(true);//Turn on the instance, instance was correctly solved
+		this.exerciseSpecificSuccessHandler();
 	},
 
 

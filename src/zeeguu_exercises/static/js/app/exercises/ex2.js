@@ -143,6 +143,10 @@ function Ex2(data,index,size){
 		}	
 		this.$context.html (contextString);
 	};
+	
+	this.exerciseSpecificSuccessHandler = function() {
+		// Success handling specific to this exercise
+	};
 };
 
 Ex2.prototype = Object.create(Exercise.prototype, {

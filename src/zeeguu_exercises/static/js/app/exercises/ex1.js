@@ -45,6 +45,22 @@ function Ex1(data,index,size){
 		var t = Util.getSelectedText();
 		this.$input.val(this.$input.val().trim() + " " + t);
 	};
+	
+	this.reGenerateContext = function(inputWord){
+		var contextString = this.data[this.index].context;
+		var res = inputWord.split(" ");	
+		
+		for (var i = 0; i <res.length; i++){
+			contextString = contextString.replace(res[i], res[i].bold());
+		}
+		
+		this.$context.html (contextString);
+	};
+	
+	this.exerciseSpecificSuccessHandler = function() {
+		// Success handling specific to this exercise
+		this.reGenerateContext(this.$input.val());
+	};
 }
 
 Ex1.prototype = Object.create(TextInputExercise.prototype, {
