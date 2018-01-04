@@ -7,6 +7,7 @@ function Ex2(data,index,size){
 	
 	/** @Override */
 	this.cacheCustomDom = function(){	
+	  this.$to            = this.$elem.find("#ex-to");
 		this.$context 				= this.$elem.find("#ex-context");
 		this.$showSolution 			= this.$elem.find("#show_solution");
 		this.$checkAnswer 			= this.$elem.find("#check_answer");		
@@ -68,6 +69,7 @@ function Ex2(data,index,size){
 		populateButton(this.btns[2], this.data[idxs[1]].from);
 
 		this.reStyleDom();
+		this.$to.html ("&zwnj;");
 		this.$descriptionContainer.removeClass('hide');
 	}
 	
@@ -147,6 +149,8 @@ function Ex2(data,index,size){
 	
 	this.exerciseSpecificSuccessHandler = function() {
 		// Success handling specific to this exercise
+		var translation = this.data[this.index].to.bold().fontcolor("#7ca500");
+		this.$to.html (translation);
 	};
 };
 
