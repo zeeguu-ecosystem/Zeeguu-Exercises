@@ -52,7 +52,7 @@ function Ex1(data,index,size){
 		var res = inputWord.split(" ");	
 		
 		for (var i = 0; i <res.length; i++){
-			contextString = contextString.replace(res[i], res[i].bold());
+			contextString = contextString.replace(res[i], res[i].bold().fontcolor("#7ca500"));
 		}
 		
 		this.$context.html (contextString);
