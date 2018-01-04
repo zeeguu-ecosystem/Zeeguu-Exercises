@@ -145,7 +145,8 @@ function Ex3(data,index,size){
 	};
 	
 	/** @Override */
-	this.next = function (){	
+	this.next = function (){
+		this.$descriptionContainer.removeClass('hide');
 		this.populateButtons();
 	};
 	

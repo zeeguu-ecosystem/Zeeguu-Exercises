@@ -56,6 +56,7 @@ Exercise.prototype = {
 		this.$description  		= this.$elem.find("#ex-descript");
 		this.$loader 			= this.$elem.find('#loader');
 		this.$statusContainer 	= this.$elem.find('#ex-status-container');
+		this.$descriptionContainer = this.$elem.find('#ex-description-container');
 		this.$exFooterPrimary 	= this.$elem.find('#ex-footer-primary');
 		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
 		this.$deleteBtn			= this.$elem.find('#btn-delete');
@@ -345,6 +346,7 @@ Exercise.prototype = {
 	**/
 	animateSuccess: function(){
 		let _this = this;
+		this.$descriptionContainer.addClass('hide');
 		this.$statusContainer.removeClass('hide');
 		setTimeout(function(){
 			if (_this.$statusContainer.length > 0) {

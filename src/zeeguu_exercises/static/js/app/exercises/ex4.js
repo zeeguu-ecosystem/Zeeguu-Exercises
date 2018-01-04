@@ -36,6 +36,7 @@ function Ex4(data,index,size){
 		this.$input.val("").attr("placeholder", "Type or click a word").focus();
 		this.reStyleDom();
 		this.answer = this.data[this.index].to;
+		this.$descriptionContainer.removeClass('hide');
 	};
 	
 	this.generateContext = function(){

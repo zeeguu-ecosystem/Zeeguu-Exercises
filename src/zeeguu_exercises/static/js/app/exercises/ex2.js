@@ -68,6 +68,7 @@ function Ex2(data,index,size){
 		populateButton(this.btns[2], this.data[idxs[1]].from);
 
 		this.reStyleDom();
+		this.$descriptionContainer.removeClass('hide');
 	}
 	
 	/** @Override */
