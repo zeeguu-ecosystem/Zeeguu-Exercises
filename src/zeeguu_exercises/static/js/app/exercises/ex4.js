@@ -31,7 +31,7 @@ function Ex4(data,index,size){
 
 	/** @Override */
 	this.next = function (){			
-		this.$to.html("\""+this.data[this.index].from +"\"");
+		this.$to.html ("&zwnj;");
 		this.$context.html(this.generateContext());
 		this.$input.val("").attr("placeholder", "Type or click a word").focus();
 		this.reStyleDom();
@@ -60,7 +60,7 @@ function Ex4(data,index,size){
 Ex4.prototype = Object.create(TextInputExercise.prototype, {
 	constructor: Ex4,
 	/************************** SETTINGS ********************************/
-	description: {value: "Translate the word given in the context."},
+	description: {value: "Translate the highlighted word."},
 	customTemplateURL: {value: 'static/template/exercise/ex4.html'},
 	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_TRANSLATE},
 });
