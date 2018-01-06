@@ -8,7 +8,6 @@ function Ex2(data,index,size){
 	/** @Override */
 	this.cacheCustomDom = function(){	
 		this.$context 				= this.$elem.find("#ex-context");
-		this.$showSolution 			= this.$elem.find("#show_solution");
 		this.$checkAnswer 			= this.$elem.find("#check_answer");		
 		this.$btn1 					= this.$elem.find("#btn1");
 		this.$btn2 					= this.$elem.find("#btn2");
@@ -19,9 +18,6 @@ function Ex2(data,index,size){
 	
 	/** @Override */
 	this.bindUIActions = function(){
-		//Bind UI action of Hint/Show solution to the function		
-		this.$showSolution.on("click", this.handleHint.bind(this));
-		
 		//Bind UI action of Check answer to the function
 		this.$checkAnswer.on("click", this.checkAnswer.bind(this));
 		
@@ -68,13 +64,6 @@ function Ex2(data,index,size){
 		populateButton(this.btns[2], this.data[idxs[1]].from);
 
 		this.reStyleDom();
-	}
-	
-	/** @Override */
-	this.giveHint = function (){
-		var elem = $('#btn'+this.btns[1]);
-		elem.prop('disabled', true);
-		elem.addClass("btn-danger");
 	}
 	
 	/** @Override */
