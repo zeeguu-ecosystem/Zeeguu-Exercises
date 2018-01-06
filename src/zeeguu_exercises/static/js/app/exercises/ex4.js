@@ -52,7 +52,7 @@ function Ex4(data,index,size){
 	
 	this.exerciseSpecificSuccessHandler = function() {
 		// Success handling specific to this exercise
-		var translation = this.data[this.index].to.bold().fontcolor("#7ca500");
+		var translation = this.data[this.index].to.bold().fontcolor(this.colourDarkGreen);
 		this.$to.html (translation);
 	};
 };

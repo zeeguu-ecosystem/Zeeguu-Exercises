@@ -38,6 +38,7 @@ Exercise.prototype = {
 	successAnimationTime: 2000,
 	exFeedback: 0,
 	instanceCorrect: false,
+	colourDarkGreen: "#7ca500",
 
 	/*********************** General Functions ***************************/
 	/**

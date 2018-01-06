@@ -47,12 +47,14 @@ function Ex1(data,index,size){
 		this.$input.val(this.$input.val().trim() + " " + t);
 	};
 	
+	// Re-print the context on screen, with the solution
+	// highlighted in boldface and green colour.
 	this.reGenerateContext = function(inputWord){
 		var contextString = this.data[this.index].context;
 		var res = inputWord.split(" ");	
 		
 		for (var i = 0; i <res.length; i++){
-			contextString = contextString.replace(res[i], res[i].bold().fontcolor("#7ca500"));
+			contextString = contextString.replace(res[i], res[i].bold().fontcolor(this.colourDarkGreen));
 		}
 		
 		this.$context.html (contextString);
