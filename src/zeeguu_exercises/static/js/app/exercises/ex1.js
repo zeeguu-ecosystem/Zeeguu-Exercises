@@ -39,11 +39,30 @@ function Ex1(data,index,size){
 		this.$input.val("").attr("placeholder", "Type or click a word").focus();
 		this.reStyleDom();
 		this.answer = this.data[this.index].from;
+		this.$descriptionContainer.removeClass('hide');
 	};
 	
 	this.updateInput = function() {
 		var t = Util.getSelectedText();
 		this.$input.val(this.$input.val().trim() + " " + t);
+	};
+	
+	// Re-print the context on screen, with the solution
+	// highlighted in boldface and green colour.
+	this.reGenerateContext = function(inputWord){
+		var contextString = this.data[this.index].context;
+		var res = inputWord.split(" ");	
+		
+		for (var i = 0; i <res.length; i++){
+			contextString = contextString.replace(res[i], res[i].bold().fontcolor(this.colourDarkGreen));
+		}
+		
+		this.$context.html (contextString);
+	};
+	
+	this.exerciseSpecificSuccessHandler = function() {
+		// Success handling specific to this exercise
+		this.reGenerateContext(this.$input.val());
 	};
 }
 

@@ -17,6 +17,9 @@
     #ex-bar{
         border-radius: 0px 15px 15px 0px;
     }
+		#ex-status{
+			height: 95px;
+		}
     .progress-module
     {
         margin-bottom: 0;
@@ -52,8 +55,7 @@
         height: 40px;
     }
     #ex-status{
-        height: 40px;
-	    margin-bottom: 15px;
+        height: 130px;
     }
     .ex-content{
 

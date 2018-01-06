@@ -31,11 +31,12 @@ function Ex4(data,index,size){
 
 	/** @Override */
 	this.next = function (){			
-		this.$to.html("\""+this.data[this.index].from +"\"");
+		this.$to.html ("&zwnj;");
 		this.$context.html(this.generateContext());
 		this.$input.val("").attr("placeholder", "Type or click a word").focus();
 		this.reStyleDom();
 		this.answer = this.data[this.index].to;
+		this.$descriptionContainer.removeClass('hide');
 	};
 	
 	this.generateContext = function(){
@@ -48,12 +49,18 @@ function Ex4(data,index,size){
 			
 		return contextString;		
 	};
+	
+	this.exerciseSpecificSuccessHandler = function() {
+		// Success handling specific to this exercise
+		var translation = this.data[this.index].to.bold().fontcolor(this.colourDarkGreen);
+		this.$to.html (translation);
+	};
 };
 
 Ex4.prototype = Object.create(TextInputExercise.prototype, {
 	constructor: Ex4,
 	/************************** SETTINGS ********************************/
-	description: {value: "Translate the word given in the context."},
+	description: {value: "Translate the highlighted word."},
 	customTemplateURL: {value: 'static/template/exercise/ex4.html'},
 	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_TRANSLATE},
 });

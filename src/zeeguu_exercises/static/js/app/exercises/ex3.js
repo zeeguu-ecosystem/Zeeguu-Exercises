@@ -145,7 +145,8 @@ function Ex3(data,index,size){
 	};
 	
 	/** @Override */
-	this.next = function (){	
+	this.next = function (){
+		this.$descriptionContainer.removeClass('hide');
 		this.populateButtons();
 	};
 	
@@ -227,6 +228,9 @@ function Ex3(data,index,size){
 		return arr;
 	};
 	
+	this.exerciseSpecificSuccessHandler = function() {
+		// Success handling specific to this exercise
+	};
 };
 
 Ex3.prototype = Object.create(Exercise.prototype, {
