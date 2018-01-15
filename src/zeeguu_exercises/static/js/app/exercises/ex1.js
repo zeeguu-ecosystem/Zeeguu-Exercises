@@ -34,7 +34,7 @@ function Ex1(data,index,size){
 	
 	/** @Override */
 	this.next = function (){
-		this.$to.html("\""+this.data[this.index].to+"\"");
+		this.$to.html(this.data[this.index].to);
 		this.$context.html(this.data[this.index].context);
 		this.$input.val("").attr("placeholder", "Type or click a word").focus();
 		this.reStyleDom();
@@ -69,7 +69,7 @@ function Ex1(data,index,size){
 Ex1.prototype = Object.create(TextInputExercise.prototype, {
 	constructor: Ex1,
 	/************************** SETTINGS ********************************/
-	description: {value: "Find the word in the context:"},
+	description: {value: "Find the word in the context"},
 	customTemplateURL: {value: 'static/template/exercise/ex1.html'},
 	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_RECOGNIZE},
 });
