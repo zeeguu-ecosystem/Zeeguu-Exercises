@@ -60,7 +60,7 @@ function Ex4(data,index,size){
 Ex4.prototype = Object.create(TextInputExercise.prototype, {
 	constructor: Ex4,
 	/************************** SETTINGS ********************************/
-	description: {value: "Translate the highlighted word."},
+	description: {value: "Translate the highlighted word"},
 	customTemplateURL: {value: 'static/template/exercise/ex4.html'},
 	resultSubmitSource: {value: Settings.ZEEGUU_EX_SOURCE_TRANSLATE},
 });
