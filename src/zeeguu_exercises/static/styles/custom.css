@@ -362,6 +362,24 @@ body
 {
 }
 
+.ex3-btn-dark-green, .ex3-btn-dark-green:hover
+{
+	color: white;
+	background: #7ca500;
+}
+
+.ex3-btn-medium-green, .ex3-btn-medium-green:hover
+{
+	color: black;
+	background: #adca52;
+}
+
+.ex3-btn-light-green, .ex3-btn-light-green:hover
+{
+	color: black;
+	background: #def0a5;
+}
+
 .centering
 {
     text-align: center;

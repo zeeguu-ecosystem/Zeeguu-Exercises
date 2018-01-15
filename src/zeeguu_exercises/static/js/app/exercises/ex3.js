@@ -78,7 +78,21 @@ function Ex3(data,index,size){
 	this.successDisableBtn = function(btnID){
 		var elem = $("#btn"+btnID);
 		elem.prop('disabled', true);
-		elem.addClass("btn-success");
+		elem.removeClass("btn-default");
+		
+		// Determine success button colour by number of correct answers
+		switch (this.correctAnswers) {
+			case 0:
+				elem.addClass("ex3-btn-dark-green");
+				break;
+			case 1:
+				elem.addClass("ex3-btn-medium-green");
+				break;
+			case 2:
+				elem.addClass("ex3-btn-light-green");
+				break;
+		}
+		
 	};
 	
 	//Checks if a button is disabled
@@ -114,8 +128,7 @@ function Ex3(data,index,size){
 			// Prepare the document
 			this.prepareDocument();
 			
-			// Reset buttons, answers, hints
-			this.resetBtns();
+			// Reset answers, hints
 			this.correctAnswers = 0;
 			this.hints = 0;
 		}
@@ -148,6 +161,7 @@ function Ex3(data,index,size){
 	this.next = function (){
 		this.$descriptionContainer.removeClass('hide');
 		this.populateButtons();
+		this.resetBtns();
 	};
 	
 	// Populates the buttons
