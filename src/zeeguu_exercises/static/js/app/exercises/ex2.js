@@ -1,3 +1,8 @@
+/** Custom exercise for choosing a word to fit the context. Inherited from Exercise.js
+ *  @initialize it using: new Ex2();
+ *  @customize it by using prototypal inheritance 
+**/
+
 import $ from 'jquery';
 import Exercise from './exercise';
 import Settings from "../settings";
@@ -118,21 +123,14 @@ function Ex2(data,index,size){
 	
 	this.generateContext = function(){
 		var contextString = this.data[this.index].context;
-		var res = this.data[this.index].from.split(" ");	
-		
-		for (var i = 0; i <res.length; i++){
-			contextString = contextString.replace(res[i]," ______ ");
-		}
+		var solution = this.data[this.index].from;
+		contextString = contextString.replace(solution, " ______ ");
 		this.$context.html(contextString);
 	};
 	
 	this.reGenerateContext = function(chosenWord){
 		var contextString = this.$context.html();
-		var res = chosenWord.split(" ");	
-		
-		for (var i = 0; i <res.length; i++){
-			contextString = contextString.replace(" ______ ",res[i].bold());
-		}	
+		contextString = contextString.replace(" ______ ", chosenWord.bold());
 		this.$context.html (contextString);
 	};
 	
