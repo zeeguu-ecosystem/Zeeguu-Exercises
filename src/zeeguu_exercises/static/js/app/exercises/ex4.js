@@ -33,10 +33,14 @@ function Ex4(data,index,size){
 	this.next = function (){			
 		this.$to.html ("&zwnj;");
 		this.$context.html(this.generateContext());
-		this.$input.val("").attr("placeholder", "Type or click a word").focus();
+		this.$input.val("").attr("placeholder", "Type or click a word");
 		this.reStyleDom();
 		this.answer = this.data[this.index].to;
 		this.$descriptionContainer.removeClass('hide');
+		
+		if (!this.isMobile()) {
+			this.$input.val("").focus();
+		}
 	};
 	
 	this.generateContext = function(){
