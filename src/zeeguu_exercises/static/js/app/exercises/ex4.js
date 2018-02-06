@@ -45,11 +45,8 @@ function Ex4(data,index,size){
 	
 	this.generateContext = function(){
 		var contextString = this.data[this.index].context;
-		var res = this.data[this.index].from.split(" ");	
-		
-		for (var i = 0; i <res.length; i++){
-			contextString = contextString.replace(res[i], res[i].bold());
-		}
+		var phrase = this.data[this.index].from;
+		contextString = contextString.replace(phrase, phrase.bold());
 			
 		return contextString;		
 	};
