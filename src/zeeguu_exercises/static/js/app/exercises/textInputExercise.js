@@ -7,6 +7,7 @@ import $ from 'jquery';
 import Exercise from './exercise';
 import Util from '../util';
 import Settings from "../settings";
+import removeAccents from 'remove-accents';
 
 var TextInputExercise = function (data, index, size) {
 	this.init(data, index, size);
@@ -20,14 +21,15 @@ TextInputExercise.prototype = Object.create(Exercise.prototype, {
 
 
 TextInputExercise.prototype.cacheCustomDom = function(){	
-	this.$to            = this.$elem.find("#ex-to");
-	this.$context       = this.$elem.find("#ex-context");
-	this.$input         = this.$elem.find("#ex-main-input");
-	this.$showSolution  = this.$elem.find("#show_solution");
-	this.$checkAnswer   = this.$elem.find("#check_answer");
-	this.$clickableText = this.$elem.find(".clickable-text");
-	this.$nextExercise  = this.$elem.find('#next-exercise');
-	this.$feedbackBtn   = this.$elem.find('#feedback');
+	this.$to              = this.$elem.find("#ex-to");
+	this.$context         = this.$elem.find("#ex-context");
+	this.$input           = this.$elem.find("#ex-main-input");
+	this.$showSolution    = this.$elem.find("#show_solution");
+	this.$checkAnswer     = this.$elem.find("#check_answer");
+	this.$clickableText   = this.$elem.find(".clickable-text");
+	this.$nextExercise    = this.$elem.find('#next-exercise');
+	this.$feedbackBtn     = this.$elem.find('#feedback');
+	this.$typoInformation = this.$elem.find("#typo-information");
 };
 
 TextInputExercise.prototype.enterKeyup = function(event){
@@ -73,9 +75,24 @@ TextInputExercise.prototype.formatStringForCheck = function (text) {
 	return text.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "").replace(/\s\s+/g, ' ');
 };
 
-TextInputExercise.prototype.successCondition = function(){	
-	// Check all the possible answers
-	return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.answer.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
+TextInputExercise.prototype.successCondition = function(){
+	var input = this.$input.val().trim().toUpperCase().replace(/\s\s+/g, ' ');
+	var answer = this.answer.trim().toUpperCase().replace(/\s\s+/g, ' ');
+	
+	// Check exact match
+	if (input === answer) {
+		this.typoInformation = "";
+		return true;
+	}
+	
+	// Check exact match after removing accents
+	if (removeAccents(input) === removeAccents(answer)) {
+		this.typoInformation = "Pay close attention to the accents!";
+		return true;
+	}
+
+	// No checks were successful
+	return false;
 };
 
 export default TextInputExercise;

@@ -63,6 +63,7 @@ function Ex1(data,index,size){
 	this.exerciseSpecificSuccessHandler = function() {
 		// Success handling specific to this exercise
 		this.reGenerateContext(this.$input.val());
+		this.$typoInformation.html(this.typoInformation);
 	};
 }
 
