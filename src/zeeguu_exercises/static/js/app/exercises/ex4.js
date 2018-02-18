@@ -55,6 +55,7 @@ function Ex4(data,index,size){
 		// Success handling specific to this exercise
 		var translation = this.data[this.index].to.bold().fontcolor(this.colourDarkGreen);
 		this.$to.html (translation);
+		this.$typoInformation.html(this.typoInformation);
 	};
 };
 

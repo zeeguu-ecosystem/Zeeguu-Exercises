@@ -40,6 +40,7 @@ Exercise.prototype = {
 	instanceCorrect: false,
 	colourDarkGreen: "#7ca500",
 	isMobileDevice: undefined,
+	typoInformation: "",
 
 	/*********************** General Functions ***************************/
 	/**

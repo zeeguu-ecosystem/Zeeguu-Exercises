@@ -306,6 +306,13 @@ body
 	background: #cde786;
 }
 
+#typo-information
+{
+	color: #7ca500;
+	text-align: center;
+	margin: 25px auto auto;
+}
+
 #ex-footer-secondary
 {
 	align-items: stretch;
