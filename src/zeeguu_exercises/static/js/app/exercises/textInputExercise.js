@@ -7,6 +7,7 @@ import $ from 'jquery';
 import Exercise from './exercise';
 import Util from '../util';
 import Settings from "../settings";
+import removeAccents from 'remove-accents';
 
 var TextInputExercise = function (data, index, size) {
 	this.init(data, index, size);
@@ -80,21 +81,18 @@ TextInputExercise.prototype.successCondition = function(){
 	
 	// Check exact match
 	if (input === answer) {
-		this.typoInformation = "Exact match";
+		this.typoInformation = "";
 		return true;
 	}
 	
-	/*
 	// Check exact match after removing accents
-	if (input.removeAccents() === answer.removeAccents()) {
-		this.typoInformation = "Exact match after removing accents";
+	if (removeAccents(input) === removeAccents(answer)) {
+		this.typoInformation = "Pay close attention to the accents!";
 		return true;
 	}
-	*/
 
-	// Check fudgy match
-	this.typoInformation = "Fudgy match";
-	return this.$input.val().trim().toUpperCase().replace(/[^a-zA-Z ]/g, "") === this.answer.trim().toUpperCase().replace(/[^a-zA-Z ]/g, "");
+	// No checks were successful
+	return false;
 };
 
 export default TextInputExercise;
