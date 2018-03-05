@@ -54,7 +54,7 @@ function Ex4(data,index,size){
 	
 	this.exerciseSpecificSuccessHandler = function() {
 		// Success handling specific to this exercise
-		var translation = this.data[this.index].to.bold().fontcolor(this.colourDarkGreen);
+		var translation = this.answerWithTyposMarked.bold();
 		this.$to.html (translation);
 		this.$typoInformation.html(this.typoInformation);
 	};

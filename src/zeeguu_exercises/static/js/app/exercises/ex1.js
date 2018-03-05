@@ -57,7 +57,7 @@ function Ex1(data,index,size){
 	this.reGenerateContext = function(inputWord){
 		var contextString = this.data[this.index].context;
 		var solution = this.data[this.index].from;
-		contextString = contextString.replace(solution, solution.bold().fontcolor(this.colourDarkGreen));
+		contextString = contextString.replace(solution, this.answerWithTyposMarked.bold());
 		this.$context.html (contextString);
 	};
 	

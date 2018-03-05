@@ -41,6 +41,7 @@ Exercise.prototype = {
 	colourDarkGreen: "#7ca500",
 	isMobileDevice: undefined,
 	typoInformation: "",
+	answerWithTyposMarked: "",
 
 	/*********************** General Functions ***************************/
 	/**
