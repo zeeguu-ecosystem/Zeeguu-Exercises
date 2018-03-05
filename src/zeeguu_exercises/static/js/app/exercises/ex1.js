@@ -40,6 +40,7 @@ function Ex1(data,index,size){
 		this.reStyleDom();
 		this.answer = this.data[this.index].from;
 		this.$descriptionContainer.removeClass('hide');
+		this.$typoInformation.html("");
 		
 		if (!this.isMobile()) {
 			this.$input.val("").focus();

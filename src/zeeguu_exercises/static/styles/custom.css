@@ -315,11 +315,9 @@ body
 
 #typo-information
 {
-	font-size: 30px;
+	text-align: center;
+	font-size: 24px;
 	color: #7ca500;
-	display: inline-block;
-	vertical-align: middle;
-	line-height: normal;
 }
 
 #ex-footer-secondary
@@ -365,8 +363,8 @@ body
 .ex-content
 {
 	overflow:auto;
-	min-height:250px;
-	max-height:250px;
+	min-height:300px;
+	max-height:300px;
 	text-align: justify;
     text-justify: inter-word;
 	font: 16px arial,sans-serif;
