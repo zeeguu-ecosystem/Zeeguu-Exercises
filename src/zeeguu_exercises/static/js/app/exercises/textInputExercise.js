@@ -76,17 +76,30 @@ TextInputExercise.prototype.formatStringForCheck = function (text) {
 };
 
 TextInputExercise.prototype.successCondition = function(){
+	this.answerWithTyposMarked = this.answer.trim().replace(/\s\s+/g, ' ');
 	var input = this.$input.val().trim().toUpperCase().replace(/\s\s+/g, ' ');
 	var answer = this.answer.trim().toUpperCase().replace(/\s\s+/g, ' ');
 	
 	// Check exact match
 	if (input === answer) {
+		this.answerWithTyposMarked = this.answerWithTyposMarked.fontcolor(this.colourDarkGreen);
 		this.typoInformation = "";
 		return true;
 	}
 	
 	// Check exact match after removing accents
 	if (removeAccents(input) === removeAccents(answer)) {
+		// Mark typos
+		var markedTypos = "";
+		for (var i = 0; i < answer.length; i++) {
+			if (input.charAt(i) !== answer.charAt(i)) {
+				markedTypos += this.answerWithTyposMarked.charAt(i).fontcolor("red");
+			} else {
+				markedTypos += this.answerWithTyposMarked.charAt(i).fontcolor(this.colourDarkGreen);
+			}
+		}
+		
+		this.answerWithTyposMarked = markedTypos;
 		this.typoInformation = "Pay close attention to the accents!";
 		return true;
 	}
