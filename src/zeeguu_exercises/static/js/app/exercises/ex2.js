@@ -36,12 +36,14 @@ function Ex2(data,index,size){
 		
 		//Bind UI action of button 3 click to the function
 		this.$btn3.on("click", this.btnSelect.bind(this,3));
+		
+		// Bind UI Enter Key
+		$(document).keyup(this.enterKeyup.bind(this));
 
 		//Next exercise clicked
 		this.$nextExercise.on("click",this.onRenderNextEx.bind(this));
-
-
-         //Feedback for the previous bookmark: this.index
+		
+    //Feedback for the previous bookmark: this.index
 		this.$feedbackBtn.click(() => {this.giveFeedbackBox(this.index);});
 	}
 	
@@ -69,6 +71,7 @@ function Ex2(data,index,size){
 		populateButton(this.btns[0], this.data[this.index].from);
 		populateButton(this.btns[1], this.data[idxs[0]].from);
 		populateButton(this.btns[2], this.data[idxs[1]].from);
+		this.$optionBtn.prop('disabled', false);
 
 		this.reStyleDom();
 		this.$to.html ("&zwnj;");

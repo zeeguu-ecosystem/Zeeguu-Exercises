@@ -14,6 +14,7 @@ function Ex3(data,index,size){
 	this.cacheCustomDom = function(data,index,size){
 		this.$to 					= this.$elem.find("#ex-to");
 		this.$context 				= this.$elem.find("#ex-content");
+		this.$checkAnswer 			= this.$elem.find("#check_answer");		
 		this.$showSolution 			= this.$elem.find("#show_solution");
 		this.$btn1 					= this.$elem.find("#btn1");
 		this.$btn2 					= this.$elem.find("#btn2");
@@ -22,6 +23,7 @@ function Ex3(data,index,size){
 		this.$btn5 					= this.$elem.find("#btn5");
 		this.$btn6 					= this.$elem.find("#btn6");
 		this.$nextExercise			= this.$elem.find('#next-exercise');
+		this.$optionBtn = this.$elem.find('.option-btn');
         this.$feedbackBtn			= this.$elem.find('#feedback');
 	};
 	
@@ -47,12 +49,14 @@ function Ex3(data,index,size){
 		
 		//Bind UI action of button 6 click to the function
 		this.$btn6.on("click", this.selectChoice.bind(this,6));
+		
+		// Bind UI Enter Key
+		$(document).keyup(this.enterKeyup.bind(this));
 
 		//Next exercise clicked
 		this.$nextExercise.on("click",this.onRenderNextEx.bind(this));
-
-
-         //Feedback for the previous bookmark: this.index
+		
+    //Feedback for the previous bookmark: this.index
 		this.$feedbackBtn.click(() => {this.giveFeedbackBox(this.index);});
 		
 	};
