@@ -12,15 +12,15 @@ function Ex2(data,index,size){
 	
 	/** @Override */
 	this.cacheCustomDom = function(){	
-	  this.$to            = this.$elem.find("#ex-to");
-		this.$context 				= this.$elem.find("#ex-context");
-		this.$checkAnswer 			= this.$elem.find("#check_answer");		
-		this.$btn1 					= this.$elem.find("#btn1");
-		this.$btn2 					= this.$elem.find("#btn2");
-		this.$btn3 					= this.$elem.find("#btn3");
-		this.$nextExercise			= this.$elem.find('#next-exercise');
-		this.$optionBtn = this.$elem.find('.option-btn');
-        this.$feedbackBtn			= this.$elem.find('#feedback');
+	  this.$to						= this.$elem.find("#ex-to");
+		this.$context				= this.$elem.find("#ex-context");
+		this.$checkAnswer		= this.$elem.find("#check_answer");		
+		this.$btn1					= this.$elem.find("#btn1");
+		this.$btn2					= this.$elem.find("#btn2");
+		this.$btn3					= this.$elem.find("#btn3");
+		this.$nextExercise	= this.$elem.find('#next-exercise');
+		this.$optionBtn			= this.$elem.find('.option-btn');
+    this.$feedbackBtn		= this.$elem.find('#feedback');
 	}
 	
 	/** @Override */
