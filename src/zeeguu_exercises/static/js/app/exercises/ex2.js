@@ -19,6 +19,7 @@ function Ex2(data,index,size){
 		this.$btn2 					= this.$elem.find("#btn2");
 		this.$btn3 					= this.$elem.find("#btn3");
 		this.$nextExercise			= this.$elem.find('#next-exercise');
+		this.$optionBtn = this.$elem.find('.option-btn');
         this.$feedbackBtn			= this.$elem.find('#feedback');
 	}
 	
@@ -138,6 +139,7 @@ function Ex2(data,index,size){
 		// Success handling specific to this exercise
 		var translation = this.data[this.index].to.bold().fontcolor(this.colourDarkGreen);
 		this.$to.html (translation);
+		this.$optionBtn.prop('disabled', true);
 	};
 };
 
