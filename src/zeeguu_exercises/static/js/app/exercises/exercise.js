@@ -309,6 +309,18 @@ Exercise.prototype = {
 	objectForSpeaker: function(){
 		return {text: this.data[this.index].from, language: this.data[this.index].from_lang};
 	},
+	
+	/**
+	 * Advance the exercise when the enter key is pressed.
+	 **/
+	enterKeyup: function(event){
+		if(event.keyCode == 13){
+			if(!this.getInstanceState())//If in the primary state of footer
+				this.$checkAnswer.click();
+			else //If in the secondary state of footer
+				this.$nextExercise.click();
+		}
+	},
 
 	/*********************** Interface functions *****************************/
 	/**

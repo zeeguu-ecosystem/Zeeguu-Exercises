@@ -27,8 +27,8 @@ function Ex1(data,index,size){
 
 		//Next exercise clicked
 		this.$nextExercise.on("click",this.onRenderNextEx.bind(this));
-
-        //Feedback for the previous bookmark: this.index
+		
+		//Feedback for the previous bookmark: this.index
 		this.$feedbackBtn.click(() => {this.giveFeedbackBox(this.index);});
 	};
 	

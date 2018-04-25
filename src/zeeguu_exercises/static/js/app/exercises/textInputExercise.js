@@ -32,15 +32,6 @@ TextInputExercise.prototype.cacheCustomDom = function(){
 	this.$typoInformation = this.$elem.find("#typo-information");
 };
 
-TextInputExercise.prototype.enterKeyup = function(event){
-	if(event.keyCode == 13){
-		if(!this.getInstanceState())//If in the primary state of footer
-			this.$checkAnswer.click();
-		else //If in the secondary state of footer
-			this.$nextExercise.click();
-	}
-};
-
 TextInputExercise.prototype.giveHint = function() {
 	// Reveal X letters of the answer, where X is the number of times the Hint button was clicked.
 	var hint = this.answer.slice(0, this.hintsUsed);

@@ -12,14 +12,15 @@ function Ex2(data,index,size){
 	
 	/** @Override */
 	this.cacheCustomDom = function(){	
-	  this.$to            = this.$elem.find("#ex-to");
-		this.$context 				= this.$elem.find("#ex-context");
-		this.$checkAnswer 			= this.$elem.find("#check_answer");		
-		this.$btn1 					= this.$elem.find("#btn1");
-		this.$btn2 					= this.$elem.find("#btn2");
-		this.$btn3 					= this.$elem.find("#btn3");
-		this.$nextExercise			= this.$elem.find('#next-exercise');
-        this.$feedbackBtn			= this.$elem.find('#feedback');
+	  this.$to						= this.$elem.find("#ex-to");
+		this.$context				= this.$elem.find("#ex-context");
+		this.$checkAnswer		= this.$elem.find("#check_answer");		
+		this.$btn1					= this.$elem.find("#btn1");
+		this.$btn2					= this.$elem.find("#btn2");
+		this.$btn3					= this.$elem.find("#btn3");
+		this.$nextExercise	= this.$elem.find('#next-exercise');
+		this.$optionBtn			= this.$elem.find('.option-btn');
+    this.$feedbackBtn		= this.$elem.find('#feedback');
 	}
 	
 	/** @Override */
@@ -35,12 +36,14 @@ function Ex2(data,index,size){
 		
 		//Bind UI action of button 3 click to the function
 		this.$btn3.on("click", this.btnSelect.bind(this,3));
+		
+		// Bind UI Enter Key
+		$(document).keyup(this.enterKeyup.bind(this));
 
 		//Next exercise clicked
 		this.$nextExercise.on("click",this.onRenderNextEx.bind(this));
-
-
-         //Feedback for the previous bookmark: this.index
+		
+    //Feedback for the previous bookmark: this.index
 		this.$feedbackBtn.click(() => {this.giveFeedbackBox(this.index);});
 	}
 	
@@ -68,6 +71,7 @@ function Ex2(data,index,size){
 		populateButton(this.btns[0], this.data[this.index].from);
 		populateButton(this.btns[1], this.data[idxs[0]].from);
 		populateButton(this.btns[2], this.data[idxs[1]].from);
+		this.$optionBtn.prop('disabled', false);
 
 		this.reStyleDom();
 		this.$to.html ("&zwnj;");
@@ -138,6 +142,7 @@ function Ex2(data,index,size){
 		// Success handling specific to this exercise
 		var translation = this.data[this.index].to.bold().fontcolor(this.colourDarkGreen);
 		this.$to.html (translation);
+		this.$optionBtn.prop('disabled', true);
 	};
 };
 
