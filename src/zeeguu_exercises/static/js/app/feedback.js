@@ -35,6 +35,7 @@ export default class Feedback {
     feedbackAction(elem){
         this.submitFeedback(this.wordId,elem.attr('value'),this.resultSubmitSource);
         this.successfulFeedback();
+				
     }
 
     /**
@@ -70,7 +71,8 @@ export default class Feedback {
     }
 
     /**
-     * Success message when the feedback is being submitted
+     * Display success message when the feedback is being submitted
+		 * and go to next exercise.
      * */
     successfulFeedback(){
         swal({
@@ -83,6 +85,7 @@ export default class Feedback {
             closeOnConfirm: false,
             confirmButtonText: "",
         });
+				console.log("Goto next ex");
     }
 
     /**
@@ -93,9 +96,11 @@ export default class Feedback {
     exerciseFeedbackOptions(){
         let preDefinedOptions = {
             Options: [
-                {name: "Too easy.", icon: 'static/img/emoji/bored.svg', val: 'too_easy'},
-                {name: "I know it.", icon: 'static/img/emoji/nerd.svg',val: 'i_already_know_this'},
-                {name: "Don't want to see it.", icon: 'static/img/emoji/confused.svg', val: 'dont_show_it_to_me_again'}]
+                {name: "Too Easy", icon: 'static/img/emoji/bored.svg', val: 'too_easy'},
+								{name: "Too Hard", icon: 'static/img/emoji/confused.svg', val: 'too_hard'},
+								{name: "Wrong Example", icon: 'static/img/emoji/confused.svg', val: 'wrong_example'},
+								{name: "Not a Good Example", icon: 'static/img/emoji/nerd.svg', val: 'not_a_good_example'},
+								{name: "Bad Translation", icon: 'static/img/emoji/confused.svg', val: 'bad_translation'}]
         };
         let preOptionTemplate =
             '{{#Options}}' +
