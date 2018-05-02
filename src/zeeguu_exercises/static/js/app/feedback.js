@@ -11,12 +11,16 @@ export default class Feedback {
      * Construct the feedback class
      * @param {number}, id of the current word
      * @param {String}, resultSubmitSource,
+		 * @param {function}, function to be called back after successful feedback,
+		 * @param {this}, scope of callback function,
      * */
-    constructor(resultSubmitSource, sessionId){
+    constructor(resultSubmitSource, sessionId, callback, parentScope){
          /** Class parameters*/
         this.wordId = -1;//will be set whenever the feedback box is called
         this.resultSubmitSource = resultSubmitSource;
         this.sessionId = sessionId;
+				this.callback = callback;
+				this.parentScope = parentScope;
     }
 
     /**
@@ -85,7 +89,7 @@ export default class Feedback {
             closeOnConfirm: false,
             confirmButtonText: "",
         });
-				console.log("Goto next ex");
+				this.callback.call(this.parentScope);
     }
 
     /**

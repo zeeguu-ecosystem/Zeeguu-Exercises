@@ -90,7 +90,7 @@ Exercise.prototype = {
 		this.startIndex = index;
 		this.size = size;
 		this.shake = new ShakeAnimation();
-		this.exFeedback = new Feedback(this.resultSubmitSource,this.session);
+		this.exFeedback = new Feedback(this.resultSubmitSource, this.session, this.onRenderNextEx, this);
         Session.getLanguage((text)=>{this.lang = text});//Set the language with callback
 		this.setDescription();
 		this.next();
