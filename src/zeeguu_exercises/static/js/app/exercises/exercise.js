@@ -63,7 +63,6 @@ Exercise.prototype = {
 		this.$descriptionContainer = this.$elem.find('#ex-description-container');
 		this.$exFooterPrimary 	= this.$elem.find('#ex-footer-primary');
 		this.$exFooterSecondary = this.$elem.find('#ex-footer-secondary');
-		this.$deleteBtn			= this.$elem.find('#btn-delete');
 		this.$reportBtn			= this.$elem.find('#btn-report');
 		this.$speakBtn			= this.$elem.find('#btn-speak');
 		this.cacheCustomDom();
@@ -91,7 +90,7 @@ Exercise.prototype = {
 		this.startIndex = index;
 		this.size = size;
 		this.shake = new ShakeAnimation();
-		this.exFeedback = new Feedback(this.resultSubmitSource,this.session);
+		this.exFeedback = new Feedback(this.resultSubmitSource, this.session, this.onRenderNextEx, this);
         Session.getLanguage((text)=>{this.lang = text});//Set the language with callback
 		this.setDescription();
 		this.next();
@@ -210,16 +209,6 @@ Exercise.prototype = {
 	},
 
 	/**
-	 * Function for deleting bookmark from Zeeguu
-	 * @example https://zeeguu.unibe.ch/api/delete_bookmark/19971?session=34563456
-	 * */
-	deleteBookmark: function (idx) {
-		$.post(Settings.ZEEGUU_API + Settings.ZEEGUU_DELETE_BOOKMARKS + "/" + this.data[idx].id + "?session=" + this.session);
-		this.onRenderNextEx();
-	},
-
-
-	/**
 	 *    Removes focus of page elements
 	 **/
 	prepareDocument: function () {
@@ -276,7 +265,6 @@ Exercise.prototype = {
 	 * */
 	generalBindUIActions: function () {
 		//Bind general actions
-		this.$deleteBtn.click(() => {this.deleteBookmark(this.index);});
 		this.$reportBtn.click(() => {this.giveFeedbackBox(this.index);});
 		this.$speakBtn.click(() => {this.handleSpeak();});
 
@@ -288,7 +276,6 @@ Exercise.prototype = {
 	 * Unbinding of general actions for every exercise
 	 * */
 	generalUnBindUIActions: function () {
-		this.$deleteBtn.off( "click");
 		this.$reportBtn.off( "click");
 		this.$speakBtn.off( "click");
 		//TODO terminate individual bindings for each exercise,
