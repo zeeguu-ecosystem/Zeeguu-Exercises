@@ -14,7 +14,7 @@ module.exports = {
 		filename: '[name].entry.js',
 	},
 	module: {
-	 loaders: [
+	 rules: [
 		 {
 			 test: /\.js$/,
 			 loader: 'babel-loader',
