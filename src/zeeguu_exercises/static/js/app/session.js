@@ -32,7 +32,7 @@ export default class Session {
 
     /**
      * Get user language
-     * @example  https://zeeguu.unibe.ch/api/learned_language?session=00026435
+     * @example  .../learned_language?session=00026435
      * */
     static getLanguage (hookFunc) {
         $.get(Settings.ZEEGUU_API + Settings.ZEEGUU_LEARNING_LANGUAGE + "?session="+Session.getSession(), function(text) {
