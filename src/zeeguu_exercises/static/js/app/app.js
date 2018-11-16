@@ -10,7 +10,7 @@ import Events from './pubsub';
 
 
 /********************** Routes **************************/
-page('/', index);
+page('/', redirect);
 page('/practice', index);
 page('/practice/get-ex', getEx);
 page('/practice/plan/:practicePlan', practice);
@@ -22,6 +22,11 @@ page({hashbang:true});
 page.start();
 
 /********************** Handlers ***********************/
+
+function redirect() {
+    page.redirect("/practice");
+    console.log("redirected...");
+}
 /**
  * Main starter screen route
  * */

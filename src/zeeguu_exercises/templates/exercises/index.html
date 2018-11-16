@@ -3,73 +3,43 @@
 <head>
     <!-- Used to separate the concern of drop down menu-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    
+    <!-- Add Page Title -->
+    <title>Zeeguu Practice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Cookie notice-->
-	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
-	<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
-	<script>
-	window.addEventListener("load", function(){
-	window.cookieconsent.initialise({
-	  "palette": {
-		"popup": {
-		  "background": "#edeff5",
-		  "text": "#838391"
-		},
-		"button": {
-		  "background": "#4b81e8"
-		}
-	  },
-	  "theme": "edgeless"
-	})});
-	</script>
-	<!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/practice/ -->
-    <script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:530281,hjsv:5};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
+    <!-- Add Local styles -->
+    <link rel="stylesheet" href="{{ url_for('ex_blueprint.static',filename='styles/google_fonts.css') }}"
+          type="text/css">
+    <link rel="stylesheet" href="{{ url_for('ex_blueprint.static',filename='styles/bootstrap_mini.css') }}"
+          type="text/css">
 
-	<!-- Add Page Title -->
-	<title>Zeeguu Practice</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('ex_blueprint.static',filename='styles/custom.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('ex_blueprint.static',filename='styles/success.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('ex_blueprint.static',filename='styles/loader.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('ex_blueprint.static',filename='styles/dropdown.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('ex_blueprint.static',filename='styles/sweetalert.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('ex_blueprint.static',filename='styles/responsive.css') }}" type="text/css">
 
-	<!-- Add External styles
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300">
-    -->
-	<!-- Add Local styles -->
-	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/google_fonts.css') }}" 	type = "text/css">
-	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/bootstrap_mini.css') }}" 	type = "text/css">
-
-	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/custom.css') }}" 	type = "text/css">
-	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/success.css') }}" 	type = "text/css">
-	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/loader.css') }}" 	type = "text/css">
-    <link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/dropdown.css') }}" 	type = "text/css">
-	<link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/sweetalert.css') }}" 	type = "text/css">
-    <link rel="stylesheet" href= "{{ url_for('ex_blueprint.static',filename='styles/responsive.css') }}" 	type = "text/css">
-
-	<!-- Add favicon -->
-	<link rel="icon" 	   href= "{{ url_for('ex_blueprint.static',filename='img/favicon.png') }}"  		type="image/x-icon"/>
-	<!-- Add External scripts -->
+    <!-- Add favicon -->
+    <link rel="icon" href="{{ url_for('ex_blueprint.static',filename='img/favicon.png') }}" type="image/x-icon"/>
+    <!-- Add External scripts -->
 
 </head>
-<body class = "home-body">
+<body class="home-body">
 
-<div id = "main-content">
+<div id="main-content">
 </div>
 
 <!-- HTML that enables the loading page to show loader-->
-<div id="loader" class = "hide">
-	<div class="spinner">
-		<div class="double-bounce1"></div>
-		<div class="double-bounce2"></div>
-	</div>
+<div id="loader" class="hide">
+    <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+    </div>
 </div>
 
 <!-- Add Local main script -->
