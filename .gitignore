@@ -66,3 +66,5 @@ npm-debug.log.3409570137
 *.pyc
 
 */build/*
+*.egg
+*.egg-info
