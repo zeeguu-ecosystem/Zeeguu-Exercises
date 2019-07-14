@@ -9,7 +9,7 @@ The default_session is only used for testing purposes
 Alternative: 11010001 34563456
 """
 DEFAULT_SESSION = '11010001'
-ZEEGUU_LOGIN = 'https://www.zeeguu.unibe.ch/login?next='
+ZEEGUU_LOGIN = 'https://www.zeeguu.org/login?next='
 ZEEGUU_SESSION = 'sessionID'
 
 
