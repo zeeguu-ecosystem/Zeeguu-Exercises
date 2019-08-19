@@ -18,7 +18,7 @@ EmptyPage.prototype = {
             icon: 'static/img/illustrations/ntd_cloud.png',
             title: "Not Enough Words To Learn",
             info: 'You can get words when you read articles.',
-            btnPrime: 'https://www.zeeguu.org/reading',
+            btnPrime: 'https://www.zeeguu.org/read',
             btnPrimeText: 'Let\'s Read',
             btnSecond: false,
             btnSecondText: 'Skip',
