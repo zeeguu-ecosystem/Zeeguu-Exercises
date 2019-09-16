@@ -1,4 +1,4 @@
 ./cleanup.sh
 webpack
 cd src
-sudo python setup.py install
+sudo python setup.py develop
