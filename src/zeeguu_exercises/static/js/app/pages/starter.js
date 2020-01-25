@@ -26,27 +26,27 @@ Starter.prototype = Object.create(Home.prototype, {
 		value: [
 			{
 				name: "Basic",
-				exID: [[1, 2],[2, 2], [4, 1],  [3, 1], [2, 2],[4, 2]],
-				info: 'Practice 10 words in 2 minutes.',
+				exID: [[1, 2],[2, 2], [3, 2], [2, 2],[1, 2]],
+				info: 'Three exercise types.',
 				icon: 'static/img/icons/starter/eleph1.svg',
 				gradientColor: 'starter-btn-header-level1',
-				time: 2
-			},
-			{
-				name: "Casual",
-				exID: [[2, 4], [1, 1], [3, 1],[2, 1], [4, 1], [2, 3],[1, 2],[3, 1],[2, 2],[3, 1]],
-				info: 'Practice 15 words in 3 minutes.',
-				icon: 'static/img/icons/starter/eleph2.svg',
-				gradientColor: 'starter-btn-header-level2',
-				time: 3
+				time: 10
 			},
 			{
 				name: "Regular",
+				exID: [[2, 4], [1, 1], [3, 1],[2, 1], [4, 1], [2, 3],[1, 2],[3, 1],[2, 2],[3, 1]],
+				info: 'Four exercise types.',
+				icon: 'static/img/icons/starter/eleph2.svg',
+				gradientColor: 'starter-btn-header-level2',
+				time: 15
+			},
+			{
+				name: "Ambitious",
 				exID: [[1, 1], [2, 2], [3, 1], [4, 1], [2, 2], [1, 2], [2, 2],[1, 3],[3, 1],[1, 2],[2, 2],[3, 1],[4, 2],[2, 2],[1, 2],[3,1]],
-				info: 'Practice 25 words in 5 minutes.',
+				info: 'For the ambitious :)',
 				icon: 'static/img/icons/starter/eleph3.svg',
 				gradientColor: 'starter-btn-header-level3',
-				time: 5
+				time: 25
 			},
 		]
 	},
