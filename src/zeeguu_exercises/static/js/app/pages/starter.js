@@ -25,7 +25,7 @@ Starter.prototype = Object.create(Home.prototype, {
 	exNames: {
 		value: [
 			{
-				name: "Basic",
+				name: "Easy",
 				exID: [[1, 2],[2, 2], [3, 2], [2, 2],[1, 2]],
 				info: 'Three exercise types.',
 				icon: 'static/img/icons/starter/eleph1.svg',
