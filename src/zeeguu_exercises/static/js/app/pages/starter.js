@@ -43,7 +43,7 @@ Starter.prototype = Object.create(Home.prototype, {
 			{
 				name: "Ambitious",
 				exID: [[1, 1], [2, 2], [3, 1], [4, 1], [2, 2], [1, 2], [2, 2],[1, 3],[3, 1],[1, 2],[2, 2],[3, 1],[4, 2],[2, 2],[1, 2],[3,1]],
-				info: 'For the ambitious :)',
+				info: 'Only for the brave :)',
 				icon: 'static/img/icons/starter/eleph3.svg',
 				gradientColor: 'starter-btn-header-level3',
 				time: 25
