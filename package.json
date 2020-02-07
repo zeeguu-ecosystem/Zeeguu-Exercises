@@ -9,7 +9,7 @@
     "ci": "npm test",
     "report": "nyc report --reporter=lcov",
     "coveralls": "npm run posttest && npm test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "build": "webpack -p --progress",
+    "build": "webpack -p",
     "heroku-postbuild": "webpack -p --progress"
   },
   "keywords": [],
