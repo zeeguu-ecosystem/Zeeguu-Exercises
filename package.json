@@ -18,7 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "babel-core": "6.26.3",
-    "babel-loader": "7.1.5",
+    "babel-loader": "^7.1.5",
     "babel-tape-runner": "2.0.1",
     "coveralls": "2.13.1",
     "css-loader": "0.28.11",
@@ -31,8 +31,8 @@
     "tap-spec": "4.1.2",
     "tape": "4.9.1",
     "url-loader": "0.5.9",
-    "webpack": "2.6.1",
-    "webpack-cli": "2.1.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
     "webpack-dev-server": "3.1.11"
   },
   "dependencies": {
