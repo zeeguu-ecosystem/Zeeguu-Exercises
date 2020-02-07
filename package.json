@@ -8,9 +8,7 @@
     "production": "NODE_ENV=production webpack",
     "ci": "npm test",
     "test": "nyc babel-tape-runner test/*.js | tap-spec",
-    "nsp": "nsp check --output checkstyle",
     "report": "nyc report --reporter=lcov",
-    "posttest": "npm run nsp && npm run report",
     "coveralls": "npm run posttest && npm test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "build": "webpack -p --progress",
     "heroku-postbuild": "webpack -p --progress"
@@ -27,7 +25,6 @@
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "file-loader": "0.11.2",
     "jquery": "3.4.0",
-    "nsp": "2.8.1",
     "nyc": "11.9.0",
     "remove-accents": "0.4.2",
     "style-loader": "0.18.2",
