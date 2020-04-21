@@ -1,6 +1,6 @@
 {
   "title":"Zeeguu Exercises",
-  "source":"./src/zeeguu_exercises/static/js/app",
+  "source":"./javascript/app",
   "destination":"./docs",
   "access": [
     "public",

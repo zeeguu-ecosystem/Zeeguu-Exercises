@@ -2,10 +2,7 @@ An adaptive online language practice platform
 =====
 [![Build Status](https://travis-ci.org/martinavagyan/zeeguu-exercises.svg?branch=master)](https://travis-ci.org/martinavagyan/zeeguu-exercises)
 [![Coverage Status](https://coveralls.io/repos/github/martinavagyan/zeeguu-exercises/badge.svg?branch=master)](https://coveralls.io/github/martinavagyan/zeeguu-exercises?branch=master)
-[![Dependency Status](https://gemnasium.com/badges/github.com/martinavagyan/zeeguu-exercises.svg)](https://gemnasium.com/github.com/martinavagyan/zeeguu-exercises)
-[![NSP Status](https://nodesecurity.io/orgs/martinavagyan/projects/69db0b36-c5a2-4f40-bafd-79775a774854/badge)](https://nodesecurity.io/orgs/martinavagyan/projects/69db0b36-c5a2-4f40-bafd-79775a774854)
 [![Documentation Coverage](https://martinavagyan.github.io/zeeguu-exercises/badge.svg)](https://martinavagyan.github.io/zeeguu-exercises/)
-=====
 
 Running locally
 ------------------------------------
@@ -50,20 +47,6 @@ In case you add new dependencies, do not forget to update the requirements.txt f
 
     pip freeze > requirements.txt    
 
-   
-A batch file (*batchfile*.*bat*) is provided to easily activate the virtual environment and start the localhost, given that all the previous installations are successfully completed. You can access the app via: 
-
-    http://127.0.0.1:5000/ 
-
 The application will redirect to Zeeguu login page if the cookie for the session is not set yet. To set a test session in the cookies, go to the browser and run :
 
-    http://127.0.0.1:5000/debug
-This will set a test cookie for local debugging.
-
-Heroku Deployment
------------------
-
-The project is deployed on the *Heroku* server[1]. The
-deployment is connected to Github repository: https://github.com/martinavagyan/zeeguu-exercises
-The link to deployed app:  https://zeeguu.herokuapp.com/
 
