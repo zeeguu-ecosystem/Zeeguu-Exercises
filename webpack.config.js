@@ -6,11 +6,11 @@ var inProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
 	entry: {
-		appEntry: './src/zeeguu_exercises/static/js/app/app.js',
-		setCookieEntry: './src/zeeguu_exercises/static/js/app/debug/set_cookie_test.js',
+		appEntry: './javascript/app/app.js',
+		setCookieEntry: './javascript/app/debug/set_cookie_test.js',
     },
 	output: {		
-		path: path.join(__dirname, './src/zeeguu_exercises/static/js/dist'),
+		path: path.join(__dirname, './python/zeeguu_exercises/static/js/dist'),
 		filename: '[name].entry.js',
 	},
 	module: {
